@@ -3,7 +3,7 @@ import path from 'path';
 import { notFound } from 'next/navigation';
 
 export interface GameTask {
-  type: 'challenge' | 'never_have_i_ever' | 'prompt' | 'pointing' | 'ai_prompt';
+  type: 'challenge' | 'never_have_i_ever' | 'prompt' | 'pointing';
   text: string;
 }
 
@@ -15,7 +15,6 @@ export interface Game {
   items: GameTask[];
   shuffle?: boolean;
   requiresPlayers?: boolean;
-  engine?: 'ai-scenario';
 }
 
 const gamesDirectory = path.join(process.cwd(), 'src/data');

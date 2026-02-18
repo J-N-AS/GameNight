@@ -1,15 +1,15 @@
 {
   "id": "rolig-sosial",
-  "title": "Scenario-Mesteren (AI)",
-  "description": "AI-genererte dilemmaer og absurde situasjoner. Hva gjør du?",
+  "title": "Rolig & Sosialt",
+  "description": "Dype og morsomme spørsmål for å bli bedre kjent.",
   "language": "no",
-  "requiresPlayers": true,
-  "shuffle": false,
-  "engine": "ai-scenario",
+  "shuffle": true,
+  "requiresPlayers": false,
   "items": [
-    {
-      "type": "ai_prompt",
-      "text": "Laster scenario..."
-    }
+    { "type": "prompt", "text": "Hvis du kunne hatt én superkraft, hvilken ville det vært og hvorfor?" },
+    { "type": "prompt", "text": "Hva er den rareste matkombinasjonen du elsker?" },
+    { "type": "prompt", "text": "Hvis du kunne spist middag med tre personer, døde eller levende, hvem ville du valgt?" },
+    { "type": "prompt", "text": "Hvilken film eller bok skulle du ønske du kunne oppleve for første gang igjen?" },
+    { "type": "prompt", "text": "Hva er det beste rådet du noensinne har fått?" }
   ]
 }
