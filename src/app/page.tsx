@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Rocket, History } from 'lucide-react';
+import { Rocket, History, Beer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { GameMenu } from '@/components/game/GameMenu';
 import { motion } from 'framer-motion';
 import { usePlayers } from '@/hooks/usePlayers';
-import { AdBanner } from '@/components/ads/AdBanner';
+import { Card } from '@/components/ui/card';
 
 export default function Home() {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
@@ -44,9 +44,22 @@ export default function Home() {
     },
   };
 
+  const delayedItemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        delay: 0.2,
+      },
+    },
+  };
+
   return (
     <motion.div
-      className="container mx-auto px-4 flex flex-col items-center justify-center min-h-screen text-center"
+      className="container mx-auto flex flex-col items-center justify-center min-h-screen text-center py-12"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -100,8 +113,29 @@ export default function Home() {
             <Link href="/spill/velg">Eller se alle spillene</Link>
           </Button>
         )}
-
       </motion.div>
+
+      <motion.div
+        className="mt-16 w-full max-w-md"
+        variants={delayedItemVariants}
+      >
+        <Card className="transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
+          <Link href="/drikkeleker" className="block p-4 group">
+            <div className="flex items-center gap-4">
+              <div className="bg-accent/20 p-3 rounded-lg">
+                  <Beer className="h-6 w-6 text-accent" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-left text-foreground group-hover:text-accent transition-colors">Klassiske Drikkeleker</h3>
+                <p className="text-sm text-left text-muted-foreground">
+                  Regler for Ring of Fire, Beer Pong og mer.
+                </p>
+              </div>
+            </div>
+          </Link>
+        </Card>
+      </motion.div>
+
     </motion.div>
   );
 }
