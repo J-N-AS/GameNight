@@ -27,4 +27,5 @@ export interface GameArticle {
   cardRules?: { [key: string]: string };
   imageUrl?: string;
   imageHint?: string;
+  attributionHtml?: string;
 }

@@ -81,6 +81,9 @@
     text-shadow: 0 0 10px hsl(var(--accent) / 0.8);
     animation: player-glow-2 1.5s ease-in-out;
   }
+  .image-attribution a {
+    @apply text-white/80 underline transition-colors hover:text-white;
+  }
 }
 
 @keyframes gradient-animation {

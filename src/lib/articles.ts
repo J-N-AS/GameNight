@@ -5,7 +5,7 @@ import drikkeleker from '@/data/drikkeleker.json';
 import { PlaceHolderImages } from './placeholder-images';
 
 async function loadArticles(): Promise<GameArticle[]> {
-  const articles = drikkeleker as Omit<GameArticle, 'imageUrl' | 'imageHint'>[];
+  const articles = drikkeleker as Omit<GameArticle, 'imageUrl' | 'imageHint' | 'attributionHtml'>[];
   
   return articles.map(article => {
     const imageData = PlaceHolderImages.find(img => img.id === article.slug);
@@ -13,12 +13,13 @@ async function loadArticles(): Promise<GameArticle[]> {
       ...article,
       imageUrl: imageData?.imageUrl,
       imageHint: imageData?.imageHint,
+      attributionHtml: imageData?.attributionHtml,
     };
   });
 }
 
 export async function getArticles(): Promise<
-  Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules'>[]
+  Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules' | 'attributionHtml'>[]
 > {
   const articles = await loadArticles();
   return articles.map(({ slug, title, description, imageUrl, imageHint }) => ({

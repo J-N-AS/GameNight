@@ -2,57 +2,66 @@
   "placeholderImages": [
     {
       "id": "ring-of-fire",
-      "description": "Friends laughing while playing a card game around a wooden table.",
-      "imageUrl": "https://images.unsplash.com/photo-1559526324-c1f275fbfa32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmcmllbmRzJTIwcGxheWluZyUyMGNhcmRzfGVufDB8fHx8MTcyMTI0NzU5MHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "friends cards"
+      "description": "Swords arranged in a circle, reminiscent of a crown or a ring of fire.",
+      "imageUrl": "/drikkeleker/kyraxys-swords-8652518_1920.jpg",
+      "imageHint": "swords circle",
+      "attributionHtml": "Image by <a href=\"https://pixabay.com/users/kyraxys-41857870/\" target=\"_blank\" rel=\"noopener noreferrer\">Leo</a> from <a href=\"https://pixabay.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Pixabay</a>"
     },
     {
       "id": "beer-pong",
-      "description": "A beer pong ball captured mid-air, about to land in a red cup.",
-      "imageUrl": "https://images.unsplash.com/photo-1557426985-a469741c448d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxiZWVyJTIwcG9uZyUyMGFjdGlvbnxlbnwwfHx8fDE3MjEyNDc3MDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "beer-pong action"
+      "description": "A table set up for a game of beer pong with red cups.",
+      "imageUrl": "/drikkeleker/yosoylxcamara-ng-Z8SOXEPQYjQ-unsplash.jpg",
+      "imageHint": "beer-pong setup",
+      "attributionHtml": "Photo by <a href=\"https://unsplash.com/@yosoylxcamara?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">Yosoylxcamara (NG)</a> on <a href=\"https://unsplash.com/photos/a-table-topped-with-lots-of-empty-cups-Z8SOXEPQYjQ?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
     },
     {
       "id": "flip-cup",
-      "description": "A row of red solo cups ready for a game of flip cup on a table.",
-      "imageUrl": "https://images.unsplash.com/photo-1522880064562-4270525d1a88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmbGlwJTIwY3VwJTIwZ2FtZXxlbnwwfHx8fDE3MjEyNDc4MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "flip-cup"
+      "description": "Friends sitting together and laughing during a party.",
+      "imageUrl": "/drikkeleker/axville-ox7SACCsnRA-unsplash.jpg",
+      "imageHint": "friends laughing",
+      "attributionHtml": "Photo by <a href=\"https://unsplash.com/@axville?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">Axville</a> on <a href=\"https://unsplash.com/photos/woman-sitting-between-two-men-smiling-ox7SACCsnRA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
     },
     {
       "id": "sannhet-eller-promille",
-      "description": "Two friends whispering and sharing secrets at a party.",
-      "imageUrl": "https://images.unsplash.com/photo-1519671482727-a4d4b205f329?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmcmllbmRzJTIwc2hhcmluZyUyMHNlY3JldHMlMjBwYXJ0eXxlbnwwfHx8fDE3MjEyNDc4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "friends secrets"
+      "description": "A man and a woman talking intently at a kitchen counter.",
+      "imageUrl": "/drikkeleker/david-schultz-uP0XEms7Ias-unsplash.jpg",
+      "imageHint": "couple talking",
+      "attributionHtml": "Photo by <a href=\"https://unsplash.com/@davidschultz?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">David Schultz</a> on <a href=\"https://unsplash.com/photos/a-man-and-a-woman-sitting-at-a-kitchen-counter-uP0XEms7Ias?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
     },
     {
       "id": "strip-poker-sfw",
-      "description": "A group of friends laughing and having a good time while playing poker.",
-      "imageUrl": "https://images.unsplash.com/photo-1605335163884-25c0a911a3c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwb2tlciUyMGZyaWVuZHMlMjBsYXVnaGluZ3xlbnwwfHx8fDE3MjEyNDgwMDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "poker friends"
+      "description": "A close-up of a person holding a hand of playing cards.",
+      "imageUrl": "/drikkeleker/michal-parzuchowski-bRqsXcEcKFw-unsplash.jpg",
+      "imageHint": "holding cards",
+      "attributionHtml": "Photo by <a href=\"https://unsplash.com/@mparzuchowski?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">Michał Parzuchowski</a> on <a href=\"https://unsplash.com/photos/person-holding-white-and-black-playing-cards-bRqsXcEcKFw?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
     },
     {
       "id": "busstur",
-      "description": "A pyramid of playing cards on a dark background, illustrating a card game structure.",
-      "imageUrl": "https://images.unsplash.com/photo-1544652478-66a9d88f63c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJkJTIwZ2FtZSUyMHB5cmFtaWR8ZW58MHx8fHwxNzIxMjQ4MDc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "card pyramid"
+      "description": "A view from inside a bus, looking down an empty road at night.",
+      "imageUrl": "/drikkeleker/fotorech-bus-2663034_1280.jpg",
+      "imageHint": "bus road",
+      "attributionHtml": "Image by <a href=\"https://pixabay.com/users/fotorech-5554393/\" target=\"_blank\" rel=\"noopener noreferrer\">Daniel Reche</a> from <a href=\"https://pixabay.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Pixabay</a>"
     },
     {
       "id": "pyramide",
-      "description": "Playing cards arranged in a pyramid shape for a drinking game.",
-      "imageUrl": "https://images.unsplash.com/photo-1614995166416-52b0f3b4a457?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxweXJhbWlkJTIwY2FyZHMlMjBnYW1lfGVufDB8fHx8MTcyMTI0ODIwN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "pyramid cards"
+      "description": "An artistic photo of a pyramid of playing cards.",
+      "imageUrl": "/drikkeleker/decster1-hd-wallpaper-8095421_1280.jpg",
+      "imageHint": "card pyramid",
+      "attributionHtml": "Image by <a href=\"https://pixabay.com/users/decster1-25688242/\" target=\"_blank\" rel=\"noopener noreferrer\">Darren Collis</a> from <a href=\"https://pixabay.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Pixabay</a>"
     },
     {
       "id": "strip-poker-nsfw",
-      "description": "A sultry, dimly lit scene with poker cards and a glass of whiskey.",
-      "imageUrl": "https://images.unsplash.com/photo-1621905333624-85734b419822?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdWx0cnklMjBwb2tlciUyMGdhbWV8ZW58MHx8fHwxNzIxMjQ4MjU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "sultry poker"
+      "description": "A dramatic close-up of playing cards on a surface.",
+      "imageUrl": "/drikkeleker/javardh--_5TphPhx5c-unsplash.jpg",
+      "imageHint": "playing cards",
+      "attributionHtml": "Photo by <a href=\"https://unsplash.com/@javardh?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">Javardh</a> on <a href=\"https://unsplash.com/photos/shallow-focus-photo-of-playing-cards--_5TphPhx5c?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
     },
     {
       "id": "medusa",
-      "description": "A group of friends at a party, looking and staring at each other.",
-      "imageUrl": "https://images.unsplash.com/photo-1524250502761-5ac9f2e501a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmcmllbmRzJTIwc3RhcmluZyUyMHBhcnR5fGVufDB8fHx8MTcyMTI0ODMyN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "friends staring"
+      "description": "An AI-generated image of a woman with snakes for hair, representing Medusa.",
+      "imageUrl": "/drikkeleker/benovator-ai-generated-9602834_1280.jpg",
+      "imageHint": "medusa snakes",
+      "attributionHtml": "Image by <a href=\"https://pixabay.com/users/benovator-43434340/\" target=\"_blank\" rel=\"noopener noreferrer\">Benovator</a> from <a href=\"https://pixabay.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Pixabay</a>"
     }
   ]
 }

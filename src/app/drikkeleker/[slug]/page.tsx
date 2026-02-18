@@ -37,6 +37,12 @@ function DrikkelekArticleClient({ article }: { article: GameArticle }) {
               className="object-cover rounded-t-lg"
               data-ai-hint={article.imageHint}
             />
+            {article.attributionHtml && (
+              <div
+                className="image-attribution absolute bottom-2 right-2 text-xs text-white/80 bg-black/50 p-1 px-2 rounded-md"
+                dangerouslySetInnerHTML={{ __html: article.attributionHtml }}
+              />
+            )}
           </div>
         )}
         <CardHeader>
