@@ -4,7 +4,7 @@ import { notFound, useParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, CreditCard } from 'lucide-react';
+import { ArrowLeft, CreditCard, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
@@ -135,6 +135,36 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
           <p>
             Denne personvernerklæringen kan bli oppdatert. Vi anbefaler at du ser gjennom den
             jevnlig for å holde deg informert.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  'kontakt-oss': {
+    title: 'Kontakt Oss',
+    content: (
+      <div className="space-y-6 text-muted-foreground">
+        <p className="text-lg">
+          Vi elsker å høre fra dere! Enten du har ris, ros, en idé til et nytt spill, eller bare vil si hei, er du velkommen til å ta kontakt.
+        </p>
+
+        <div className="rounded-lg border border-border bg-card/50 p-6 space-y-3">
+            <h3 className="font-semibold text-foreground text-xl">E-post</h3>
+            <p>
+                Den enkleste måten å nå oss på er via e-post. Vi leser alt og prøver å svare så fort vi kan.
+            </p>
+            <Button asChild>
+                <a href="mailto:hei@gamenight.app">
+                    <Mail className="mr-2 h-4 w-4" />
+                    Send oss en e-post
+                </a>
+            </Button>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="font-semibold text-foreground text-xl">Rapportere en feil?</h3>
+          <p>
+            Opplever du en teknisk feil eller en skrivefeil i spillet? Send oss gjerne en e-post med en kort beskrivelse av problemet og hvilken enhet/nettleser du bruker, så skal vi se på det!
           </p>
         </div>
       </div>

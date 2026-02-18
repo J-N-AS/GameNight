@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AppFooter } from '@/components/layout/AppFooter';
+import { CookieConsent } from '@/components/common/CookieConsent';
 
 export const metadata: Metadata = {
   title: 'GameNight',
@@ -30,6 +31,7 @@ export default function RootLayout({
           <AppFooter />
         </div>
         <Toaster />
+        <CookieConsent />
       </body>
     </html>
   );
