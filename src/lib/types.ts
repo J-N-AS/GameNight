@@ -64,6 +64,11 @@ export interface MusicGame {
   spotifyUrl: string;
 }
 
+export interface MusicGameCategory {
+  title: string;
+  games: MusicGame[];
+}
+
 export interface Theme {
   slug: string;
   title: string;

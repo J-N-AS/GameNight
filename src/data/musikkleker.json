@@ -1,100 +1,159 @@
-[
-  {
-    "id": "piskesangen",
-    "title": "Piskesangen (Sut Den Op)",
-    "artist": "Suspekt",
-    "rules": "Hver gang du hører piske-lyden må du luft-piske. Glemmer du å piske eller gjør det feil = drikk.",
-    "spotifyUrl": "https://open.spotify.com/track/4j0GUIihf39TCM7h2cO2x1"
-  },
-  {
-    "id": "forelska-i-laerern",
-    "title": "Forelska i lærer'n",
-    "artist": "The Kids",
-    "rules": "Drikk hver gang refrenget starter.",
-    "spotifyUrl": "https://open.spotify.com/track/5Yqg3AY2dp9AgY2jPCa7H2"
-  },
-  {
-    "id": "den-fineste-chevyn",
-    "title": "Den fineste Chevy'n",
-    "artist": "Halva Priset",
-    "rules": "Refreng = alle drikker. Syng med, ellers drikk ekstra.",
-    "spotifyUrl": "https://open.spotify.com/track/71v4IadAl12rVzUP9b2P1w"
-  },
-  {
-    "id": "e-du-nord",
-    "title": "E du nord",
-    "artist": "Vassendgutane",
-    "rules": "Drikk hver gang “E du nord” synges.",
-    "spotifyUrl": "https://open.spotify.com/track/7u6nC2D2LvybprEcGTtVjQ"
-  },
-  {
-    "id": "idyll",
-    "title": "Idyll",
-    "artist": "Postgirobygget",
-    "rules": "Drikk på hvert refreng.",
-    "spotifyUrl": "https://open.spotify.com/track/62o2n3Cw5R05L1i0eS4r7W"
-  },
-  {
-    "id": "optimist",
-    "title": "Optimist",
-    "artist": "Jahn Teigen",
-    "rules": "Drikk hver gang “Optimist” synges. Alle synger på refreng.",
-    "spotifyUrl": "https://open.spotify.com/track/55w3iFRDC5s0g2Nn2rLNFo"
-  },
-  {
-    "id": "neste-sommer",
-    "title": "Neste sommer",
-    "artist": "deLillos",
-    "rules": "Drikk på refreng.",
-    "spotifyUrl": "https://open.spotify.com/track/0YUI3a0iJh7u1N4bC1nsoB"
-  },
-  {
-    "id": "tore-tang",
-    "title": "Tore Tang",
-    "artist": "Mods",
-    "rules": "Drikk hver gang Tore Tang nevnes. Refreng = allsang.",
-    "spotifyUrl": "https://open.spotify.com/track/3nOqRUeA0tq4iBBFmYjX3f"
-  },
-  {
-    "id": "thunderstruck",
-    "title": "Thunderstruck",
-    "artist": "AC/DC",
-    "rules": "Alle starter å drikke når sangen starter. Du drikker kun når ordet “Thunder” synges. Feil timing = drikk.",
-    "spotifyUrl": "https://open.spotify.com/track/57bgtoPSgt236HzfBOd8kj"
-  },
-  {
-    "id": "roxanne",
-    "title": "Roxanne",
-    "artist": "The Police",
-    "rules": "Del gruppa i to. “Roxanne” = gruppe 1 drikker. “You don’t have to…” = gruppe 2 drikker.",
-    "spotifyUrl": "https://open.spotify.com/track/3EYOJ48Et32uATr9ZlQolq"
-  },
-  {
-    "id": "sweet-caroline",
-    "title": "Sweet Caroline",
-    "artist": "Neil Diamond",
-    "rules": "Alle drikker på “BA BA BAA”.",
-    "spotifyUrl": "https://open.spotify.com/track/62AuGbAkt8Ox2IrFFb8GKV"
-  },
-  {
-    "id": "mr-brightside",
-    "title": "Mr. Brightside",
-    "artist": "The Killers",
-    "rules": "Drikk gjennom første vers. Refreng = allsang. Feil tekst = drikk.",
-    "spotifyUrl": "https://open.spotify.com/track/003vvx7Niy0yvhvHt4a68B"
-  },
-  {
-    "id": "bohemian-rhapsody",
-    "title": "Bohemian Rhapsody",
-    "artist": "Queen",
-    "rules": "Ballade = små slurker. Rock-del = kontinuerlig drikking. Opera-del = pause.",
-    "spotifyUrl": "https://open.spotify.com/track/3z8h0lnJfeAFC7kZRM6K0P"
-  },
-  {
-    "id": "ymca",
-    "title": "Y.M.C.A.",
-    "artist": "Village People",
-    "rules": "Gjør bokstavene. Feil eller for sent = drikk.",
-    "spotifyUrl": "https://open.spotify.com/track/1pThsAQ3C8e4y3j74jDJAb"
-  }
-]
+{
+  "categories": [
+    {
+      "title": "Norske Vorspiel-Klassikere & Allsang",
+      "games": [
+        {
+          "id": "den-fineste-chevyn",
+          "title": "Den fineste Chevy'n",
+          "artist": "Halva Priset",
+          "rules": "Hver gang refrenget starter, må alle skåle og synge med. Den som ikke kan teksten, får en ekstra straff.",
+          "spotifyUrl": "https://open.spotify.com/track/71v4IadAl12rVzUP9b2P1w"
+        },
+        {
+          "id": "forelska-i-laerern",
+          "title": "Forelska i lærer'n",
+          "artist": "The Kids",
+          "rules": "Hver gang refrenget starter, må alle reise seg og skåle.",
+          "spotifyUrl": "https://open.spotify.com/track/5Yqg3AY2dp9AgY2jPCa7H2"
+        },
+        {
+          "id": "badebussen",
+          "title": "Badebussen",
+          "artist": "Kjartan Lauritzen",
+          "rules": "Når refrenget treffer, må alle reise seg og 'svømme' i luften. Sistemann som reiser seg, får en straff.",
+          "spotifyUrl": "https://open.spotify.com/track/5jL4O1JdIlj7HSSoUEq415"
+        },
+        {
+          "id": "idyll",
+          "title": "Idyll",
+          "artist": "Postgirobygget",
+          "rules": "På refrenget tar alle en slurk. En ekte sommerklassiker som krever allsang.",
+          "spotifyUrl": "https://open.spotify.com/track/62o2n3Cw5R05L1i0eS4r7W"
+        },
+        {
+          "id": "levva-livet",
+          "title": "Levva Livet",
+          "artist": "Åge Aleksandersen",
+          "rules": "Hver gang Åge synger 'Levva Livet!', hever alle glasset og tar en skål for livet.",
+          "spotifyUrl": "https://open.spotify.com/track/3v0A2i3A8iE8A7Swnl6pBf"
+        },
+        {
+          "id": "pinne-for-landet",
+          "title": "Pinne for landet",
+          "artist": "Freddy Kalas",
+          "rules": "Når du hører 'Pinne for landet', må alle ta en slurk. Syng med for full effekt!",
+          "spotifyUrl": "https://open.spotify.com/track/62G9TdtCHEHgrtA23gYyB0"
+        },
+        {
+          "id": "tore-tang",
+          "title": "Tore Tang",
+          "artist": "Mods",
+          "rules": "Hver gang 'Tore Tang' nevnes, tar alle en slurk. På refrenget er allsang obligatorisk.",
+          "spotifyUrl": "https://open.spotify.com/track/3nOqRUeA0tq4iBBFmYjX3f"
+        },
+        {
+          "id": "e-du-nord",
+          "title": "E du nord",
+          "artist": "Vassendgutane",
+          "rules": "En slurk hver gang du hører 'E du nord'. Perfekt for å teste geografisk stolthet.",
+          "spotifyUrl": "https://open.spotify.com/track/7u6nC2D2LvybprEcGTtVjQ"
+        }
+      ]
+    },
+    {
+      "title": "Action, Dans & Interaksjon",
+      "games": [
+        {
+          "id": "piskesangen",
+          "title": "Piskesangen (Sut Den Op)",
+          "artist": "Suspekt",
+          "rules": "Hver gang du hører piskelyden, må du 'piske' i luften. Glemmer du bevegelsen, må du ta en straff.",
+          "spotifyUrl": "https://open.spotify.com/track/4j0GUIihf39TCM7h2cO2x1"
+        },
+        {
+          "id": "macarena",
+          "title": "Macarena (Bayside Boys Remix)",
+          "artist": "Los del Río",
+          "rules": "Alle må danse Macarena under refrenget. Den som gjør feil trinn, eller er sist ute, får en straff.",
+          "spotifyUrl": "https://open.spotify.com/track/4oaj36KzXRgRx4k4r2fX8c"
+        },
+        {
+          "id": "cotton-eye-joe",
+          "title": "Cotton Eye Joe",
+          "artist": "Rednex",
+          "rules": "Reis deg og finn en dansepartner når refrenget starter. Sistemann som finner en partner, må ta en straff.",
+          "spotifyUrl": "https://open.spotify.com/track/06hsdMbBxWGqBO0TV0Zrkf"
+        },
+        {
+          "id": "ymca",
+          "title": "Y.M.C.A.",
+          "artist": "Village People",
+          "rules": "Alle må forme bokstavene med armene under refrenget. Gjør du feil eller er ute av synk, får du en straff.",
+          "spotifyUrl": "https://open.spotify.com/track/1pThsAQ3C8e4y3j74jDJAb"
+        }
+      ]
+    },
+    {
+      "title": "Rock & Internasjonale Hits",
+      "games": [
+        {
+          "id": "take-on-me",
+          "title": "Take On Me",
+          "artist": "a-ha",
+          "rules": "Alle må prøve å treffe den høye tonen i refrenget. Den som unngår det eller høres verst ut, får en straff.",
+          "spotifyUrl": "https://open.spotify.com/track/2WfaOiMkCvy7F5fcp2zZ8L"
+        },
+        {
+          "id": "thunderstruck",
+          "title": "Thunderstruck",
+          "artist": "AC/DC",
+          "rules": "Start å ta en slurk. Du kan stoppe når du hører 'Thunder', og begynne igjen etterpå. Fortsett til neste 'Thunder'.",
+          "spotifyUrl": "https://open.spotify.com/track/57bgtoPSgt236HzfBOd8kj"
+        },
+        {
+          "id": "roxanne",
+          "title": "Roxanne",
+          "artist": "The Police",
+          "rules": "Del gruppa i to. Gruppe 1 skåler hver gang 'Roxanne' synges. Gruppe 2 skåler på 'put on the red light'.",
+          "spotifyUrl": "https://open.spotify.com/track/3EYOJ48Et32uATr9ZlQolq"
+        },
+        {
+          "id": "mr-brightside",
+          "title": "Mr. Brightside",
+          "artist": "The Killers",
+          "rules": "Ta en slurk gjennom første vers. Når refrenget starter, er det allsang som gjelder. Kan du ikke teksten, får du en straff.",
+          "spotifyUrl": "https://open.spotify.com/track/003vvx7Niy0yvhvHt4a68B"
+        },
+        {
+          "id": "gimme-gimme-gimme",
+          "title": "Gimme! Gimme! Gimme!",
+          "artist": "ABBA",
+          "rules": "Hver gang du hører 'Gimme! Gimme! Gimme!', tar alle en slurk. Syng med for maks stemning.",
+          "spotifyUrl": "https://open.spotify.com/track/3vkQ5DAB1qQMYO4PO9zfoS"
+        },
+        {
+          "id": "sweet-caroline",
+          "title": "Sweet Caroline",
+          "artist": "Neil Diamond",
+          "rules": "Alle skåler og tar en slurk på 'BA BA BAA!'. Høylytt allsang er påkrevd.",
+          "spotifyUrl": "https://open.spotify.com/track/62AuGbAkt8Ox2IrFFb8GKV"
+        },
+        {
+          "id": "hey-jude",
+          "title": "Hey Jude",
+          "artist": "The Beatles",
+          "rules": "Hold en tone så lenge som mulig under 'Na-na-na na'-delen. Den som holder kortest, får en straff.",
+          "spotifyUrl": "https://open.spotify.com/track/1eT2CjXwFXNx6oY5yd2h29"
+        },
+        {
+          "id": "bohemian-rhapsody",
+          "title": "Bohemian Rhapsody",
+          "artist": "Queen",
+          "rules": "Ballade-del: Rolige slurker. Rocke-del: Kontinuerlig sirkel der man sender slurker videre. Opera-del: Pause. Avslutning: Alle tar en siste skål.",
+          "spotifyUrl": "https://open.spotify.com/track/3z8h0lnJfeAFC7kZRM6K0P"
+        }
+      ]
+    }
+  ]
+}
