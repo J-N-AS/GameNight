@@ -16,6 +16,11 @@ const taskTypeDetails = {
     color: 'text-accent',
   },
   prompt: {
+    title: 'Spørsmål',
+    icon: MessageSquareQuote,
+    color: 'text-prompt',
+  },
+  pointing: {
     title: 'Pekefest',
     icon: Hand,
     color: 'text-prompt',
@@ -32,7 +37,7 @@ export function TaskCard({ type, content }: TaskCardProps) {
   const Icon = details.icon;
 
   return (
-    <Card className="w-full max-w-2xl border-0 bg-transparent shadow-none text-center animate-in fade-in-50 zoom-in-95 duration-500">
+    <Card className="w-full max-w-2xl border-0 bg-transparent shadow-none text-center">
       <CardHeader>
         <CardTitle
           className={cn(

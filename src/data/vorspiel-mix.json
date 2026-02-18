@@ -1,0 +1,15 @@
+{
+  "id": "vorspiel-mix",
+  "title": "Vorspiel Mix",
+  "description": "En god blanding for å få festen i gang.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "items": [
+    { "type": "challenge", "text": "{player}, velg en annen spiller som skal ta en shot." },
+    { "type": "prompt", "text": "Hva er det flaueste som har skjedd deg på fest?" },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å blacke ut i kveld?" },
+    { "type": "challenge", "text": "{player} og {player2}, dere er drikkebuddies for resten av runden. Hver gang en av dere drikker, må den andre også drikke." },
+    { "type": "prompt", "text": "Fortell om din verste fylleangst-historie." }
+  ]
+}

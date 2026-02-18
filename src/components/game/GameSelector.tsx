@@ -19,17 +19,53 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import { useState } from 'react';
+import { usePlayers } from '@/hooks/usePlayers';
+import { useRouter } from 'next/navigation';
+import { PlayerSetup } from './PlayerSetup';
+import { useToast } from '@/hooks/use-toast';
+
+type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
 type GameSelectorProps = {
-  games: Omit<Game, 'items' | 'language' | 'shuffle'>[];
+  games: GameFromGetGames[];
 };
 
 export function GameSelector({ games }: GameSelectorProps) {
-  // For now, all games are "featured"
+  const router = useRouter();
+  const { players } = usePlayers();
+  const { toast } = useToast();
+  const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<GameFromGetGames | null>(null);
+
+  const handleGameSelect = (e: React.MouseEvent, game: GameFromGetGames) => {
+    if (game.requiresPlayers && players.length === 0) {
+      e.preventDefault();
+      setSelectedGame(game);
+      toast({
+        title: 'Spillere mangler',
+        description: `"${game.title}" krever at du legger til spillere først.`,
+      });
+      setIsPlayerSetupOpen(true);
+    }
+  };
+
+  const handleSetupComplete = () => {
+    setIsPlayerSetupOpen(false);
+    if (selectedGame) {
+      router.push(`/spill/${selectedGame.id}`);
+    }
+  };
+
   const featuredGames = games;
 
   return (
     <>
+      <PlayerSetup
+        open={isPlayerSetupOpen}
+        onOpenChange={setIsPlayerSetupOpen}
+        onSetupComplete={handleSetupComplete}
+      />
       <section className="mb-16">
         <h2 className="text-3xl font-bold text-center mb-8 font-headline">Anbefalte spill</h2>
         <Carousel
@@ -43,7 +79,11 @@ export function GameSelector({ games }: GameSelectorProps) {
             {featuredGames.map((game) => (
               <CarouselItem key={game.id} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1">
-                  <Link href={`/spill/${game.id}`} className="group">
+                  <Link
+                    href={`/spill/${game.id}`}
+                    onClick={(e) => handleGameSelect(e, game)}
+                    className="group"
+                  >
                     <Card className="h-full flex flex-col transition-all duration-300 group-hover:border-primary group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-primary/20">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-xl font-bold">

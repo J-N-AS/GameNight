@@ -1,0 +1,14 @@
+{
+  "id": "kjapp-party-runde",
+  "title": "Kjapp Party-runde",
+  "description": "Raske runder for å få stemningen opp.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "items": [
+    { "type": "challenge", "text": "{player}, ta 2 slurker." },
+    { "type": "prompt", "text": "Alle må si sitt beste sjekketriks. Dårligst triks (bestemt av flertallet) må drikke." },
+    { "type": "challenge", "text": "{player} og {player2} tar en stein-saks-papir. Taperen drikker 3 slurker." },
+    { "type": "challenge", "text": "Alle som har bursdag i samme måned som {player} må drikke." }
+  ]
+}

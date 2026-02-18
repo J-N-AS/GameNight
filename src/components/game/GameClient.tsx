@@ -4,10 +4,13 @@ import type { Game, GameTask } from '@/lib/games';
 import React, { useState, useEffect, useMemo } from 'react';
 import { TaskCard } from './TaskCard';
 import { Button } from '@/components/ui/button';
-import { Home, Repeat } from 'lucide-react';
+import { Repeat, Home } from 'lucide-react';
 import Link from 'next/link';
 import { usePlayers } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GameMenu } from './GameMenu';
+import { useToast } from '@/hooks/use-toast';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -56,29 +59,39 @@ function processPlaceholders(text: string, players: { id: string; name: string }
     );
 }
 
-
 export function GameClient({ game }: { game: Game }) {
   const { players, isLoaded } = usePlayers();
   const router = useRouter();
+  const { toast } = useToast();
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
+  const [direction, setDirection] = useState(1);
 
   useEffect(() => {
+    // Initial shuffle and setup
     if (isLoaded) {
-      if (players.length === 0) {
-        // Redirect to home if no players are set up.
-        router.push('/');
-      } else {
-        const gameTasks = game.shuffle === false ? game.items : shuffleArray(game.items);
-        setTasks(gameTasks);
-        setCurrentIndex(0);
-        setIsFinished(false);
-      }
+      const gameTasks = game.shuffle === false ? game.items : shuffleArray(game.items);
+      setTasks(gameTasks);
+      setCurrentIndex(0);
+      setIsFinished(false);
     }
-  }, [game, isLoaded, players, router]);
+  }, [game, isLoaded]);
+
+  useEffect(() => {
+    // End game if players are removed from a game that requires them
+    if (isLoaded && game.requiresPlayers && players.length === 0) {
+      toast({
+        title: 'Spillere mangler',
+        description: 'Dette spillet krever spillere. Returnerer til lobby.',
+        variant: 'destructive',
+      });
+      router.push('/');
+    }
+  }, [isLoaded, game.requiresPlayers, players, router, toast]);
 
   const handleNextTask = () => {
+    setDirection(1);
     if (currentIndex < tasks.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -100,12 +113,36 @@ export function GameClient({ game }: { game: Game }) {
   );
   
   const processedContent = useMemo(() => {
-    if (!currentTask || !isLoaded || players.length === 0) return '';
-    return processPlaceholders(currentTask.text, players);
+    if (!currentTask || !isLoaded) return '';
+    const { type, text } = currentTask;
+
+    const hasPlaceholders = /\{player|player2|all\}/.test(text);
+    const canProcessPlaceholders = (type === 'challenge' || type === 'prompt') && hasPlaceholders && players.length > 0;
+
+    if (canProcessPlaceholders) {
+        return processPlaceholders(text, players);
+    }
+    return text;
   }, [currentTask, players, isLoaded]);
 
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 50 : -50,
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 50 : -50,
+      opacity: 0,
+    }),
+  };
 
-  if (!isLoaded || (isLoaded && players.length === 0)) {
+  if (!isLoaded || !currentTask) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p>Laster spill...</p>
@@ -115,36 +152,28 @@ export function GameClient({ game }: { game: Game }) {
 
   if (isFinished) {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen text-center p-4">
-            <h2 className="text-4xl font-bold mb-4">Spillet er ferdig!</h2>
-            <p className="text-muted-foreground mb-8">Hva vil dere gjøre nå?</p>
-            <div className="flex gap-4">
-                <Button onClick={handleRestart} size="lg">
-                    <Repeat className="mr-2 h-5 w-5" />
-                    Spill igjen
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                    <Link href="/spill/velg">
-                        <Home className="mr-2 h-5 w-5" />
-                        Velg nytt spill
-                    </Link>
-                </Button>
-            </div>
-        </div>
-    )
-  }
-
-  if (!currentTask) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Laster spill...</p>
+      <div className="flex flex-col items-center justify-center min-h-screen text-center p-4">
+          <h2 className="text-4xl font-bold mb-4">Spillet er ferdig!</h2>
+          <p className="text-muted-foreground mb-8">Hva vil dere gjøre nå?</p>
+          <div className="flex gap-4">
+              <Button onClick={handleRestart} size="lg">
+                  <Repeat className="mr-2 h-5 w-5" />
+                  Spill igjen
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                  <Link href="/spill/velg">
+                      <Home className="mr-2 h-5 w-5" />
+                      Velg nytt spill
+                  </Link>
+              </Button>
+          </div>
       </div>
-    );
+    )
   }
 
   return (
     <div
-      className="flex flex-col min-h-screen p-4 md:p-8 cursor-pointer"
+      className="flex flex-col min-h-screen p-4 md:p-8 overflow-hidden"
       onClick={handleNextTask}
     >
       <div className="absolute top-4 left-4 z-10">
@@ -156,8 +185,28 @@ export function GameClient({ game }: { game: Game }) {
          </Button>
       </div>
 
-      <div className="flex-grow flex items-center justify-center">
-        <TaskCard type={currentTask.type} content={processedContent} key={currentIndex} />
+      <div className="absolute top-2.5 right-2.5 z-10" onClick={(e) => e.stopPropagation()}>
+          <GameMenu context="in-game" onRestart={handleRestart} />
+      </div>
+
+      <div className="flex-grow flex items-center justify-center cursor-pointer">
+        <AnimatePresence initial={false} custom={direction} mode="wait">
+          <motion.div
+            key={currentIndex}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.2 },
+            }}
+            className="w-full"
+          >
+            <TaskCard type={currentTask.type} content={processedContent} />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       <div className="text-center text-muted-foreground mt-4">

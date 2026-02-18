@@ -3,7 +3,7 @@ import path from 'path';
 import { notFound } from 'next/navigation';
 
 export interface GameTask {
-  type: 'challenge' | 'never_have_i_ever' | 'prompt';
+  type: 'challenge' | 'never_have_i_ever' | 'prompt' | 'pointing';
   text: string;
 }
 
@@ -14,6 +14,7 @@ export interface Game {
   language: string;
   items: GameTask[];
   shuffle?: boolean;
+  requiresPlayers?: boolean;
 }
 
 const gamesDirectory = path.join(process.cwd(), 'src/data');
@@ -32,6 +33,7 @@ export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shu
             id: gameData.id,
             title: gameData.title,
             description: gameData.description,
+            requiresPlayers: gameData.requiresPlayers,
           };
         })
     );

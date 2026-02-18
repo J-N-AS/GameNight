@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
 import Image from 'next/image';
+import { GameMenu } from '@/components/game/GameMenu';
 
 export default function Home() {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
@@ -19,6 +20,10 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 flex flex-col items-center justify-center min-h-screen text-center">
+      <div className="absolute top-2.5 right-2.5 z-10">
+        <GameMenu context="lobby" />
+      </div>
+
       <header className="mb-12 animate-in fade-in-50 duration-1000">
         <h1 className="font-bold font-headline">
           <Image

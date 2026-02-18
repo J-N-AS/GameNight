@@ -1,17 +1,15 @@
 {
-  "id": "jeg-har-aldri",
-  "title": "Jeg har aldri",
-  "description": "En klassiker. Drikk hvis du har gjort det som står på skjermen.",
+  "id": "jeg-har-aldri-klassisk",
+  "title": "Jeg har aldri – Klassisk",
+  "description": "Drikk hvis du har gjort det. Ingen navn, bare ærlighet.",
   "language": "no",
   "shuffle": true,
+  "requiresPlayers": false,
   "items": [
-    { "type": "never_have_i_ever", "text": "sendt en melding til {player} jeg angret på dagen etter." },
-    { "type": "never_have_i_ever", "text": "skulket skole eller jobb med {player}." },
-    { "type": "never_have_i_ever", "text": "løyet om alderen min for å imponere {player}." },
-    { "type": "never_have_i_ever", "text": "blitt kasta ut fra et utested. Hvis ja, fortell historien, {player}." },
-    { "type": "never_have_i_ever", "text": "spist mat som har falt på gulvet, og {player} så det." },
-    { "type": "never_have_i_ever", "text": "stalket en eks på sosiale medier. {player}, du først." },
-    { "type": "never_have_i_ever", "text": "glemt navnet på {player} rett etter at de presenterte seg." },
-    { "type": "never_have_i_ever", "text": "snakket til meg selv i speilet mens {player} var i rommet." }
+    { "type": "never_have_i_ever", "text": "sendt en melding jeg angret på dagen etter." },
+    { "type": "never_have_i_ever", "text": "blitt kasta ut fra et utested." },
+    { "type": "never_have_i_ever", "text": "stalket en eks på sosiale medier." },
+    { "type": "never_have_i_ever", "text": "løyet om alderen min for å komme inn et sted." },
+    { "type": "never_have_i_ever", "text": "spist mat som har ligget på gulvet i mer enn 5 sekunder." }
   ]
 }
