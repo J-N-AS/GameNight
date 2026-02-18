@@ -21,6 +21,7 @@ import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
 import type { Game } from '@/lib/types';
 import { AdBanner } from '@/components/ads/AdBanner';
+import { PartyTools } from './PartyTools';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -96,7 +97,7 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
       </motion.div>
       
        {/* Player Setup */}
-      <motion.div className="mb-16 w-full max-w-md mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.2 } } }}>
+      <motion.div className="mb-8 w-full max-w-md mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.2 } } }}>
           <PlayerSetup open={isPlayerSetupOpen} onOpenChange={setIsPlayerSetupOpen} onSetupComplete={handleSetupComplete}>
              {isLoaded && players.length === 0 && (
                 <Button variant="outline" className="w-full h-12" onClick={() => setIsPlayerSetupOpen(true)}>
@@ -128,8 +129,16 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
           )}
       </motion.div>
 
+      {/* Party Tools */}
+      <motion.div
+        className="mb-16 w-full max-w-md mx-auto"
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}
+      >
+        <PartyTools />
+      </motion.div>
+
       {/* Recommended Games */}
-      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}>
+      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.4 } } }}>
           <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
             ⭐ Anbefalt Nå
           </h2>
@@ -151,7 +160,7 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
       </motion.div>
 
       {/* Moods */}
-      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.4 } } }}>
+      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
         <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
             🎉 Hva slags kveld er dette?
         </h2>
@@ -176,7 +185,7 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
       </motion.div>
       
       {/* Secret Code, Classic Games & Music Games */}
-      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
+      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
           <section className="text-center">
               <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <PartyPopper className="h-6 w-6 text-primary" /> Har du en hemmelig kode?
@@ -206,7 +215,7 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
           </section>
       </motion.div>
 
-      <motion.div className="mt-16 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.5 }}>
+      <motion.div className="mt-16 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.5 }}>
         <AdBanner />
       </motion.div>
     </motion.div>

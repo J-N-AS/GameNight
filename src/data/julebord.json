@@ -1,0 +1,25 @@
+{
+  "id": "julebord",
+  "title": "Julebordet",
+  "description": "Festlige utfordringer og spørsmål for å få julestemningen på topp. Perfekt for julebord med venner eller kolleger.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🎄",
+  "color": "hsl(0 70% 50%)",
+  "intensity": "medium",
+  "audience": "all",
+  "category": ["Sesong", "Party"],
+  "tags": ["Jul"],
+  "items": [
+    { "type": "challenge", "text": "Alle tar en slurk og sier 'God jul!'" },
+    { "type": "pointing", "text": "Hvem her er mest i julestemning?" },
+    { "type": "prompt", "text": "{player}, hva er din favoritt-julesang?" },
+    { "type": "challenge", "text": "{player}, nevn tre ting du ønsker deg til jul på 5 sekunder. Hvis ikke, drikk." },
+    { "type": "never_have_i_ever", "text": "åpnet en julegave før julaften." },
+    { "type": "pointing", "text": "Hvem her hadde spist mest julemat?" },
+    { "type": "challenge", "text": "Regel: Ingen får si ordet 'jul'. Den som bryter regelen, drikker." },
+    { "type": "prompt", "text": "{player}, hva er den verste julegaven du har fått?" },
+    { "type": "challenge", "text": "{player}, del ut 3 slurker til den personen du tror er den største nissen." }
+  ]
+}
