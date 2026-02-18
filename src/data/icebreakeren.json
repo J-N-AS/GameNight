@@ -1,0 +1,33 @@
+{
+  "id": "icebreakeren",
+  "title": "Icebreakeren",
+  "description": "Perfekt for grupper som møtes for første gang. Åpne spørsmål, morsomme dilemmaer, og null drikkepress for en trygg og inkluderende start.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🧊",
+  "color": "hsl(190 80% 60%)",
+  "intensity": "low",
+  "audience": "all",
+  "category": ["Sosialt", "Rolig"],
+  "items": [
+    { "type": "prompt", "text": "{player}, hva er en liten ting som gjør deg genuint glad?" },
+    { "type": "prompt", "text": "Hva er den beste konserten du har vært på, {player}?" },
+    { "type": "pointing", "text": "Hvem her virker som de har en spennende hobby?" },
+    { "type": "prompt", "text": "{player}, hvis du kunne hatt en middag med hvem som helst, levende eller død, hvem ville det vært?" },
+    { "type": "prompt", "text": "Hva var drømmejobben din da du var liten, {player}?" },
+    { "type": "prompt", "text": "Hvilken film eller serie kan du se om og om igjen, {player}?" },
+    { "type": "pointing", "text": "Hvem her ser ut som de gir de beste reisetipsene?" },
+    { "type": "prompt", "text": "{player}, hva er et talent du har som folk kanskje ikke vet om?" },
+    { "type": "prompt", "text": "{player}, hva er din favoritt-årstid og hvorfor?" },
+    { "type": "prompt", "text": "{player}, hva er en ting du er skikkelig dårlig på, men liker å gjøre likevel?" },
+    { "type": "pointing", "text": "Hvem her virker som de har den rareste matkombinasjonen de liker?" },
+    { "type": "prompt", "text": "{player}, hva er det beste rådet du noensinne har fått?" },
+    { "type": "prompt", "text": "Hvis du var en superhelt, {player}, hva ville din (kanskje litt ubrukelige) superkraft vært?" },
+    { "type": "prompt", "text": "Hva er en sang som alltid får deg i godt humør, {player}?" },
+    { "type": "pointing", "text": "Hvem her tror du er mest eventyrlysten?" },
+    { "type": "prompt", "text": "{player}, hva er en ting på din 'bucket list'?" },
+    { "type": "prompt", "text": "{player}, fortell om en gang du lo så hardt at du gråt." },
+    { "type": "prompt", "text": "Hva er din 'go-to' karaokesang, {player}?" }
+  ]
+}

@@ -19,7 +19,7 @@ async function loadGameData(id: string): Promise<Game | null> {
 // Hardcoded lists of game IDs.
 // This is more maintainable than reading the file system in a serverless environment.
 const allGameIds = [
-  'after-dark', 'afterparty', 'dating-fails', 'fyllevalg', 'girl-power', 'girls-vs-boys', 'gutta', 'hemmelig-bonus', 'hemmeligheter', 'jeg-har-aldri', 'julebord', 'kaosrunden', 'kjapp-party-runde', 'party-klassikere', 'pekefest', 'pest-eller-kolera', 'rolig-sosial', 'rt-2025-dummy', 'sannhet-eller-shot', 'sexy-action', 'sexy-dares', 'sexy-vibes', 'singles-body', 'singles-night', 'spinn-flasken', 'spinn-flasken-action', 'spinn-flasken-sannhet', 'snusboksen', 'snusboksen-utfordring', 'snusboksen-sannhet', 'vorspiel-mix'
+  'after-dark', 'afterparty', 'bursdags-roast', 'dating-fails', 'fyllevalg', 'girl-power', 'girls-vs-boys', 'gutta', 'hemmelig-bonus', 'hemmeligheter', 'hyttekos-afterski', 'icebreakeren', 'jeg-har-aldri', 'julebord', 'kaosrunden', 'kjapp-party-runde', 'party-klassikere', 'pekefest', 'pest-eller-kolera', 'rolig-sosial', 'rt-2025-dummy', 'sannhet-eller-shot', 'sexy-action', 'sexy-dares', 'sexy-vibes', 'singles-body', 'singles-night', 'spinn-flasken', 'spinn-flasken-action', 'spinn-flasken-sannhet', 'snusboksen', 'snusboksen-utfordring', 'snusboksen-sannhet', 'vorspiel-mix'
 ];
 
 

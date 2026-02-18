@@ -58,7 +58,7 @@
       "emoji": "💘",
       "content": [
         "Enten du er på en singelfest, en middag med nye bekjentskaper, eller bare vil sette en flørtende tone for kvelden, er de riktige spillene den perfekte isbryteren. Glem klein stillhet og anstrengte samtaler – her handler det om å skape en leken og avslappet atmosfære der kjemien kan blomstre.",
-        "Denne samlingen er spesielt kuratert for anledninger der det er litt spenning i luften. Her finner du spill som utfordrer på en leken måte, stiller spørsmål som avdekker personlighet, og skaper situasjoner som garantert fører til latter og gode samtaler. Fra dristige utfordringer i 'Sannhet eller Shot' til spill som utforsker kroppsspråk og flørt – disse er designet for å teste kjemien.",
+        "Denne samlingen er spesielt kuratert for anledninger der det er litt spenning i luften. Her finner du spill som utfordrer på en leken måte, stiller spørsmål som avdekker personlighet, og skaper situasjoner som garantert fører til latter og gode samtaler. Fra dristige utfordringer til spill som utforsker kroppsspråk og flørt – disse er designet for å teste kjemien.",
         "Så, enten målet er å bli bedre kjent, skape litt romantisk spenning, eller bare ha en utrolig morsom kveld, er disse spillene den perfekte katalysatoren."
       ],
       "gameIds": [
@@ -97,7 +97,7 @@
       ],
       "gameIds": [
         "sannhet-eller-shot",
-        "sexy-vibes",
+        "sexy-dares",
         "hemmeligheter",
         "after-dark"
       ]
@@ -113,9 +113,9 @@
         "Gjør bursdagsfesten til en snakkis med disse morsomme og engasjerende spillene. La oss sørge for at denne feiringen blir den beste hittil!"
       ],
       "gameIds": [
+        "bursdags-roast",
         "party-klassikere",
         "pekefest-klassisk",
-        "fyllevalg",
         "kjapp-party-runde"
       ]
     },
@@ -147,8 +147,8 @@
         "Bruk disse isbryterne for å forvandle en gruppe fremmede til en sammensveiset gjeng på rekordtid. La oss gjøre det første møtet til en positiv og minneverdig opplevelse."
       ],
       "gameIds": [
+        "icebreakeren",
         "rolig-sosial",
-        "jeg-har-aldri-klassisk",
         "pekefest-klassisk",
         "pest-eller-kolera"
       ]
@@ -164,10 +164,10 @@
         "Så neste gang dere er samlet på hytta, legg bort mobilene, finn frem et av disse spillene, og gjør dere klare for en kveld med ekte, analog moro og minner som varer."
       ],
       "gameIds": [
+        "hyttekos-afterski",
         "pest-eller-kolera",
         "rolig-sosial",
-        "party-klassikere",
-        "hemmeligheter"
+        "party-klassikere"
       ]
     }
   ]

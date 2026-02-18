@@ -1,0 +1,33 @@
+{
+  "id": "bursdags-roast",
+  "title": "Bursdags-Roast",
+  "description": "Et spill der bursdagsbarnet står i sentrum! Del morsomme minner, flaue historier og gi en vennskapelig 'roast'.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🎂",
+  "color": "hsl(50 95% 60%)",
+  "intensity": "medium",
+  "audience": "all",
+  "category": ["Party"],
+  "items": [
+    { "type": "challenge", "text": "Alle skåler for bursdagsbarnet! Ta en slurk." },
+    { "type": "prompt", "text": "{player}, hva er ditt favorittminne med bursdagsbarnet?" },
+    { "type": "pointing", "text": "Hvem her har kjent bursdagsbarnet lengst (utenom familie)?" },
+    { "type": "challenge", "text": "Bursdagsbarnet deler ut 5 slurker slik de selv ønsker." },
+    { "type": "prompt", "text": "{player}, beskriv bursdagsbarnet med tre ord." },
+    { "type": "pointing", "text": "Hvem her er mest lik bursdagsbarnet?" },
+    { "type": "challenge", "text": "Alle må fortelle en (snill) flau historie om bursdagsbarnet. Den beste historien (bestemt av {player}) får dele ut 3 slurker." },
+    { "type": "prompt", "text": "{player}, hva er den beste egenskapen til bursdagsbarnet?" },
+    { "type": "pointing", "text": "Hvem her er bursdagsbarnets 'partner in crime'?" },
+    { "type": "challenge", "text": "Bursdagsbarnet må ta en slurk for hvert år de fyller (nei da, bare tuller... ta 3)." },
+    { "type": "prompt", "text": "{player}, hva er det dummeste rådet bursdagsbarnet noensinne har gitt deg?" },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å holde den flaueste talen for bursdagsbarnet?" },
+    { "type": "challenge", "text": "Alle som har reist på tur med bursdagsbarnet, tar en slurk." },
+    { "type": "prompt", "text": "{player}, hvis bursdagsbarnet var et dyr, hvilket dyr ville de vært og hvorfor?" },
+    { "type": "challenge", "text": "Bursdagsbarnet får velge en sang som alle må synge refrenget på." },
+    { "type": "pointing", "text": "Hvem her kjenner den mest irriterende vanen til bursdagsbarnet?" },
+    { "type": "prompt", "text": "{player}, hva er én ting du håper bursdagsbarnet oppnår i året som kommer?" },
+    { "type": "challenge", "text": "Alle tar en siste, stor skål for den fantastiske jubilanten!" }
+  ]
+}
