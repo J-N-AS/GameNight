@@ -58,24 +58,47 @@
   body {
     @apply bg-background text-foreground;
   }
+  .animated-background {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)),
+      hsl(var(--primary) / 0.1),
+      hsl(var(--background))
+    );
+    background-size: 200% 200%;
+    animation: gradient-animation 15s ease infinite;
+  }
 }
 
 @layer components {
   .player-highlight {
     @apply text-primary font-semibold;
-    text-shadow: 0 0 8px hsl(var(--primary) / 0.7);
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.8);
     animation: player-glow 1.5s ease-in-out;
   }
   .player-highlight-2 {
     @apply text-accent font-semibold;
-    text-shadow: 0 0 8px hsl(var(--accent) / 0.7);
+    text-shadow: 0 0 10px hsl(var(--accent) / 0.8);
     animation: player-glow-2 1.5s ease-in-out;
   }
 }
 
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 @keyframes player-glow {
-  0%, 100% {
-    text-shadow: 0 0 8px hsl(var(--primary) / 0.3);
+  0%,
+  100% {
+    text-shadow: 0 0 8px hsl(var(--primary) / 0.4);
   }
   50% {
     text-shadow: 0 0 16px hsl(var(--primary) / 0.9);
@@ -83,8 +106,9 @@
 }
 
 @keyframes player-glow-2 {
-  0%, 100% {
-    text-shadow: 0 0 8px hsl(var(--accent) / 0.3);
+  0%,
+  100% {
+    text-shadow: 0 0 8px hsl(var(--accent) / 0.4);
   }
   50% {
     text-shadow: 0 0 16px hsl(var(--accent) / 0.9);

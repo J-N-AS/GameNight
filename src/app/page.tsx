@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { PartyPopper } from 'lucide-react';
+import { Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
@@ -20,23 +20,21 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 flex flex-col items-center justify-center min-h-screen text-center">
-      <div className="absolute top-2.5 right-2.5 z-10">
+      <div className="absolute top-4 right-4 z-10">
         <GameMenu context="lobby" />
       </div>
 
       <header className="mb-12 animate-in fade-in-50 duration-1000">
-        <h1 className="font-bold font-headline">
-          <Image
-            src="/GameNight-logo-small.webp"
-            alt="GameNight"
-            width={400}
-            height={100}
-            priority
-            className="w-auto h-auto mx-auto max-w-[300px] md:max-w-[400px]"
-          />
-        </h1>
-        <p className="text-muted-foreground mt-4 text-lg">
-          Gratis partyspill, rett i nettleseren.
+        <Image
+          src="/GameNight-logo-small.webp"
+          alt="GameNight Logo"
+          width={400}
+          height={100}
+          priority
+          className="w-auto h-auto mx-auto max-w-[300px] md:max-w-[400px] drop-shadow-[0_5px_15px_rgba(0,0,0,0.2)]"
+        />
+        <p className="text-muted-foreground mt-4 text-lg md:text-xl">
+          Start festen med et spill!
         </p>
       </header>
 
@@ -48,23 +46,22 @@ export default function Home() {
         >
           <Button
             size="lg"
-            className="h-14 text-xl px-10 transform transition-transform duration-200 active:scale-95"
+            className="h-16 text-xl px-10 transform transition-transform duration-200 active:scale-95 hover:scale-105 hover:shadow-primary/40 shadow-lg"
             onClick={() => setIsPlayerSetupOpen(true)}
           >
-            <PartyPopper className="mr-3 h-6 w-6" />
+            <Rocket className="mr-3 h-6 w-6 animate-pulse" />
             Start en runde
           </Button>
         </PlayerSetup>
 
         <Button variant="link" asChild>
-          <Link href="/spill/velg">Eller bla i spill</Link>
+          <Link href="/spill/velg">Eller se alle spillene</Link>
         </Button>
       </div>
 
-       {/* Ad banner placeholder */}
-       <footer className="absolute bottom-0 left-0 right-0 flex items-center justify-center h-16 border-t border-border/50">
-          <p className="text-sm text-muted-foreground">Annonse</p>
-       </footer>
+      <footer className="absolute bottom-0 left-0 right-0 flex items-center justify-center h-16">
+        <p className="text-sm text-muted-foreground/50">Laget med ❤️ for festen</p>
+      </footer>
     </div>
   );
 }

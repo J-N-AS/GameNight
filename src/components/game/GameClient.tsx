@@ -4,7 +4,7 @@ import type { Game, GameTask } from '@/lib/games';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TaskCard } from './TaskCard';
 import { Button } from '@/components/ui/button';
-import { Repeat, Home } from 'lucide-react';
+import { Repeat, Home, PartyPopper } from 'lucide-react';
 import Link from 'next/link';
 import { usePlayers } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
@@ -84,13 +84,12 @@ export function GameClient({ game }: { game: Game }) {
           description: `Dette spillet krever spillere. Legg til noen for å starte.`,
           variant: 'destructive',
         });
-        router.push('/spill/velg');
+        router.push('/');
         return;
       }
       setupGame();
     }
   }, [game, isLoaded, players.length, game.requiresPlayers, router, toast, setupGame]);
-
 
   const handleNextTask = () => {
     setDirection(1);
@@ -128,38 +127,31 @@ export function GameClient({ game }: { game: Game }) {
   }, [currentTask, players, isLoaded]);
 
   const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 50 : -50,
+    enter: {
+      x: 30,
       opacity: 0,
-    }),
+    },
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
     },
-    exit: (direction: number) => ({
+    exit: {
       zIndex: 0,
-      x: direction < 0 ? 50 : -50,
+      x: -30,
       opacity: 0,
-    }),
+    },
   };
 
-  const showLoading = !isLoaded || !currentTask;
-
-  if (showLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Laster spill...</p>
-      </div>
-    )
-  }
+  const showLoading = !isLoaded || tasks.length === 0;
 
   if (isFinished) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen text-center p-4">
+          <PartyPopper className="h-16 w-16 text-primary mb-6" />
           <h2 className="text-4xl font-bold mb-4">Spillet er ferdig!</h2>
-          <p className="text-muted-foreground mb-8">Hva vil dere gjøre nå?</p>
-          <div className="flex gap-4">
+          <p className="text-muted-foreground mb-8">Bra spilt! Hva vil dere gjøre nå?</p>
+          <div className="flex flex-col sm:flex-row gap-4">
               <Button onClick={handleRestart} size="lg">
                   <Repeat className="mr-2 h-5 w-5" />
                   Spill igjen
@@ -176,45 +168,60 @@ export function GameClient({ game }: { game: Game }) {
   }
 
   return (
-    <div
-      className="flex flex-col min-h-screen p-4 md:p-8 overflow-hidden"
-      onClick={handleNextTask}
-    >
+    <div className="flex flex-col min-h-screen p-4 md:p-8 justify-center items-center">
       <div className="absolute top-4 left-4 z-10">
          <Button variant="ghost" size="sm" asChild>
-            <Link href="/" onClick={(e) => e.stopPropagation()}>
+            <Link href="/">
                 <Home className="mr-2 h-4 w-4" />
                 Lobby
             </Link>
          </Button>
       </div>
 
-      <div className="absolute top-2.5 right-2.5 z-10" onClick={(e) => e.stopPropagation()}>
+      <div className="absolute top-4 right-4 z-10">
           <GameMenu context="in-game" onRestart={handleRestart} />
       </div>
 
-      <div className="flex-grow flex items-center justify-center cursor-pointer">
-        <AnimatePresence initial={false} custom={direction} mode="wait">
-          <motion.div
-            key={currentIndex}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 },
-            }}
-            className="w-full"
-          >
-            {currentTask && <TaskCard type={currentTask.type} content={processedContent} />}
-          </motion.div>
-        </AnimatePresence>
+      {/* Game Stage */}
+      <div className="w-full max-w-3xl flex-grow flex flex-col justify-center text-center">
+        <div className="relative flex-grow flex items-center justify-center">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+                <motion.div
+                    key={currentIndex}
+                    custom={direction}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{
+                        x: { type: "spring", stiffness: 300, damping: 30 },
+                        opacity: { duration: 0.2 },
+                    }}
+                    className="w-full"
+                >
+                    {showLoading ? (
+                        <p>Laster spill...</p>
+                    ) : (
+                        currentTask && <TaskCard type={currentTask.type} content={processedContent} />
+                    )}
+                </motion.div>
+            </AnimatePresence>
+        </div>
+
+        {!showLoading && (
+             <div className="mt-8 mb-4 animate-in fade-in duration-500">
+                <Button 
+                    onClick={handleNextTask} 
+                    size="lg" 
+                    className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform active:scale-95">
+                    Neste
+                </Button>
+             </div>
+        )}
       </div>
 
-      <div className="text-center text-muted-foreground mt-4">
-        {`Trykk hvor som helst for neste kort (${currentIndex + 1} / ${tasks.length})`}
+      <div className="text-center text-muted-foreground/60 text-sm h-6">
+        {tasks.length > 0 && `${currentIndex + 1} / ${tasks.length}`}
       </div>
     </div>
   );

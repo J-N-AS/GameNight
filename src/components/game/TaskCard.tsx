@@ -1,29 +1,33 @@
 import type { GameTask } from '@/lib/games';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Beer, Hand, MessageSquareQuote } from 'lucide-react';
+import { Beer, Hand, MessageSquareQuote, Flame, HelpCircle } from 'lucide-react';
 import React from 'react';
 
 const taskTypeDetails = {
   challenge: {
     title: 'Utfordring',
-    icon: Beer,
+    icon: Flame,
     color: 'text-primary',
+    emoji: '🔥'
   },
   never_have_i_ever: {
     title: 'Jeg har aldri...',
     icon: MessageSquareQuote,
     color: 'text-accent',
+    emoji: '🤫'
   },
   prompt: {
     title: 'Spørsmål',
-    icon: MessageSquareQuote,
+    icon: HelpCircle,
     color: 'text-prompt',
+    emoji: '🤔'
   },
   pointing: {
-    title: 'Pekefest',
+    title: 'Pekelek',
     icon: Hand,
-    color: 'text-prompt',
+    color: 'text-yellow-400',
+    emoji: '👉'
   },
 };
 
@@ -33,24 +37,23 @@ type TaskCardProps = {
 }
 
 export function TaskCard({ type, content }: TaskCardProps) {
-  const details = taskTypeDetails[type];
-  const Icon = details.icon;
-
+  const details = taskTypeDetails[type] || taskTypeDetails.prompt;
+  
   return (
-    <Card className="w-full max-w-2xl border-0 bg-transparent shadow-none text-center">
+    <Card className="w-full max-w-3xl border-0 bg-transparent shadow-none text-center">
       <CardHeader>
         <CardTitle
           className={cn(
-            'flex items-center justify-center gap-3 text-2xl md:text-3xl font-semibold tracking-wide uppercase',
+            'flex items-center justify-center gap-3 text-xl md:text-2xl font-semibold tracking-wide uppercase',
             details.color
           )}
         >
-          <Icon className="h-8 w-8" />
+          <span className="text-3xl">{details.emoji}</span>
           {details.title}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-3xl md:text-5xl font-bold leading-tight md:leading-tight">
+        <p className="text-3xl md:text-5xl font-bold leading-tight md:leading-tight px-4">
           {content}
         </p>
       </CardContent>

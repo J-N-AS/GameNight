@@ -7,23 +7,15 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowRight, PartyPopper } from 'lucide-react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
 import { useState } from 'react';
 import { usePlayers } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
 import { PlayerSetup } from './PlayerSetup';
 import { useToast } from '@/hooks/use-toast';
+import { motion } from 'framer-motion';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -57,8 +49,6 @@ export function GameSelector({ games }: GameSelectorProps) {
     }
   };
 
-  const featuredGames = games;
-
   return (
     <>
       <PlayerSetup
@@ -66,65 +56,51 @@ export function GameSelector({ games }: GameSelectorProps) {
         onOpenChange={setIsPlayerSetupOpen}
         onSetupComplete={handleSetupComplete}
       />
-      <section className="mb-16">
-        <h2 className="text-3xl font-bold text-center mb-8 font-headline">Anbefalte spill</h2>
-        <Carousel
-          opts={{
-            align: 'start',
-            loop: true,
-          }}
-          className="w-full max-w-4xl mx-auto"
-        >
-          <CarouselContent>
-            {featuredGames.map((game) => (
-              <CarouselItem key={game.id} className="md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <Link
-                    href={`/spill/${game.id}`}
-                    onClick={(e) => handleGameSelect(e, game)}
-                    className="group"
-                  >
-                    <Card className="h-full flex flex-col transition-all duration-300 group-hover:border-primary group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-primary/20">
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                          <PartyPopper className="w-5 h-5 text-primary" />
-                          {game.title}
-                        </CardTitle>
-                        <CardDescription className="text-sm">{game.description}</CardDescription>
-                      </CardHeader>
-                      <CardFooter className="mt-auto bg-muted/20 px-6 py-3">
-                        <div className="text-sm font-semibold text-primary w-full flex justify-between items-center">
-                          Start spillet
-                          <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  </Link>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="hidden sm:flex" />
-          <CarouselNext className="hidden sm:flex" />
-        </Carousel>
-      </section>
+      <div className="w-full max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {games.filter(g => g.id).map((game, index) => (
+            <motion.div
+              key={game.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+            >
+              <Link
+                href={`/spill/${game.id}`}
+                onClick={(e) => handleGameSelect(e, game)}
+                className="group block h-full"
+                style={{ '--accent-color': game.color } as React.CSSProperties}
+              >
+                <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary/50 hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
+                  <CardHeader className="flex-row items-start gap-4">
+                    <div className="text-4xl mt-1">{game.emoji}</div>
+                    <div>
+                      <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
+                        {game.title}
+                      </CardTitle>
+                      <CardDescription className="mt-1">{game.description}</CardDescription>
+                    </div>
+                  </CardHeader>
+                </Card>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
 
-      <section>
-        <h2 className="text-3xl font-bold text-center mb-8 font-headline">Har du en kode?</h2>
-        <form className="max-w-sm mx-auto flex gap-2">
-          <Input
-            type="text"
-            placeholder="Skriv inn kode..."
-            className="text-center tracking-widest uppercase"
-          />
-          <Button type="submit" variant="default">
-            Bli med
-          </Button>
-        </form>
-        <p className="text-center text-sm text-muted-foreground mt-4">
-          For russegrupper og egne spill.
-        </p>
-      </section>
+        <section className="mt-20 text-center">
+            <h2 className="text-2xl font-bold text-center mb-4 font-headline">Har du en hemmelig kode?</h2>
+            <form className="max-w-sm mx-auto flex gap-2">
+            <Input
+                type="text"
+                placeholder="🤫 Skriv inn koden..."
+                className="text-center tracking-widest uppercase bg-card/80 backdrop-blur-sm h-12 text-base"
+            />
+            <Button type="submit" variant="secondary" size="lg" className="h-12">
+                Bli med
+            </Button>
+            </form>
+        </section>
+      </div>
     </>
   );
 }

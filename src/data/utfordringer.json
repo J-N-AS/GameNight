@@ -1,15 +1,9 @@
 {
-  "id": "party-klassikere",
-  "title": "Party Klassikere",
-  "description": "Gode gamle klassikere som alltid funker.",
+  "id": "utfordringer-deprecated",
+  "title": "Utfordringer",
+  "description": "Dette spillet er utdatert.",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": true,
-  "items": [
-    { "type": "challenge", "text": "Waterfall! {player} starter." },
-    { "type": "challenge", "text": "Kategorier! Tema: bilmerker. {player} starter. Taperen drikker." },
-    { "type": "prompt", "text": "Ny regel: Ingen får si ordet 'drikke'. Den som bryter regelen må drikke." },
-    { "type": "challenge", "text": "{all} må ta en slurk fra drikken til personen til venstre." },
-    { "type": "pointing", "text": "Hvem i rommet kjenner du dårligst? Bli bedre kjent!" }
-  ]
+  "items": []
 }

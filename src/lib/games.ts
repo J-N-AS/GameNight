@@ -15,6 +15,8 @@ export interface Game {
   items: GameTask[];
   shuffle?: boolean;
   requiresPlayers?: boolean;
+  emoji?: string;
+  color?: string;
 }
 
 const gamesDirectory = path.join(process.cwd(), 'src/data');
@@ -29,15 +31,21 @@ export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shu
           const filePath = path.join(gamesDirectory, filename);
           const fileContents = await fs.readFile(filePath, 'utf8');
           const gameData: Game = JSON.parse(fileContents);
+          // Don't include games with no items or that are deprecated
+          if (!gameData.items || gameData.items.length === 0) {
+            return null;
+          }
           return {
             id: gameData.id,
             title: gameData.title,
             description: gameData.description,
             requiresPlayers: gameData.requiresPlayers,
+            emoji: gameData.emoji,
+            color: gameData.color,
           };
         })
     );
-    return games;
+    return games.filter(Boolean) as Omit<Game, 'items' | 'language' | 'shuffle'>[];
   } catch (error) {
     console.error("Failed to read games directory:", error);
     return [];
@@ -45,25 +53,32 @@ export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shu
 }
 
 export async function getGame(id: string): Promise<Game> {
-  const filePath = path.join(gamesDirectory, `${id}.json`);
+  const filenames = await fs.readdir(gamesDirectory);
+  const foundFile = filenames.find(name => name.endsWith('.json'));
+
+  // First, try to find a file that is named {id}.json
+  let filePath = path.join(gamesDirectory, `${id}.json`);
   try {
     const fileContents = await fs.readFile(filePath, 'utf8');
     const gameData: Game = JSON.parse(fileContents);
-    return gameData;
+    if (gameData.id === id) {
+      return gameData;
+    }
   } catch (error) {
-    console.error(`Failed to read game file for id: ${id}`, error);
-    // Attempt to find a game where the id inside the json matches, even if filename is different.
-    const filenames = await fs.readdir(gamesDirectory);
+    // If {id}.json not found or id mismatch, search all files
     for (const filename of filenames) {
         if (filename.endsWith('.json')) {
-            const filePath = path.join(gamesDirectory, filename);
-            const fileContents = await fs.readFile(filePath, 'utf8');
+            const loopFilePath = path.join(gamesDirectory, filename);
+            const fileContents = await fs.readFile(loopFilePath, 'utf8');
             const gameData: Game = JSON.parse(fileContents);
             if (gameData.id === id) {
                 return gameData;
             }
         }
     }
+    // If no game is found after checking all files, throw a notFound error
     notFound();
   }
+  // This part should be unreachable, but just in case
+  notFound();
 }

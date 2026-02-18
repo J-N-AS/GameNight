@@ -1,15 +1,17 @@
 {
   "id": "vorspiel-mix",
   "title": "Vorspiel Mix",
-  "description": "En god blanding for å få festen i gang.",
+  "description": "Den perfekte blandingen for å kickstarte kvelden og få alle i godt humør.",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": true,
+  "emoji": "🍻",
+  "color": "hsl(140 80% 60%)",
   "items": [
-    { "type": "challenge", "text": "{player}, velg en annen spiller som skal ta en shot." },
-    { "type": "prompt", "text": "Hva er det flaueste som har skjedd deg på fest?" },
-    { "type": "pointing", "text": "Hvem er mest sannsynlig til å blacke ut i kveld?" },
-    { "type": "challenge", "text": "{player} og {player2}, dere er drikkebuddies for resten av runden. Hver gang en av dere drikker, må den andre også drikke." },
-    { "type": "prompt", "text": "Fortell om din verste fylleangst-historie." }
+    { "type": "challenge", "text": "{player}, velg en drikkepartner for de neste 3 rundene. Hver gang en av dere drikker, drikker den andre også." },
+    { "type": "prompt", "text": "Hva er det flaueste kallenavnet du noensinne har hatt?" },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å foreslå nachspiel kl. 02?" },
+    { "type": "challenge", "text": "{player}, du får 10 sekunder til å nevne 5 ting man kan finne i et kjøleskap. Hvis du feiler, drikk." },
+    { "type": "prompt", "text": "Fortell om en gang du prøvde å imponere noen, men feilet totalt." }
   ]
 }

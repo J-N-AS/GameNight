@@ -1,15 +1,17 @@
 {
   "id": "rolig-sosial",
   "title": "Rolig & Sosialt",
-  "description": "Dype og morsomme spørsmål for å bli bedre kjent.",
+  "description": "Spørsmål for å bli bedre kjent, eller bare for å starte en god samtale.",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": false,
+  "emoji": "🤔",
+  "color": "hsl(180 80% 50%)",
   "items": [
-    { "type": "prompt", "text": "Hvis du kunne hatt én superkraft, hvilken ville det vært og hvorfor?" },
-    { "type": "prompt", "text": "Hva er den rareste matkombinasjonen du elsker?" },
-    { "type": "prompt", "text": "Hvis du kunne spist middag med tre personer, døde eller levende, hvem ville du valgt?" },
-    { "type": "prompt", "text": "Hvilken film eller bok skulle du ønske du kunne oppleve for første gang igjen?" },
-    { "type": "prompt", "text": "Hva er det beste rådet du noensinne har fått?" }
+    { "type": "prompt", "text": "Hvis du kunne hatt en middag med tre fiktive karakterer, hvem ville du valgt?" },
+    { "type": "prompt", "text": "Hva er en liten ting som gjør deg genuint glad?" },
+    { "type": "prompt", "text": "Hvilken ferdighet skulle du ønske du kunne mestre over natten?" },
+    { "type": "prompt", "text": "Hva er den beste konserten du noensinne har vært på?" },
+    { "type": "prompt", "text": "Hvis du måtte holde et foredrag om et valgfritt tema i 10 minutter uten forberedelse, hva ville du snakket om?" }
   ]
 }

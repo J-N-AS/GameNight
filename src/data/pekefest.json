@@ -1,15 +1,17 @@
 {
   "id": "pekefest-klassisk",
   "title": "Pekefest",
-  "description": "Pek på den personen som passer best til beskrivelsen.",
+  "description": "Enkle spørsmål, brutalt ærlige svar. Pek på den det gjelder!",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": false,
+  "emoji": "👉",
+  "color": "hsl(260 90% 65%)",
   "items": [
-    { "type": "pointing", "text": "Hvem er mest sannsynlig til å sovne på festen?" },
-    { "type": "pointing", "text": "Hvem bruker mest penger på unødvendige ting?" },
-    { "type": "pointing", "text": "Hvem er mest avhengig av telefonen sin?" },
-    { "type": "pointing", "text": "Hvem hadde overlevd lengst på en øde øy?" },
-    { "type": "pointing", "text": "Hvem har dårligst musikksmak?" }
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å le på upassende tidspunkt?" },
+    { "type": "pointing", "text": "Hvem bruker mest penger på mat?" },
+    { "type": "pointing", "text": "Hvem er mest avhengig av kaffe?" },
+    { "type": "pointing", "text": "Hvem hadde vært den dårligste hemmelige agenten?" },
+    { "type": "pointing", "text": "Hvem har best musikksmak?" }
   ]
 }

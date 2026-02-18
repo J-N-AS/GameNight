@@ -1,14 +1,16 @@
 {
   "id": "kjapp-party-runde",
   "title": "Kjapp Party-runde",
-  "description": "Raske runder for å få stemningen opp.",
+  "description": "Raske og enkle oppgaver for å få opp energinivået i rommet.",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": true,
+  "emoji": "⚡",
+  "color": "hsl(45 93% 47%)",
   "items": [
-    { "type": "challenge", "text": "{player}, ta 2 slurker." },
-    { "type": "prompt", "text": "Alle må si sitt beste sjekketriks. Dårligst triks (bestemt av flertallet) må drikke." },
-    { "type": "challenge", "text": "{player} og {player2} tar en stein-saks-papir. Taperen drikker 3 slurker." },
-    { "type": "challenge", "text": "Alle som har bursdag i samme måned som {player} må drikke." }
+    { "type": "challenge", "text": "{player}, du er nå slangetemmer. Hver gang du sier ordet 'slange', må alle drikke." },
+    { "type": "prompt", "text": "Alle må si sitt favoritt-dansemove. {player} bestemmer hvem som har det dårligste, som må drikke." },
+    { "type": "challenge", "text": "{player}, ta 2 slurker for fremtiden og 2 for fortiden." },
+    { "type": "challenge", "text": "Tommel-mester! {player} kan når som helst sette tommelen på bordet. Sistemann som gjør det samme må drikke." }
   ]
 }

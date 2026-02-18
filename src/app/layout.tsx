@@ -23,7 +23,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased bg-background text-foreground">
+      <body className="font-body antialiased bg-background text-foreground animated-background">
         <div className="relative flex min-h-screen flex-col">
           <main className="flex-1">{children}</main>
         </div>

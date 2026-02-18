@@ -1,15 +1,18 @@
 {
   "id": "jeg-har-aldri-klassisk",
-  "title": "Jeg har aldri – Klassisk",
-  "description": "Drikk hvis du har gjort det. Ingen navn, bare ærlighet.",
+  "title": "Jeg har aldri",
+  "description": "En runde med klassikeren. Drikk hvis du har gjort det, ingen spørsmål stilt.",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": false,
+  "emoji": "🤫",
+  "color": "hsl(var(--accent))",
   "items": [
-    { "type": "never_have_i_ever", "text": "sendt en melding jeg angret på dagen etter." },
-    { "type": "never_have_i_ever", "text": "blitt kasta ut fra et utested." },
+    { "type": "never_have_i_ever", "text": "sendt en melding til feil person." },
+    { "type": "never_have_i_ever", "text": "løyet om at jeg har sett en film alle snakker om." },
     { "type": "never_have_i_ever", "text": "stalket en eks på sosiale medier." },
-    { "type": "never_have_i_ever", "text": "løyet om alderen min for å komme inn et sted." },
-    { "type": "never_have_i_ever", "text": "spist mat som har ligget på gulvet i mer enn 5 sekunder." }
+    { "type": "never_have_i_ever", "text": "sneket meg inn på en fest." },
+    { "type": "never_have_i_ever", "text": "grått på grunn av en film." },
+    { "type": "never_have_i_ever", "text": "prøvd å klippe mitt eget hår." }
   ]
 }

@@ -1,15 +1,17 @@
 {
   "id": "party-klassikere",
   "title": "Party Klassikere",
-  "description": "Gode gamle klassikere som alltid funker.",
+  "description": "En samling av de beste selskapslekene som aldri slår feil. Garantert stemning!",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": true,
+  "emoji": "🎉",
+  "color": "hsl(var(--primary))",
   "items": [
-    { "type": "challenge", "text": "Waterfall! {player} starter." },
-    { "type": "challenge", "text": "Kategorier! Tema: bilmerker. {player} starter. Taperen drikker." },
-    { "type": "prompt", "text": "Ny regel: Ingen får si ordet 'drikke'. Den som bryter regelen må drikke." },
+    { "type": "challenge", "text": "Waterfall! {player} starter, og rekkefølgen går mot klokka." },
+    { "type": "challenge", "text": "Kategorier! Tema: Frukt. {player} starter. Førstemann som ikke kommer på en frukt, drikker." },
+    { "type": "prompt", "text": "Ny regel: Ingen har lov til å si navnet til noen. Den som bryter regelen, må drikke." },
     { "type": "challenge", "text": "{all} må ta en slurk fra drikken til personen til venstre." },
-    { "type": "pointing", "text": "Hvem i rommet kjenner du dårligst? Bli bedre kjent!" }
+    { "type": "pointing", "text": "Hvem i rommet er mest sannsynlig til å vinne i Lotto, men miste kupongen?" }
   ]
 }
