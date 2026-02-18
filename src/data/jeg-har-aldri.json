@@ -1,0 +1,16 @@
+{
+  "id": "jeg-har-aldri",
+  "title": "Jeg har aldri",
+  "description": "En klassiker. Drikk hvis du har gjort det som står på skjermen.",
+  "language": "no",
+  "items": [
+    { "type": "never_have_i_ever", "text": "sendt en melding jeg angret på dagen etter." },
+    { "type": "never_have_i_ever", "text": "skulket skole eller jobb." },
+    { "type": "never_have_i_ever", "text": "løyet om alderen min." },
+    { "type": "never_have_i_ever", "text": "blitt kasta ut fra et utested." },
+    { "type": "never_have_i_ever", "text": "spist mat som har falt på gulvet." },
+    { "type": "never_have_i_ever", "text": "stalket en eks på sosiale medier." },
+    { "type": "never_have_i_ever", "text": "glemt navnet på noen rett etter at de presenterte seg." },
+    { "type": "never_have_i_ever", "text": "snakket til meg selv i speilet." }
+  ]
+}
