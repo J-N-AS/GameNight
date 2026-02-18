@@ -191,11 +191,11 @@ export function GameClient({ game }: { game: Game }) {
           <div className="mb-8 text-lg">
             <p className="font-semibold text-2xl mb-4">Resultat:</p>
             <div className="flex justify-center gap-8 text-xl">
-              <p>{game.teams.team1}: <span className="font-bold text-primary">{team1Score} poeng</span></p>
-              <p>{game.teams.team2}: <span className="font-bold text-accent">{team2Score} poeng</span></p>
+              <p>{game.teams.team1}: <span className="font-bold text-accent">{team1Score} poeng</span></p>
+              <p>{game.teams.team2}: <span className="font-bold text-primary">{team2Score} poeng</span></p>
             </div>
             {winner ? (
-              <p className="mt-6 text-3xl font-bold">Vinneren er <span className={team1Score > team2Score ? "text-primary" : "text-accent"}>{winner}!</span></p>
+              <p className="mt-6 text-3xl font-bold">Vinneren er <span className={team1Score > team2Score ? "text-accent" : "text-primary"}>{winner}!</span></p>
             ) : (
               <p className="mt-6 text-3xl font-bold">Det ble uavgjort!</p>
             )}
@@ -260,8 +260,8 @@ export function GameClient({ game }: { game: Game }) {
             <div className="w-full max-w-sm mx-auto">
                {isVersusMode && game.teams && (
                  <div className="flex justify-between text-lg font-bold mb-2">
-                    <span className="text-primary">{game.teams.team1}: {team1Score}</span>
-                    <span className="text-accent">{game.teams.team2}: {team2Score}</span>
+                    <span className="text-accent">{game.teams.team1}: {team1Score}</span>
+                    <span className="text-primary">{game.teams.team2}: {team2Score}</span>
                  </div>
               )}
               <Progress value={progressValue} className="h-2" />

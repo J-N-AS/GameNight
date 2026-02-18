@@ -71,7 +71,7 @@ export function TaskCard({ type, content, onVote, teams }: TaskCardProps) {
               onClick={() => onVote('team1')}
               size="lg"
               variant="outline"
-              className="h-14 text-lg border-2 border-primary hover:bg-primary/10 hover:text-primary-foreground"
+              className="h-14 text-lg border-2 border-accent hover:bg-accent/10 hover:text-accent-foreground"
             >
               {teams.team1} vinner!
             </Button>
@@ -79,7 +79,7 @@ export function TaskCard({ type, content, onVote, teams }: TaskCardProps) {
               onClick={() => onVote('team2')}
               size="lg"
               variant="outline"
-              className="h-14 text-lg border-2 border-accent hover:bg-accent/10 hover:text-accent-foreground"
+              className="h-14 text-lg border-2 border-primary hover:bg-primary/10 hover:text-primary-foreground"
             >
               {teams.team2} vinner!
             </Button>
