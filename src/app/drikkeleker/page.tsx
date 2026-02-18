@@ -11,10 +11,13 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import type { GameArticle } from '@/lib/articles';
+import type { GameArticle } from '@/lib/types';
 import { getArticles } from '@/lib/articles';
+import Image from 'next/image';
 
-function DrikkelekerClient({ games }: { games: Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules'>[] }) {
+type Articles = Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules'>[];
+
+function DrikkelekerClient({ games }: { games: Articles }) {
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 max-w-4xl">
       <div className="mb-8">
@@ -48,6 +51,17 @@ function DrikkelekerClient({ games }: { games: Omit<GameArticle, 'whatYouNeed' |
               className="group block h-full"
             >
               <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
+                {game.imageUrl && (
+                  <div className="relative aspect-video w-full">
+                    <Image
+                      src={game.imageUrl}
+                      alt={game.title}
+                      fill
+                      className="object-cover rounded-t-lg"
+                      data-ai-hint={game.imageHint}
+                    />
+                  </div>
+                )}
                 <CardHeader>
                   <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
                     {game.title}
@@ -67,9 +81,7 @@ function DrikkelekerClient({ games }: { games: Omit<GameArticle, 'whatYouNeed' |
 
 
 export default function DrikkelekerPage() {
-  const [games, setGames] = useState<
-    Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules'>[]
-  >([]);
+  const [games, setGames] = useState<Articles>([]);
   
   const [loading, setLoading] = useState(true);
 

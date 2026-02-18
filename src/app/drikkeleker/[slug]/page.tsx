@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Dice5, Crown, HelpCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import type { GameArticle } from '@/lib/articles';
+import type { GameArticle } from '@/lib/types';
 import { getArticle } from '@/lib/articles';
+import Image from 'next/image';
 
 function DrikkelekArticleClient({ article }: { article: GameArticle }) {
   return (
@@ -27,6 +28,17 @@ function DrikkelekArticleClient({ article }: { article: GameArticle }) {
         </Button>
       </div>
       <Card className="bg-card/80 backdrop-blur-sm">
+        {article.imageUrl && (
+          <div className="relative aspect-video w-full">
+            <Image
+              src={article.imageUrl}
+              alt={article.title}
+              fill
+              className="object-cover rounded-t-lg"
+              data-ai-hint={article.imageHint}
+            />
+          </div>
+        )}
         <CardHeader>
           <CardTitle className="text-3xl font-bold">{article.title}</CardTitle>
           <p className="text-muted-foreground pt-2">{article.description}</p>

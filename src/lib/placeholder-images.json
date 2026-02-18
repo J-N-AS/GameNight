@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "ring-of-fire",
+      "description": "Friends playing a card game around a table.",
+      "imageUrl": "https://images.unsplash.com/photo-1607438802263-ada36dae55c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjYXJkJTIwZ2FtZSUyMHBhcnR5fGVufDB8fHx8MTc3MTQyMzI1NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "card game party"
+    },
+    {
+      "id": "beer-pong",
+      "description": "A beer pong table set up for a game.",
+      "imageUrl": "https://images.unsplash.com/photo-1720236177709-6048d149d426?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YmVlciUyMHBvbmclMjBnYW1lfGVufDB8fHx8MTc3MTQyMzI1NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "beer pong game"
+    },
+    {
+      "id": "flip-cup",
+      "description": "People playing flip cup at a party.",
+      "imageUrl": "https://images.unsplash.com/photo-1768850899420-fe996cd5e231?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwYXJ0eSUyMGdhbWUlMjBmcmllbmRzfGVufDB8fHx8MTc3MTQyMzI1NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "party game friends"
+    },
+    {
+      "id": "sannhet-eller-promille",
+      "description": "A group of friends talking and laughing together.",
+      "imageUrl": "https://images.unsplash.com/photo-1486704155675-e4c07f8ad160?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxmcmllbmRzJTIwdGFsa2luZ3xlbnwwfHx8fDE3NzE0MjMyNTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "friends talking"
+    },
+    {
+      "id": "strip-poker-sfw",
+      "description": "A poker game with cards and chips on a table.",
+      "imageUrl": "https://images.unsplash.com/photo-1739133710741-1468de0acf26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwb2tlciUyMGdhbWUlMjBuaWdodHxlbnwwfHx8fDE3NzE0MjMyNTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "poker game night"
+    },
+    {
+      "id": "busstur",
+      "description": "Playing cards spread out on a table.",
+      "imageUrl": "https://images.unsplash.com/photo-1622014402888-e78d0fd790d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwbGF5aW5nJTIwY2FyZHN8ZW58MHx8fHwxNzcxNDIzMjU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "playing cards"
+    },
+    {
+      "id": "pyramide",
+      "description": "A pyramid made of playing cards.",
+      "imageUrl": "https://images.unsplash.com/photo-1570054623229-2bb4f05d1560?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FyZCUyMHB5cmFtaWR8ZW58MHx8fHwxNzcxNDIzMjU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "card pyramid"
+    }
+  ]
 }

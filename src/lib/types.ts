@@ -25,4 +25,6 @@ export interface GameArticle {
   whatYouNeed: string[];
   rules: string[];
   cardRules?: { [key: string]: string };
+  imageUrl?: string;
+  imageHint?: string;
 }

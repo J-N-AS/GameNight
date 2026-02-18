@@ -45,13 +45,13 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2">
             <Button size="lg" asChild className="transform transition-transform duration-200 hover:scale-105">
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.buymeacoffee.com/gamenight" target="_blank" rel="noopener noreferrer">
                 <CreditCard className="mr-2 h-5 w-5" />
                 Doner med Kort
               </a>
             </Button>
             <Button size="lg" variant="secondary" asChild className="transform transition-transform duration-200 hover:scale-105">
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href="https://vipps.no/privat/" target="_blank" rel="noopener noreferrer">
                 <span className="mr-2 text-lg">🇳🇴</span>
                 Doner med Vipps
               </a>
