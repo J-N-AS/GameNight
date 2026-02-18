@@ -1,0 +1,82 @@
+
+[
+    {
+        "title": "Ring of Fire (også kjent som Kings Cup)",
+        "description": "Et klassisk kortspill hvor hvert kort har en unik regel. Spillet fortsetter til den siste kongen trekkes.",
+        "whatYouNeed": ["En kortstokk", "En stor kopp (King's Cup)", "Drikke til alle"],
+        "rules": [
+            "Plasser koppen i midten og spre kortstokken med bildesiden ned i en sirkel rundt den.",
+            "Spillerne bytter på å trekke ett kort. Hvert kort har en regel.",
+            "Når en konge trekkes, heller spilleren litt av sin egen drikke i 'King's Cup'.",
+            "Den som trekker den fjerde og siste kongen, må drikke hele innholdet i King's Cup. Spillet er da over."
+        ],
+        "cardRules": {
+            "Ess": "Waterfall - Alle begynner å drikke. Ingen kan stoppe før personen til høyre for dem stopper.",
+            "To": "You - Du velger en person som må drikke.",
+            "Tre": "Me - Du må drikke selv.",
+            "Fire": "Floor - Alle må ta på gulvet. Sistemann drikker.",
+            "Fem": "Thumb Master - Personen som trakk kortet blir 'Thumb Master' og kan når som helst sette tommelen på bordet. Sistemann som følger etter, må drikke.",
+            "Seks": "Chicks - Alle jenter/kvinner drikker.",
+            "Syv": "Heaven - Alle peker mot himmelen. Sistemann drikker.",
+            "Åtte": "Mate - Velg en 'mate' som må drikke hver gang du drikker (og omvendt) resten av spillet.",
+            "Ni": "Rhyme - Si et ord. Personen til venstre må si et ord som rimer. Fortsett til noen ikke finner et ord. Den personen drikker.",
+            "Ti": "Categories - Velg en kategori (f.eks. bilmerker). Fortsett rundt sirkelen til noen ikke klarer å nevne noe i kategorien. Den personen drikker.",
+            "Knekt": "Ny regel - Lag en ny regel som gjelder for resten av spillet.",
+            "Dame": "Question Master - Du blir 'Question Master'. Hvis noen svarer på et spørsmål fra deg, må de drikke. (Hint: spør 'hva sa du?').",
+            "Konge": "King's Cup - Hell litt av drikken din i koppen i midten. Den som trekker den siste kongen, drikker alt."
+        }
+    },
+    {
+        "title": "Beer Pong",
+        "description": "Et lagspill hvor målet er å kaste en bordtennisball i motstanderens kopper. Treffer du, må de drikke!",
+        "whatYouNeed": ["22 plastkopper", "Bordtennisballer", "Et langt bord", "Drikke (vanligvis øl)"],
+        "rules": [
+            "Sett opp 10 kopper i en trekantformasjon på hver sin ende av bordet.",
+            "Fyll koppene ca. 1/3 fulle med drikke.",
+            "Del inn i to lag. Hvert lag står på sin side av bordet.",
+            "Lagene bytter på å kaste en ball mot motstanderens kopper.",
+            "Hvis ballen lander i en kopp, må en fra motstanderlaget drikke innholdet og fjerne koppen.",
+            "Første lag som blir kvitt alle motstanderens kopper, vinner spillet."
+        ]
+    },
+    {
+        "title": "Flip Cup",
+        "description": "Et fartsfylt lagspill hvor stafett og drikkeferdigheter settes på prøve. Perfekt for å få opp stemningen.",
+        "whatYouNeed": ["Plastkopper (like mange som deltakere)", "Et bord", "Drikke"],
+        "rules": [
+            "Del inn i to jevnstore lag som stiller seg på hver sin side av bordet.",
+            "Hver spiller får en kopp med en liten mengde drikke.",
+            "På 'klar, ferdig, gå!', begynner den første personen på hvert lag å drikke opp innholdet i koppen sin.",
+            "Når koppen er tom, plasseres den på bordkanten med bunnen opp, og spilleren må prøve å 'flippe' den slik at den lander med åpningen ned.",
+            "Så fort en spiller klarer det, kan neste person på laget begynne.",
+            "Det første laget hvor alle har fullført, vinner."
+        ]
+    },
+    {
+        "title": "Busstur / Ride the Bus",
+        "description": "Et kortspill hvor en uheldig spiller må 'kjøre bussen' ved å gjette seg gjennom en rekke kort. Stor sjanse for mye drikking for bussjåføren.",
+        "whatYouNeed": ["En kortstokk", "Drikke"],
+        "rules": [
+            "Del ut en pyramide av kort med bildesiden ned (f.eks. 5 kort nederst, så 4, 3, 2, 1). Del ut resten av kortene til spillerne.",
+            "Første del: En runde med 'høyt eller lavt', 'rødt eller svart' etc. for å dele ut slurker og bestemme hvem som har flest kort på hånden.",
+            "Den som har flest kort, eller taper en siste utfordring, blir 'bussjåføren'.",
+            "Bussjåføren skal så snu ett og ett kort i pyramiden, fra bunnen av.",
+            "For hvert kort må sjåføren gjette om neste kort som snus er høyere eller lavere.",
+            "Gjetter man feil, må man drikke antall slurker tilsvarende raden man er på (1 slurk for nederste rad, 2 for neste osv.) og starte raden på nytt.",
+            "Målet er å komme seg gjennom hele pyramiden. Lykke til, sjåfør!"
+        ]
+    },
+    {
+        "title": "Pyramide",
+        "description": "Et spill som tester hukommelsen og evnen til å bløffe. Hvem husker hvor kortene er, og hvem må drikke?",
+        "whatYouNeed": ["En kortstokk", "Drikke"],
+        "rules": [
+            "Legg ut en pyramide av kort med bildesiden ned (f.eks. 5-4-3-2-1).",
+            "Del ut 3-4 kort til hver spiller. Alle ser på sine egne kort, men holder dem hemmelige.",
+            "Start med å snu ett og ett kort i den nederste raden av pyramiden.",
+            "For hvert kort som snus, kan spillere som har et kort med samme verdi på hånden, dele ut slurker. F.eks. hvis en 7-er snus, kan en spiller med en 7-er på hånden si 'Per, ta en slurk'.",
+            "Man kan også bløffe! Hvis du deler ut en slurk, kan den som mottar den utfordre deg ved å si 'bløff'. Hvis du har kortet, må de drikke dobbelt. Hvis du ikke har det, må du drikke dobbelt selv.",
+            "Antall slurker som deles ut øker for hver rad oppover i pyramiden. Toppkortet er ofte verdt mange slurker eller en 'shot'."
+        ]
+    }
+]
