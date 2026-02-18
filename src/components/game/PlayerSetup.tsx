@@ -35,6 +35,7 @@ export function PlayerSetup({
   const [editingPlayerId, setEditingPlayerId] = useState<string | null>(null);
   const [editingPlayerName, setEditingPlayerName] = useState('');
   const addPlayerInputRef = useRef<HTMLInputElement>(null);
+  const editPlayerInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!open) {
@@ -46,8 +47,16 @@ export function PlayerSetup({
     }
   }, [open]);
 
+  useEffect(() => {
+    if (editingPlayerId) {
+      setTimeout(() => {
+        editPlayerInputRef.current?.focus();
+      }, 100)
+    }
+  }, [editingPlayerId]);
+
   const handleAddPlayer = () => {
-    if (newPlayerName.trim()) {
+    if (newPlayerName.trim() && players.length < 20) {
       addPlayer(newPlayerName);
       setNewPlayerName('');
       addPlayerInputRef.current?.focus();
@@ -102,7 +111,7 @@ export function PlayerSetup({
         <DialogHeader>
           <DialogTitle>Hvem spiller?</DialogTitle>
           <DialogDescription>
-            Legg til spillere for å starte. Trykk på et navn for å endre det.
+            Legg til opptil 20 spillere. Trykk på et navn for å endre det.
           </DialogDescription>
         </DialogHeader>
 
@@ -113,11 +122,12 @@ export function PlayerSetup({
             onChange={e => setNewPlayerName(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Navn på spiller..."
-            disabled={!isLoaded || !!editingPlayerId}
+            disabled={!isLoaded || !!editingPlayerId || players.length >= 20}
+            maxLength={20}
           />
           <Button
             onClick={handleAddPlayer}
-            disabled={!newPlayerName.trim() || !isLoaded || !!editingPlayerId}
+            disabled={!newPlayerName.trim() || !isLoaded || !!editingPlayerId || players.length >= 20}
           >
             <UserPlus className="h-4 w-4" />
           </Button>
@@ -137,11 +147,12 @@ export function PlayerSetup({
                 {editingPlayerId === player.id ? (
                   <>
                     <Input
+                      ref={editPlayerInputRef}
                       value={editingPlayerName}
                       onChange={e => setEditingPlayerName(e.target.value)}
                       onKeyDown={handleEditKeyDown}
                       className="h-8"
-                      autoFocus
+                      maxLength={20}
                     />
                     <div className="flex">
                       <Button
@@ -165,7 +176,7 @@ export function PlayerSetup({
                 ) : (
                   <>
                     <span
-                      className="flex-1 cursor-pointer"
+                      className="flex-1 cursor-pointer truncate pr-2"
                       onClick={() => handleStartEdit(player)}
                     >
                       {player.name}

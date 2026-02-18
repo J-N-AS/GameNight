@@ -14,6 +14,8 @@ import { useToast } from '@/hooks/use-toast';
 import { AdBanner } from '../ads/AdBanner';
 import { Progress } from '@/components/ui/progress';
 import { GameConsentScreen } from './GameConsentScreen';
+import { GameModeSelectionScreen } from './GameModeSelectionScreen';
+import { GlassWater, Smartphone } from 'lucide-react';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -33,6 +35,7 @@ export function GameClient({ game }: { game: Game }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [consentGiven, setConsentGiven] = useState(false);
+  const [gameMode, setGameMode] = useState<'virtual' | 'physical' | null>(null);
 
   // Versus mode state
   const [team1Score, setTeam1Score] = useState(0);
@@ -43,7 +46,7 @@ export function GameClient({ game }: { game: Game }) {
   const [isSpinning, setIsSpinning] = useState(false);
   const [showSpinResult, setShowSpinResult] = useState(false);
 
-  const isVersusMode = game.gameType === 'versus' && !!game.teams;
+  const isVersusMode = game.gameType === 'versus';
   const isSpinTheBottleMode = game.gameType === 'spin-the-bottle';
 
   const setupGame = useCallback(() => {
@@ -124,6 +127,9 @@ export function GameClient({ game }: { game: Game }) {
     if (isLoaded) {
       if (game.warning) {
         setConsentGiven(false);
+      }
+      if (isSpinTheBottleMode) {
+        setGameMode(null); // Go back to mode selection
       }
       setupGame();
     }
@@ -216,6 +222,30 @@ export function GameClient({ game }: { game: Game }) {
     );
   }
 
+  if (isSpinTheBottleMode && !gameMode) {
+    return (
+      <GameModeSelectionScreen
+        title="Spinn Flasken"
+        description="Hvordan vil dere spille? Velg om dere bruker en ekte, fysisk flaske eller den virtuelle flasken på skjermen."
+        options={[
+          {
+            id: 'virtual',
+            icon: <Smartphone className="h-8 w-8 text-primary" />,
+            title: 'Bruk Virtuell Flaske',
+            description: 'Spill med en animert flaske på skjermen. Perfekt hvis dere ikke har en flaske tilgjengelig.',
+          },
+          {
+            id: 'physical',
+            icon: <GlassWater className="h-8 w-8 text-primary" />,
+            title: 'Bruk Ekte Flaske',
+            description: 'Bruk en fysisk flaske. Spillet vil kun vise oppgavene etter at dere har spunnet selv.',
+          }
+        ]}
+        onModeSelect={(mode) => setGameMode(mode as 'virtual' | 'physical')}
+      />
+    );
+  }
+
   if (isFinished) {
     const winner = team1Score > team2Score ? game.teams!.team1 : (team2Score > team1Score ? game.teams!.team2 : null);
 
@@ -287,7 +317,7 @@ export function GameClient({ game }: { game: Game }) {
     );
   }
 
-  if (isSpinTheBottleMode) {
+  if (isSpinTheBottleMode && gameMode === 'virtual') {
     return (
       <div className="flex flex-col min-h-screen p-4 md:p-8 overflow-hidden">
         <div className="absolute top-4 left-4 z-10">
@@ -364,6 +394,85 @@ export function GameClient({ game }: { game: Game }) {
       </div>
     );
   }
+
+  if (isSpinTheBottleMode && gameMode === 'physical') {
+    return (
+      <div className="flex flex-col min-h-screen p-4 md:p-8">
+        <div className="absolute top-4 left-4 z-10">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/">
+              <Home className="mr-2 h-4 w-4" />
+              Lobby
+            </Link>
+          </Button>
+        </div>
+
+        <div className="absolute top-4 right-4 z-10">
+          <GameMenu context="in-game" onRestart={handleRestart} />
+        </div>
+        
+        <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
+            <div className="h-20 mb-4 flex items-center justify-center">
+                {!showLoading && (
+                    <p className="text-muted-foreground text-center px-4">
+                        Spinn den ekte flasken. Den flasken peker på må gjøre oppgaven som vises.
+                    </p>
+                )}
+            </div>
+
+            <div className="relative flex-grow flex items-center justify-center overflow-hidden">
+                <AnimatePresence initial={false} mode="wait">
+                    <motion.div
+                      key={currentIndex}
+                      variants={cardVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      className="w-full"
+                    >
+                    {showLoading ? (
+                        <p>Laster spill...</p>
+                    ) : (
+                        currentTask && (
+                        <TaskCard
+                            type={currentTask.type}
+                            content={processedContent}
+                        />
+                        )
+                    )}
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+
+            {!showLoading && (
+            <motion.div
+                className="mt-8 mb-4"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+            >
+                <Button
+                  onClick={handleNextTask}
+                  size="lg"
+                  className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-primary/30"
+                >
+                  Neste Oppgave
+                </Button>
+            </motion.div>
+            )}
+        </div>
+
+        <footer className="w-full flex-shrink-0 mt-4">
+          {!showLoading && (
+            <div className="flex justify-center">
+              <AdBanner className="h-16" />
+            </div>
+          )}
+        </footer>
+      </div>
+    )
+}
 
   return (
     <div className="flex flex-col min-h-screen p-4 md:p-8" style={cssVars}>

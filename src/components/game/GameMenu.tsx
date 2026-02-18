@@ -13,6 +13,7 @@ import { MoreVertical, Users, Repeat, LogOut, Trash2 } from 'lucide-react';
 import { PlayerSetup } from './PlayerSetup';
 import { useRouter } from 'next/navigation';
 import { usePlayers } from '@/hooks/usePlayers';
+import { useToast } from '@/hooks/use-toast';
 
 interface GameMenuProps {
   context: 'lobby' | 'in-game';
@@ -23,6 +24,7 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
   const router = useRouter();
   const { players, removeAllPlayers } = usePlayers();
+  const { toast } = useToast();
 
   const handleLeaveGame = () => {
     router.push('/');
@@ -35,6 +37,10 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
 
   const handleRemoveAllPlayers = () => {
     removeAllPlayers();
+    toast({
+        title: 'Alle spillere fjernet',
+        description: 'Spillerlisten er nå tom.'
+    })
   };
 
   const showDestructiveSeparator = context === 'in-game' || players.length > 0;
@@ -62,7 +68,7 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
             <Users className="mr-2 h-4 w-4" />
             <span>Endre spillere</span>
           </DropdownMenuItem>
-          {context === 'in-game' && (
+          {context === 'in-game' && onRestart && (
             <DropdownMenuItem onSelect={onRestart}>
               <Repeat className="mr-2 h-4 w-4" />
               <span>Spill igjen</span>
