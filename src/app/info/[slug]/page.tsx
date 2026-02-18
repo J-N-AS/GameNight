@@ -4,36 +4,56 @@ import { notFound, useParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, CreditCard, Mail } from 'lucide-react';
+import { ArrowLeft, CreditCard, Mail, Gamepad2, Library, Music } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AdBanner } from '@/components/ads/AdBanner';
 
 const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
   'om-oss': {
-    title: 'Vårt Løfte: Gratis Fest, For Alltid',
+    title: 'Vårt Mål: Mer Moro, Mindre Styr',
     content: (
       <div className="space-y-8 text-muted-foreground">
-        <div className="space-y-2 text-lg">
+        <div className="space-y-4 text-lg">
           <p>
-            GameNight ble startet som en reaksjon på en frustrerende trend: At de beste
-            partyspillene låses bak dyre abonnementer.
+            GameNight ble startet med én enkel idé: Å gjøre det lettere å ha det gøy sammen. Vi ønsker å være din digitale verktøykasse for enhver festlig anledning, enten det er vorspiel, parkheng eller en rolig kveld med venner.
           </p>
           <p className="font-semibold text-foreground">
-            Vi mener at det å ha det gøy med venner ikke skal koste skjorta.
-          </p>
-          <p>
-            Vårt mål er enkelt: Å tilby de beste drikke- og partyspillene helt gratis, rett i
-            nettleseren din. Ingen app-nedlastninger, ingen "premium"-funksjoner, bare ren og
-            uforfalsket moro.
+            Målet vårt er å samle de beste digitale partyspillene, klassiske drikkelekene og morsomme musikalske utfordringer – alt på ett sted og rett i nettleseren din.
           </p>
         </div>
 
+        <div className="space-y-6">
+            <h3 className="font-semibold text-foreground text-2xl text-center">Hva finner du på GameNight?</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div className="rounded-lg border border-border bg-card/50 p-4">
+                    <Gamepad2 className="mx-auto h-8 w-8 text-primary mb-2" />
+                    <h4 className="font-semibold text-foreground">Digitale Spill</h4>
+                    <p className="text-sm">Interaktive spill som "Pekefest" og "Spinn flasken", klare til å spilles direkte på skjermen.</p>
+                </div>
+                <div className="rounded-lg border border-border bg-card/50 p-4">
+                    <Library className="mx-auto h-8 w-8 text-primary mb-2" />
+                    <h4 className="font-semibold text-foreground">Klassiske Drikkeleker</h4>
+                    <p className="text-sm">Reglene til tidløse favoritter som "Beer Pong" og "Ring of Fire", lett tilgjengelig.</p>
+                </div>
+                <div className="rounded-lg border border-border bg-card/50 p-4">
+                    <Music className="mx-auto h-8 w-8 text-primary mb-2" />
+                    <h4 className="font-semibold text-foreground">Musikkeleker</h4>
+                    <p className="text-sm">Enkle drikkeleker basert på kjente sanger, med direkte lenke til Spotify.</p>
+                </div>
+            </div>
+        </div>
+
         <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
-          <h3 className="font-semibold text-foreground text-xl">Hvorfor viser vi reklame?</h3>
+          <h3 className="font-semibold text-foreground text-xl">Hvordan holder vi det gratis?</h3>
           <p>
-            Å holde GameNight gratis for alle betyr at vi har driftskostnader for servere og
-            videreutvikling. Annonsene hjelper oss med å dekke disse kostnadene, slik at vi kan
-            fortsette å tilby og forbedre spillene uten å måtte ta betalt fra deg.
+            Vårt håp er å kunne holde GameNight gratis så lenge som mulig. For å dekke kostnadene for servere og videreutvikling, viser vi annonser. Dette lar oss fortsette å lage nye spill og forbedre siden uten å måtte ta betalt fra deg.
+          </p>
+        </div>
+        
+        <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
+          <h3 className="font-semibold text-foreground text-xl">Et lidenskapsprosjekt</h3>
+          <p>
+            GameNight er et lidenskapsprosjekt som utvikles på fritiden. Det betyr at nye funksjoner og spill kommer når inspirasjonen (og tiden) strekker til. Vi setter utrolig stor pris på tålmodigheten og støtten fra dere!
           </p>
         </div>
 
@@ -155,11 +175,14 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
                 Den enkleste måten å nå oss på er via e-post. Vi leser alt og prøver å svare så fort vi kan.
             </p>
             <Button asChild>
-                <a href="mailto:hei@gamenight.app">
+                <a href="mailto:hei@gamenight.no">
                     <Mail className="mr-2 h-4 w-4" />
                     Send oss en e-post
                 </a>
             </Button>
+             <p className="text-sm pt-2">
+                Siden GameNight er et lidenskapsprosjekt som drives på fritiden, kan det ta litt tid før du får svar. Vi setter stor pris på din tålmodighet!
+            </p>
         </div>
 
         <div className="space-y-2">
