@@ -102,10 +102,6 @@ export default function Home() {
         )}
 
       </motion.div>
-
-      <footer className="absolute bottom-0 left-0 right-0 p-4 flex justify-center">
-        <AdBanner />
-      </footer>
     </motion.div>
   );
 }
