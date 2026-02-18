@@ -1,0 +1,49 @@
+{
+  "categories": [
+    {
+      "title": "🍿 Film-Maraton",
+      "games": [
+        {
+          "id": "harry-potter",
+          "title": "Harry Potter ⚡🧙‍♂️",
+          "artist": "Film-maraton",
+          "rules": "Skål hver gang noen sier 'Harry'. Ta en straff når et hus får (eller mister) poeng. Del ut 3 slurker når noen kaster en utilgivelig forbannelse."
+        },
+        {
+          "id": "lord-of-the-rings",
+          "title": "Ringenes Herre 🌋💍",
+          "artist": "Film-trilogi",
+          "rules": "Skål for hvert episk drone-skudd av folk som går. Ta en straff når Gimli klager. Del ut en slurk hver gang Ringen hvisker."
+        }
+      ]
+    },
+    {
+      "title": "📺 TV & Reality",
+      "games": [
+        {
+          "id": "eurovision-mgp",
+          "title": "Eurovision / MGP 🎤✨",
+          "artist": "Musikkonkurranse",
+          "rules": "Skål når vindmaskinen skrus på. Ta en straff ved et uforventet klesbytte. Del ut 2 slurker ved et episk (eller falskt) toneartsskifte."
+        },
+        {
+          "id": "reality-tv",
+          "title": "Klassisk Reality-TV 🌴💅",
+          "artist": "Forræder, Ex on the Beach etc.",
+          "rules": "Skål hver gang noen gråter. Ta en straff når noen sier de er der '100 prosent'. Del ut slurker ved åpenbar baksnakking."
+        }
+      ]
+    },
+    {
+      "title": "⚽ Sport & Eventer",
+      "games": [
+        {
+          "id": "fotballkamp",
+          "title": "Fotballkampen ⚽🥅",
+          "artist": "Alle ligaer",
+          "rules": "Skål ved gult kort. Ta en straff ved VAR-drama. Del ut slurker når kommentatoren sier noe smertelig åpenbart."
+        }
+      ]
+    }
+  ]
+}

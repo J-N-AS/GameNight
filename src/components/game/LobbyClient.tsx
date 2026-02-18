@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
@@ -206,7 +206,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
       </motion.div>
 
       {/* Classic Games & Music Games */}
-      <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
+      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
           <section className="text-center">
              <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <Beer className="h-6 w-6 text-accent" /> Klassiske Drikkeleker
@@ -223,6 +223,15 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
               <p className="text-muted-foreground mb-4">Partyspill basert på kjente sanger. Koble til anlegget og la reglene styre kvelden.</p>
               <Button asChild>
                 <Link href="/musikkleker">Finn en sang</Link>
+              </Button>
+          </section>
+          <section className="text-center">
+             <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
+                  <Clapperboard className="h-6 w-6 text-purple-400" /> Skjermleker
+              </h2>
+              <p className="text-muted-foreground mb-4">Spill til filmkvelden, reality-showet eller fotballkampen. Perfekt for sofaen.</p>
+              <Button asChild>
+                <Link href="/skjermleker">Finn et skjermspill</Link>
               </Button>
           </section>
       </motion.div>

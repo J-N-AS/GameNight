@@ -69,6 +69,18 @@ export interface MusicGameCategory {
   games: MusicGame[];
 }
 
+export interface ScreenGame {
+  id: string;
+  title: string;
+  artist: string;
+  rules: string;
+}
+
+export interface ScreenGameCategory {
+  title: string;
+  games: ScreenGame[];
+}
+
 export interface Theme {
   slug: string;
   title: string;
