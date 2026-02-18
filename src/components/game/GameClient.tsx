@@ -4,7 +4,7 @@ import type { Game, GameTask } from '@/lib/games';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TaskCard } from './TaskCard';
 import { Button } from '@/components/ui/button';
-import { Repeat, Home, PartyPopper } from 'lucide-react';
+import { Repeat, Home, PartyPopper, Trophy } from 'lucide-react';
 import Link from 'next/link';
 import { usePlayers } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
@@ -24,63 +24,6 @@ function shuffleArray<T>(array: T[]): T[] {
   return newArray;
 }
 
-function processPlaceholders(
-  text: string,
-  players: { id: string; name: string }[]
-): React.ReactNode {
-  if (players.length < 1) {
-    return text
-      .replace(/\{player\d?\}|\{player\}|{all}/g, 'Noen')
-      .replace('{all}', 'Alle');
-  }
-  if (players.length < 2) {
-    const player1 = players[0].name;
-    return text
-      .replace(/\{player\d?\}|\{player\}/g, player1)
-      .replace('{all}', 'Alle');
-  }
-
-  let availablePlayers = [...players];
-
-  const player1Index = Math.floor(Math.random() * availablePlayers.length);
-  const player1 = availablePlayers[player1Index].name;
-  availablePlayers.splice(player1Index, 1);
-
-  const player2Index = Math.floor(Math.random() * availablePlayers.length);
-  const player2 = availablePlayers[player2Index].name;
-
-  const parts = text.split(/(\{player\}|\{player2\}|\{all\})/g);
-
-  return (
-    <React.Fragment>
-      {parts.map((part, index) => {
-        if (part === '{player}') {
-          return (
-            <span key={index} className="player-highlight">
-              {player1}
-            </span>
-          );
-        }
-        if (part === '{player2}') {
-          return (
-            <span key={index} className="player-highlight-2">
-              {player2}
-            </span>
-          );
-        }
-        if (part === '{all}') {
-          return (
-            <strong key={index} className="text-prompt font-semibold">
-              Alle
-            </strong>
-          );
-        }
-        return part;
-      })}
-    </React.Fragment>
-  );
-}
-
 export function GameClient({ game }: { game: Game }) {
   const { players, isLoaded } = usePlayers();
   const router = useRouter();
@@ -91,12 +34,20 @@ export function GameClient({ game }: { game: Game }) {
   const [isFinished, setIsFinished] = useState(false);
   const [consentGiven, setConsentGiven] = useState(false);
 
+  // Versus mode state
+  const [team1Score, setTeam1Score] = useState(0);
+  const [team2Score, setTeam2Score] = useState(0);
+
+  const isVersusMode = game.gameType === 'versus' && !!game.teams;
+
   const setupGame = useCallback(() => {
     const gameTasks =
       game.shuffle === false ? game.items : shuffleArray(game.items);
     setTasks(gameTasks);
     setCurrentIndex(0);
     setIsFinished(false);
+    setTeam1Score(0);
+    setTeam2Score(0);
   }, [game]);
 
   useEffect(() => {
@@ -130,9 +81,18 @@ export function GameClient({ game }: { game: Game }) {
     }
   };
 
+  const handleVote = (winner: 'team1' | 'team2') => {
+    if (winner === 'team1') {
+      setTeam1Score(prev => prev + 1);
+    } else {
+      setTeam2Score(prev => prev + 1);
+    }
+    handleNextTask();
+  };
+
   const handleRestart = () => {
     if (isLoaded) {
-      if(game.warning) {
+      if (game.warning) {
         setConsentGiven(false);
       }
       setupGame();
@@ -148,20 +108,43 @@ export function GameClient({ game }: { game: Game }) {
     if (!currentTask || !isLoaded) return '';
     const { type, text } = currentTask;
 
-    const hasPlaceholders = /\{player|player2|all\}/.test(text);
-    const canProcessPlaceholders =
-      (type === 'challenge' || type === 'prompt') &&
-      hasPlaceholders &&
-      players.length > 0;
+    const isNameForbidden = type === 'never_have_i_ever' || type === 'pointing';
+    let content: React.ReactNode = text;
+    const placeholderRegex = /(\{team1\}|\{team2\}|\{player\}|\{player2\}|\{all\})/g;
 
-    const isNameForbidden =
-      type === 'never_have_i_ever' || type === 'pointing';
+    if (placeholderRegex.test(text)) {
+      let availablePlayers = [...players];
+      const player1Index = players.length > 0 ? Math.floor(Math.random() * availablePlayers.length) : -1;
+      const player1 = player1Index !== -1 ? availablePlayers[player1Index].name : 'Noen';
+      if (player1Index !== -1) availablePlayers.splice(player1Index, 1);
+      const player2Index = players.length > 1 ? Math.floor(Math.random() * availablePlayers.length) : -1;
+      const player2 = player2Index !== -1 ? availablePlayers[player2Index].name : 'En annen';
 
-    if (canProcessPlaceholders && !isNameForbidden) {
-      return processPlaceholders(text, players);
+      const parts = text.split(placeholderRegex);
+      content = (
+        <React.Fragment>
+          {parts.map((part, index) => {
+            switch (part) {
+              case '{team1}':
+                return <span key={index} className="player-highlight">{game.teams?.team1 || 'Lag 1'}</span>;
+              case '{team2}':
+                return <span key={index} className="player-highlight-2">{game.teams?.team2 || 'Lag 2'}</span>;
+              case '{player}':
+                return isNameForbidden ? 'Noen' : <span key={index} className="player-highlight">{player1}</span>;
+              case '{player2}':
+                return isNameForbidden ? 'En annen' : <span key={index} className="player-highlight-2">{player2}</span>;
+              case '{all}':
+                return <strong key={index} className="text-prompt font-semibold">Alle</strong>;
+              default:
+                return part;
+            }
+          })}
+        </React.Fragment>
+      );
     }
-    return text;
-  }, [currentTask, players, isLoaded]);
+    return content;
+  }, [currentTask, players, isLoaded, game.teams]);
+
 
   const cardVariants = {
     enter: { opacity: 0 },
@@ -173,19 +156,21 @@ export function GameClient({ game }: { game: Game }) {
 
   const progressValue =
     tasks.length > 0 ? ((currentIndex + 1) / tasks.length) * 100 : 0;
-  
+
   const showConsent = game.warning && !consentGiven;
-  
+
   if (showConsent) {
     return (
-        <GameConsentScreen
-            warning={game.warning!}
-            onConfirm={() => setConsentGiven(true)}
-        />
+      <GameConsentScreen
+        warning={game.warning!}
+        onConfirm={() => setConsentGiven(true)}
+      />
     );
   }
 
   if (isFinished) {
+    const winner = team1Score > team2Score ? game.teams!.team1 : (team2Score > team1Score ? game.teams!.team2 : null);
+
     return (
       <motion.div
         className="flex flex-col items-center justify-center min-h-screen text-center p-4"
@@ -198,9 +183,25 @@ export function GameClient({ game }: { game: Game }) {
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', delay: 0.4, duration: 0.5 }}
         >
-          <PartyPopper className="h-16 w-16 text-primary mb-6" />
+          {isVersusMode ? <Trophy className="h-16 w-16 text-primary mb-6" /> : <PartyPopper className="h-16 w-16 text-primary mb-6" />}
         </motion.div>
         <h2 className="text-4xl font-bold mb-4">Spillet er ferdig!</h2>
+
+        {isVersusMode && game.teams && (
+          <div className="mb-8 text-lg">
+            <p className="font-semibold text-2xl mb-4">Resultat:</p>
+            <div className="flex justify-center gap-8 text-xl">
+              <p>{game.teams.team1}: <span className="font-bold text-primary">{team1Score} poeng</span></p>
+              <p>{game.teams.team2}: <span className="font-bold text-accent">{team2Score} poeng</span></p>
+            </div>
+            {winner ? (
+              <p className="mt-6 text-3xl font-bold">Vinneren er <span className={team1Score > team2Score ? "text-primary" : "text-accent"}>{winner}!</span></p>
+            ) : (
+              <p className="mt-6 text-3xl font-bold">Det ble uavgjort!</p>
+            )}
+          </div>
+        )}
+
         <p className="text-muted-foreground mb-8">
           Bra spilt! Hva vil dere gjøre nå?
         </p>
@@ -254,9 +255,15 @@ export function GameClient({ game }: { game: Game }) {
 
       {/* Game Stage */}
       <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
-        <div className="h-10 mb-4 flex items-center justify-center">
+        <div className="h-20 mb-4 flex items-center justify-center">
           {!showLoading && tasks.length > 0 && (
             <div className="w-full max-w-sm mx-auto">
+               {isVersusMode && game.teams && (
+                 <div className="flex justify-between text-lg font-bold mb-2">
+                    <span className="text-primary">{game.teams.team1}: {team1Score}</span>
+                    <span className="text-accent">{game.teams.team2}: {team2Score}</span>
+                 </div>
+              )}
               <Progress value={progressValue} className="h-2" />
               <p className="text-center text-muted-foreground/60 text-sm mt-2">
                 {currentIndex + 1} / {tasks.length}
@@ -283,6 +290,8 @@ export function GameClient({ game }: { game: Game }) {
                   <TaskCard
                     type={currentTask.type}
                     content={processedContent}
+                    onVote={isVersusMode ? handleVote : undefined}
+                    teams={isVersusMode ? game.teams : undefined}
                   />
                 )
               )}
@@ -290,7 +299,7 @@ export function GameClient({ game }: { game: Game }) {
           </AnimatePresence>
         </div>
 
-        {!showLoading && (
+        {!showLoading && currentTask?.type !== 'versus' && (
           <motion.div
             className="mt-8 mb-4"
             initial={{ opacity: 0, y: 10 }}

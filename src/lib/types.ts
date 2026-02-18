@@ -1,7 +1,7 @@
 // This file can be used to share types between server and client components.
 
 export interface GameTask {
-  type: 'challenge' | 'never_have_i_ever' | 'prompt' | 'pointing';
+  type: 'challenge' | 'never_have_i_ever' | 'prompt' | 'pointing' | 'versus';
   text: string;
 }
 
@@ -26,6 +26,11 @@ export interface Game {
   audience: 'all' | '18+';
   category: string[];
   warning?: GameWarning;
+  gameType?: 'default' | 'versus';
+  teams?: {
+    team1: string;
+    team2: string;
+  };
 }
 
 export interface GameArticle {
