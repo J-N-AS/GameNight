@@ -211,7 +211,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
              <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <Beer className="h-6 w-6 text-accent" /> Klassiske Drikkeleker
               </h2>
-              <p className="text-muted-foreground mb-4">Regler for spill som Beer Pong & Ring of Fire – uten skjerm.</p>
+              <p className="text-muted-foreground mb-4">Reglene til tidløse fest-klassikere som Beer Pong & Ring of Fire.</p>
               <Button asChild>
                 <Link href="/drikkeleker">Se alle klassikerne</Link>
               </Button>
@@ -220,7 +220,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
              <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <Music className="h-6 w-6 text-primary" /> Musikkeleker
               </h2>
-              <p className="text-muted-foreground mb-4">Drikkeleker til kjente sanger. Koble til anlegget og spill!</p>
+              <p className="text-muted-foreground mb-4">Partyspill basert på kjente sanger. Koble til anlegget og la reglene styre kvelden.</p>
               <Button asChild>
                 <Link href="/musikkleker">Finn en sang</Link>
               </Button>
