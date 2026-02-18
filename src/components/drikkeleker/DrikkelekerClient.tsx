@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import type { GameArticle } from '@/lib/types';
 import Image from 'next/image';
+import { AdBanner } from '../ads/AdBanner';
 
 type Articles = Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules' | 'variants' | 'attributionHtml'>[];
 
@@ -73,6 +74,14 @@ export function DrikkelekerClient({ games }: { games: Articles }) {
           </motion.div>
         ))}
       </div>
+      <motion.div
+        className="mt-16 flex justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+      >
+        <AdBanner />
+      </motion.div>
     </div>
   );
 }

@@ -13,6 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { AdBanner } from '../ads/AdBanner';
 
 export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
   return (
@@ -126,6 +127,14 @@ export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
           </div>
         </CardContent>
       </Card>
+      <motion.div
+        className="mt-12 w-full flex justify-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        <AdBanner />
+      </motion.div>
     </motion.div>
   );
 }

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, CreditCard, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { AdBanner } from '@/components/ads/AdBanner';
 
 const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
   'om-oss': {
@@ -202,6 +203,14 @@ export default function InfoPage() {
         </CardHeader>
         <CardContent>{page.content}</CardContent>
       </Card>
+      <motion.div
+        className="mt-12 w-full flex justify-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        <AdBanner />
+      </motion.div>
     </motion.div>
   );
 }
