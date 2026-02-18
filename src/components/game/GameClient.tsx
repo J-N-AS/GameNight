@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameMenu } from './GameMenu';
 import { useToast } from '@/hooks/use-toast';
 import { AdBanner } from '../ads/AdBanner';
+import { Progress } from '@/components/ui/progress';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -22,42 +23,61 @@ function shuffleArray<T>(array: T[]): T[] {
   return newArray;
 }
 
-function processPlaceholders(text: string, players: { id: string; name: string }[]): React.ReactNode {
-    if (players.length < 1) {
-        return text.replace(/\{player\d?\}|\{player\}|{all}/g, 'Noen').replace('{all}', 'Alle');
-    }
-    if (players.length < 2) {
-      const player1 = players[0].name;
-      return text.replace(/\{player\d?\}|\{player\}/g, player1).replace('{all}', 'Alle');
-    }
+function processPlaceholders(
+  text: string,
+  players: { id: string; name: string }[]
+): React.ReactNode {
+  if (players.length < 1) {
+    return text
+      .replace(/\{player\d?\}|\{player\}|{all}/g, 'Noen')
+      .replace('{all}', 'Alle');
+  }
+  if (players.length < 2) {
+    const player1 = players[0].name;
+    return text
+      .replace(/\{player\d?\}|\{player\}/g, player1)
+      .replace('{all}', 'Alle');
+  }
 
-    let availablePlayers = [...players];
-    
-    const player1Index = Math.floor(Math.random() * availablePlayers.length);
-    const player1 = availablePlayers[player1Index].name;
-    availablePlayers.splice(player1Index, 1);
+  let availablePlayers = [...players];
 
-    const player2Index = Math.floor(Math.random() * availablePlayers.length);
-    const player2 = availablePlayers[player2Index].name;
+  const player1Index = Math.floor(Math.random() * availablePlayers.length);
+  const player1 = availablePlayers[player1Index].name;
+  availablePlayers.splice(player1Index, 1);
 
-    const parts = text.split(/(\{player\}|\{player2\}|\{all\})/g);
+  const player2Index = Math.floor(Math.random() * availablePlayers.length);
+  const player2 = availablePlayers[player2Index].name;
 
-    return (
-        <React.Fragment>
-            {parts.map((part, index) => {
-                if (part === '{player}') {
-                    return <span key={index} className="player-highlight">{player1}</span>;
-                }
-                if (part === '{player2}') {
-                    return <span key={index} className="player-highlight-2">{player2}</span>;
-                }
-                if (part === '{all}') {
-                    return <strong key={index} className="text-prompt font-semibold">Alle</strong>;
-                }
-                return part;
-            })}
-        </React.Fragment>
-    );
+  const parts = text.split(/(\{player\}|\{player2\}|\{all\})/g);
+
+  return (
+    <React.Fragment>
+      {parts.map((part, index) => {
+        if (part === '{player}') {
+          return (
+            <span key={index} className="player-highlight">
+              {player1}
+            </span>
+          );
+        }
+        if (part === '{player2}') {
+          return (
+            <span key={index} className="player-highlight-2">
+              {player2}
+            </span>
+          );
+        }
+        if (part === '{all}') {
+          return (
+            <strong key={index} className="text-prompt font-semibold">
+              Alle
+            </strong>
+          );
+        }
+        return part;
+      })}
+    </React.Fragment>
+  );
 }
 
 export function GameClient({ game }: { game: Game }) {
@@ -70,7 +90,8 @@ export function GameClient({ game }: { game: Game }) {
   const [isFinished, setIsFinished] = useState(false);
 
   const setupGame = useCallback(() => {
-    const gameTasks = game.shuffle === false ? game.items : shuffleArray(game.items);
+    const gameTasks =
+      game.shuffle === false ? game.items : shuffleArray(game.items);
     setTasks(gameTasks);
     setCurrentIndex(0);
     setIsFinished(false);
@@ -89,7 +110,15 @@ export function GameClient({ game }: { game: Game }) {
       }
       setupGame();
     }
-  }, [game, isLoaded, players.length, game.requiresPlayers, router, toast, setupGame]);
+  }, [
+    game,
+    isLoaded,
+    players.length,
+    game.requiresPlayers,
+    router,
+    toast,
+    setupGame,
+  ]);
 
   const handleNextTask = () => {
     if (currentIndex < tasks.length - 1) {
@@ -98,29 +127,33 @@ export function GameClient({ game }: { game: Game }) {
       setIsFinished(true);
     }
   };
-  
+
   const handleRestart = () => {
     if (isLoaded) {
       setupGame();
     }
-  }
+  };
 
   const currentTask = useMemo(
     () => (tasks.length > 0 ? tasks[currentIndex] : null),
     [currentIndex, tasks]
   );
-  
+
   const processedContent = useMemo(() => {
     if (!currentTask || !isLoaded) return '';
     const { type, text } = currentTask;
 
     const hasPlaceholders = /\{player|player2|all\}/.test(text);
-    const canProcessPlaceholders = (type === 'challenge' || type === 'prompt') && hasPlaceholders && players.length > 0;
-    
-    const isNameForbidden = type === 'never_have_i_ever' || type === 'pointing';
+    const canProcessPlaceholders =
+      (type === 'challenge' || type === 'prompt') &&
+      hasPlaceholders &&
+      players.length > 0;
+
+    const isNameForbidden =
+      type === 'never_have_i_ever' || type === 'pointing';
 
     if (canProcessPlaceholders && !isNameForbidden) {
-        return processPlaceholders(text, players);
+      return processPlaceholders(text, players);
     }
     return text;
   }, [currentTask, players, isLoaded]);
@@ -130,101 +163,133 @@ export function GameClient({ game }: { game: Game }) {
     center: { opacity: 1 },
     exit: { opacity: 0 },
   };
-  
+
   const showLoading = !isLoaded || tasks.length === 0;
+
+  const progressValue =
+    tasks.length > 0 ? ((currentIndex + 1) / tasks.length) * 100 : 0;
 
   if (isFinished) {
     return (
-      <motion.div 
+      <motion.div
         className="flex flex-col items-center justify-center min-h-screen text-center p-4"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: 'spring', duration: 0.5, delay: 0.2 }}
       >
-          <motion.div initial={{ scale: 0, rotate: -30 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring', delay: 0.4, duration: 0.5 }}>
-            <PartyPopper className="h-16 w-16 text-primary mb-6" />
-          </motion.div>
-          <h2 className="text-4xl font-bold mb-4">Spillet er ferdig!</h2>
-          <p className="text-muted-foreground mb-8">Bra spilt! Hva vil dere gjøre nå?</p>
-          <div className="flex flex-col sm:flex-row gap-4">
-              <Button onClick={handleRestart} size="lg" className="transform transition-transform duration-200 hover:scale-105">
-                  <Repeat className="mr-2 h-5 w-5" />
-                  Spill igjen
-              </Button>
-              <Button variant="outline" size="lg" asChild className="transform transition-transform duration-200 hover:scale-105">
-                  <Link href="/">
-                      <Home className="mr-2 h-5 w-5" />
-                      Velg nytt spill
-                  </Link>
-              </Button>
-          </div>
-          <motion.div
-            className="mt-12 w-full flex justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
+        <motion.div
+          initial={{ scale: 0, rotate: -30 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: 'spring', delay: 0.4, duration: 0.5 }}
+        >
+          <PartyPopper className="h-16 w-16 text-primary mb-6" />
+        </motion.div>
+        <h2 className="text-4xl font-bold mb-4">Spillet er ferdig!</h2>
+        <p className="text-muted-foreground mb-8">
+          Bra spilt! Hva vil dere gjøre nå?
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button
+            onClick={handleRestart}
+            size="lg"
+            className="transform transition-transform duration-200 hover:scale-105"
           >
-            <AdBanner />
-          </motion.div>
+            <Repeat className="mr-2 h-5 w-5" />
+            Spill igjen
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            asChild
+            className="transform transition-transform duration-200 hover:scale-105"
+          >
+            <Link href="/">
+              <Home className="mr-2 h-5 w-5" />
+              Velg nytt spill
+            </Link>
+          </Button>
+        </div>
+        <motion.div
+          className="mt-12 w-full flex justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+        >
+          <AdBanner />
+        </motion.div>
       </motion.div>
-    )
+    );
   }
 
   return (
     <div className="flex flex-col min-h-screen p-4 md:p-8">
       <div className="absolute top-4 left-4 z-10">
-         <Button variant="ghost" size="sm" asChild>
-            <Link href="/">
-                <Home className="mr-2 h-4 w-4" />
-                Lobby
-            </Link>
-         </Button>
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/">
+            <Home className="mr-2 h-4 w-4" />
+            Lobby
+          </Link>
+        </Button>
       </div>
 
       <div className="absolute top-4 right-4 z-10">
-          <GameMenu context="in-game" onRestart={handleRestart} />
+        <GameMenu context="in-game" onRestart={handleRestart} />
       </div>
-      
+
       {/* Game Stage */}
       <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
+        <div className="h-10 mb-4 flex items-center justify-center">
+          {!showLoading && tasks.length > 0 && (
+            <div className="w-full max-w-sm mx-auto">
+              <Progress value={progressValue} className="h-2" />
+              <p className="text-center text-muted-foreground/60 text-sm mt-2">
+                {currentIndex + 1} / {tasks.length}
+              </p>
+            </div>
+          )}
+        </div>
+
         <div className="relative flex-grow flex items-center justify-center overflow-hidden">
-            <AnimatePresence initial={false} mode="wait">
-                <motion.div
-                    key={currentIndex}
-                    variants={cardVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                    className="w-full"
-                >
-                    {showLoading ? (
-                        <p>Laster spill...</p>
-                    ) : (
-                        currentTask && <TaskCard type={currentTask.type} content={processedContent} />
-                    )}
-                </motion.div>
-            </AnimatePresence>
+          <AnimatePresence initial={false} mode="wait">
+            <motion.div
+              key={currentIndex}
+              variants={cardVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="w-full"
+            >
+              {showLoading ? (
+                <p>Laster spill...</p>
+              ) : (
+                currentTask && (
+                  <TaskCard
+                    type={currentTask.type}
+                    content={processedContent}
+                  />
+                )
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {!showLoading && (
-             <motion.div 
-              className="mt-8 mb-4"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.3 }}
+          <motion.div
+            className="mt-8 mb-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.3 }}
+          >
+            <Button
+              onClick={handleNextTask}
+              size="lg"
+              className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-primary/30"
             >
-                <Button 
-                    onClick={handleNextTask} 
-                    size="lg" 
-                    className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-primary/30">
-                    Neste
-                </Button>
-             </motion.div>
+              Neste
+            </Button>
+          </motion.div>
         )}
-         <div className="text-center text-muted-foreground/60 text-sm h-6">
-          {!showLoading && tasks.length > 0 && `${currentIndex + 1} / ${tasks.length}`}
-        </div>
       </div>
 
       <footer className="w-full flex-shrink-0 mt-4">
