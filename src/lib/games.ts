@@ -3,7 +3,7 @@ import path from 'path';
 import { notFound } from 'next/navigation';
 
 export interface GameTask {
-  type: 'challenge' | 'never_have_i_ever' | 'prompt' | 'pointing';
+  type: 'challenge' | 'never_have_i_ever' | 'prompt' | 'pointing' | 'ai_prompt';
   text: string;
 }
 
@@ -15,6 +15,7 @@ export interface Game {
   items: GameTask[];
   shuffle?: boolean;
   requiresPlayers?: boolean;
+  engine?: 'ai-scenario';
 }
 
 const gamesDirectory = path.join(process.cwd(), 'src/data');
@@ -52,6 +53,18 @@ export async function getGame(id: string): Promise<Game> {
     return gameData;
   } catch (error) {
     console.error(`Failed to read game file for id: ${id}`, error);
+    // Attempt to find a game where the id inside the json matches, even if filename is different.
+    const filenames = await fs.readdir(gamesDirectory);
+    for (const filename of filenames) {
+        if (filename.endsWith('.json')) {
+            const filePath = path.join(gamesDirectory, filename);
+            const fileContents = await fs.readFile(filePath, 'utf8');
+            const gameData: Game = JSON.parse(fileContents);
+            if (gameData.id === id) {
+                return gameData;
+            }
+        }
+    }
     notFound();
   }
 }

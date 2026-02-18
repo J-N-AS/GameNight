@@ -1,14 +1,15 @@
 {
   "id": "rolig-sosial",
-  "title": "Rolig Sosial",
-  "description": "Spørsmål for å starte samtaler og bli bedre kjent.",
+  "title": "Scenario-Mesteren (AI)",
+  "description": "AI-genererte dilemmaer og absurde situasjoner. Hva gjør du?",
   "language": "no",
-  "shuffle": true,
-  "requiresPlayers": false,
+  "requiresPlayers": true,
+  "shuffle": false,
+  "engine": "ai-scenario",
   "items": [
-    { "type": "prompt", "text": "Hvis du kunne hatt en superkraft, hva ville det vært?" },
-    { "type": "prompt", "text": "Hva er ditt drømmereisemål?" },
-    { "type": "prompt", "text": "Hva er den beste konserten du har vært på?" },
-    { "type": "prompt", "text": "Hvis du kunne spist middag med hvem som helst, død eller levende, hvem ville det vært?" }
+    {
+      "type": "ai_prompt",
+      "text": "Laster scenario..."
+    }
   ]
 }
