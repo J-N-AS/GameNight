@@ -6,9 +6,10 @@ import { CookieConsent } from '@/components/common/CookieConsent';
 import { AppProviders } from './providers';
 
 export const metadata: Metadata = {
-  title: 'GameNight',
-  description: 'Gratis partyspill, rett i nettleseren.',
+  title: 'GameNight - Gratis Partyspill & Drikkeleker',
+  description: 'Start festen med de beste gratis partyspillene og drikkelekene, rett i nettleseren. Ingen installasjon, bare moro!',
   manifest: '/manifest.json',
+  themeColor: '#1A1412',
 };
 
 export default function RootLayout({
