@@ -14,7 +14,7 @@
         "julebord",
         "pekefest-klassisk",
         "party-klassikere",
-        "sannhet-eller-shot"
+        "rolig-sosial"
       ]
     },
     {
@@ -64,8 +64,8 @@
       "gameIds": [
         "singles-night-flort-kjemi",
         "singles-body-language",
-        "sexy-dares-late-night",
-        "sannhet-eller-shot"
+        "pekefest-klassisk",
+        "spinn-flasken-action"
       ]
     },
     {
@@ -100,6 +100,74 @@
         "sexy-vibes",
         "hemmeligheter",
         "after-dark"
+      ]
+    },
+    {
+      "slug": "bursdagsfest",
+      "title": "Bursdagsfest: Spill for Voksne",
+      "metaDescription": "Planlegger du bursdag? Her er de beste selskapslekene og partyspillene som garantert skaper god stemning og latter i voksenbursdagen.",
+      "emoji": "🥳",
+      "content": [
+        "En bursdag er en perfekt anledning til å samle venner og familie for en minneverdig feiring. Men hva gjør en voksenbursdag virkelig spesiell? Gode samtaler, masse latter og aktiviteter som inkluderer alle. Riktig selskapsspill kan løfte stemningen fra hyggelig til uforglemmelig.",
+        "I denne samlingen har vi plukket ut spill som passer perfekt for en festlig anledning. Her finner du en blanding av enkle isbrytere som får gjestene til å prate, livlige partyspill som skaper energi, og klassiske leker som alle kan delta i. Målet er å tilby noe for enhver smak, slik at bursdagsbarnet og gjestene kan lene seg tilbake og nyte feiringen.",
+        "Gjør bursdagsfesten til en snakkis med disse morsomme og engasjerende spillene. La oss sørge for at denne feiringen blir den beste hittil!"
+      ],
+      "gameIds": [
+        "party-klassikere",
+        "pekefest-klassisk",
+        "fyllevalg",
+        "kjapp-party-runde"
+      ]
+    },
+    {
+      "slug": "guttakveld",
+      "title": "Guttakveld: Konkurranse & Løye",
+      "metaDescription": "Samle gutta for en kveld med konkurranse, løye og garantert god stemning. Her er de beste spillene for herremiddag eller guttetur.",
+      "emoji": "🍻",
+      "content": [
+        "Noen ganger handler det bare om å samle gutta. Enten det er herremiddag, vorspiel før en kveld på byen, eller en hel helg med kameratslig rivalisering, er de riktige spillene avgjørende for å sette stemningen. Det handler om konkurranse, selvironi og den unike interne humoren som definerer en skikkelig guttakveld.",
+        "Denne samlingen er skreddersydd for nettopp slike anledninger. Her finner du spill som er stappfulle av 'bro-kultur', utfordringer som tester viljestyrken, og spørsmål som garantert fører til latter og absurde diskusjoner. Vi har tonet ned føleriet og skrudd opp intensiteten for en kveld med høy energi.",
+        "Så enten dere skal avgjøre hvem som er kongen av konkurranse eller bare le av hverandres dårlige beslutninger, er disse spillene det perfekte utgangspunktet for en legendarisk kveld med gutta."
+      ],
+      "gameIds": [
+        "gutta-stemning-bros-banter",
+        "kaosrunden",
+        "fyllevalg",
+        "party-klassikere"
+      ]
+    },
+    {
+      "slug": "bli-kjent",
+      "title": "Bli Kjent: Icebreakers & Sosiale Spill",
+      "metaDescription": "Perfekte isbrytere og bli-kjent-leker for fadderuke, nye vennegjenger eller teambuilding. Trygge spill med fokus på samtale og null press.",
+      "emoji": "🤝",
+      "content": [
+        "Å møte nye mennesker kan være både spennende og litt skummelt. Enten det er i en faddergruppe, på en ny arbeidsplass, eller i en ny vennegjeng, er den første tiden avgjørende for å bygge relasjoner. Den beste måten å bryte isen på er gjennom felles latter og avslappede aktiviteter.",
+        "Denne samlingen er designet med nettopp dette i tankene. Her finner du trygge, inkluderende og morsomme 'bli kjent'-spill som fjerner presset fra small-talk. Spillene fokuserer på åpne spørsmål, ufarlige påstander og samtale-startere som lar alle delta på sine egne premisser. Det er den perfekte verktøykassen for å skape en positiv og åpen atmosfære.",
+        "Bruk disse isbryterne for å forvandle en gruppe fremmede til en sammensveiset gjeng på rekordtid. La oss gjøre det første møtet til en positiv og minneverdig opplevelse."
+      ],
+      "gameIds": [
+        "rolig-sosial",
+        "jeg-har-aldri-klassisk",
+        "pekefest-klassisk",
+        "pest-eller-kolera"
+      ]
+    },
+    {
+      "slug": "hyttetur",
+      "title": "Hyttetur: Spill for Peiskos & Stemning",
+      "metaDescription": "De beste spillene for hyttetur, påskeferie eller afterski. Samle gjengen rundt bordet for selskapsleker som varer hele kvelden.",
+      "emoji": "🏡",
+      "content": [
+        "Det er noe magisk med hytteturer. Enten det er påskefjellet med strålende sol og afterski, eller en mørk høstkveld med fyr i peisen, er hytta det perfekte stedet for å koble av og være sosial. Når mobildekningen er dårlig og omverdenen føles langt unna, er gode, gammeldagse selskapsspill den ultimate underholdningen.",
+        "Denne samlingen er laget for nettopp slike stunder. Her finner du spill som passer perfekt rundt stuebordet og som kan vare i timevis. Vi har fokusert på samtalebaserte spill, morsomme dilemmaer og rolige klassikere som ikke krever mer enn godt selskap og noe godt i glasset.",
+        "Så neste gang dere er samlet på hytta, legg bort mobilene, finn frem et av disse spillene, og gjør dere klare for en kveld med ekte, analog moro og minner som varer."
+      ],
+      "gameIds": [
+        "pest-eller-kolera",
+        "rolig-sosial",
+        "party-klassikere",
+        "hemmeligheter"
       ]
     }
   ]

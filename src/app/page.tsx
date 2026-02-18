@@ -10,5 +10,5 @@ export default async function Home() {
   const recommendedGames = allGames.filter(g => RECOMMENDED_GAME_IDS.includes(g.id));
   const themes = await getThemes();
   
-  return <LobbyClient recommendedGames={recommendedGames} themes={themes} />;
+  return <LobbyClient allGames={allGames} recommendedGames={recommendedGames} themes={themes} />;
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, PartyPopper, Music, Wand2 } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
@@ -17,35 +17,64 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { useRouter } from 'next/navigation';
 import type { Game, Theme } from '@/lib/types';
 import { AdBanner } from '@/components/ads/AdBanner';
 import { PartyTools } from './PartyTools';
+import { useToast } from '@/hooks/use-toast';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
-const moods = [
-    { name: 'Vorspiel', emoji: '🍻', link: '/alle-spill?kategori=Vorspiel' },
-    { name: 'Party', emoji: '🥳', link: '/alle-spill?kategori=Party' },
-    { name: 'Kaos', emoji: '💥', link: '/alle-spill?kategori=Kaos' },
-    { name: 'Sexy / 18+', emoji: '😈', link: '/alle-spill?kategori=18+' },
-];
-
-export function LobbyClient({ recommendedGames, themes }: { recommendedGames: GameFromGetGames[], themes: Theme[] }) {
+export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: GameFromGetGames[], recommendedGames: GameFromGetGames[], themes: Theme[] }) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
-  const { players, isLoaded } = usePlayers();
-  const [code, setCode] = useState('');
-  const router = useRouter();
+  const [isSurpriseMeOpen, setIsSurpriseMeOpen] = useState(false);
+  const [surpriseGame, setSurpriseGame] = useState<GameFromGetGames | null>(null);
   
+  const { players, isLoaded } = usePlayers();
+  const router = useRouter();
+  const { toast } = useToast();
+
   const handleSetupComplete = () => {
     setIsPlayerSetupOpen(false);
   };
+  
+  const selectRandomGame = () => {
+    if (allGames.length > 0) {
+      const randomIndex = Math.floor(Math.random() * allGames.length);
+      setSurpriseGame(allGames[randomIndex]);
+    }
+  };
 
-  const handleCodeSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (code.trim()) {
-      router.push(`/spill/${code.trim().toLowerCase()}`);
+  const handleSurpriseMeClick = () => {
+    selectRandomGame();
+    setIsSurpriseMeOpen(true);
+  };
+
+  const handleTryAnother = () => {
+    selectRandomGame();
+  };
+
+  const handleStartSurpriseGame = () => {
+    if (surpriseGame) {
+      if (surpriseGame.requiresPlayers && players.length === 0) {
+        toast({
+          title: 'Spillere mangler',
+          description: `"${surpriseGame.title}" krever at du legger til spillere først.`,
+          variant: 'destructive',
+        });
+        setIsSurpriseMeOpen(false);
+        setTimeout(() => setIsPlayerSetupOpen(true), 100);
+        return;
+      }
+      router.push(`/spill/${surpriseGame.id}`);
     }
   };
 
@@ -82,16 +111,14 @@ export function LobbyClient({ recommendedGames, themes }: { recommendedGames: Ga
         className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.1 } } }}
       >
-        <Button size="lg" asChild className="h-14 text-lg transform transition-transform duration-200 hover:scale-105">
-            <Link href={`/spill/${recommendedGames[0]?.id || 'vorspiel-mix'}`}>
-                <Rocket className="mr-3 h-6 w-6"/>
-                Start anbefalt spill
-            </Link>
+        <Button size="lg" onClick={handleSurpriseMeClick} className="h-14 text-lg transform transition-transform duration-200 hover:scale-105">
+          <Dices className="mr-3 h-6 w-6"/>
+          Overrask meg!
         </Button>
         <Button size="lg" variant="secondary" asChild className="h-14 text-lg transform transition-transform duration-200 hover:scale-105">
             <Link href="/alle-spill">
                 <Gamepad2 className="mr-3 h-6 w-6" />
-                Velg spill selv
+                Se alle spill
             </Link>
         </Button>
       </motion.div>
@@ -166,7 +193,7 @@ export function LobbyClient({ recommendedGames, themes }: { recommendedGames: Ga
         <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
             <Wand2 className="h-6 w-6 text-primary" /> Utforsk temaer
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
             {themes.map(theme => (
                 <Link key={theme.slug} href={`/tema/${theme.slug}`} className="group block">
                     <Card className="text-center p-6 transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
@@ -178,17 +205,8 @@ export function LobbyClient({ recommendedGames, themes }: { recommendedGames: Ga
         </div>
       </motion.div>
 
-      {/* Secret Code, Classic Games & Music Games */}
-      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
-          <section className="text-center">
-              <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
-                  <PartyPopper className="h-6 w-6 text-primary" /> Har du en hemmelig kode?
-              </h2>
-              <form onSubmit={handleCodeSubmit} className="max-w-sm mx-auto flex gap-2">
-                  <Input type="text" value={code} onChange={e => setCode(e.target.value)} placeholder="🤫 Skriv inn koden..." className="text-center tracking-widest uppercase bg-card/80 backdrop-blur-sm h-12 text-base"/>
-                  <Button type="submit" variant="secondary" size="lg" className="h-12">Bli med</Button>
-              </form>
-          </section>
+      {/* Classic Games & Music Games */}
+      <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
           <section className="text-center">
              <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <Beer className="h-6 w-6 text-accent" /> Klassiske Drikkeleker
@@ -212,6 +230,32 @@ export function LobbyClient({ recommendedGames, themes }: { recommendedGames: Ga
       <motion.div className="mt-16 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.5 }}>
         <AdBanner />
       </motion.div>
+      
+      <Dialog open={isSurpriseMeOpen} onOpenChange={setIsSurpriseMeOpen}>
+        <DialogContent>
+            <DialogHeader>
+            {surpriseGame && (
+                <>
+                <DialogTitle className="flex items-center gap-4 text-2xl">
+                    <span className="text-5xl">{surpriseGame.emoji}</span>
+                    {surpriseGame.title}
+                </DialogTitle>
+                <DialogDescription className="pt-2 text-base">
+                    {surpriseGame.description}
+                </DialogDescription>
+                </>
+            )}
+            </DialogHeader>
+            <DialogFooter className="flex-col-reverse sm:flex-row sm:justify-between gap-2 pt-4">
+                <Button variant="secondary" onClick={handleTryAnother}>
+                    Prøv et annet
+                </Button>
+                <Button onClick={handleStartSurpriseGame} disabled={!surpriseGame}>
+                    Kjør i gang!
+                </Button>
+            </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </motion.div>
   );
 }
