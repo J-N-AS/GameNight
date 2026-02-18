@@ -10,15 +10,6 @@
   "audience": "18+",
   "category": ["Party", "Fysiske Leker", "Kaos"],
   "gameType": "physical-item",
-  "warning": {
-    "title": "Advarsel: Fysisk aktivitet",
-    "description": [
-      "Dette spillet innebærer å kaste en gjenstand. Sørg for at dere har nok plass og at ingenting knuselig er i nærheten.",
-      "Vær forsiktig så ingen blir skadet. Kast forsiktig!",
-      "Husk at det alltid er lov å si nei til en oppgave. Drikk ansvarlig."
-    ],
-    "buttonText": "Vi forstår og starter spillet"
-  },
   "items": [
     { "type": "challenge", "text": "Du som fanget boksen, velg en annen person som må ta en slurk." },
     { "type": "prompt", "text": "Du som fanget boksen, svar ærlig: Hva er det rareste du har gjort denne uken?" },

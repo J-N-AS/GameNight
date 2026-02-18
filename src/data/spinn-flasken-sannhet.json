@@ -1,0 +1,39 @@
+{
+  "id": "spinn-flasken-sannhet",
+  "title": "Spinn Flasken: Kun Sannhet",
+  "description": "Flasken peker, sannheten kommer frem. En ærligere versjon av klassikeren. Ingen utfordringer, bare spørsmål.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": false,
+  "emoji": "🤫",
+  "intensity": "medium",
+  "audience": "18+",
+  "category": ["Party", "18+", "Fysiske Leker", "Rolig"],
+  "gameType": "spin-the-bottle",
+  "warning": {
+    "title": "Advarsel: Personlige Spørsmål",
+    "description": [
+      "Dette spillet fokuserer på ærlige og personlige spørsmål. Svar kun det du er komfortabel med.",
+      "Respekter hverandres svar og grenser. Det som sies i spillet, blir i spillet.",
+      "Husk at det alltid er lov å si nei eller velge å drikke i stedet for å svare."
+    ],
+    "buttonText": "Jeg forstår og starter spillet"
+  },
+  "items": [
+    { "type": "prompt", "text": "Sannhet: Hva er den største misforståelsen folk har om deg?" },
+    { "type": "prompt", "text": "Sannhet: Hvem her inne kjenner deg best, og hvorfor?" },
+    { "type": "prompt", "text": "Sannhet: Hva er din mest kontroversielle mening?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det siste du løy om?" },
+    { "type": "prompt", "text": "Sannhet: Hvem har du et lite crush på for tiden?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det flaueste som har skjedd deg på date?" },
+    { "type": "prompt", "text": "Sannhet: Hva er din største usikkerhet?" },
+    { "type": "prompt", "text": "Sannhet: Hvis du måtte date en i dette rommet, hvem ville det vært?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det rareste du har googlet i det siste?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det mest barnslige du fortsatt gjør?" },
+    { "type": "prompt", "text": "Sannhet: Hvem er den siste personen du stalket på sosiale medier?" },
+    { "type": "prompt", "text": "Sannhet: Hva er en hemmelighet du aldri har fortalt noen her?" },
+    { "type": "prompt", "text": "Sannhet: Hva angrer du mest på fra forrige helg?" },
+    { "type": "prompt", "text": "Sannhet: Hva er din 'guilty pleasure' sang?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det mest impulsive du har gjort?" }
+  ]
+}

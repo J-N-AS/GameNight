@@ -1,0 +1,29 @@
+{
+  "id": "snusboksen-utfordring",
+  "title": "Snusboksen: Utfordring",
+  "description": "Kast gjenstanden, få en utfordring. Høyere tempo, mer action. Ikke mist boksen!",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🏆",
+  "intensity": "high",
+  "audience": "all",
+  "category": ["Party", "Fysiske Leker", "Kaos"],
+  "gameType": "physical-item",
+  "items": [
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Ta 10 knebøy." },
+    { "type": "challenge", "text": "Mistet du den? Du må ta 3 straffeslurker." },
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Start en 'waterfall'. Du bestemmer når den stopper." },
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Velg en person som må etterligne deg til neste kast." },
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Snakk med en aksent til det er din tur igjen." },
+    { "type": "challenge", "text": "Mistet du den? Du er ute av leken for neste runde og må drikke det de andre bestemmer." },
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Lag en ny regel som gjelder for resten av spillet." },
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Gi en high-five til alle med føttene." },
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Pek på en person som må drikke." },
+    { "type": "challenge", "text": "Mistet du den? Drikk en slurk for hver person i rommet." },
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Bytt plass med personen som kastet til deg." },
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Hold pusten i 20 sekunder. Hvis du feiler, drikk 2 slurker." },
+    { "type": "challenge", "text": "Du som fanget gjenstanden: Du er nå 'slangetemmer'. Hver gang du sier 'slange', må alle drikke." },
+    { "type": "challenge", "text": "Mistet du den? Prøv å sjonglere med to gjenstander i 10 sekunder. Feiler du, drikk 3 slurker." }
+  ]
+}

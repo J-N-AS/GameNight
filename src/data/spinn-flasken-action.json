@@ -1,0 +1,39 @@
+{
+  "id": "spinn-flasken-action",
+  "title": "Spinn Flasken: Kun Action",
+  "description": "Ingen spørsmål, bare action. Flasken peker, du gjør. En mer fysisk og utfordrende versjon av klassikeren.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": false,
+  "emoji": "🔥",
+  "intensity": "high",
+  "audience": "18+",
+  "category": ["Party", "18+", "Fysiske Leker", "Kaos"],
+  "gameType": "spin-the-bottle",
+  "warning": {
+    "title": "Advarsel: Fysiske Utfordringer",
+    "description": [
+      "Dette spillet inneholder utfordringer som krever fysisk interaksjon, inkludert kyss og nærkontakt.",
+      "Spill kun med folk du er komfortabel med. Samtykke er avgjørende.",
+      "Husk at det alltid er lov å si nei eller velge å drikke i stedet for å utføre en oppgave."
+    ],
+    "buttonText": "Jeg forstår og starter spillet"
+  },
+  "items": [
+    { "type": "challenge", "text": "Kyss personen flasken peker på (på munnen)." },
+    { "type": "challenge", "text": "Gi et kyss på kinnet til personen til høyre for den flasken peker på." },
+    { "type": "challenge", "text": "Sitt på fanget til personen flasken peker på i én runde." },
+    { "type": "challenge", "text": "Hold hender med personen flasken peker på til neste spinn." },
+    { "type": "challenge", "text": "Gi personen flasken peker på en 10-sekunders klem." },
+    { "type": "challenge", "text": "Bytt et klesplagg (f.eks. sokk) med personen flasken peker på." },
+    { "type": "challenge", "text": "Hvisk en hemmelighet i øret til personen flasken peker på." },
+    { "type": "challenge", "text": "Gi et kompliment om utseendet til personen flasken peker på." },
+    { "type": "challenge", "text": "Velg en person. Du og den personen må ta en shot sammen." },
+    { "type": "challenge", "text": "Kyss personen du synes er mest attraktiv i rommet (ikke den flasken peker på)." },
+    { "type": "challenge", "text": "Den flasken peker på må ta av ett valgfritt klesplagg (sokk, genser e.l.) eller drikke 3 slurker." },
+    { "type": "challenge", "text": "Gi en 'lap dance' i 15 sekunder til personen flasken peker på." },
+    { "type": "challenge", "text": "Den flasken peker på må velge en annen person de vil kysse. Personen kan si ja eller nei. Hvis nei, drikker begge." },
+    { "type": "challenge", "text": "Mat personen flasken peker på med en potetgullbit eller lignende på en forførende måte." },
+    { "type": "challenge", "text": "Massér skuldrene til personen flasken peker på i 30 sekunder." }
+  ]
+}
