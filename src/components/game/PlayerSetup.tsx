@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePlayers, type Player } from '@/hooks/usePlayers';
 import { UserPlus, X, Trash2, Edit, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface PlayerSetupProps {
   children: React.ReactNode;
@@ -116,69 +117,75 @@ export function PlayerSetup({
         </div>
 
         <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
-          {players.map(player => (
-            <div
-              key={player.id}
-              className="flex items-center justify-between bg-muted/50 p-2 rounded-md animate-in fade-in-0"
-            >
-              {editingPlayerId === player.id ? (
-                <>
-                  <Input
-                    value={editingPlayerName}
-                    onChange={e => setEditingPlayerName(e.target.value)}
-                    onKeyDown={handleEditKeyDown}
-                    className="h-8"
-                    autoFocus
-                  />
-                  <div className="flex">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleSaveEdit}
-                      className="h-8 w-8"
-                    >
-                      <Check className="h-4 w-4 text-green-500" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleCancelEdit}
-                      className="h-8 w-8"
-                    >
-                      <X className="h-4 w-4 text-muted-foreground" />
-                    </Button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <span
-                    className="flex-1 cursor-pointer"
-                    onClick={() => handleStartEdit(player)}
-                  >
-                    {player.name}
-                  </span>
-                  <div className="flex">
-                    <Button
-                      variant="ghost"
-                      size="icon"
+          <AnimatePresence>
+            {players.map(player => (
+              <motion.div
+                key={player.id}
+                layout
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, x: -20, transition: { duration: 0.2 } }}
+                className="flex items-center justify-between bg-muted/50 p-2 rounded-md"
+              >
+                {editingPlayerId === player.id ? (
+                  <>
+                    <Input
+                      value={editingPlayerName}
+                      onChange={e => setEditingPlayerName(e.target.value)}
+                      onKeyDown={handleEditKeyDown}
+                      className="h-8"
+                      autoFocus
+                    />
+                    <div className="flex">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleSaveEdit}
+                        className="h-8 w-8"
+                      >
+                        <Check className="h-4 w-4 text-green-500" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleCancelEdit}
+                        className="h-8 w-8"
+                      >
+                        <X className="h-4 w-4 text-muted-foreground" />
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <span
+                      className="flex-1 cursor-pointer"
                       onClick={() => handleStartEdit(player)}
-                      className="h-8 w-8"
                     >
-                      <Edit className="h-4 w-4 text-muted-foreground" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => removePlayer(player.id)}
-                      className="h-8 w-8"
-                    >
-                      <Trash2 className="h-4 w-4 text-muted-foreground" />
-                    </Button>
-                  </div>
-                </>
-              )}
-            </div>
-          ))}
+                      {player.name}
+                    </span>
+                    <div className="flex">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleStartEdit(player)}
+                        className="h-8 w-8"
+                      >
+                        <Edit className="h-4 w-4 text-muted-foreground" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => removePlayer(player.id)}
+                        className="h-8 w-8"
+                      >
+                        <Trash2 className="h-4 w-4 text-muted-foreground" />
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </motion.div>
+            ))}
+          </AnimatePresence>
           {isLoaded && players.length === 0 && (
             <p className="text-sm text-muted-foreground text-center py-4">
               Ingen spillere lagt til ennå.
@@ -190,7 +197,10 @@ export function PlayerSetup({
           <Button
             type="button"
             onClick={handleSetupAndClose}
-            disabled={players.length < 1 && gameRequiresPlayers(players, onSetupComplete)}
+            disabled={
+              players.length < 1 &&
+              gameRequiresPlayers(players, onSetupComplete)
+            }
             className="w-full"
             size="lg"
           >
@@ -205,7 +215,10 @@ export function PlayerSetup({
 // Helper function to determine if the next step requires players
 // This is a bit of a hack, but works for this flow.
 // A better solution would involve passing the selected game's `requiresPlayers` prop.
-function gameRequiresPlayers(players: Player[], onSetupComplete: () => void): boolean {
+function gameRequiresPlayers(
+  players: Player[],
+  onSetupComplete: () => void
+): boolean {
   if (typeof window !== 'undefined') {
     // onSetupComplete pushes to /spill/velg, so we are in the main lobby
     // and no game is selected yet. We can allow continuing.

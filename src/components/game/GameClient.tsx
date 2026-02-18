@@ -128,7 +128,7 @@ export function GameClient({ game }: { game: Game }) {
 
   const variants = {
     enter: {
-      x: 30,
+      x: 300,
       opacity: 0,
     },
     center: {
@@ -138,7 +138,7 @@ export function GameClient({ game }: { game: Game }) {
     },
     exit: {
       zIndex: 0,
-      x: -30,
+      x: -300,
       opacity: 0,
     },
   };
@@ -147,7 +147,12 @@ export function GameClient({ game }: { game: Game }) {
 
   if (isFinished) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen text-center p-4">
+      <motion.div 
+        className="flex flex-col items-center justify-center min-h-screen text-center p-4"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: 'spring', duration: 0.5 }}
+      >
           <PartyPopper className="h-16 w-16 text-primary mb-6" />
           <h2 className="text-4xl font-bold mb-4">Spillet er ferdig!</h2>
           <p className="text-muted-foreground mb-8">Bra spilt! Hva vil dere gjøre nå?</p>
@@ -163,7 +168,7 @@ export function GameClient({ game }: { game: Game }) {
                   </Link>
               </Button>
           </div>
-      </div>
+      </motion.div>
     )
   }
 
@@ -184,7 +189,7 @@ export function GameClient({ game }: { game: Game }) {
 
       {/* Game Stage */}
       <div className="w-full max-w-3xl flex-grow flex flex-col justify-center text-center">
-        <div className="relative flex-grow flex items-center justify-center">
+        <div className="relative flex-grow flex items-center justify-center overflow-hidden">
             <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
                     key={currentIndex}
@@ -209,14 +214,19 @@ export function GameClient({ game }: { game: Game }) {
         </div>
 
         {!showLoading && (
-             <div className="mt-8 mb-4 animate-in fade-in duration-500">
+             <motion.div 
+              className="mt-8 mb-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+            >
                 <Button 
                     onClick={handleNextTask} 
                     size="lg" 
-                    className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform active:scale-95">
+                    className="w-full max-w-xs mx-auto h-14 text-lg">
                     Neste
                 </Button>
-             </div>
+             </motion.div>
         )}
       </div>
 

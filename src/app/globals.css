@@ -98,19 +98,19 @@
 @keyframes player-glow {
   0%,
   100% {
-    text-shadow: 0 0 8px hsl(var(--primary) / 0.4);
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
   }
   50% {
-    text-shadow: 0 0 16px hsl(var(--primary) / 0.9);
+    text-shadow: 0 0 20px hsl(var(--primary) / 1);
   }
 }
 
 @keyframes player-glow-2 {
   0%,
   100% {
-    text-shadow: 0 0 8px hsl(var(--accent) / 0.4);
+    text-shadow: 0 0 10px hsl(var(--accent) / 0.5);
   }
   50% {
-    text-shadow: 0 0 16px hsl(var(--accent) / 0.9);
+    text-shadow: 0 0 20px hsl(var(--accent) / 1);
   }
 }

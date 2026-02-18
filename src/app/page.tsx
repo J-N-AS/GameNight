@@ -8,6 +8,7 @@ import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
 import Image from 'next/image';
 import { GameMenu } from '@/components/game/GameMenu';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
@@ -18,13 +19,40 @@ export default function Home() {
     router.push('/spill/velg');
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+      },
+    },
+  };
+
   return (
-    <div className="container mx-auto px-4 flex flex-col items-center justify-center min-h-screen text-center">
+    <motion.div
+      className="container mx-auto px-4 flex flex-col items-center justify-center min-h-screen text-center"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="absolute top-4 right-4 z-10">
         <GameMenu context="lobby" />
       </div>
 
-      <header className="mb-12 animate-in fade-in-50 duration-1000">
+      <motion.header className="mb-12" variants={itemVariants}>
         <Image
           src="/GameNight-logo-small.webp"
           alt="GameNight Logo"
@@ -36,9 +64,12 @@ export default function Home() {
         <p className="text-muted-foreground mt-4 text-lg md:text-xl">
           Start festen med et spill!
         </p>
-      </header>
+      </motion.header>
 
-      <div className="flex flex-col items-center gap-4 animate-in fade-in-0 slide-in-from-bottom-10 duration-1000 delay-500 fill-mode-both">
+      <motion.div
+        className="flex flex-col items-center gap-4"
+        variants={itemVariants}
+      >
         <PlayerSetup
           open={isPlayerSetupOpen}
           onOpenChange={setIsPlayerSetupOpen}
@@ -46,7 +77,7 @@ export default function Home() {
         >
           <Button
             size="lg"
-            className="h-16 text-xl px-10 transform transition-transform duration-200 active:scale-95 hover:scale-105 hover:shadow-primary/40 shadow-lg"
+            className="h-16 text-xl px-10 transform transition-transform duration-200 hover:scale-105 hover:shadow-primary/40 shadow-lg"
             onClick={() => setIsPlayerSetupOpen(true)}
           >
             <Rocket className="mr-3 h-6 w-6 animate-pulse" />
@@ -57,11 +88,13 @@ export default function Home() {
         <Button variant="link" asChild>
           <Link href="/spill/velg">Eller se alle spillene</Link>
         </Button>
-      </div>
+      </motion.div>
 
       <footer className="absolute bottom-0 left-0 right-0 flex items-center justify-center h-16">
-        <p className="text-sm text-muted-foreground/50">Laget med ❤️ for festen</p>
+        <p className="text-sm text-muted-foreground/50">
+          Laget med ❤️ for festen
+        </p>
       </footer>
-    </div>
+    </motion.div>
   );
 }

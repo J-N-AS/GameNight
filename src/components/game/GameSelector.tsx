@@ -60,6 +60,8 @@ export function GameSelector({ games }: GameSelectorProps) {
     }
   };
 
+  const secretCodeDelay = games.filter(g => g.id).length * 0.05 + 0.2;
+
   return (
     <>
       <PlayerSetup
@@ -101,7 +103,12 @@ export function GameSelector({ games }: GameSelectorProps) {
           ))}
         </div>
 
-        <section className="mt-20 text-center">
+        <motion.section
+          className="mt-20 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: secretCodeDelay }}
+        >
           <h2 className="text-2xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
             <PartyPopper className="h-6 w-6 text-primary" />
             Har du en hemmelig kode?
@@ -121,7 +128,7 @@ export function GameSelector({ games }: GameSelectorProps) {
               Bli med
             </Button>
           </form>
-        </section>
+        </motion.section>
       </div>
     </>
   );
