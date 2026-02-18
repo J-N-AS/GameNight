@@ -28,6 +28,17 @@
     { "type": "pointing", "text": "Hvem her tror du er mest eventyrlysten?" },
     { "type": "prompt", "text": "{player}, hva er en ting på din 'bucket list'?" },
     { "type": "prompt", "text": "{player}, fortell om en gang du lo så hardt at du gråt." },
-    { "type": "prompt", "text": "Hva er din 'go-to' karaokesang, {player}?" }
+    { "type": "prompt", "text": "Hva er din 'go-to' karaokesang, {player}?" },
+    { "type": "prompt", "text": "{player}, hvis du kunne løst ett verdensproblem, hvilket ville det vært?" },
+    { "type": "pointing", "text": "Hvem her tror du er mest kreativ?" },
+    { "type": "prompt", "text": "{player}, hva er det første du gjør om morgenen?" },
+    { "type": "prompt", "text": "Pest eller kolera: Aldri mer musikk, eller aldri mer film?" },
+    { "type": "prompt", "text": "{player}, hva er din favorittmat?" },
+    { "type": "pointing", "text": "Hvem her ser ut som de er en morgenperson?" },
+    { "type": "prompt", "text": "{player}, hvis du kunne hatt et hvilket som helst kjæledyr, hva ville det vært?" },
+    { "type": "prompt", "text": "Hva er en ting folk ofte blir overrasket over å høre om deg, {player}?" },
+    { "type": "pointing", "text": "Hvem her tror du er den største bokormen?" },
+    { "type": "prompt", "text": "{player}, hva er det mest interessante stedet du har reist til?" },
+    { "type": "prompt", "text": "Hva er en enkel ting som kan gjøre dagen din bedre?" }
   ]
 }

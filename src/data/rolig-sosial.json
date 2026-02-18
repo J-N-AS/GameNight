@@ -40,6 +40,16 @@
     { "type": "prompt", "text": "{player}, hva er ditt favorittminne fra det siste året?" },
     { "type": "prompt", "text": "{player}, hvis du kunne løst ett verdensproblem, hvilket ville det vært?" },
     { "type": "prompt", "text": "{player}, hva er en enkel glede du setter stor pris på?" },
-    { "type": "prompt", "text": "{player}, hva er den viktigste leksjonen du har lært om vennskap?" }
+    { "type": "prompt", "text": "{player}, hva er den viktigste leksjonen du har lært om vennskap?" },
+    { "type": "prompt", "text": "{player}, hva er en matrett du kunne spist hver dag?" },
+    { "type": "prompt", "text": "Hva er det rareste du har i kjøleskapet akkurat nå, {player}?" },
+    { "type": "prompt", "text": "{player}, hva er den beste lukten i verden, ifølge deg?" },
+    { "type": "prompt", "text": "Hvis du var et dyr, {player}, hvilket ville du vært og hvorfor?" },
+    { "type": "prompt", "text": "{player}, hva er din mest ubrukelige ferdighet?" },
+    { "type": "prompt", "text": "Hva er det fineste komplimentet du har fått, {player}?" },
+    { "type": "prompt", "text": "{player}, hvilken farge beskriver personligheten din best?" },
+    { "type": "prompt", "text": "{player}, fortell om en gang du tok feil, men lærte noe viktig." },
+    { "type": "prompt", "text": "Hva er din favorittplass i hele verden, {player}?" },
+    { "type": "prompt", "text": "{player}, hvis livet ditt var en film, hvilken sjanger ville det vært?" }
   ]
 }

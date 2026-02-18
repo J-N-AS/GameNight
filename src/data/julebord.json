@@ -20,6 +20,17 @@
     { "type": "pointing", "text": "Hvem her hadde spist mest julemat?" },
     { "type": "challenge", "text": "Regel: Ingen får si ordet 'jul'. Den som bryter regelen, drikker." },
     { "type": "prompt", "text": "{player}, hva er den verste julegaven du har fått?" },
-    { "type": "challenge", "text": "{player}, del ut 3 slurker til den personen du tror er den største nissen." }
+    { "type": "challenge", "text": "{player}, del ut 3 slurker til den personen du tror er den største nissen." },
+    { "type": "pointing", "text": "Hvem her pynter tidligst til jul?" },
+    { "type": "challenge", "text": "Alle som er ferdige med julegavene, kan dele ut 2 slurker." },
+    { "type": "prompt", "text": "Pest eller kolera: Kun spise ribbe eller kun spise pinnekjøtt resten av året?" },
+    { "type": "never_have_i_ever", "text": "gått på julebord med jobben og angret dagen etter." },
+    { "type": "challenge", "text": "{player} må synge første vers av 'På låven sitter nissen'. Hvis du klarer det, del ut 5 slurker." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å gråte av 'Tre nøtter til Askepott'?" },
+    { "type": "prompt", "text": "{player}, hva er din favoritt juletradisjon?" },
+    { "type": "challenge", "text": "Alle som elsker gløgg, tar en slurk." },
+    { "type": "never_have_i_ever", "text": "gitt bort en gave du har fått selv." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å kjøpe alle julegavene på lille julaften?" },
+    { "type": "challenge", "text": "Skål for alle som jobber i romjulen! Alle tar en slurk." }
   ]
 }

@@ -29,6 +29,16 @@
     { "type": "never_have_i_ever", "text": "tatt en 'selfie' på en fjelltopp." },
     { "type": "prompt", "text": "{player}, hva er ditt beste afterski-minne?" },
     { "type": "pointing", "text": "Hvem her hadde klart seg lengst alene i villmarka?" },
-    { "type": "challenge", "text": "Alle skåler for god stemning og fyr i peisen!" }
+    { "type": "challenge", "text": "Alle skåler for god stemning og fyr i peisen!" },
+    { "type": "pointing", "text": "Hvem her er mest 'hytte-pappa' eller 'hytte-mamma'?" },
+    { "type": "prompt", "text": "{player}, hva er det beste brettspillet for hyttetur?" },
+    { "type": "never_have_i_ever", "text": "falt i skiheisen." },
+    { "type": "challenge", "text": "Alle som har på seg ullsokker akkurat nå kan dele ut 2 slurker." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å starte en snøballkrig?" },
+    { "type": "prompt", "text": "Pest eller kolera: Alltid måtte gå på utedo, eller alltid måtte dele rom med den som snorker mest?" },
+    { "type": "challenge", "text": "{player}, fortell en historie som starter med 'Den gangen på fjellet...'" },
+    { "type": "never_have_i_ever", "text": "drukket kakao med 'noe ekstra' i." },
+    { "type": "pointing", "text": "Hvem her er den største optimisten når det gjelder været?" },
+    { "type": "challenge", "text": "Alle skåler for de som lager maten på hytteturen!" }
   ]
 }

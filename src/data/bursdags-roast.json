@@ -28,6 +28,13 @@
     { "type": "challenge", "text": "Bursdagsbarnet får velge en sang som alle må synge refrenget på." },
     { "type": "pointing", "text": "Hvem her kjenner den mest irriterende vanen til bursdagsbarnet?" },
     { "type": "prompt", "text": "{player}, hva er én ting du håper bursdagsbarnet oppnår i året som kommer?" },
-    { "type": "challenge", "text": "Alle tar en siste, stor skål for den fantastiske jubilanten!" }
+    { "type": "challenge", "text": "Alle tar en siste, stor skål for den fantastiske jubilanten!" },
+    { "type": "prompt", "text": "{player}, hva var ditt første inntrykk av bursdagsbarnet?" },
+    { "type": "challenge", "text": "Bursdagsbarnet må velge sin favorittperson i rommet (utenom partner/familie) til å ta en 'æresslurk'." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å gi bursdagsbarnet en gave de glemmer å bytte?" },
+    { "type": "prompt", "text": "{player}, del en intern vits bare du og bursdagsbarnet forstår." },
+    { "type": "challenge", "text": "Bursdagsbarnet får immunitet i neste runde. De kan velge en annen til å ta utfordringen for seg." },
+    { "type": "pointing", "text": "Hvem her kjenner bursdagsbarnets kaffebestilling utenat?" },
+    { "type": "prompt", "text": "{player}, hva er den beste gaven du kunne gitt bursdagsbarnet, hvis penger ikke var et problem?" }
   ]
 }

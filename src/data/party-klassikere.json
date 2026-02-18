@@ -41,6 +41,26 @@
     { "type": "challenge", "text": "Alle spiller 'stein, saks, papir' mot {player}. Alle som taper, drikker." },
     { "type": "prompt", "text": "Ny regel: Ingen har lov til å peke med fingrene. Bruk albuen i stedet. Straff: 1 slurk." },
     { "type": "pointing", "text": "Hvem i rommet er den største livsnyteren?" },
-    { "type": "challenge", "text": "Alle ta en felles skål for en legendarisk kveld!" }
+    { "type": "challenge", "text": "Alle ta en felles skål for en legendarisk kveld!" },
+    { "type": "challenge", "text": "Rim! {player} sier et ord. Personen til venstre må si et ord som rimer. Fortsett til noen feiler." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å prøve stand-up?" },
+    { "type": "never_have_i_ever", "text": "blitt avslørt i en løgn." },
+    { "type": "challenge", "text": "{player}, velg en person som må snakke med en teit aksent de neste 3 rundene." },
+    { "type": "pointing", "text": "Hvem her hadde vært den dårligste spionen?" },
+    { "type": "challenge", "text": "{player} må velge en 'drikke-buddy'. Hver gang en av dere drikker, drikker den andre også, ut spillet." },
+    { "type": "prompt", "text": "Hva er den mest ubrukelige tingen du kan?" },
+    { "type": "challenge", "text": "Alle som har sett ferdig en hel sesong av en serie på én dag, drikker." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å glemme hvor de parkerte?" },
+    { "type": "never_have_i_ever", "text": "snakket til et dyr som om det var et menneske." },
+    { "type": "challenge", "text": "Bytt plass med den personen du kjenner dårligst." },
+    { "type": "prompt", "text": "Pest eller kolera: Alltid måtte gå med en klovnenese, eller alltid ha våte sokker?" },
+    { "type": "pointing", "text": "Hvem her er mest fotogen?" },
+    { "type": "challenge", "text": "{player}, du er nå 'Question Master'. Hvis noen svarer på et spørsmål fra deg, må de drikke. Gjelder til din neste tur." },
+    { "type": "never_have_i_ever", "text": "prøvd å fikse noe teknisk og bare gjort det verre." },
+    { "type": "challenge", "text": "Alle som er født i en måned med 'r' i, tar en slurk." },
+    { "type": "pointing", "text": "Hvem her gir best råd?" },
+    { "type": "challenge", "text": "{player}, del ut 5 slurker, men maks 2 per person." },
+    { "type": "prompt", "text": "Hva er det rareste du har spist?" },
+    { "type": "challenge", "text": "Alle tar en slurk for hver piercing eller tatovering de har." }
   ]
 }
