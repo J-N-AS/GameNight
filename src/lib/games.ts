@@ -13,11 +13,12 @@ export interface Game {
   description: string;
   language: string;
   items: GameTask[];
+  shuffle?: boolean;
 }
 
 const gamesDirectory = path.join(process.cwd(), 'src/data');
 
-export async function getGames(): Promise<Omit<Game, 'items' | 'language'>[]> {
+export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> {
   try {
     const filenames = await fs.readdir(gamesDirectory);
     const games = await Promise.all(

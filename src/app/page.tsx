@@ -1,22 +1,24 @@
-import { getGames } from '@/lib/games';
-import Link from 'next/link';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { ArrowRight, PartyPopper } from 'lucide-react';
+'use client';
 
-export default async function Home() {
-  const games = await getGames();
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { PartyPopper } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { PlayerSetup } from '@/components/game/PlayerSetup';
+import Link from 'next/link';
+
+export default function Home() {
+  const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
+  const router = useRouter();
+
+  const handleSetupComplete = () => {
+    setIsPlayerSetupOpen(false);
+    router.push('/spill/velg');
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-16">
-      <header className="text-center mb-12">
+    <div className="container mx-auto px-4 flex flex-col items-center justify-center min-h-screen text-center">
+      <header className="mb-12 animate-in fade-in-50 duration-1000">
         <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
           GameNight
         </h1>
@@ -25,47 +27,31 @@ export default async function Home() {
         </p>
       </header>
 
-      <section className="mb-16">
-        <h2 className="text-3xl font-bold text-center mb-8 font-headline">Velg et spill</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {games.map((game) => (
-            <Link href={`/spill/${game.id}`} key={game.id} className="group">
-              <Card className="h-full flex flex-col transition-all duration-300 group-hover:border-primary group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-2xl font-bold">
-                    <PartyPopper className="w-6 h-6 text-primary" />
-                    {game.title}
-                  </CardTitle>
-                  <CardDescription>{game.description}</CardDescription>
-                </CardHeader>
-                <CardFooter className="mt-auto">
-                  <Button variant="ghost" className="w-full justify-between">
-                    Start spillet
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </CardFooter>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-3xl font-bold text-center mb-8 font-headline">Har du en kode?</h2>
-        <form className="max-w-sm mx-auto flex gap-2">
-          <Input
-            type="text"
-            placeholder="Skriv inn kode..."
-            className="text-center tracking-widest uppercase"
-          />
-          <Button type="submit" variant="default">
-            Bli med
+      <div className="flex flex-col items-center gap-4 animate-in fade-in-0 slide-in-from-bottom-10 duration-1000 delay-500 fill-mode-both">
+        <PlayerSetup
+          open={isPlayerSetupOpen}
+          onOpenChange={setIsPlayerSetupOpen}
+          onSetupComplete={handleSetupComplete}
+        >
+          <Button
+            size="lg"
+            className="h-14 text-xl px-10 transform transition-transform duration-200 active:scale-95"
+            onClick={() => setIsPlayerSetupOpen(true)}
+          >
+            <PartyPopper className="mr-3 h-6 w-6" />
+            Start en runde
           </Button>
-        </form>
-        <p className="text-center text-sm text-muted-foreground mt-4">
-          For russegrupper og egne spill.
-        </p>
-      </section>
+        </PlayerSetup>
+
+        <Button variant="link" asChild>
+          <Link href="/spill/velg">Eller bla i spill</Link>
+        </Button>
+      </div>
+
+       {/* Ad banner placeholder */}
+       <footer className="absolute bottom-0 left-0 right-0 flex items-center justify-center h-16 border-t border-border/50">
+          <p className="text-sm text-muted-foreground">Annonse</p>
+       </footer>
     </div>
   );
 }

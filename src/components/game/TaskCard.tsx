@@ -2,6 +2,7 @@ import type { GameTask } from '@/lib/games';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Beer, Hand, MessageSquareQuote } from 'lucide-react';
+import React from 'react';
 
 const taskTypeDetails = {
   challenge: {
@@ -21,8 +22,13 @@ const taskTypeDetails = {
   },
 };
 
-export function TaskCard({ task }: { task: GameTask }) {
-  const details = taskTypeDetails[task.type];
+type TaskCardProps = {
+    type: GameTask['type'];
+    content: React.ReactNode;
+}
+
+export function TaskCard({ type, content }: TaskCardProps) {
+  const details = taskTypeDetails[type];
   const Icon = details.icon;
 
   return (
@@ -40,7 +46,7 @@ export function TaskCard({ task }: { task: GameTask }) {
       </CardHeader>
       <CardContent>
         <p className="text-3xl md:text-5xl font-bold leading-tight md:leading-tight">
-          {task.text}
+          {content}
         </p>
       </CardContent>
     </Card>

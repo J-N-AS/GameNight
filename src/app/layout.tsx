@@ -26,10 +26,6 @@ export default function RootLayout({
       <body className="font-body antialiased bg-background text-foreground">
         <div className="relative flex min-h-screen flex-col">
           <main className="flex-1">{children}</main>
-          {/* Ad banner placeholder */}
-          <footer className="flex items-center justify-center h-16 border-t border-border/50">
-            <p className="text-sm text-muted-foreground">Annonse</p>
-          </footer>
         </div>
         <Toaster />
       </body>

@@ -3,14 +3,15 @@
   "title": "Pekefest",
   "description": "Pek på den personen som passer best til beskrivelsen.",
   "language": "no",
+  "shuffle": true,
   "items": [
-    { "type": "prompt", "text": "Pek på den som mest sannsynlig sovner først i kveld." },
-    { "type": "prompt", "text": "Hvem i rommet er mest morgenmenneske?" },
-    { "type": "prompt", "text": "Hvem her hadde overlevd lengst på en øde øy?" },
-    { "type": "prompt", "text": "Hvem bruker mest penger på unødvendige ting?" },
-    { "type": "prompt", "text": "Pek på den med best musikksmak." },
-    { "type": "prompt", "text": "Hvem er mest sannsynlig til å le på et upassende tidspunkt?" },
-    { "type": "prompt", "text": "Hvem ville vært den første til å bli arrestert i en zombieapokalypse?" },
-    { "type": "prompt", "text": "Pek på den som er mest avhengig av telefonen sin." }
+    { "type": "prompt", "text": "Hvem er mest sannsynlig til å sovne hos {player} i kveld?" },
+    { "type": "prompt", "text": "Hvem i rommet, utenom {player}, er mest morgenmenneske?" },
+    { "type": "prompt", "text": "Hvem hadde ofret {player} for å overleve på en øde øy?" },
+    { "type": "prompt", "text": "Hvem bruker mest penger på unødvendige ting til {player}?" },
+    { "type": "prompt", "text": "Pek på den med dårligst musikksmak (beklager, {player})." },
+    { "type": "prompt", "text": "Hvem er mest sannsynlig til å le av at {player} faller?" },
+    { "type": "prompt", "text": "Hvem ville vært den første til å bli arrestert hvis de var med {player} på by'n?" },
+    { "type": "prompt", "text": "Pek på den som er mest avhengig av telefonen sin, foruten {player}." }
   ]
 }

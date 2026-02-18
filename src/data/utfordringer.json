@@ -3,14 +3,15 @@
   "title": "Utfordringer",
   "description": "Gjør som kortet sier. Enkelt og greit.",
   "language": "no",
+  "shuffle": true,
   "items": [
-    { "type": "challenge", "text": "Ta 2 slurker." },
-    { "type": "challenge", "text": "Velg en person som må ta 3 slurker." },
-    { "type": "challenge", "text": "Alle med svart T-skjorte må drikke." },
-    { "type": "challenge", "text": "Fortell en vits. Hvis ingen ler, ta 4 slurker." },
-    { "type": "challenge", "text": "Den som sist var på do må drikke." },
-    { "type": "challenge", "text": "Alle må ta en slurk fra drikken til personen til venstre." },
-    { "type": "challenge", "text": "Bytt plass med personen rett ovenfor deg." },
-    { "type": "challenge", "text": "Waterfall! Alle starter å drikke, og du kan ikke stoppe før personen til høyre for deg stopper." }
+    { "type": "challenge", "text": "{player}, ta 2 slurker." },
+    { "type": "challenge", "text": "Velg en person som må ta 3 slurker. Du kan ikke velge {player}." },
+    { "type": "challenge", "text": "{all} med svart T-skjorte må drikke." },
+    { "type": "challenge", "text": "{player}, fortell en vits. Hvis ingen ler, ta 4 slurker." },
+    { "type": "challenge", "text": "Den som sist var på do må drikke. Er det deg, {player}?" },
+    { "type": "challenge", "text": "{all} må ta en slurk fra drikken til personen til venstre." },
+    { "type": "challenge", "text": "{player}, bytt plass med {player2}." },
+    { "type": "challenge", "text": "Waterfall! {player} starter." }
   ]
 }
