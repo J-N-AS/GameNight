@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AppFooter } from '@/components/layout/AppFooter';
@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: 'GameNight - Gratis Partyspill & Drikkeleker',
   description: 'Start festen med de beste gratis partyspillene og drikkelekene, rett i nettleseren. Ingen installasjon, bare moro!',
   manifest: '/manifest.json',
+};
+
+export const viewport: Viewport = {
   themeColor: '#1c1717',
 };
 
@@ -24,7 +27,6 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon-192x192.png"></link>
-        <meta name="theme-color" content="#1c1717" />
       </head>
       <body className="font-body antialiased bg-background text-foreground animated-background">
         <AppProviders>
