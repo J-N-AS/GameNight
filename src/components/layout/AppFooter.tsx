@@ -18,14 +18,17 @@ export function AppFooter() {
           <Link href="/info/om-oss" className="hover:text-foreground transition-colors">
             Om oss
           </Link>
-          <Link href="/info/kontakt-oss" className="hover:text-foreground transition-colors">
-            Kontakt
+          <Link href="/alle-spill" className="hover:text-foreground transition-colors">
+            Alle Spill
           </Link>
           <Link href="/drikkeleker" className="hover:text-foreground transition-colors">
-            Flere Drikkeleker
+            Klassiske Drikkeleker
           </Link>
           <Link href="/info/personvern" className="hover:text-foreground transition-colors">
             Personvern
+          </Link>
+          <Link href="/info/kontakt-oss" className="hover:text-foreground transition-colors">
+            Kontakt
           </Link>
         </div>
       </div>

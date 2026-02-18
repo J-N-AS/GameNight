@@ -7,6 +7,9 @@
   "requiresPlayers": true,
   "emoji": "🥃",
   "color": "hsl(35 90% 55%)",
+  "intensity": "high",
+  "audience": "18+",
+  "category": ["Kaos", "18+"],
   "items": [
     { "type": "challenge", "text": "{player}, sannhet eller shot: Hva er den siste løgnen du fortalte?" },
     { "type": "challenge", "text": "{player}, sannhet eller shot: Hvem tenkte du sist på romantisk?" },

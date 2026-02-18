@@ -8,6 +8,9 @@
   "emoji": "💎",
   "color": "hsl(210 100% 70%)",
   "hidden": true,
+  "intensity": "medium",
+  "audience": "18+",
+  "category": ["Kaos", "18+"],
   "items": [
     { "type": "challenge", "text": "{player}, du må snakke med en teit aksent resten av spillet." },
     { "type": "prompt", "text": "{player}, hva er det rareste du har spist?" },

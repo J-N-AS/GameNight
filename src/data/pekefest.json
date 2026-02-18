@@ -7,6 +7,9 @@
   "requiresPlayers": false,
   "emoji": "👉",
   "color": "hsl(260 90% 65%)",
+  "intensity": "low",
+  "audience": "all",
+  "category": ["Vorspiel", "Party"],
   "items": [
     { "type": "pointing", "text": "Hvem er mest sannsynlig til å le på upassende tidspunkt?" },
     { "type": "pointing", "text": "Hvem bruker mest penger på mat?" },

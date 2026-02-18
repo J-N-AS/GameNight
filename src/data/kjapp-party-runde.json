@@ -7,6 +7,9 @@
   "requiresPlayers": true,
   "emoji": "⚡",
   "color": "hsl(45 93% 47%)",
+  "intensity": "medium",
+  "audience": "all",
+  "category": ["Vorspiel", "Party"],
   "items": [
     { "type": "challenge", "text": "{player}, du er nå slangetemmer. Hver gang du sier ordet 'slange', må alle drikke." },
     { "type": "prompt", "text": "Alle må si sitt favoritt-dansemove. {player} bestemmer hvem som har det dårligste, som må drikke." },

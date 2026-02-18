@@ -7,6 +7,9 @@
   "requiresPlayers": true,
   "emoji": "😈",
   "color": "hsl(320 80% 60%)",
+  "intensity": "medium",
+  "audience": "18+",
+  "category": ["Rolig", "18+"],
   "items": [
     { "type": "prompt", "text": "{player}, hva er din største turn-on?" },
     { "type": "challenge", "text": "{player}, gi et flørtende kompliment til {player2}." },

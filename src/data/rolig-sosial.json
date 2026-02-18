@@ -7,6 +7,9 @@
   "requiresPlayers": true,
   "emoji": "🤔",
   "color": "hsl(180 80% 50%)",
+  "intensity": "low",
+  "audience": "all",
+  "category": ["Rolig"],
   "items": [
     { "type": "prompt", "text": "{player}, hvis du kunne hatt en middag med tre fiktive karakterer, hvem ville du valgt?" },
     { "type": "prompt", "text": "{player}, hva er en liten ting som gjør deg genuint glad?" },

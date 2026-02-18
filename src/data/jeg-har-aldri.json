@@ -7,6 +7,9 @@
   "requiresPlayers": false,
   "emoji": "🤫",
   "color": "hsl(var(--accent))",
+  "intensity": "low",
+  "audience": "all",
+  "category": ["Vorspiel", "Party"],
   "items": [
     { "type": "never_have_i_ever", "text": "sendt en melding til feil person." },
     { "type": "never_have_i_ever", "text": "løyet om at jeg har sett en film alle snakker om." },

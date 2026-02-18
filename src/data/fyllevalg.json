@@ -7,6 +7,9 @@
   "requiresPlayers": true,
   "emoji": "🤦‍♂️",
   "color": "hsl(25 85% 55%)",
+  "intensity": "high",
+  "audience": "all",
+  "category": ["Kaos", "Party"],
   "items": [
     { "type": "prompt", "text": "{player}, hva er det dummeste fyllevalget du har tatt?" },
     { "type": "challenge", "text": "{player2}, del et fyllevalg – eller drikk 2 slurker." },

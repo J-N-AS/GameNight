@@ -7,6 +7,9 @@
   "requiresPlayers": true,
   "emoji": "💥",
   "color": "hsl(10 90% 55%)",
+  "intensity": "high",
+  "audience": "all",
+  "category": ["Kaos", "Party"],
   "items": [
     { "type": "challenge", "text": "Alle drikker. Ingen spørsmål." },
     { "type": "pointing", "text": "Hvem her har minst kontroll akkurat nå?" },
@@ -53,7 +56,7 @@
     { "type": "challenge", "text": "Alle lukker øynene og drikker. Stol på prosessen." },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å foreslå noe dumt – og mene det?" },
     { "type": "challenge", "text": "{player}, lag en ny regel som bare gjelder deg selv." },
-    { "type": "prompt", "text": "{player}, hva er ditt mest irriterende trekk på fylla?" },
+    { "type": "prompt", "text": "{player}, hva er det mest irriterende trekket du har på fylla?" },
     { "type": "challenge", "text": "Alle som ler av dette: drikk." },
 
     { "type": "challenge", "text": "{player}, nevn 5 dyr på 5 sekunder. Feiler du: drikk." },

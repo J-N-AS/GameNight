@@ -7,6 +7,9 @@
   "requiresPlayers": true,
   "emoji": "🤫",
   "color": "hsl(260 70% 60%)",
+  "intensity": "medium",
+  "audience": "18+",
+  "category": ["Rolig", "18+"],
   "items": [
     { "type": "challenge", "text": "{player}, del en hemmelighet – eller ta en shot." },
     { "type": "prompt", "text": "{player}, hva er noe få mennesker vet om deg?" },

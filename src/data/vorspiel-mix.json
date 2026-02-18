@@ -7,6 +7,9 @@
   "requiresPlayers": true,
   "emoji": "🍻",
   "color": "hsl(140 80% 60%)",
+  "intensity": "low",
+  "audience": "all",
+  "category": ["Vorspiel"],
   "items": [
     { "type": "challenge", "text": "{player}, velg en drikkepartner for de neste 3 rundene. Hver gang en av dere drikker, drikker den andre også." },
     { "type": "prompt", "text": "{player}, hva er det flaueste kallenavnet du noensinne har hatt?" },

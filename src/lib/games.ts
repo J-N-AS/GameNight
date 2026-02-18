@@ -47,6 +47,9 @@ export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shu
         requiresPlayers: gameData.requiresPlayers,
         emoji: gameData.emoji,
         color: gameData.color,
+        intensity: gameData.intensity,
+        audience: gameData.audience,
+        category: gameData.category,
       };
     })
   );

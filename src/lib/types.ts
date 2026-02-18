@@ -16,6 +16,9 @@ export interface Game {
   emoji?: string;
   color?: string;
   hidden?: boolean;
+  intensity: 'low' | 'medium' | 'high';
+  audience: 'all' | '18+';
+  category: string[];
 }
 
 export interface GameArticle {

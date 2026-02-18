@@ -7,6 +7,9 @@
   "requiresPlayers": true,
   "emoji": "🌙",
   "color": "hsl(220 60% 55%)",
+  "intensity": "low",
+  "audience": "all",
+  "category": ["Rolig"],
   "items": [
     { "type": "prompt", "text": "{player}, hvordan føler du deg akkurat nå?" },
     { "type": "challenge", "text": "{player}, ta én rolig slurk og pust dypt." },
