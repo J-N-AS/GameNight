@@ -4,12 +4,18 @@ import { notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Dice5, Crown, HelpCircle } from 'lucide-react';
+import { ArrowLeft, Dice5, Crown, HelpCircle, Layers } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import type { GameArticle } from '@/lib/types';
 import { getArticle } from '@/lib/articles';
 import Image from 'next/image';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 function DrikkelekArticleClient({ article }: { article: GameArticle }) {
   return (
@@ -74,6 +80,32 @@ function DrikkelekArticleClient({ article }: { article: GameArticle }) {
                 ))}
               </ol>
             </div>
+
+            {article.variants && article.variants.length > 0 && (
+              <div>
+                <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-xl">
+                  <Layers className="h-5 w-5" />
+                  Varianter og Regler
+                </h3>
+                <Accordion type="single" collapsible className="w-full">
+                  {article.variants.map((variant, i) => (
+                    <AccordionItem value={`item-${i}`} key={i}>
+                      <AccordionTrigger className="text-base font-semibold text-foreground hover:no-underline">
+                        {variant.title}
+                      </AccordionTrigger>
+                      <AccordionContent className="space-y-4 pt-2">
+                        <p className="text-muted-foreground">{variant.description}</p>
+                        <ol className="list-decimal list-inside space-y-2 text-base">
+                          {variant.rules.map((rule, j) => (
+                            <li key={j}>{rule}</li>
+                          ))}
+                        </ol>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            )}
 
             {article.cardRules && (
               <div>

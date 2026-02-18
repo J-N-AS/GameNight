@@ -38,6 +38,41 @@
             "Lagene bytter på å kaste en ball mot motstanderens kopper.",
             "Hvis ballen lander i en kopp, må en fra motstanderlaget drikke innholdet og fjerne koppen.",
             "Første lag som blir kvitt alle motstanderens kopper, vinner spillet."
+        ],
+        "variants": [
+            {
+                "title": "Rage Cage / Stack Cup",
+                "description": "En kaotisk og fartsfylt versjon av Flip Cup, hvor to spillere kjemper mot klokka for å unngå å drikke.",
+                "rules": [
+                    "Plasser en stor haug med fylte kopper i midten av bordet. Alle tar en kopp.",
+                    "To spillere starter med hver sin tomme kopp og en bordtennisball.",
+                    "På 'gå!', drikker de to startspillerne, plasserer koppen sin på bordet og prøver å treffe ballen oppi.",
+                    "Når de treffer, sender de ballen og koppen til spilleren til venstre for seg.",
+                    "Hvis en spiller tar igjen spilleren foran seg (dvs. treffer i koppen sin før spilleren foran gjør det), kan de stable koppen sin oppå koppen til den andre spilleren.",
+                    "Spilleren som fikk koppen sin 'stablet', må ta en ny, full kopp fra midten og starte på nytt.",
+                    "Spillet fortsetter til alle koppene i midten er borte."
+                ]
+            },
+            {
+                "title": "Beirut (Original Beer Pong)",
+                "description": "'Old school' Beer Pong uten ekstra regler. Ren kasteferdighet og drikking.",
+                "rules": [
+                    "Dette er i hovedsak Beer Pong med de grunnleggende reglene.",
+                    "Ingen 'bounce'-skudd som teller for to kopper.",
+                    "Ingen 're-racks' (omorganisering av kopper).",
+                    "Bare ren, enkel kasting. Ballen i koppen = drikk."
+                ]
+            },
+            {
+                "title": "Shot Pong",
+                "description": "En høy-innsats versjon av Beer Pong der øl byttes ut med shots. Spilles vanligvis med færre kopper.",
+                "rules": [
+                    "Sett opp 3 eller 6 kopper på hver side, fylt med en shot (eller en blanding av sprit og blandevann).",
+                    "Reglene er de samme som vanlig Beer Pong.",
+                    "Når en ball treffer en kopp, drikker motstanderlaget shotten.",
+                    "Vær forsiktig, dette er en intens versjon! Anbefales å spille med færre kopper."
+                ]
+            }
         ]
     },
     {
