@@ -10,7 +10,7 @@
   "hidden": true,
   "items": [
     { "type": "challenge", "text": "{player}, du må snakke med en teit aksent resten av spillet." },
-    { "type": "prompt", "text": "Hva er det rareste du har spist?" },
+    { "type": "prompt", "text": "{player}, hva er det rareste du har spist?" },
     { "type": "pointing", "text": "Hvem her ville overlevd lengst i en zombie-apokalypse?" },
     { "type": "challenge", "text": "{player} og {player2} må bytte et klesplagg." },
     { "type": "never_have_i_ever", "text": "prøvd å bruke en falsk ID." }

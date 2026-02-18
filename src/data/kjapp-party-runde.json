@@ -13,7 +13,7 @@
     { "type": "challenge", "text": "{player}, ta 2 slurker for fremtiden og 2 for fortiden." },
     { "type": "challenge", "text": "Tommel-mester! {player} kan når som helst sette tommelen på bordet. Sistemann som gjør det samme må drikke." },
     { "type": "challenge", "text": "{player}, dans Macarena i 15 sekunder." },
-    { "type": "prompt", "text": "Hva er din go-to drikkesang? {player} må starte å synge den nå." },
+    { "type": "prompt", "text": "{player}, hva er din go-to drikkesang? Syng den nå!" },
     { "type": "challenge", "text": "{player} og {player2} må ha en stirrekonkurranse. Førstemann som blunker, drikker." },
     { "type": "challenge", "text": "{all} må rope 'GameNight er best!'. Sistemann som roper, drikker." },
     { "type": "challenge", "text": "{player} må finne på et rim på ordet 'fest'. Hvis ikke, drikk." },
