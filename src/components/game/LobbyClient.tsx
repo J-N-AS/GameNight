@@ -129,16 +129,8 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
           )}
       </motion.div>
 
-      {/* Party Tools */}
-      <motion.div
-        className="mb-16 w-full max-w-md mx-auto"
-        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}
-      >
-        <PartyTools />
-      </motion.div>
-
       {/* Recommended Games */}
-      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.4 } } }}>
+      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}>
           <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
             ⭐ Anbefalt Nå
           </h2>
@@ -158,6 +150,16 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
               ))}
           </div>
       </motion.div>
+
+      {/* Party Tools */}
+      {isLoaded && players.length > 0 && (
+        <motion.div
+          className="mb-16 w-full max-w-md mx-auto"
+          variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.4 } } }}
+        >
+          <PartyTools />
+        </motion.div>
+      )}
 
       {/* Moods */}
       <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
