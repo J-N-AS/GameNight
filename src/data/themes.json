@@ -32,5 +32,39 @@
       "pekefest-klassisk",
       "kjapp-party-runde"
     ]
+  },
+  {
+    "slug": "jentekveld",
+    "title": "Girls Night: Spill for Jentekvelden",
+    "metaDescription": "Den ultimate samlingen av spill for jentekvelden, vorspiel med jentene eller 'girls night'. Garantert god stemning, latter og girl power!",
+    "emoji": "💅",
+    "content": [
+      "Samle jentegjengen for en kveld fylt med latter, hemmeligheter og uforglemmelig stemning! Enten det er vorspiel før byen, en koselig kveld inne, eller bare en unnskyldning for å feire vennskapet, er de riktige spillene nøkkelen til suksess.",
+      "Her finner du en håndplukket samling spill som er skapt for jentekvelden. Vi snakker om alt fra morsomme pekefester og 'Jeg har aldri'-runder som avdekker interne hemmeligheter, til spill som oser av 'girl power' og selvtillit. Disse spillene er designet for å skape en trygg og gøyal atmosfære der dere kan være dere selv, dele historier og hype hverandre opp.",
+      "Så finn frem boblene, skru opp favoritt-spillelisten, og la disse spillene sette den perfekte stemningen for en legendarisk jentekveld!"
+    ],
+    "gameIds": [
+      "girl-power-jenta-stemning",
+      "pekefest-klassisk",
+      "sexy-vibes",
+      "jeg-har-aldri-klassisk"
+    ]
+  },
+  {
+    "slug": "singelkveld",
+    "title": "Singelkveld: Spill som Bryter Isen",
+    "metaDescription": "Perfekte isbrytere og flørtende partyspill for single og vennegjenger. Fra sexy utfordringer til spill som tester kjemien.",
+    "emoji": "💘",
+    "content": [
+      "Enten du er på en singelfest, en middag med nye bekjentskaper, eller bare vil sette en flørtende tone for kvelden, er de riktige spillene den perfekte isbryteren. Glem klein stillhet og anstrengte samtaler – her handler det om å skape en leken og avslappet atmosfære der kjemien kan blomstre.",
+      "Denne samlingen er spesielt kuratert for anledninger der det er litt spenning i luften. Her finner du spill som utfordrer på en leken måte, stiller spørsmål som avdekker personlighet, og skaper situasjoner som garantert fører til latter og gode samtaler. Fra dristige utfordringer i 'Sannhet eller Shot' til spill som utforsker kroppsspråk og flørt – disse er designet for å teste kjemien.",
+      "Så, enten målet er å bli bedre kjent, skape litt romantisk spenning, eller bare ha en utrolig morsom kveld, er disse spillene den perfekte katalysatoren."
+    ],
+    "gameIds": [
+      "singles-night-flort-kjemi",
+      "singles-body-language",
+      "sexy-dares-late-night",
+      "sannhet-eller-shot"
+    ]
   }
 ]

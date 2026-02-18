@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Gamepad2 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -88,6 +88,20 @@ export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
           </motion.div>
         ))}
       </div>
+
+      <motion.div
+        className="mt-12 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <Button size="lg" variant="outline" asChild>
+          <Link href="/alle-spill">
+            <Gamepad2 className="mr-2 h-5 w-5" />
+            Se alle spill
+          </Link>
+        </Button>
+      </motion.div>
 
       <motion.div
         className="mt-16 flex justify-center"
