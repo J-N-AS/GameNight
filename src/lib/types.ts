@@ -5,6 +5,12 @@ export interface GameTask {
   text: string;
 }
 
+export interface GameWarning {
+  title: string;
+  description: string[];
+  buttonText: string;
+}
+
 export interface Game {
   id: string;
   title: string;
@@ -19,6 +25,7 @@ export interface Game {
   intensity: 'low' | 'medium' | 'high';
   audience: 'all' | '18+';
   category: string[];
+  warning?: GameWarning;
 }
 
 export interface GameArticle {

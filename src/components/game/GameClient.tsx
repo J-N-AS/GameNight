@@ -13,6 +13,7 @@ import { GameMenu } from './GameMenu';
 import { useToast } from '@/hooks/use-toast';
 import { AdBanner } from '../ads/AdBanner';
 import { Progress } from '@/components/ui/progress';
+import { GameConsentScreen } from './GameConsentScreen';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -88,6 +89,7 @@ export function GameClient({ game }: { game: Game }) {
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
+  const [consentGiven, setConsentGiven] = useState(false);
 
   const setupGame = useCallback(() => {
     const gameTasks =
@@ -130,6 +132,9 @@ export function GameClient({ game }: { game: Game }) {
 
   const handleRestart = () => {
     if (isLoaded) {
+      if(game.warning) {
+        setConsentGiven(false);
+      }
       setupGame();
     }
   };
@@ -168,6 +173,17 @@ export function GameClient({ game }: { game: Game }) {
 
   const progressValue =
     tasks.length > 0 ? ((currentIndex + 1) / tasks.length) * 100 : 0;
+  
+  const showConsent = game.warning && !consentGiven;
+  
+  if (showConsent) {
+    return (
+        <GameConsentScreen
+            warning={game.warning!}
+            onConfirm={() => setConsentGiven(true)}
+        />
+    );
+  }
 
   if (isFinished) {
     return (

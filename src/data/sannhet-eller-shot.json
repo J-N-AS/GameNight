@@ -10,6 +10,15 @@
   "intensity": "high",
   "audience": "18+",
   "category": ["Kaos", "18+"],
+  "warning": {
+    "title": "Advarsel: Intenst Innhold",
+    "description": [
+      "Dette spillet inneholder personlige og potensielt dristige spørsmål. 'Shot' er et forslag, og kan byttes ut med en avtalt mengde drikke.",
+      "Vær ærlig, men respekter hverandres grenser. Det som sies i spillet, blir i spillet.",
+      "Husk: Du kan alltid velge å ta en straff i stedet for å svare. Drikk ansvarlig og ta vare på hverandre."
+    ],
+    "buttonText": "Jeg forstår og starter spillet"
+  },
   "items": [
     { "type": "challenge", "text": "{player}, sannhet eller shot: Hva er den siste løgnen du fortalte?" },
     { "type": "challenge", "text": "{player}, sannhet eller shot: Hvem tenkte du sist på romantisk?" },

@@ -16,9 +16,13 @@ async function loadGameData(id: string): Promise<Game | null> {
 // Helper function to get all game IDs (filenames without .json).
 // This list must contain the filenames to ensure they are found.
 const allGameIds = [
+  'after-dark',
   'afterparty',
   'dating-fails',
   'fyllevalg',
+  'girl-power',
+  'girls-vs-boys',
+  'gutta',
   'hemmelig-bonus',
   'hemmeligheter',
   'jeg-har-aldri',
@@ -28,7 +32,11 @@ const allGameIds = [
   'pekefest',
   'rolig-sosial',
   'sannhet-eller-shot',
+  'sexy-action',
+  'sexy-dares',
   'sexy-vibes',
+  'singles-body',
+  'singles-night',
   'vorspiel-mix',
   // Note: 'utfordringer' is intentionally not included as it's empty/deprecated.
 ];

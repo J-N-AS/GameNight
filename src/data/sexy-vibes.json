@@ -10,67 +10,66 @@
   "intensity": "medium",
   "audience": "18+",
   "category": ["Rolig", "18+"],
+  "warning": {
+    "title": "Advarsel: Flørtete Innhold",
+    "description": [
+      "Dette spillet inneholder spørsmål og oppgaver med et flørtende og seksuelt ladet tema.",
+      "Spillet er ment for å være lekent. Respekter hverandres grenser.",
+      "Husk: Det er alltid lov å si nei eller velge å drikke i stedet for å utføre en oppgave som føles ubehagelig. Ta vare på hverandre."
+    ],
+    "buttonText": "Jeg forstår og starter spillet"
+  },
   "items": [
     { "type": "prompt", "text": "{player}, hva er din største turn-on?" },
     { "type": "challenge", "text": "{player}, gi et flørtende kompliment til {player2}." },
     { "type": "pointing", "text": "Hvem her har mest sexy energi akkurat nå?" },
     { "type": "prompt", "text": "{player}, hva er din største turn-off?" },
     { "type": "challenge", "text": "{player}, ta en slurk hvis du liker øyekontakt." },
-
     { "type": "prompt", "text": "{player}, hva er din mest attraktive egenskap?" },
     { "type": "challenge", "text": "Alle som liker komplimenter: drikk." },
     { "type": "pointing", "text": "Hvem her flørter mest uten å prøve?" },
     { "type": "prompt", "text": "{player}, hva får deg til å føle deg mest ønsket?" },
     { "type": "challenge", "text": "{player}, gi en slow clap til {player2} som du synes har best stil." },
-
     { "type": "prompt", "text": "{player}, hva er ditt beste sjekketriks?" },
     { "type": "challenge", "text": "{player}, vis ditt beste flørtende smil i 5 sekunder." },
     { "type": "pointing", "text": "Hvem her ville vært best på en date?" },
     { "type": "prompt", "text": "{player}, hva er den mest romantiske tingen du liker?" },
     { "type": "challenge", "text": "Alle tar én slurk hvis de liker små berøringer." },
-
     { "type": "prompt", "text": "{player}, hva er din favoritt-type kompliment?" },
     { "type": "challenge", "text": "{player}, hvisk et hyggelig ord til {player2} (eller drikk)." },
     { "type": "pointing", "text": "Hvem her har best stemme?" },
     { "type": "prompt", "text": "{player}, hva gjør deg trygg i flørt?" },
     { "type": "challenge", "text": "Alle som liker spontane øyeblikk: drikk." },
-
     { "type": "prompt", "text": "{player}, hva er din mest flørtete vane?" },
     { "type": "challenge", "text": "{player}, hold øyekontakt med {player2} i 10 sekunder (eller drikk)." },
     { "type": "pointing", "text": "Hvem her er mest magnetisk?" },
     { "type": "prompt", "text": "{player}, hva er ditt beste date-tips?" },
     { "type": "challenge", "text": "Alle tar én slurk hvis de liker sakte tempo." },
-
     { "type": "prompt", "text": "{player}, hva er din favoritt-måte å bli flørtet med på?" },
     { "type": "challenge", "text": "{player}, gi et kompliment om stilen eller energien til {player2}." },
     { "type": "pointing", "text": "Hvem her gir best førsteinntrykk?" },
     { "type": "prompt", "text": "{player}, hva er din største flørteseier?" },
     { "type": "challenge", "text": "Alle som liker latter i flørt: drikk." },
-
     { "type": "prompt", "text": "{player}, hva er din mest sjarmerende side?" },
     { "type": "challenge", "text": "{player}, send en fingerpistol + wink til {player2}." },
     { "type": "pointing", "text": "Hvem her har best øyekontakt?" },
     { "type": "prompt", "text": "{player}, hva er en liten ting som betyr mye for deg?" },
     { "type": "challenge", "text": "Alle tar én slurk hvis de liker rolig stemning." },
-
     { "type": "prompt", "text": "{player}, hva er din favoritt-date-aktivitet?" },
     { "type": "challenge", "text": "{player}, gi en high-five til {player2} som varer litt for lenge (eller drikk)." },
     { "type": "pointing", "text": "Hvem her er mest romantisk?" },
     { "type": "prompt", "text": "{player}, hva får deg til å smile umiddelbart?" },
     { "type": "challenge", "text": "Alle som liker komplimenter om personlighet: drikk." },
-
     { "type": "prompt", "text": "{player}, hva er din flørtende «guilty pleasure»?" },
     { "type": "challenge", "text": "{player}, velg en person som får 2 slurker for god energi." },
     { "type": "pointing", "text": "Hvem her har best latter?" },
     { "type": "prompt", "text": "{player}, hva er ditt beste råd for god kjemi?" },
     { "type": "challenge", "text": "Alle tar én slurk hvis de liker spontanitet." },
-
     { "type": "prompt", "text": "{player}, hva er den beste måten å bryte isen på?" },
     { "type": "challenge", "text": "{player}, gi et oppriktig kompliment til rommet." },
     { "type": "pointing", "text": "Hvem her er mest flørtbar akkurat nå?" },
     { "type": "prompt", "text": "{player}, hva er din favoritt-type date-stemning?" },
     { "type": "challenge", "text": "Alle skåler med noen de liker energien til." },
-
     { "type": "prompt", "text": "{player}, hva er en ting som gjør deg ekstra tiltrukket?" },
     { "type": "challenge", "text": "{player}, velg en person som må ta én slurk med deg." },
     { "type": "pointing", "text": "Hvem her er mest «main character» i kveld?" },
