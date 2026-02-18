@@ -3,7 +3,7 @@ import { getArticles } from '@/lib/articles';
 import type { MetadataRoute } from 'next';
 
 // CHANGE THIS TO YOUR ACTUAL DOMAIN
-const URL = 'https://gamenight.app';
+const URL = 'https://gamenight.no';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const games = await getGames();
