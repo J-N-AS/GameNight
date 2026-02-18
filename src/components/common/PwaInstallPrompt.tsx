@@ -27,7 +27,6 @@ export function PwaInstallPrompt() {
       setInstallPromptEvent(e as BeforeInstallPromptEvent);
       // Show the install button
       setIsVisible(true);
-      console.log('beforeinstallprompt event fired');
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -46,9 +45,7 @@ export function PwaInstallPrompt() {
     await installPromptEvent.prompt();
     
     // Wait for the user to respond to the prompt
-    const { outcome } = await installPromptEvent.userChoice;
-    
-    console.log(`User response to the install prompt: ${outcome}`);
+    await installPromptEvent.userChoice;
 
     // We've used the prompt, and can't use it again, so clear it
     setInstallPromptEvent(null);

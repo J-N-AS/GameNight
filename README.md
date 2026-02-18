@@ -65,6 +65,10 @@ Prosjektet er designet for å kjøre på **Firebase Hosting**. Dette valget er s
 Hovedstrategien er å bruke **Google AdSense**.
 -   **Mål:** Målet er ikke nødvendigvis å skape stor profitt, men primært å **dekke driftskostnadene** (server, domene etc.) slik at prosjektet kan forbli gratis for brukerne. Et eventuelt overskudd vil bli reinvestert i videre utvikling.
 -   **Transparens:** "Om oss"-siden kommuniserer åpent at annonser brukes for å holde tjenesten gratis, noe som bygger tillit.
+-   **AdSense-strategi og Innholdsrisiko:** Siden spillene har drikking som et sentralt tema, er det en iboende risiko knyttet til Google AdSense's retningslinjer for alkoholrelatert innhold. For å minimere denne risikoen og fremstå som en ansvarlig plattform, er følgende tiltak iverksatt:
+    -   **Aldersgrenser:** Spill med dristig eller voksent innhold er tydelig merket "18+" og har en egen advarselsskjerm som krever aktivt samtykke.
+    -   **Ansvarlighetsfraskrivelse:** Nettstedet har en tydelig og detaljert oppfordring om ansvarlig drikking i bunnteksten på hver side.
+    -   **Fokus på det sosiale:** Kommunikasjonen rundt spillene fokuserer på det sosiale aspektet – samhold, latter og gode samtaler – fremfor selve drikkingen.
 
 ### 6. SEO og AI-optimalisering
 
@@ -82,7 +86,7 @@ GameNight er bygget som en **Progressive Web App (PWA)**, med et sterkt fokus p�
 -   **Service Worker (`sw.js`):** En egendefinert service worker fanger opp nettverksforespørsler og lagrer alle nødvendige ressurser i en cache. Dette inkluderer:
     -   Selve applikasjonsskallet.
     -   **Alle `.json`-filer** med spill- og artikkeldata.
-    -   Alle bilder brukt i artikler og layout.
+    -   Alle bilder og logoer brukt i artikler og layout.
 -   **Resultat:** Etter første besøk fungerer hele nettstedet sømløst **uten internettforbindelse**. Dette er en kritisk funksjon for bruk i situasjoner med dårlig dekning (hytter, parker etc.).
 -   **Installerbar:** `manifest.json` og service-workeren gjør at brukere på mobil får et forslag om å "Installere GameNight" for enkel tilgang fra hjemskjermen.
 
@@ -101,8 +105,9 @@ Innholdet er lett å administrere via JSON-filer, noe som gjør det enkelt å la
 
 GameNight er et **lidenskapsprosjekt** utviklet på fritiden. Dette preger filosofien:
 
--   **Brukerfokus:** Målet er å skape noe genuint morsomt og nyttig.
--   **Bærekraftig vekst:** Utvikling skjer når tid og inspirasjon strekker til. Forretningsmodellen er designet for å støtte prosjektet, ikke for å maksimere profitt.
+-   **Brukerfokus:** Målet er å skape noe genuint morsomt og nyttig. Kvalitet og brukeropplevelse trumfer alt.
+-   **Bærekraftig vekst:** Utvikling skjer når tid og inspirasjon strekker til. Forretningsmodellen er designet for å støtte prosjektet, ikke for å maksimere profitt. Dette er ikke en "laget for AdSense"-side, men et ekte produkt.
 -   **Fellesskap:** Selv om det ikke er open source per nå, er tilbakemeldinger og spill-ideer fra brukere høyt verdsatt og en viktig drivkraft for videre utvikling.
+-   **Transparens:** Vi er åpne om hvordan prosjektet driftes og finansieres, noe som bygger tillit hos brukerne.
 
 Ved å kombinere en solid teknisk plattform med en klar visjon og en bærekraftig driftsmodell, har GameNight som mål å bli en varig og verdsatt ressurs for sosiale lag i Norge.
