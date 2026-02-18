@@ -11,9 +11,7 @@ export type ThemeWithGames = Theme & {
 };
 
 export const getThemes = cache(async (): Promise<Theme[]> => {
-  // For now, we just return the imported JSON.
-  // This function can be expanded later if we need to process the themes.
-  return themesData as Theme[];
+  return themesData.themes as Theme[];
 });
 
 export const getTheme = cache(async (slug: string): Promise<ThemeWithGames | undefined> => {

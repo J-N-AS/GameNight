@@ -49,8 +49,8 @@ Prosjektet er organisert for å være lett å vedlikeholde og utvide.
 
 -   `src/app/`: Hovedstrukturen for Next.js-appen, med sider og ruter.
 -   `src/components/`: Gjenbrukbare React-komponenter som utgjør brukergrensesnittet.
--   `src/data/`: **Hjertet av innholdet.** Alle spill og artikler ligger her som enkle `.json`-filer. Dette gjør det ekstremt enkelt å legge til nye spill, oppgaver eller redigere eksisterende innhold uten å endre koden.
--   `src/lib/`: Kjernefunksjonalitet, inkludert `games.ts` og `articles.ts` som laster og behandler data fra `data`-mappen.
+-   `src/data/`: **Hjertet av innholdet.** Alle spill, artikler og temaer ligger her som enkle `.json`-filer. Dette gjør det ekstremt enkelt å legge til nytt innhold uten å endre koden.
+-   `src/lib/`: Kjernefunksjonalitet, inkludert `games.ts`, `articles.ts` og `themes.ts` som laster og behandler data fra `data`-mappen.
 -   `public/`: Statiske filer, inkludert bilder, `manifest.json` (for PWA), `robots.txt`, `llms.txt` og den kritiske `sw.js` (Service Worker).
 
 ### 5. Forretningsmodell: Hosting og Inntekter
@@ -74,7 +74,7 @@ Hovedstrategien er å bruke **Google AdSense**.
 
 For å maksimere synlighet i søkemotorer og forberede for fremtiden, er følgende implementert:
 
--   **Dynamisk Sitemap (`sitemap.ts`):** Genererer automatisk en `sitemap.xml` som inkluderer alle statiske sider, spill og artikler. Dette gir Google et komplett kart over alt innhold.
+-   **Dynamisk Sitemap (`sitemap.ts`):** Genererer automatisk en `sitemap.xml` som inkluderer alle statiske sider, spill, artikler og temasider. Dette gir Google et komplett kart over alt innhold.
 -   **`robots.txt`:** En standardisert fil som gir søkemotorer instruksjoner om hvordan de skal gjennomsøke siden. Den peker også til sitemap.
 -   **`llms.txt`:** En ny og fremtidsrettet fil som eksplisitt gir tillatelse til AI-modeller (som Googles Gemini) til å bruke innholdet på siden. Dette kan forbedre synligheten i AI-drevne søk og interaksjoner.
 -   **Server-Side Rendering (SSR):** Next.js sørger for at alt innhold er renderet på serveren, noe som er optimalt for indeksering.
@@ -85,8 +85,8 @@ GameNight er bygget som en **Progressive Web App (PWA)**, med et sterkt fokus p�
 
 -   **Service Worker (`sw.js`):** En egendefinert service worker fanger opp nettverksforespørsler og lagrer alle nødvendige ressurser i en cache. Dette inkluderer:
     -   Selve applikasjonsskallet.
-    -   **Alle `.json`-filer** med spill- og artikkeldata.
-    -   Alle bilder og logoer brukt i artikler og layout.
+    -   **Alle `.json`-filer** med spill-, artikkel- og temadata.
+    -   Alle bilder og logoer brukt i artikler og layout, som caches "on-demand" når de vises for første gang.
 -   **Resultat:** Etter første besøk fungerer hele nettstedet sømløst **uten internettforbindelse**. Dette er en kritisk funksjon for bruk i situasjoner med dårlig dekning (hytter, parker etc.).
 -   **Installerbar:** `manifest.json` og service-workeren gjør at brukere på mobil får et forslag om å "Installere GameNight" for enkel tilgang fra hjemskjermen.
 
@@ -99,7 +99,7 @@ Systemet er bygget for å være fleksibelt med ulike spilltyper, definert av `ga
 -   `spin-the-bottle`: Spill som bruker enten en virtuell, animert flaske eller er tilpasset bruk av en ekte flaske.
 -   `physical-item`: Spill som krever en fysisk gjenstand, med en dedikert instruksjonsskjerm (f.eks. "Snusboksen").
 
-Innholdet er lett å administrere via JSON-filer, noe som gjør det enkelt å lansere nye spillpakker og oppdatere eksisterende.
+Innholdet er lett å administrere via JSON-filer, noe som gjør det enkelt å lansere nye spillpakker, temaer og oppdatere eksisterende.
 
 ### 9. Filosofi og Fremtidsvisjoner
 

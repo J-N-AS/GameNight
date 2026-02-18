@@ -1,70 +1,106 @@
-[
-  {
-    "slug": "julebord",
-    "title": "Spill & Leker til Julebordet",
-    "metaDescription": "Den ultimate samlingen av leker, spill og isbrytere for julebordet. Skap uforglemmelig stemning med kolleger eller venner!",
-    "emoji": "🎅",
-    "content": [
-      "Julebordet er årets høydepunkt for mange, enten det er med jobben eller vennegjengen. Det er en tid for god mat, drikke, og ikke minst – sosialt samvær. Men hvordan sørger man for at stemningen går fra høflig prat til rungende latter? Med de riktige selskapslekene, selvfølgelig!",
-      "Her har vi samlet en perfekt blanding av spill som passer utmerket til julebordsesongen. Vi har alt fra enkle isbrytere som får praten i gang, til mer livlige festspill som løfter taket. Enten dere trenger en rolig start på kvelden eller en aktivitet som rister løs på dansefoten, finner dere det her. Disse spillene er designet for å være enkle å forstå, krever minimalt med forberedelser, og garanterer god stemning.",
-      "Så senk skuldrene, fyll glasset, og la GameNight ta seg av underholdningen. Utforsk spillene nedenfor og finn de perfekte aktivitetene for deres julebord. God fest!"
-    ],
-    "gameIds": [
-      "julebord",
-      "pekefest-klassisk",
-      "party-klassikere",
-      "sannhet-eller-shot"
-    ]
-  },
-  {
-    "slug": "vorspiel",
-    "title": "Den Perfekte Starten: Spill for Vorspiel",
-    "metaDescription": "Kickstart festen med de beste vorspiel-spillene! Her finner du en kuratert liste med isbrytere og partystartere som garanterer god stemning.",
-    "emoji": "🍻",
-    "content": [
-      "Vorspielet setter tonen for resten av kvelden. Det er her man går fra en vanlig dag til festmodus, og de rette aktivitetene kan utgjøre hele forskjellen. Et vellykket vorspiel handler om å bryte isen, få i gang praten, og bygge opp forventningene til kvelden som kommer. Kjedelige small-talk hører ikke hjemme her!",
-      "Vi har håndplukket spillene som er perfekte for nettopp dette. I denne samlingen finner du en blanding av enkle pekefester som får alle til å le, klassiske drikkeleker som løsner på stemningen, og samtale-startere som får dere til å bli bedre kjent. Alle spillene er designet for å være raske å lære og enkle å delta i, slik at ingen faller utenfor.",
-      "Glem kleine stillheter og la GameNight være din partner-in-crime for å arrangere det ultimate vorspielet. Utforsk spillene nedenfor og gjør deg klar for en kveld fylt med latter, gode historier og en uslåelig start på festen."
-    ],
-    "gameIds": [
-      "vorspiel-mix",
-      "jeg-har-aldri-klassisk",
-      "pekefest-klassisk",
-      "kjapp-party-runde"
-    ]
-  },
-  {
-    "slug": "jentekveld",
-    "title": "Girls Night: Spill for Jentekvelden",
-    "metaDescription": "Den ultimate samlingen av spill for jentekvelden, vorspiel med jentene eller 'girls night'. Garantert god stemning, latter og girl power!",
-    "emoji": "💅",
-    "content": [
-      "Samle jentegjengen for en kveld fylt med latter, hemmeligheter og uforglemmelig stemning! Enten det er vorspiel før byen, en koselig kveld inne, eller bare en unnskyldning for å feire vennskapet, er de riktige spillene nøkkelen til suksess.",
-      "Her finner du en håndplukket samling spill som er skapt for jentekvelden. Vi snakker om alt fra morsomme pekefester og 'Jeg har aldri'-runder som avdekker interne hemmeligheter, til spill som oser av 'girl power' og selvtillit. Disse spillene er designet for å skape en trygg og gøyal atmosfære der dere kan være dere selv, dele historier og hype hverandre opp.",
-      "Så finn frem boblene, skru opp favoritt-spillelisten, og la disse spillene sette den perfekte stemningen for en legendarisk jentekveld!"
-    ],
-    "gameIds": [
-      "girl-power-jenta-stemning",
-      "pekefest-klassisk",
-      "sexy-vibes",
-      "jeg-har-aldri-klassisk"
-    ]
-  },
-  {
-    "slug": "singelkveld",
-    "title": "Singelkveld: Spill som Bryter Isen",
-    "metaDescription": "Perfekte isbrytere og flørtende partyspill for single og vennegjenger. Fra sexy utfordringer til spill som tester kjemien.",
-    "emoji": "💘",
-    "content": [
-      "Enten du er på en singelfest, en middag med nye bekjentskaper, eller bare vil sette en flørtende tone for kvelden, er de riktige spillene den perfekte isbryteren. Glem klein stillhet og anstrengte samtaler – her handler det om å skape en leken og avslappet atmosfære der kjemien kan blomstre.",
-      "Denne samlingen er spesielt kuratert for anledninger der det er litt spenning i luften. Her finner du spill som utfordrer på en leken måte, stiller spørsmål som avdekker personlighet, og skaper situasjoner som garantert fører til latter og gode samtaler. Fra dristige utfordringer i 'Sannhet eller Shot' til spill som utforsker kroppsspråk og flørt – disse er designet for å teste kjemien.",
-      "Så, enten målet er å bli bedre kjent, skape litt romantisk spenning, eller bare ha en utrolig morsom kveld, er disse spillene den perfekte katalysatoren."
-    ],
-    "gameIds": [
-      "singles-night-flort-kjemi",
-      "singles-body-language",
-      "sexy-dares-late-night",
-      "sannhet-eller-shot"
-    ]
-  }
-]
+{
+  "themes": [
+    {
+      "slug": "julebord",
+      "title": "Spill & Leker til Julebordet",
+      "metaDescription": "Den ultimate samlingen av leker, spill og isbrytere for julebordet. Skap uforglemmelig stemning med kolleger eller venner!",
+      "emoji": "🎅",
+      "content": [
+        "Julebordet er årets høydepunkt for mange, enten det er med jobben eller vennegjengen. Det er en tid for god mat, drikke, og ikke minst – sosialt samvær. Men hvordan sørger man for at stemningen går fra høflig prat til rungende latter? Med de riktige selskapslekene, selvfølgelig!",
+        "Her har vi samlet en perfekt blanding av spill som passer utmerket til julebordsesongen. Vi har alt fra enkle isbrytere som får praten i gang, til mer livlige festspill som løfter taket. Enten dere trenger en rolig start på kvelden eller en aktivitet som rister løs på dansefoten, finner dere det her. Disse spillene er designet for å være enkle å forstå, krever minimalt med forberedelser, og garanterer god stemning.",
+        "Så senk skuldrene, fyll glasset, og la GameNight ta seg av underholdningen. Utforsk spillene nedenfor og finn de perfekte aktivitetene for deres julebord. God fest!"
+      ],
+      "gameIds": [
+        "julebord",
+        "pekefest-klassisk",
+        "party-klassikere",
+        "sannhet-eller-shot"
+      ]
+    },
+    {
+      "slug": "vorspiel",
+      "title": "Den Perfekte Starten: Spill for Vorspiel",
+      "metaDescription": "Kickstart festen med de beste vorspiel-spillene! Her finner du en kuratert liste med isbrytere og partystartere som garanterer god stemning.",
+      "emoji": "🍻",
+      "content": [
+        "Vorspielet setter tonen for resten av kvelden. Det er her man går fra en vanlig dag til festmodus, og de rette aktivitetene kan utgjøre hele forskjellen. Et vellykket vorspiel handler om å bryte isen, få i gang praten, og bygge opp forventningene til kvelden som kommer. Kjedelige small-talk hører ikke hjemme her!",
+        "Vi har håndplukket spillene som er perfekte for nettopp dette. I denne samlingen finner du en blanding av enkle pekefester som får alle til å le, klassiske drikkeleker som løsner på stemningen, og samtale-startere som får dere til å bli bedre kjent. Alle spillene er designet for å være raske å lære og enkle å delta i, slik at ingen faller utenfor.",
+        "Glem kleine stillheter og la GameNight være din partner-in-crime for å arrangere det ultimate vorspielet. Utforsk spillene nedenfor og gjør deg klar for en kveld fylt med latter, gode historier og en uslåelig start på festen."
+      ],
+      "gameIds": [
+        "vorspiel-mix",
+        "jeg-har-aldri-klassisk",
+        "pekefest-klassisk",
+        "kjapp-party-runde"
+      ]
+    },
+    {
+      "slug": "jentekveld",
+      "title": "Girls Night: Spill for Jentekvelden",
+      "metaDescription": "Den ultimate samlingen av spill for jentekvelden, vorspiel med jentene eller 'girls night'. Garantert god stemning, latter og girl power!",
+      "emoji": "💅",
+      "content": [
+        "Samle jentegjengen for en kveld fylt med latter, hemmeligheter og uforglemmelig stemning! Enten det er vorspiel før byen, en koselig kveld inne, eller bare en unnskyldning for å feire vennskapet, er de riktige spillene nøkkelen til suksess.",
+        "Her finner du en håndplukket samling spill som er skapt for jentekvelden. Vi snakker om alt fra morsomme pekefester og 'Jeg har aldri'-runder som avdekker interne hemmeligheter, til spill som oser av 'girl power' og selvtillit. Disse spillene er designet for å skape en trygg og gøyal atmosfære der dere kan være dere selv, dele historier og hype hverandre opp.",
+        "Så finn frem boblene, skru opp favoritt-spillelisten, og la disse spillene sette den perfekte stemningen for en legendarisk jentekveld!"
+      ],
+      "gameIds": [
+        "girl-power-jenta-stemning",
+        "pekefest-klassisk",
+        "sexy-vibes",
+        "jeg-har-aldri-klassisk"
+      ]
+    },
+    {
+      "slug": "singelkveld",
+      "title": "Singelkveld: Spill som Bryter Isen",
+      "metaDescription": "Perfekte isbrytere og flørtende partyspill for single og vennegjenger. Fra sexy utfordringer til spill som tester kjemien.",
+      "emoji": "💘",
+      "content": [
+        "Enten du er på en singelfest, en middag med nye bekjentskaper, eller bare vil sette en flørtende tone for kvelden, er de riktige spillene den perfekte isbryteren. Glem klein stillhet og anstrengte samtaler – her handler det om å skape en leken og avslappet atmosfære der kjemien kan blomstre.",
+        "Denne samlingen er spesielt kuratert for anledninger der det er litt spenning i luften. Her finner du spill som utfordrer på en leken måte, stiller spørsmål som avdekker personlighet, og skaper situasjoner som garantert fører til latter og gode samtaler. Fra dristige utfordringer i 'Sannhet eller Shot' til spill som utforsker kroppsspråk og flørt – disse er designet for å teste kjemien.",
+        "Så, enten målet er å bli bedre kjent, skape litt romantisk spenning, eller bare ha en utrolig morsom kveld, er disse spillene den perfekte katalysatoren."
+      ],
+      "gameIds": [
+        "singles-night-flort-kjemi",
+        "singles-body-language",
+        "sexy-dares-late-night",
+        "sannhet-eller-shot"
+      ]
+    },
+    {
+      "slug": "kaos-og-konkurranse",
+      "title": "Kaos & Konkurranse: For de Vågale",
+      "metaDescription": "En samling av våre mest kaotiske og konkurransepregede partyspill. Perfekt når festen trenger et ekstra gir. Tør dere prøve?",
+      "emoji": "💥",
+      "content": [
+        "Noen ganger trenger festen et ekstra gir. Når den rolige praten er over og stemningen er klar for litt mer action, er dette spillene dere trenger. Denne samlingen er for de som elsker litt vennskapelig konkurranse, uforutsigbare runder og en god dose kontrollert kaos.",
+        "Her finner du spill som utfordrer reaksjonsevnen, setter lagene opp mot hverandre, og stiller spørsmål som garantert skaper livlige diskusjoner og latterutbrudd. Dette er ikke spillene for en rolig kveld – dette er oppskriften på en energisk og minneverdig fest.",
+        "Gjør dere klare for å heve innsatsen, teste grensene og finne ut hvem som er festens mest konkurransedyktige spiller. Advarsel: Kan føre til høylytt jubel og intense diskusjoner."
+      ],
+      "gameIds": [
+        "kaosrunden",
+        "fyllevalg",
+        "girls-vs-boys",
+        "dating-fails"
+      ]
+    },
+    {
+      "slug": "spicy-18-pluss",
+      "title": "Spicy: 18+ Spill for de Voksne",
+      "metaDescription": "Vår samling av 18+ spill for en mer dristig og intim kveld. Inneholder temaer som flørt, hemmeligheter og fysisk nærhet.",
+      "emoji": "🌶️",
+      "content": [
+        "Når kvelden blir sen og samtalene blir dypere, kan det være tid for spill som tør å utfordre litt ekstra. Denne samlingen er kuratert for voksne grupper som er komfortable med hverandre og klare for en mer dristig og intim spillopplevelse.",
+        "Disse spillene tar for seg temaer som flørt, hemmeligheter, fysisk nærhet og ærlighet på et dypere nivå. De er designet for å skape spenning, åpne for nye samtaler og kanskje til og med teste kjemien i rommet. Alle spillene i denne kategorien har en 18-årsgrense og kommer med en tydelig advarselsskjerm.",
+        "Husk at samtykke og respekt for hverandres grenser er avgjørende. Målet er å ha en spennende og morsom opplevelse der alle føler seg trygge. Utforsk spillene nedenfor hvis dere er klare for en kveld med litt ekstra krydder."
+      ],
+      "gameIds": [
+        "sannhet-eller-shot",
+        "sexy-vibes",
+        "hemmeligheter",
+        "after-dark"
+      ]
+    }
+  ]
+}
