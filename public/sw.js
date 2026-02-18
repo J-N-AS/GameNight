@@ -1,10 +1,9 @@
-// Updated Service Worker
+// This is a basic service worker that caches assets for offline use.
 
-const CACHE_NAME = 'gamenight-v1.6'; // Increment version to trigger update
-const DYNAMIC_CACHE_NAME = 'gamenight-dynamic-v1.6';
+const CACHE_NAME = 'gamenight-cache-v1.4'; // increment to force update
 
-// URLs to cache on install
-const urlsToCache = [
+const PRECACHE_ASSETS = [
+  // Core App Shell
   '/',
   '/alle-spill',
   '/drikkeleker',
@@ -14,12 +13,8 @@ const urlsToCache = [
   '/info/kontakt-oss',
   '/manifest.json',
   '/GameNight-logo-small.webp',
-  // --- Core app shell files will be added by the build process ---
-  // Note: We won't hardcode every single file here. We cache core pages.
-  // The fetch handler will cache other assets dynamically.
 
-  // --- ALL game and article JSON data ---
-  // This ensures all game content is available offline immediately.
+  // All JSON data files for games and articles
   '/data/after-dark.json',
   '/data/afterparty.json',
   '/data/dating-fails.json',
@@ -50,101 +45,105 @@ const urlsToCache = [
   '/data/snusboksen-utfordring.json',
   '/data/spinn-flasken.json',
   '/data/spinn-flasken-action.json',
-  '/data/spinn-flasken-ekte.json',
   '/data/spinn-flasken-sannhet.json',
-  '/data/spinn-flasken-virtuell.json',
-  '/data/utfordringer.json',
   '/data/vorspiel-mix.json',
+  
+  // All images
+  '/drikkeleker/axville-ox7SACCsnRA-unsplash.jpg',
+  '/drikkeleker/benovator-ai-generated-9602834_1280.png',
+  '/drikkeleker/david-schultz-uP0XEms7Ias-unsplash.jpg',
+  '/drikkeleker/decster1-hd-wallpaper-8095421_1280.png',
+  '/drikkeleker/fotorech-bus-2663034_1280.jpg',
+  '/drikkeleker/javardh--_5TphPhx5c-unsplash.jpg',
+  '/drikkeleker/kyraxys-swords-8652518_1920.png',
+  '/drikkeleker/michal-parzuchowski-bRqsXcEcKFw-unsplash.jpg',
+  '/drikkeleker/yosoylxcamara-ng-Z8SOXEPQYjQ-unsplash.jpg',
+  
+  // All logos
+  '/logos/rt-2025-dummy-logo.png'
 ];
 
 self.addEventListener('install', event => {
-  console.log('Service Worker: Installing...');
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log('Service Worker: Caching app shell and data');
-      return cache.addAll(urlsToCache);
-    }).catch(err => console.error("Cache addAll failed:", err))
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache. Caching files...');
+        return cache.addAll(PRECACHE_ASSETS.map(url => new Request(url, {cache: 'reload'})));
+      })
+      .then(() => {
+        console.log('All assets were successfully cached.');
+      })
+      .catch(error => {
+        console.error('Failed to cache assets:', error);
+      })
   );
 });
 
 self.addEventListener('activate', event => {
-  console.log('Service Worker: Activating...');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME && cacheName !== DYNAMIC_CACHE_NAME) {
-            console.log('Service Worker: Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
+        cacheNames.filter(cacheName => {
+          return cacheName.startsWith('gamenight-cache-') && cacheName !== CACHE_NAME;
+        }).map(cacheName => {
+          return caches.delete(cacheName);
         })
       );
     })
   );
-  return self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
-  const { request } = event;
-  const url = new URL(request.url);
+  const url = new URL(event.request.url);
 
-  // Serve Next.js internal requests directly from network
-  if (url.pathname.startsWith('/_next/')) {
-    event.respondWith(fetch(request));
+  // We only want to handle GET requests
+  if (event.request.method !== 'GET') {
+    return;
+  }
+  
+  // For Next.js data requests, use a network-first strategy
+  if (url.pathname.startsWith('/_next/data/')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const cacheCopy = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, cacheCopy);
+          });
+          return response;
+        })
+        .catch(() => {
+          return caches.match(event.request);
+        })
+    );
     return;
   }
 
-  // Use different caching strategies for different file types
-  if (url.pathname.endsWith('.json')) {
-    // For JSON data: Stale-while-revalidate
-    event.respondWith(staleWhileRevalidate(request));
-  } else if (/\.(png|jpg|jpeg|svg|webp|gif)$/.test(url.pathname)) {
-    // For images and logos: Cache first, fallback to network
-    event.respondWith(cacheFirst(request));
-  } else {
-    // For pages and other requests: Cache first, fallback to network
-    event.respondWith(cacheFirst(request));
-  }
+  // For all other requests, use cache-first strategy
+  event.respondWith(
+    caches.match(event.request)
+      .then(cachedResponse => {
+        // If we found a match in the cache, return it
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        // Otherwise, fetch from the network
+        return fetch(event.request).then(response => {
+          // If the response is valid, clone it and store it in the cache
+          if (!response || response.status !== 200 || response.type !== 'basic') {
+            return response;
+          }
+
+          const responseToCache = response.clone();
+
+          caches.open(CACHE_NAME)
+            .then(cache => {
+              cache.put(event.request, responseToCache);
+            });
+
+          return response;
+        });
+      })
+  );
 });
-
-
-// --- Caching Strategies ---
-
-// Cache First: Great for static assets like the app shell, pages, and images.
-// Responds from cache immediately if available, otherwise fetches from network and caches the response.
-const cacheFirst = async (request) => {
-  try {
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) {
-      // console.log(`SW: Serving from cache: ${request.url}`);
-      return cachedResponse;
-    }
-    
-    const networkResponse = await fetch(request);
-    // console.log(`SW: Fetching from network and caching: ${request.url}`);
-    const cache = await caches.open(DYNAMIC_CACHE_NAME);
-    cache.put(request, networkResponse.clone());
-    return networkResponse;
-
-  } catch (error) {
-    console.error(`SW: Failed to fetch ${request.url}`, error);
-    // Optional: Return a fallback page if network fails
-    // const cache = await caches.open(CACHE_NAME);
-    // return await cache.match('/offline.html');
-  }
-};
-
-// Stale-While-Revalidate: Good for data that changes, like our JSON files.
-// It serves from cache for speed, but also fetches a fresh version in the background for the next visit.
-const staleWhileRevalidate = async (request) => {
-  const cache = await caches.open(DYNAMIC_CACHE_NAME);
-  const cachedResponse = await cache.match(request);
-
-  const networkFetch = fetch(request).then(response => {
-    cache.put(request, response.clone());
-    return response;
-  });
-
-  // Return cached response immediately if available, otherwise wait for the network
-  return cachedResponse || networkFetch;
-};

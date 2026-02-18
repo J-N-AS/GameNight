@@ -10,35 +10,29 @@ async function loadGameData(id: string): Promise<Game | null> {
     const gameModule = await import(`@/data/${id}.json`);
     return gameModule.default as Game;
   } catch (error) {
-    console.error(`Failed to load game data for id: ${id}`, error);
+    // We don't log here anymore as it can be noisy for files that are expected to not exist
+    // (e.g. if a game is removed from the list but the file isn't deleted yet)
     return null;
   }
 }
 
 // Hardcoded lists of game IDs.
 // This is more maintainable than reading the file system in a serverless environment.
-const officialGameIds = [
-  'after-dark', 'afterparty', 'dating-fails', 'fyllevalg', 'girl-power', 'girls-vs-boys', 'gutta', 'hemmeligheter', 'jeg-har-aldri', 'kaosrunden', 'kjapp-party-runde', 'party-klassikere', 'pekefest', 'pest-eller-kolera', 'rolig-sosial', 'sannhet-eller-shot', 'sexy-action', 'sexy-dares', 'sexy-vibes', 'singles-body', 'singles-night', 'spinn-flasken', 'spinn-flasken-action', 'spinn-flasken-sannhet', 'snusboksen', 'snusboksen-utfordring', 'snusboksen-sannhet', 'vorspiel-mix'
+const allGameIds = [
+  'after-dark', 'afterparty', 'dating-fails', 'fyllevalg', 'girl-power', 'girls-vs-boys', 'gutta', 'hemmelig-bonus', 'hemmeligheter', 'jeg-har-aldri', 'kaosrunden', 'kjapp-party-runde', 'party-klassikere', 'pekefest', 'pest-eller-kolera', 'rolig-sosial', 'rt-2025-dummy', 'sannhet-eller-shot', 'sexy-action', 'sexy-dares', 'sexy-vibes', 'singles-body', 'singles-night', 'spinn-flasken', 'spinn-flasken-action', 'spinn-flasken-sannhet', 'snusboksen', 'snusboksen-utfordring', 'snusboksen-sannhet', 'vorspiel-mix'
 ];
 
-const customGameIds = [
-  'rt-2025-dummy',
-  'hemmelig-bonus', // Treating this as custom for now to test the UI
-];
-
-// Combine and create a master list of all known game IDs
-const allGameIds = [...customGameIds, ...officialGameIds];
 
 export const getGames = cache(async (): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> => {
   const games = await Promise.all(
     allGameIds.map(async (id) => {
       const gameData = await loadGameData(id);
+      
+      // Filter out games that don't load, have no items, or are explicitly hidden
       if (!gameData || !gameData.items || gameData.items.length === 0 || gameData.hidden) {
         return null;
       }
       
-      const isCustom = customGameIds.includes(id);
-
       // Return a stripped-down version of the game data for lobby/listing pages
       return {
         id: gameData.id,
@@ -52,7 +46,7 @@ export const getGames = cache(async (): Promise<Omit<Game, 'items' | 'language' 
         category: gameData.category,
         gameType: gameData.gameType,
         teams: gameData.teams,
-        custom: gameData.custom || isCustom,
+        custom: gameData.custom,
         tags: gameData.tags,
         logo: gameData.logo,
         instagram: gameData.instagram,
@@ -67,27 +61,14 @@ export const getGames = cache(async (): Promise<Omit<Game, 'items' | 'language' 
 export const getGame = cache(async (id: string): Promise<Game> => {
   const normalizedId = id.toLowerCase();
   
+  // Check against the master list first for security and performance
   if (allGameIds.includes(normalizedId)) {
     const gameData = await loadGameData(normalizedId);
     if (gameData) {
-       // Check if it's in the custom list to ensure the flag is set
-       if (customGameIds.includes(normalizedId)) {
-        gameData.custom = true;
-      }
       return gameData;
     }
   }
 
-  // Fallback search for cases where slug might not match filename exactly
-  for (const gameId of allGameIds) {
-    const data = await loadGameData(gameId);
-    if (data && data.id.toLowerCase() === normalizedId) {
-       if (customGameIds.includes(gameId)) {
-        data.custom = true;
-      }
-      return data;
-    }
-  }
-
+  // If we reach here, the game ID is not valid or the file is missing.
   notFound();
 });

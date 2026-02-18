@@ -2,6 +2,10 @@
   "name": "GameNight - Gratis Partyspill & Drikkeleker",
   "short_name": "GameNight",
   "description": "Start festen med de beste gratis partyspillene og drikkelekene, rett i nettleseren. Ingen installasjon, bare moro!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1c1717",
+  "theme_color": "#1c1717",
   "icons": [
     {
       "src": "/icon-192x192.png",
@@ -13,10 +17,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "theme_color": "#1c1717",
-  "background_color": "#1c1717",
-  "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }

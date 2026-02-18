@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gamenight.app/sitemap.xml
+Sitemap: https://gamenight.no/sitemap.xml
