@@ -30,6 +30,7 @@ const allGameIds = [
   'kjapp-party-runde',
   'party-klassikere',
   'pekefest',
+  'pest-eller-kolera',
   'rolig-sosial',
   'sannhet-eller-shot',
   'sexy-action',
@@ -38,7 +39,7 @@ const allGameIds = [
   'singles-body',
   'singles-night',
   'vorspiel-mix',
-  // Note: 'utfordringer' is intentionally not included as it's empty/deprecated.
+  // Note: 'utfordringer-deprecated' is intentionally not included as it's empty/deprecated.
 ];
 
 export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> {
@@ -58,6 +59,8 @@ export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shu
         intensity: gameData.intensity,
         audience: gameData.audience,
         category: gameData.category,
+        gameType: gameData.gameType,
+        teams: gameData.teams,
       };
     })
   );

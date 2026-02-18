@@ -92,7 +92,6 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
               href={`/spill/${game.id}`}
               onClick={e => handleGameSelect(e, game)}
               className="group block h-full"
-              style={{ '--accent-color': game.color } as React.CSSProperties}
             >
               <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/10">
                 <CardHeader className="flex-row items-start gap-4">

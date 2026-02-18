@@ -22,6 +22,17 @@
     { "type": "challenge", "text": "{player} må finne på et rim på ordet 'fest'. Hvis ikke, drikk." },
     { "type": "challenge", "text": "{all} tar en felles skål for en fantastisk kveld!" },
     { "type": "prompt", "text": "Hvem kan den beste kjendis-etterligningen? Vis den nå! Gruppen stemmer, taperen drikker." },
-    { "type": "challenge", "text": "{player}, du har 10 sekunder på å nevne 5 ting man finner på et bad. Klarer du det ikke, må du drikke." }
+    { "type": "challenge", "text": "{player}, du har 10 sekunder på å nevne 5 ting man finner på et bad. Klarer du det ikke, må du drikke." },
+    { "type": "challenge", "text": "Alle som har på seg blått, drikker en slurk." },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å le av sin egen vits?" },
+    { "type": "challenge", "text": "{player}, velg en person som må snakke med en fancy aksent neste runde." },
+    { "type": "prompt", "text": "Hva er det rareste du har i veska/lommene akkurat nå? Vis det frem!" },
+    { "type": "challenge", "text": "{player}, du må komplimentere personen til høyre for deg." },
+    { "type": "challenge", "text": "Stein, saks, papir! Alle spiller mot personen til venstre. Taperne drikker." },
+    { "type": "pointing", "text": "Hvem har de fineste skoene her?" },
+    { "type": "challenge", "text": "{player}, du må avslutte hver setning med '...ikke sant?' i 2 runder. Glemmer du det, drikk." },
+    { "type": "prompt", "text": "{player}, hva er din mest unyttige superkraft?" },
+    { "type": "challenge", "text": "Alle som har reist utenlands i år, tar en slurk." },
+    { "type": "challenge", "text": "{player}, bytt plass med personen tvers overfor deg." }
   ]
 }

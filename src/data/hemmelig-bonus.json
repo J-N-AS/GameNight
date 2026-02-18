@@ -1,7 +1,7 @@
 {
   "id": "bonus",
   "title": "Hemmelig Bonus-spill",
-  "description": "Du fant et hemmelig spill! Denne er for de eventyrlystne.",
+  "description": "Du fant et hemmelig spill! Denne er for de eventyrlystne. En blanding av rart, vilt og fantastisk.",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": true,
@@ -15,7 +15,23 @@
     { "type": "challenge", "text": "{player}, du må snakke med en teit aksent resten av spillet." },
     { "type": "prompt", "text": "{player}, hva er det rareste du har spist?" },
     { "type": "pointing", "text": "Hvem her ville overlevd lengst i en zombie-apokalypse?" },
-    { "type": "challenge", "text": "{player} og {player2} må bytte et klesplagg." },
-    { "type": "never_have_i_ever", "text": "prøvd å bruke en falsk ID." }
+    { "type": "challenge", "text": "{player} og {player2} må bytte et klesplagg (f.eks. en sokk, en genser)." },
+    { "type": "never_have_i_ever", "text": "prøvd å bruke en falsk ID." },
+    { "type": "challenge", "text": "Alle må imitere et dyr. {player} bestemmer hvem som var dårligst, den personen drikker." },
+    { "type": "prompt", "text": "Hvis du var en superhelt, hva ville din totalt ubrukelige superkraft vært?" },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å bli med i en kult?" },
+    { "type": "challenge", "text": "{player}, du er nå Konge/Dronning. Du kan lage én regel som varer i 3 runder." },
+    { "type": "never_have_i_ever", "text": "løyet i dette spillet." },
+    { "type": "challenge", "text": "Alle tar en slurk for hver app de har på første side på mobilen." },
+    { "type": "prompt", "text": "{player}, hva er det mest absurde du har drømt?" },
+    { "type": "pointing", "text": "Hvem her hadde vært den verste reality-TV-stjernen?" },
+    { "type": "challenge", "text": "{player} må fortelle en vits. Hvis ingen ler, drikker du 2 slurker. Hvis minst én person ler, deler du ut 3." },
+    { "type": "never_have_i_ever", "text": "sendt en melding til feil person med vilje." },
+    { "type": "challenge", "text": "Alle må prøve å balansere en kopp på hodet i 10 sekunder. Den som feiler, drikker." },
+    { "type": "prompt", "text": "{player}, hva er din mest kontroversielle mat-mening?" },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å lede en revolusjon ved en feiltakelse?" },
+    { "type": "challenge", "text": "{player} og {player2} spiller stein, saks, papir. Taperen drikker 2 slurker." },
+    { "type": "never_have_i_ever", "text": "glemt navnet på daten sin midt i daten." },
+    { "type": "challenge", "text": "{player}, finn på et nytt kallenavn til {player2} som skal brukes resten av spillet." }
   ]
 }
