@@ -9,9 +9,10 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { MoreVertical, Users, Repeat, LogOut } from 'lucide-react';
+import { MoreVertical, Users, Repeat, LogOut, Trash2 } from 'lucide-react';
 import { PlayerSetup } from './PlayerSetup';
 import { useRouter } from 'next/navigation';
+import { usePlayers } from '@/hooks/usePlayers';
 
 interface GameMenuProps {
   context: 'lobby' | 'in-game';
@@ -21,15 +22,22 @@ interface GameMenuProps {
 export function GameMenu({ context, onRestart }: GameMenuProps) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
   const router = useRouter();
+  const { players, removeAllPlayers } = usePlayers();
 
   const handleLeaveGame = () => {
     router.push('/');
   };
-  
+
   const handlePlayerSetupComplete = () => {
     setIsPlayerSetupOpen(false);
     // No need to push, as player setup is now a global modal
-  }
+  };
+
+  const handleRemoveAllPlayers = () => {
+    removeAllPlayers();
+  };
+
+  const showDestructiveSeparator = context === 'in-game' || players.length > 0;
 
   return (
     <>
@@ -40,7 +48,11 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="h-9 w-9 active:scale-95 transition-transform">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9 active:scale-95 transition-transform"
+          >
             <MoreVertical className="h-5 w-5" />
             <span className="sr-only">Spillmeny</span>
           </Button>
@@ -51,17 +63,32 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
             <span>Endre spillere</span>
           </DropdownMenuItem>
           {context === 'in-game' && (
-            <>
-              <DropdownMenuItem onSelect={onRestart}>
-                <Repeat className="mr-2 h-4 w-4" />
-                <span>Spill igjen</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={handleLeaveGame}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Avslutt spill</span>
-              </DropdownMenuItem>
-            </>
+            <DropdownMenuItem onSelect={onRestart}>
+              <Repeat className="mr-2 h-4 w-4" />
+              <span>Spill igjen</span>
+            </DropdownMenuItem>
+          )}
+
+          {showDestructiveSeparator && <DropdownMenuSeparator />}
+
+          {players.length > 0 && (
+            <DropdownMenuItem
+              onSelect={handleRemoveAllPlayers}
+              className="text-destructive focus:text-destructive"
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              <span>Fjern alle spillere</span>
+            </DropdownMenuItem>
+          )}
+          
+          {context === 'in-game' && (
+            <DropdownMenuItem
+              onSelect={handleLeaveGame}
+              className="text-destructive focus:text-destructive"
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Avslutt spill</span>
+            </DropdownMenuItem>
           )}
         </DropdownMenuContent>
       </DropdownMenu>

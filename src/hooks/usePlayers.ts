@@ -51,13 +51,18 @@ export function usePlayers() {
   const updatePlayerName = (id: string, newName: string) => {
     const newPlayers = players.map(p => p.id === id ? {...p, name: newName.trim()} : p);
     savePlayers(newPlayers);
-  }
+  };
+
+  const removeAllPlayers = useCallback(() => {
+    savePlayers([]);
+  }, [savePlayers]);
 
   return {
     players,
     addPlayer,
     removePlayer,
     updatePlayerName,
+    removeAllPlayers,
     isLoaded,
   };
 }
