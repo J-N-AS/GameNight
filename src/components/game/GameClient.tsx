@@ -38,7 +38,13 @@ export function GameClient({ game }: { game: Game }) {
   const [team1Score, setTeam1Score] = useState(0);
   const [team2Score, setTeam2Score] = useState(0);
 
+  // Spin the bottle state
+  const [bottleRotation, setBottleRotation] = useState(0);
+  const [isSpinning, setIsSpinning] = useState(false);
+  const [showSpinResult, setShowSpinResult] = useState(false);
+
   const isVersusMode = game.gameType === 'versus' && !!game.teams;
+  const isSpinTheBottleMode = game.gameType === 'spin-the-bottle';
 
   const setupGame = useCallback(() => {
     const gameTasks =
@@ -48,6 +54,8 @@ export function GameClient({ game }: { game: Game }) {
     setIsFinished(false);
     setTeam1Score(0);
     setTeam2Score(0);
+    setShowSpinResult(false);
+    setIsSpinning(false);
   }, [game]);
 
   useEffect(() => {
@@ -74,12 +82,34 @@ export function GameClient({ game }: { game: Game }) {
   ]);
 
   const handleNextTask = () => {
+    if (isSpinTheBottleMode) {
+      setShowSpinResult(false);
+    }
     if (currentIndex < tasks.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       setIsFinished(true);
     }
   };
+  
+  const handleSpinBottle = () => {
+    if (isSpinning) return;
+
+    setIsSpinning(true);
+    setShowSpinResult(false);
+
+    const randomExtraRotation = Math.random() * 360;
+    const fullSpins = 5 + Math.floor(Math.random() * 5); // 5 to 9 full spins
+    const newRotation = bottleRotation + fullSpins * 360 + randomExtraRotation;
+
+    setBottleRotation(newRotation);
+
+    setTimeout(() => {
+      setIsSpinning(false);
+      setShowSpinResult(true);
+    }, 4000); // Animation duration should match transition duration in motion.div
+  };
+
 
   const handleVote = (winner: 'team1' | 'team2') => {
     if (winner === 'team1') {
@@ -106,8 +136,14 @@ export function GameClient({ game }: { game: Game }) {
 
   const processedContent = useMemo(() => {
     if (!currentTask || !isLoaded) return '';
-    const { type, text } = currentTask;
+    let { text } = currentTask;
+    
+    // For spin the bottle, we don't process player names.
+    if (isSpinTheBottleMode) {
+        return text;
+    }
 
+    const { type } = currentTask;
     const isNameForbidden = type === 'never_have_i_ever' || type === 'pointing';
     let content: React.ReactNode = text;
     const placeholderRegex = /(\{team1\}|\{team2\}|\{player\}|\{player2\}|\{all\})/g;
@@ -143,7 +179,7 @@ export function GameClient({ game }: { game: Game }) {
       );
     }
     return content;
-  }, [currentTask, players, isLoaded, game.teams]);
+  }, [currentTask, players, isLoaded, game.teams, isSpinTheBottleMode]);
 
 
   const cardVariants = {
@@ -248,6 +284,84 @@ export function GameClient({ game }: { game: Game }) {
           <AdBanner />
         </motion.div>
       </motion.div>
+    );
+  }
+
+  if (isSpinTheBottleMode) {
+    return (
+      <div className="flex flex-col min-h-screen p-4 md:p-8 overflow-hidden">
+        <div className="absolute top-4 left-4 z-10">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/">
+              <Home className="mr-2 h-4 w-4" />
+              Lobby
+            </Link>
+          </Button>
+        </div>
+        <div className="absolute top-4 right-4 z-10">
+          <GameMenu context="in-game" onRestart={handleRestart} />
+        </div>
+  
+        <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
+          <div className="relative flex-grow flex items-center justify-center overflow-hidden flex-col">
+            <motion.div
+              style={{ rotate: bottleRotation }}
+              animate={{ rotate: bottleRotation }}
+              transition={{ duration: 4, ease: 'easeOut' }}
+              className="text-8xl md:text-9xl my-8 select-none"
+            >
+              🍾
+            </motion.div>
+  
+            {isSpinning && <p className="text-lg text-muted-foreground absolute bottom-1/4">Spinner...</p>}
+  
+            <div className="absolute bottom-0 w-full mb-8">
+            <AnimatePresence>
+              {showSpinResult && currentTask && (
+                <motion.div
+                  className="w-full"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                >
+                  <TaskCard
+                    type={currentTask.type}
+                    content={processedContent}
+                  />
+                  <Button onClick={handleNextTask} size="lg" className="mt-8">
+                    Neste Spinn
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            </div>
+
+          </div>
+  
+          {!isSpinning && !showSpinResult && (
+            <motion.div
+              className="mb-4"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Button
+                onClick={handleSpinBottle}
+                size="lg"
+                className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-primary/30"
+              >
+                Spinn flasken
+              </Button>
+            </motion.div>
+          )}
+        </div>
+  
+        <footer className="w-full flex-shrink-0 mt-4">
+          <div className="flex justify-center">
+            <AdBanner className="h-16" />
+          </div>
+        </footer>
+      </div>
     );
   }
 

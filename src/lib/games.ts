@@ -38,6 +38,8 @@ const allGameIds = [
   'sexy-vibes',
   'singles-body',
   'singles-night',
+  'spinn-flasken-ekte',
+  'spinn-flasken-virtuell',
   'vorspiel-mix',
   // Note: 'utfordringer-deprecated' is intentionally not included as it's empty/deprecated.
 ];

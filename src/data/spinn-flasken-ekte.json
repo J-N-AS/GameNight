@@ -1,0 +1,39 @@
+{
+  "id": "spinn-flasken-ekte",
+  "title": "Spinn Flasken (Ekte Flaske)",
+  "description": "Finn frem en ekte flaske! Spinn den på gulvet, og den personen flasken peker på må utføre oppgaven som vises på skjermen.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": false,
+  "emoji": "🍾",
+  "intensity": "medium",
+  "audience": "18+",
+  "category": ["Party", "18+"],
+  "warning": {
+    "title": "Advarsel: Utfordrende Innhold",
+    "description": [
+      "Dette spillet inneholder utfordringer som kan involvere personlige spørsmål og fysisk nærhet, inkludert kyss.",
+      "Alle spillere må gi sitt fulle samtykke før spillet starter. Respekter hverandres grenser til enhver tid.",
+      "Husk at det alltid er lov å si nei eller velge å drikke i stedet for å utføre en oppgave som føles ubehagelig."
+    ],
+    "buttonText": "Vi forstår og starter spillet"
+  },
+  "items": [
+    { "type": "challenge", "text": "Personen flasken peker på må gi et kyss på kinnet til personen til venstre." },
+    { "type": "prompt", "text": "Sannhet: Personen flasken peker på må svare ærlig: Hvem her inne er din favorittperson og hvorfor?" },
+    { "type": "challenge", "text": "Personen flasken peker på må ta en shot (eller 3 slurker)." },
+    { "type": "challenge", "text": "Personen flasken peker på må velge en annen person som de skal holde i hånden med til neste runde." },
+    { "type": "prompt", "text": "Sannhet: Personen flasken peker på må innrømme sin mest flaue forelskelse." },
+    { "type": "challenge", "text": "Personen flasken peker på må bytte et klesplagg med personen tvers overfor (f.eks. en sokk)." },
+    { "type": "challenge", "text": "Personen flasken peker på må velge en annen spiller. De to må ha en stirrekonkurranse. Førstemann som blunker, drikker." },
+    { "type": "challenge", "text": "Personen flasken peker på må kysse personen til høyre på pannen." },
+    { "type": "prompt", "text": "Sannhet: Personen flasken peker på må fortelle om sin verste date noensinne." },
+    { "type": "challenge", "text": "Personen flasken peker på må gi en high-five til alle i rommet." },
+    { "type": "challenge", "text": "Personen flasken peker på må velge en sang som alle må synge refrenget til." },
+    { "type": "prompt", "text": "Sannhet: Personen flasken peker på må avsløre sitt mest brukte kallenavn for en partner." },
+    { "type": "challenge", "text": "Personen flasken peker på må sitte på fanget til personen til venstre for seg i én runde." },
+    { "type": "challenge", "text": "Personen flasken peker på må ta av seg ett klesplagg (valgfritt, f.eks. sokk, genser) eller drikke 3 slurker." },
+    { "type": "prompt", "text": "Sannhet: Personen flasken peker på må svare: Hvis du måtte date en i dette rommet, hvem ville det vært?" },
+    { "type": "challenge", "text": "Personen flasken peker på må kysse den personen flasken peker MEST på." }
+  ]
+}
