@@ -67,28 +67,63 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
   'personvern': {
     title: 'Personvernerklæring',
     content: (
-      <div className="space-y-4 text-muted-foreground">
-        <h3 className="font-semibold text-foreground">Datainnsamling og Bruk</h3>
-        <p>
-          GameNight er designet med personvern i tankene. Vi samler ikke inn
-          personlig identifiserbar informasjon.
+      <div className="space-y-6 text-muted-foreground">
+        <p className="text-lg">
+          Din tillit er viktig for oss. Her forklarer vi hvilken informasjon vi samler inn, hvorfor
+          vi gjør det, og hvordan vi bruker den for å gjøre GameNight bedre for alle.
         </p>
-        <p>
-          For å forbedre spillopplevelsen, lagrer vi spillernavnene du legger inn lokalt i din
-          nettleser ved hjelp av `localStorage`. Denne informasjonen forlater aldri din enhet og
-          sendes ikke til våre servere. Du kan når som helst slette denne informasjonen ved å fjerne
-          spillerne i spillet.
-        </p>
-        <h3 className="font-semibold text-foreground">Annonsering</h3>
-        <p>
-          For å dekke driftskostnadene og holde tjenesten gratis, kan denne applikasjonen vise
-          annonser fra tredjepartsnettverk som Google AdSense. Disse nettverkene kan bruke cookies for
-          å vise relevante annonser basert på tidligere besøk.
-        </p>
-        <h3 className="font-semibold text-foreground">Endringer</h3>
-        <p>
-          Denne personvernerklæringen kan bli oppdatert. Vi anbefaler at du ser gjennom den jevnlig.
-        </p>
+
+        <div>
+          <h3 className="font-semibold text-foreground text-xl mb-2">Spilldata (Lagret lokalt hos deg)</h3>
+          <p>
+            For å gi deg en sømløs spillopplevelse, lagrer vi spillernavnene du legger inn lokalt i
+            din egen nettleser ved hjelp av `localStorage`. Denne informasjonen forlater aldri din
+            enhet, sendes ikke til våre servere, og er kun tilgjengelig for deg. Du kan når som
+            helst slette denne dataen ved å tømme nettleserdataene dine.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="font-semibold text-foreground text-xl mb-2">Anonym Bruksanalyse (Google Analytics)</h3>
+          <p>
+            Vi bruker Google Analytics for å forstå hvordan GameNight blir brukt. Vi samler inn
+            anonym og aggregert statistikk, for eksempel hvilke spill som er mest populære, hvor
+            mange runder som spilles, og hvilke typer enheter som brukes. Dette hjelper oss med å
+            forbedre spillene og prioritere nye funksjoner. Ingen personlig identifiserbar
+            informasjon blir lagret i denne prosessen.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="font-semibold text-foreground text-xl mb-2">Annonsering (Google AdSense)</h3>
+          <p>
+            For å dekke driftskostnadene og holde tjenesten gratis, viser vi annonser levert av
+            Google AdSense og andre tredjepartsnettverk. Disse nettverkene kan bruke informasjonskapsler
+            (cookies) for å vise annonser basert på dine tidligere besøk på denne eller andre
+            nettsider. Dette bidrar til å gjøre annonsene mer relevante for deg.
+          </p>
+          <p className="mt-2">
+            Du kan velge bort personlig tilpasset annonsering ved å besøke{' '}
+            <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-primary underline">
+              Googles Annonseinnstillinger
+            </a>.
+          </p>
+        </div>
+        
+        <div>
+            <h3 className="font-semibold text-foreground text-xl mb-2">Søkestatistikk (Google Search Console)</h3>
+            <p>
+                Vi bruker Google Search Console for å se hvordan brukere finner GameNight via Google-søk. Dette hjelper oss å forstå hvilke søkeord som fører til siden vår, slik at vi kan gjøre den mer synlig for andre som leter etter partyspill. Denne dataen er anonym og brukes kun for å forbedre vår synlighet i søkemotorer.
+            </p>
+        </div>
+
+        <div>
+          <h3 className="font-semibold text-foreground text-xl mb-2">Endringer i erklæringen</h3>
+          <p>
+            Denne personvernerklæringen kan bli oppdatert. Vi anbefaler at du ser gjennom den
+            jevnlig for å holde deg informert.
+          </p>
+        </div>
       </div>
     ),
   },
