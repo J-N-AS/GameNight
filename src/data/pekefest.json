@@ -10,6 +10,7 @@
   "intensity": "low",
   "audience": "all",
   "category": ["Vorspiel", "Party"],
+  "tags": ["Anbefalt"],
   "items": [
     { "type": "pointing", "text": "Hvem er mest sannsynlig til å le på upassende tidspunkt?" },
     { "type": "pointing", "text": "Hvem bruker mest penger på mat?" },

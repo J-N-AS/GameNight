@@ -1,0 +1,25 @@
+{
+  "id": "rt-2025-dummy",
+  "title": "RT 2025: Dummy Bussen",
+  "description": "Et custom spill for den beste bussen i 2025! Interne vitser, ville utfordringer og minner for livet. Kun for medlemmer av bussen.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🚌",
+  "color": "hsl(350 90% 50%)",
+  "intensity": "high",
+  "audience": "18+",
+  "category": ["Party", "Kaos", "18+"],
+  "tags": ["Russ"],
+  "custom": true,
+  "logo": "/logos/rt-2025-dummy-logo.png",
+  "instagram": "https://www.instagram.com/gamenight.no",
+  "items": [
+    { "type": "pointing", "text": "Hvem er bussens mest kaotiske medlem?" },
+    { "type": "challenge", "text": "{player}, ta en slurk for hver gang du har sagt 'det ordner seg' denne uken." },
+    { "type": "prompt", "text": "Hva er det mest legendariske øyeblikket som har skjedd på bussen så langt?" },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å sovne på et rart sted i russetiden?" },
+    { "type": "challenge", "text": "Alle skåler for buss-sjåføren! Ta en slurk." },
+    { "type": "never_have_i_ever", "text": "mistet en gjenstand under en buss-kveld." }
+  ]
+}

@@ -1,5 +1,5 @@
 import { getGame } from '@/lib/games';
-import { GameClient } from '@/components/game/GameClient';
+import { GameFlow } from '@/components/game/GameFlow';
 import { notFound } from 'next/navigation';
 
 type GamePageProps = {
@@ -29,5 +29,5 @@ export default async function GamePage({ params }: GamePageProps) {
     notFound();
   }
 
-  return <GameClient game={game} />;
+  return <GameFlow game={game} />;
 }

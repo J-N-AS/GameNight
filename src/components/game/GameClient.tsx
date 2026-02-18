@@ -13,10 +13,6 @@ import { GameMenu } from './GameMenu';
 import { useToast } from '@/hooks/use-toast';
 import { AdBanner } from '../ads/AdBanner';
 import { Progress } from '@/components/ui/progress';
-import { GameConsentScreen } from './GameConsentScreen';
-import { GameModeSelectionScreen } from './GameModeSelectionScreen';
-import { GameInstructionScreen } from './GameInstructionScreen';
-import { GlassWater, Smartphone } from 'lucide-react';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -27,7 +23,13 @@ function shuffleArray<T>(array: T[]): T[] {
   return newArray;
 }
 
-export function GameClient({ game }: { game: Game }) {
+interface GameClientProps {
+  game: Game;
+  onRestart: () => void;
+  gameMode?: 'virtual' | 'physical' | null;
+}
+
+export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
   const { players, isLoaded } = usePlayers();
   const router = useRouter();
   const { toast } = useToast();
@@ -35,13 +37,8 @@ export function GameClient({ game }: { game: Game }) {
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
-  const [consentGiven, setConsentGiven] = useState(false);
-  const [gameMode, setGameMode] = useState<'virtual' | 'physical' | null>(null);
-  const [physicalGameConfirmed, setPhysicalGameConfirmed] = useState(false);
   
-  // State to hold the players for the current task to prevent re-shuffling on re-render
   const [taskPlayers, setTaskPlayers] = useState<{player1: string; player2: string} | null>(null);
-
 
   // Versus mode state
   const [team1Score, setTeam1Score] = useState(0);
@@ -57,8 +54,7 @@ export function GameClient({ game }: { game: Game }) {
   const isPhysicalItemGame = game.gameType === 'physical-item';
 
   const setupGame = useCallback(() => {
-    const gameTasks =
-      game.shuffle === false ? game.items : shuffleArray(game.items);
+    const gameTasks = game.shuffle === false ? game.items : shuffleArray(game.items);
     setTasks(gameTasks);
     setCurrentIndex(0);
     setIsFinished(false);
@@ -66,10 +62,7 @@ export function GameClient({ game }: { game: Game }) {
     setTeam2Score(0);
     setShowSpinResult(false);
     setIsSpinning(false);
-    if (isPhysicalItemGame) {
-      setPhysicalGameConfirmed(false);
-    }
-  }, [game, isPhysicalItemGame]);
+  }, [game]);
 
   useEffect(() => {
     if (isLoaded) {
@@ -84,15 +77,7 @@ export function GameClient({ game }: { game: Game }) {
       }
       setupGame();
     }
-  }, [
-    game,
-    isLoaded,
-    players.length,
-    game.requiresPlayers,
-    router,
-    toast,
-    setupGame,
-  ]);
+  }, [game, isLoaded, players.length, game.requiresPlayers, router, toast, setupGame]);
 
   const currentTask = useMemo(
     () => (tasks.length > 0 ? tasks[currentIndex] : null),
@@ -153,21 +138,6 @@ export function GameClient({ game }: { game: Game }) {
     handleNextTask();
   };
 
-  const handleRestart = () => {
-    if (isLoaded) {
-      if (game.warning) {
-        setConsentGiven(false);
-      }
-      if (isSpinTheBottleMode) {
-        setGameMode(null); // Go back to mode selection
-      }
-      if (isPhysicalItemGame) {
-        setPhysicalGameConfirmed(false);
-      }
-      setupGame();
-    }
-  };
-
   const processedContent = useMemo(() => {
     if (!currentTask || !isLoaded) return '';
     let { text } = currentTask;
@@ -220,8 +190,6 @@ export function GameClient({ game }: { game: Game }) {
 
   const progressValue =
     tasks.length > 0 ? ((currentIndex + 1) / tasks.length) * 100 : 0;
-
-  const showConsent = game.warning && !consentGiven;
   
   const extractHslValues = (hslString?: string) => {
     if (!hslString) return '';
@@ -233,52 +201,6 @@ export function GameClient({ game }: { game: Game }) {
     '--team1-color-hsl': extractHslValues(game.teams?.team1Color),
     '--team2-color-hsl': extractHslValues(game.teams?.team2Color),
   } as React.CSSProperties;
-
-
-  if (showConsent) {
-    return (
-      <GameConsentScreen
-        warning={game.warning!}
-        onConfirm={() => setConsentGiven(true)}
-      />
-    );
-  }
-
-  if (isSpinTheBottleMode && !gameMode) {
-    return (
-      <GameModeSelectionScreen
-        title="Spinn Flasken"
-        description="Hvordan vil dere spille? Velg om dere bruker en ekte, fysisk flaske eller den virtuelle flasken på skjermen."
-        options={[
-          {
-            id: 'virtual',
-            icon: <Smartphone className="h-8 w-8 text-primary" />,
-            title: 'Bruk Virtuell Flaske',
-            description: 'Spill med en animert flaske på skjermen. Perfekt hvis dere ikke har en flaske tilgjengelig.',
-          },
-          {
-            id: 'physical',
-            icon: <GlassWater className="h-8 w-8 text-primary" />,
-            title: 'Bruk Ekte Flaske',
-            description: 'Bruk en fysisk flaske. Spillet vil kun vise oppgavene etter at dere har spunnet selv.',
-          }
-        ]}
-        onModeSelect={(mode) => setGameMode(mode as 'virtual' | 'physical')}
-      />
-    );
-  }
-
-  if (isPhysicalItemGame && !physicalGameConfirmed) {
-    return (
-      <GameInstructionScreen
-        icon={<Package className="h-12 w-12 text-primary" />}
-        title="Gjør dere klare!"
-        description="Dette spillet krever en liten gjenstand, som en snusboks eller en myk ball, som kan kastes trygt mellom dere. Finn en gjenstand og trykk start når dere er klare."
-        buttonText="Start Spillet"
-        onConfirm={() => setPhysicalGameConfirmed(true)}
-      />
-    );
-  }
 
   if (isFinished) {
     const winner = team1Score > team2Score ? game.teams!.team1 : (team2Score > team1Score ? game.teams!.team2 : null);
@@ -320,7 +242,7 @@ export function GameClient({ game }: { game: Game }) {
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <Button
-            onClick={handleRestart}
+            onClick={onRestart}
             size="lg"
             className="transform transition-transform duration-200 hover:scale-105"
           >
@@ -363,7 +285,7 @@ export function GameClient({ game }: { game: Game }) {
           </Button>
         </div>
         <div className="absolute top-4 right-4 z-10">
-          <GameMenu context="in-game" onRestart={handleRestart} />
+          <GameMenu context="in-game" onRestart={onRestart} />
         </div>
   
         <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
@@ -446,7 +368,7 @@ export function GameClient({ game }: { game: Game }) {
         </div>
 
         <div className="absolute top-4 right-4 z-10">
-          <GameMenu context="in-game" onRestart={handleRestart} />
+          <GameMenu context="in-game" onRestart={onRestart} />
         </div>
         
         <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
@@ -524,7 +446,7 @@ export function GameClient({ game }: { game: Game }) {
       </div>
 
       <div className="absolute top-4 right-4 z-10">
-        <GameMenu context="in-game" onRestart={handleRestart} />
+        <GameMenu context="in-game" onRestart={onRestart} />
       </div>
 
       {/* Game Stage */}

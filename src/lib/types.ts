@@ -33,6 +33,10 @@ export interface Game {
     team1Color?: string;
     team2Color?: string;
   };
+  custom?: boolean;
+  instagram?: string;
+  logo?: string;
+  tags?: string[];
 }
 
 export interface GameArticle {

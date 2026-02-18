@@ -10,6 +10,7 @@
   "intensity": "medium",
   "audience": "all",
   "category": ["Vorspiel", "Party"],
+  "tags": ["Anbefalt"],
   "items": [
     { "type": "challenge", "text": "Waterfall! {player} starter, og rekkefølgen går mot klokka." },
     { "type": "challenge", "text": "Kategorier! Tema: Frukt. {player} starter. Førstemann som ikke kommer på en frukt, drikker." },
