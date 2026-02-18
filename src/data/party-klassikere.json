@@ -25,6 +25,21 @@
     { "type": "prompt", "text": "Hva er det verste sjekketrikset du har hørt? Personen med det verste må dele ut 3 slurker." },
     { "type": "challenge", "text": "{player} og personen til høyre må bytte plasser." },
     { "type": "pointing", "text": "Hvem har den mest smittende latteren?" },
-    { "type": "challenge", "text": "{all} må ta en slurk for hver person i rommet som har på seg noe blått." }
+    { "type": "challenge", "text": "{all} må ta en slurk for hver person i rommet som har på seg noe blått." },
+    { "type": "challenge", "text": "Tommel-mester! {player} kan når som helst sette tommelen på bordet. Den siste som gjør det samme, må drikke." },
+    { "type": "challenge", "text": "{player}, du kan kun snakke i spørsmål frem til din neste tur. Hvis du feiler, drikk." },
+    { "type": "pointing", "text": "Hvem i rommet hadde overlevd lengst på en øde øy?" },
+    { "type": "never_have_i_ever", "text": "sneket meg ut av huset som tenåring." },
+    { "type": "challenge", "text": "Alle må ta en slurk med den hånden de vanligvis ikke bruker." },
+    { "type": "challenge", "text": "{player}, start en setning. Neste person legger til et ord, og så videre. Den som ikke klarer å legge til et logisk ord, drikker." },
+    { "type": "prompt", "text": "Hvem kan den beste (eller verste) dansen? Vis den nå! Gruppen stemmer, taperen drikker." },
+    { "type": "challenge", "text": "{player}, du må komplimentere personen til venstre for deg, men det må være kreativt." },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å bli venn med bartenderen?" },
+    { "type": "challenge", "text": "Alle som har bursdag i samme sesong (vinter, vår, sommer, høst) som deg, {player}, må skåle med deg." },
+    { "type": "never_have_i_ever", "text": "spist en hel pizza alene." },
+    { "type": "challenge", "text": "Alle spiller 'stein, saks, papir' mot {player}. Alle som taper, drikker." },
+    { "type": "prompt", "text": "Ny regel: Ingen har lov til å peke med fingrene. Bruk albuen i stedet. Straff: 1 slurk." },
+    { "type": "pointing", "text": "Hvem i rommet er den største livsnyteren?" },
+    { "type": "challenge", "text": "Alle ta en felles skål for en legendarisk kveld!" }
   ]
 }

@@ -25,6 +25,21 @@
     { "type": "prompt", "text": "{player}, hva var drømmejobben din da du var liten?" },
     { "type": "prompt", "text": "{player}, hvis du kunne bo hvor som helst i verden i ett år, hvor ville du dratt?" },
     { "type": "prompt", "text": "{player}, hva verdsetter du mest i et vennskap?" },
-    { "type": "prompt", "text": "{player}, hva er din favoritt-årstid og hvorfor?" }
+    { "type": "prompt", "text": "{player}, hva er din favoritt-årstid og hvorfor?" },
+    { "type": "prompt", "text": "{player}, hva er en ting du har på bucket-listen din?" },
+    { "type": "prompt", "text": "{player}, fortell om en reise som forandret deg." },
+    { "type": "prompt", "text": "{player}, hvis du kunne hatt hvilken som helst superkraft, hva ville det vært og hvorfor?" },
+    { "type": "prompt", "text": "{player}, hva er en bok eller dokumentar som gjorde inntrykk på deg?" },
+    { "type": "prompt", "text": "{player}, hva er din favorittmåte å slappe av på?" },
+    { "type": "prompt", "text": "{player}, hva er en ting du er genuint nysgjerrig på?" },
+    { "type": "prompt", "text": "{player}, hvis du kunne gi ditt 16 år gamle jeg ett råd, hva ville det vært?" },
+    { "type": "prompt", "text": "{player}, hva er et talent du har som få vet om?" },
+    { "type": "prompt", "text": "{player}, hva er den beste gaven du noensinne har fått?" },
+    { "type": "prompt", "text": "{player}, hva er en tradisjon fra din barndom du setter pris på?" },
+    { "type": "prompt", "text": "{player}, hva er en ting folk ofte misforstår om deg?" },
+    { "type": "prompt", "text": "{player}, hva er ditt favorittminne fra det siste året?" },
+    { "type": "prompt", "text": "{player}, hvis du kunne løst ett verdensproblem, hvilket ville det vært?" },
+    { "type": "prompt", "text": "{player}, hva er en enkel glede du setter stor pris på?" },
+    { "type": "prompt", "text": "{player}, hva er den viktigste leksjonen du har lært om vennskap?" }
   ]
 }
