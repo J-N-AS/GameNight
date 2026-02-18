@@ -38,6 +38,10 @@ export function GameClient({ game }: { game: Game }) {
   const [consentGiven, setConsentGiven] = useState(false);
   const [gameMode, setGameMode] = useState<'virtual' | 'physical' | null>(null);
   const [physicalGameConfirmed, setPhysicalGameConfirmed] = useState(false);
+  
+  // State to hold the players for the current task to prevent re-shuffling on re-render
+  const [taskPlayers, setTaskPlayers] = useState<{player1: string; player2: string} | null>(null);
+
 
   // Versus mode state
   const [team1Score, setTeam1Score] = useState(0);
@@ -89,6 +93,26 @@ export function GameClient({ game }: { game: Game }) {
     toast,
     setupGame,
   ]);
+
+  const currentTask = useMemo(
+    () => (tasks.length > 0 ? tasks[currentIndex] : null),
+    [currentIndex, tasks]
+  );
+  
+  useEffect(() => {
+    if (currentTask && players.length > 0) {
+      let availablePlayers = [...players];
+      const player1Index = Math.floor(Math.random() * availablePlayers.length);
+      const player1 = availablePlayers[player1Index]?.name || 'Noen';
+      availablePlayers.splice(player1Index, 1);
+
+      const player2Index = availablePlayers.length > 0 ? Math.floor(Math.random() * availablePlayers.length) : -1;
+      const player2 = player2Index !== -1 ? availablePlayers[player2Index]?.name : 'En annen';
+      
+      setTaskPlayers({ player1, player2 });
+    }
+  }, [currentIndex, players, currentTask]);
+
 
   const handleNextTask = () => {
     if (isSpinTheBottleMode) {
@@ -144,11 +168,6 @@ export function GameClient({ game }: { game: Game }) {
     }
   };
 
-  const currentTask = useMemo(
-    () => (tasks.length > 0 ? tasks[currentIndex] : null),
-    [currentIndex, tasks]
-  );
-
   const processedContent = useMemo(() => {
     if (!currentTask || !isLoaded) return '';
     let { text } = currentTask;
@@ -163,14 +182,8 @@ export function GameClient({ game }: { game: Game }) {
     let content: React.ReactNode = text;
     const placeholderRegex = /(\{team1\}|\{team2\}|\{player\}|\{player2\}|\{all\})/g;
 
-    if (placeholderRegex.test(text)) {
-      let availablePlayers = [...players];
-      const player1Index = players.length > 0 ? Math.floor(Math.random() * availablePlayers.length) : -1;
-      const player1 = player1Index !== -1 ? availablePlayers[player1Index].name : 'Noen';
-      if (player1Index !== -1) availablePlayers.splice(player1Index, 1);
-      const player2Index = players.length > 1 ? Math.floor(Math.random() * availablePlayers.length) : -1;
-      const player2 = player2Index !== -1 ? availablePlayers[player2Index].name : 'En annen';
-
+    if (placeholderRegex.test(text) && taskPlayers) {
+      const { player1, player2 } = taskPlayers;
       const parts = text.split(placeholderRegex);
       content = (
         <React.Fragment>
@@ -194,7 +207,7 @@ export function GameClient({ game }: { game: Game }) {
       );
     }
     return content;
-  }, [currentTask, players, isLoaded, game.teams, isSpinTheBottleMode, isPhysicalItemGame]);
+  }, [currentTask, isLoaded, game.teams, isSpinTheBottleMode, isPhysicalItemGame, taskPlayers]);
 
 
   const cardVariants = {
