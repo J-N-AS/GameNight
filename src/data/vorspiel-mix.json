@@ -12,6 +12,16 @@
     { "type": "prompt", "text": "Hva er det flaueste kallenavnet du noensinne har hatt?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å foreslå nachspiel kl. 02?" },
     { "type": "challenge", "text": "{player}, du får 10 sekunder til å nevne 5 ting man kan finne i et kjøleskap. Hvis du feiler, drikk." },
-    { "type": "prompt", "text": "Fortell om en gang du prøvde å imponere noen, men feilet totalt." }
+    { "type": "prompt", "text": "Fortell om en gang du prøvde å imponere noen, men feilet totalt." },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å bli husket av bartenderen etter i kveld?" },
+    { "type": "challenge", "text": "{player}, du kan ikke si 'ja' eller 'nei' de neste 3 rundene. Hver gang du feiler, drikk." },
+    { "type": "never_have_i_ever", "text": "gått hjem med feil jakke fra en fest." },
+    { "type": "challenge", "text": "{player} må velge en sang som {all} må lytte til. Hvis noen klager, må de drikke." },
+    { "type": "prompt", "text": "Hva er din 'guilty pleasure' TV-serie?" },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å starte en allsang på bussen hjem?" },
+    { "type": "challenge", "text": "{player} må ta en slurk fra drikken sin uten å bruke hendene." },
+    { "type": "prompt", "text": "Hvis du var en superhelt for en dag, hva ville superkraften din vært?" },
+    { "type": "challenge", "text": "{player} og {player2} må gi hverandre et ærlig kompliment." },
+    { "type": "never_have_i_ever", "text": "prank-ringt til noen etter fylte 18." }
   ]
 }

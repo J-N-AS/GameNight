@@ -12,6 +12,16 @@
     { "type": "pointing", "text": "Hvem bruker mest penger på mat?" },
     { "type": "pointing", "text": "Hvem er mest avhengig av kaffe?" },
     { "type": "pointing", "text": "Hvem hadde vært den dårligste hemmelige agenten?" },
-    { "type": "pointing", "text": "Hvem har best musikksmak?" }
+    { "type": "pointing", "text": "Hvem har best musikksmak?" },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å bli berømt?" },
+    { "type": "pointing", "text": "Hvem er den største drama-kongen/dronningen i gjengen?" },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å glemme en bursdag?" },
+    { "type": "pointing", "text": "Hvem hadde vunnet en spisekonkurranse?" },
+    { "type": "pointing", "text": "Hvem har den tørreste humoren?" },
+    { "type": "pointing", "text": "Hvem er den verste taperen?" },
+    { "type": "pointing", "text": "Hvem synger høyest og best i dusjen?" },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å gråte av en søt dyrevideo?" },
+    { "type": "pointing", "text": "Hvem er den største rotekoppen?" },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å dra på en spontan ferie alene?" }
   ]
 }

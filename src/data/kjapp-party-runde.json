@@ -11,6 +11,14 @@
     { "type": "challenge", "text": "{player}, du er nå slangetemmer. Hver gang du sier ordet 'slange', må alle drikke." },
     { "type": "prompt", "text": "Alle må si sitt favoritt-dansemove. {player} bestemmer hvem som har det dårligste, som må drikke." },
     { "type": "challenge", "text": "{player}, ta 2 slurker for fremtiden og 2 for fortiden." },
-    { "type": "challenge", "text": "Tommel-mester! {player} kan når som helst sette tommelen på bordet. Sistemann som gjør det samme må drikke." }
+    { "type": "challenge", "text": "Tommel-mester! {player} kan når som helst sette tommelen på bordet. Sistemann som gjør det samme må drikke." },
+    { "type": "challenge", "text": "{player}, dans Macarena i 15 sekunder." },
+    { "type": "prompt", "text": "Hva er din go-to drikkesang? {player} må starte å synge den nå." },
+    { "type": "challenge", "text": "{player} og {player2} må ha en stirrekonkurranse. Førstemann som blunker, drikker." },
+    { "type": "challenge", "text": "{all} må rope 'GameNight er best!'. Sistemann som roper, drikker." },
+    { "type": "challenge", "text": "{player} må finne på et rim på ordet 'fest'. Hvis ikke, drikk." },
+    { "type": "challenge", "text": "{all} tar en felles skål for en fantastisk kveld!" },
+    { "type": "prompt", "text": "Hvem kan den beste kjendis-etterligningen? Vis den nå! Gruppen stemmer, taperen drikker." },
+    { "type": "challenge", "text": "{player}, du har 10 sekunder på å nevne 5 ting man finner på et bad. Klarer du det ikke, må du drikke." }
   ]
 }

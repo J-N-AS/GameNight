@@ -12,6 +12,16 @@
     { "type": "challenge", "text": "Kategorier! Tema: Frukt. {player} starter. Førstemann som ikke kommer på en frukt, drikker." },
     { "type": "prompt", "text": "Ny regel: Ingen har lov til å si navnet til noen. Den som bryter regelen, må drikke." },
     { "type": "challenge", "text": "{all} må ta en slurk fra drikken til personen til venstre." },
-    { "type": "pointing", "text": "Hvem i rommet er mest sannsynlig til å vinne i Lotto, men miste kupongen?" }
+    { "type": "pointing", "text": "Hvem i rommet er mest sannsynlig til å vinne i Lotto, men miste kupongen?" },
+    { "type": "challenge", "text": "Regelmester! {player} får lage en ny regel som gjelder for de neste 5 rundene." },
+    { "type": "challenge", "text": "{player}, nevn 3 land i Asia på 5 sekunder. Hvis ikke, drikk." },
+    { "type": "pointing", "text": "Hvem er mest sannsynlig til å sovne på festen i kveld?" },
+    { "type": "challenge", "text": "{player} må etterligne en annen person i rommet. De andre gjetter. Førstemann som gjetter riktig, får dele ut 3 slurker." },
+    { "type": "never_have_i_ever", "text": "tatt æren for noe jeg ikke har gjort." },
+    { "type": "challenge", "text": "{player} må si alfabetet baklengs. Kan dele ut 5 slurker hvis de klarer det. Lykke til!" },
+    { "type": "prompt", "text": "Hva er det verste sjekketrikset du har hørt? Personen med det verste må dele ut 3 slurker." },
+    { "type": "challenge", "text": "{player} og personen til høyre må bytte plasser." },
+    { "type": "pointing", "text": "Hvem har den mest smittende latteren?" },
+    { "type": "challenge", "text": "{all} må ta en slurk for hver person i rommet som har på seg noe blått." }
   ]
 }
