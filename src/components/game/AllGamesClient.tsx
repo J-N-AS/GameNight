@@ -28,6 +28,7 @@ const categories = [
   { id: 'alle', label: 'Alle', emoji: '🎉' },
   { id: 'Vorspiel', label: 'Vorspiel', emoji: '🍻' },
   { id: 'Party', label: 'Party', emoji: '🥳' },
+  { id: 'Fysiske Leker', label: 'Fysiske Leker', emoji: '🤸' },
   { id: 'Rolig', label: 'Rolig', emoji: '🤔' },
   { id: 'Kaos', label: 'Kaos', emoji: '💥' },
   { id: '18+', label: '18+', emoji: '😈' },

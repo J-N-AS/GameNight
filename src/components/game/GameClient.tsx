@@ -4,7 +4,7 @@ import type { Game, GameTask } from '@/lib/games';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TaskCard } from './TaskCard';
 import { Button } from '@/components/ui/button';
-import { Repeat, Home, PartyPopper, Trophy } from 'lucide-react';
+import { Repeat, Home, PartyPopper, Trophy, Package } from 'lucide-react';
 import Link from 'next/link';
 import { usePlayers } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,7 @@ import { AdBanner } from '../ads/AdBanner';
 import { Progress } from '@/components/ui/progress';
 import { GameConsentScreen } from './GameConsentScreen';
 import { GameModeSelectionScreen } from './GameModeSelectionScreen';
+import { GameInstructionScreen } from './GameInstructionScreen';
 import { GlassWater, Smartphone } from 'lucide-react';
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -36,6 +37,7 @@ export function GameClient({ game }: { game: Game }) {
   const [isFinished, setIsFinished] = useState(false);
   const [consentGiven, setConsentGiven] = useState(false);
   const [gameMode, setGameMode] = useState<'virtual' | 'physical' | null>(null);
+  const [physicalGameConfirmed, setPhysicalGameConfirmed] = useState(false);
 
   // Versus mode state
   const [team1Score, setTeam1Score] = useState(0);
@@ -48,6 +50,7 @@ export function GameClient({ game }: { game: Game }) {
 
   const isVersusMode = game.gameType === 'versus';
   const isSpinTheBottleMode = game.gameType === 'spin-the-bottle';
+  const isPhysicalItemGame = game.gameType === 'physical-item';
 
   const setupGame = useCallback(() => {
     const gameTasks =
@@ -59,7 +62,10 @@ export function GameClient({ game }: { game: Game }) {
     setTeam2Score(0);
     setShowSpinResult(false);
     setIsSpinning(false);
-  }, [game]);
+    if (isPhysicalItemGame) {
+      setPhysicalGameConfirmed(false);
+    }
+  }, [game, isPhysicalItemGame]);
 
   useEffect(() => {
     if (isLoaded) {
@@ -131,6 +137,9 @@ export function GameClient({ game }: { game: Game }) {
       if (isSpinTheBottleMode) {
         setGameMode(null); // Go back to mode selection
       }
+      if (isPhysicalItemGame) {
+        setPhysicalGameConfirmed(false);
+      }
       setupGame();
     }
   };
@@ -144,8 +153,8 @@ export function GameClient({ game }: { game: Game }) {
     if (!currentTask || !isLoaded) return '';
     let { text } = currentTask;
     
-    // For spin the bottle, we don't process player names.
-    if (isSpinTheBottleMode) {
+    // For spin the bottle or physical item games, we don't process player names.
+    if (isSpinTheBottleMode || isPhysicalItemGame) {
         return text;
     }
 
@@ -185,7 +194,7 @@ export function GameClient({ game }: { game: Game }) {
       );
     }
     return content;
-  }, [currentTask, players, isLoaded, game.teams, isSpinTheBottleMode]);
+  }, [currentTask, players, isLoaded, game.teams, isSpinTheBottleMode, isPhysicalItemGame]);
 
 
   const cardVariants = {
@@ -242,6 +251,18 @@ export function GameClient({ game }: { game: Game }) {
           }
         ]}
         onModeSelect={(mode) => setGameMode(mode as 'virtual' | 'physical')}
+      />
+    );
+  }
+
+  if (isPhysicalItemGame && !physicalGameConfirmed) {
+    return (
+      <GameInstructionScreen
+        icon={<Package className="h-12 w-12 text-primary" />}
+        title="Gjør dere klare!"
+        description="Dette spillet krever en liten gjenstand, som en snusboks eller en myk ball, som kan kastes trygt mellom dere. Finn en gjenstand og trykk start når dere er klare."
+        buttonText="Start Spillet"
+        onConfirm={() => setPhysicalGameConfirmed(true)}
       />
     );
   }
@@ -395,7 +416,11 @@ export function GameClient({ game }: { game: Game }) {
     );
   }
 
-  if (isSpinTheBottleMode && gameMode === 'physical') {
+  if ((isSpinTheBottleMode && gameMode === 'physical') || isPhysicalItemGame) {
+    const instructionText = isPhysicalItemGame
+      ? 'Kast gjenstanden til en annen spiller. Den som fanger den utfører oppgaven.'
+      : 'Spinn den ekte flasken. Den flasken peker på må gjøre oppgaven som vises.';
+
     return (
       <div className="flex flex-col min-h-screen p-4 md:p-8">
         <div className="absolute top-4 left-4 z-10">
@@ -415,7 +440,7 @@ export function GameClient({ game }: { game: Game }) {
             <div className="h-20 mb-4 flex items-center justify-center">
                 {!showLoading && (
                     <p className="text-muted-foreground text-center px-4">
-                        Spinn den ekte flasken. Den flasken peker på må gjøre oppgaven som vises.
+                        {instructionText}
                     </p>
                 )}
             </div>

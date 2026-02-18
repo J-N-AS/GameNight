@@ -1,0 +1,40 @@
+{
+  "id": "snusboksen",
+  "title": "Snusboksen",
+  "description": "Kast boksen, utfør oppgaven. En enkel og fartsfylt lek som krever raske reflekser og litt flaks.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🥫",
+  "intensity": "medium",
+  "audience": "18+",
+  "category": ["Party", "Fysiske Leker", "Kaos"],
+  "gameType": "physical-item",
+  "warning": {
+    "title": "Advarsel: Fysisk aktivitet",
+    "description": [
+      "Dette spillet innebærer å kaste en gjenstand. Sørg for at dere har nok plass og at ingenting knuselig er i nærheten.",
+      "Vær forsiktig så ingen blir skadet. Kast forsiktig!",
+      "Husk at det alltid er lov å si nei til en oppgave. Drikk ansvarlig."
+    ],
+    "buttonText": "Vi forstår og starter spillet"
+  },
+  "items": [
+    { "type": "challenge", "text": "Du som fanget boksen, velg en annen person som må ta en slurk." },
+    { "type": "prompt", "text": "Du som fanget boksen, svar ærlig: Hva er det rareste du har gjort denne uken?" },
+    { "type": "challenge", "text": "Du som fanget boksen, ta 2 slurker." },
+    { "type": "challenge", "text": "Du som fanget boksen, start en runde med 'Jeg har aldri...'." },
+    { "type": "challenge", "text": "Mistet du boksen? Ta en straffeslurk. Fanget du den? Del ut 2 slurker." },
+    { "type": "challenge", "text": "Du som fanget boksen, lag en ny regel som gjelder for de neste 3 rundene." },
+    { "type": "prompt", "text": "Du som fanget boksen, fortell en dårlig vits. Hvis ingen ler, drikker du." },
+    { "type": "challenge", "text": "Du som fanget boksen, velg en kategori (f.eks. bilmerker). Neste som ikke kommer på noe i kategorien, drikker." },
+    { "type": "challenge", "text": "Du som fanget boksen, bytt plass med personen til venstre for deg." },
+    { "type": "challenge", "text": "Du som fanget boksen, pek på to personer som må skåle og drikke." },
+    { "type": "prompt", "text": "Du som fanget boksen: Sannhet eller drikk. Hvem her er mest sannsynlig til å bli president?" },
+    { "type": "challenge", "text": "Du som fanget boksen, må snakke med en rar stemme til neste gang det er din tur." },
+    { "type": "challenge", "text": "Mistet du boksen? Drikk 2 slurker. Fanget du den? Gi bort 4 slurker." },
+    { "type": "challenge", "text": "Du som fanget boksen, komplimenter personen som kastet." },
+    { "type": "prompt", "text": "Du som fanget boksen, hva er ditt 'spirit animal' og hvorfor?" },
+    { "type": "challenge", "text": "Du som fanget boksen, drikk en slurk for hver person i rommet som har på seg blått." }
+  ]
+}

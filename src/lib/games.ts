@@ -39,6 +39,7 @@ const allGameIds = [
   'singles-body',
   'singles-night',
   'spinn-flasken',
+  'snusboksen',
   'vorspiel-mix',
   // Note: 'utfordringer-deprecated' is intentionally not included as it's empty/deprecated.
 ];

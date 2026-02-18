@@ -26,7 +26,7 @@ export interface Game {
   audience: 'all' | '18+';
   category: string[];
   warning?: GameWarning;
-  gameType?: 'default' | 'versus' | 'spin-the-bottle';
+  gameType?: 'default' | 'versus' | 'spin-the-bottle' | 'physical-item';
   teams?: {
     team1: string;
     team2: string;
