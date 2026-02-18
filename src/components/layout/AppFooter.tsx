@@ -25,6 +25,9 @@ export function AppFooter() {
             <Link href="/drikkeleker" className="hover:text-foreground transition-colors">
               Klassiske Drikkeleker
             </Link>
+            <Link href="/musikkleker" className="hover:text-foreground transition-colors">
+              Musikkeleker
+            </Link>
             <Link href="/info/personvern" className="hover:text-foreground transition-colors">
               Personvern
             </Link>

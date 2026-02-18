@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, PartyPopper } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, PartyPopper, Music } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
@@ -175,8 +175,8 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
         </div>
       </motion.div>
       
-      {/* Secret Code & Classic Games */}
-      <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
+      {/* Secret Code, Classic Games & Music Games */}
+      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
           <section className="text-center">
               <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <PartyPopper className="h-6 w-6 text-primary" /> Har du en hemmelig kode?
@@ -193,6 +193,15 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
               <p className="text-muted-foreground mb-4">Regler for spill som Beer Pong & Ring of Fire – uten skjerm.</p>
               <Button asChild>
                 <Link href="/drikkeleker">Se alle klassikerne</Link>
+              </Button>
+          </section>
+           <section className="text-center">
+             <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
+                  <Music className="h-6 w-6 text-primary" /> Musikkeleker
+              </h2>
+              <p className="text-muted-foreground mb-4">Drikkeleker til kjente sanger. Koble til anlegget og spill!</p>
+              <Button asChild>
+                <Link href="/musikkleker">Finn en sang</Link>
               </Button>
           </section>
       </motion.div>

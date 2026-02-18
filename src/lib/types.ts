@@ -51,3 +51,11 @@ export interface GameArticle {
   imageHint?: string;
   attributionHtml?: string;
 }
+
+export interface MusicGame {
+  id: string;
+  title: string;
+  artist: string;
+  rules: string;
+  spotifyUrl: string;
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "id": "piskesangen",
+    "title": "Piskesangen (Sut Den Op)",
+    "artist": "Suspekt",
+    "rules": "Hver gang du hører piske-lyden må du luft-piske. Glemmer du å piske eller gjør det feil = drikk.",
+    "spotifyUrl": "https://open.spotify.com/track/4j0GUIihf39TCM7h2cO2x1"
+  },
+  {
+    "id": "forelska-i-laerern",
+    "title": "Forelska i lærer'n",
+    "artist": "The Kids",
+    "rules": "Drikk hver gang refrenget starter.",
+    "spotifyUrl": "https://open.spotify.com/track/5Yqg3AY2dp9AgY2jPCa7H2"
+  },
+  {
+    "id": "den-fineste-chevyn",
+    "title": "Den fineste Chevy'n",
+    "artist": "Halva Priset",
+    "rules": "Refreng = alle drikker. Syng med, ellers drikk ekstra.",
+    "spotifyUrl": "https://open.spotify.com/track/71v4IadAl12rVzUP9b2P1w"
+  },
+  {
+    "id": "e-du-nord",
+    "title": "E du nord",
+    "artist": "Vassendgutane",
+    "rules": "Drikk hver gang “E du nord” synges.",
+    "spotifyUrl": "https://open.spotify.com/track/7u6nC2D2LvybprEcGTtVjQ"
+  },
+  {
+    "id": "idyll",
+    "title": "Idyll",
+    "artist": "Postgirobygget",
+    "rules": "Drikk på hvert refreng.",
+    "spotifyUrl": "https://open.spotify.com/track/62o2n3Cw5R05L1i0eS4r7W"
+  },
+  {
+    "id": "optimist",
+    "title": "Optimist",
+    "artist": "Jahn Teigen",
+    "rules": "Drikk hver gang “Optimist” synges. Alle synger på refreng.",
+    "spotifyUrl": "https://open.spotify.com/track/55w3iFRDC5s0g2Nn2rLNFo"
+  },
+  {
+    "id": "neste-sommer",
+    "title": "Neste sommer",
+    "artist": "deLillos",
+    "rules": "Drikk på refreng.",
+    "spotifyUrl": "https://open.spotify.com/track/0YUI3a0iJh7u1N4bC1nsoB"
+  },
+  {
+    "id": "tore-tang",
+    "title": "Tore Tang",
+    "artist": "Mods",
+    "rules": "Drikk hver gang Tore Tang nevnes. Refreng = allsang.",
+    "spotifyUrl": "https://open.spotify.com/track/3nOqRUeA0tq4iBBFmYjX3f"
+  },
+  {
+    "id": "thunderstruck",
+    "title": "Thunderstruck",
+    "artist": "AC/DC",
+    "rules": "Alle starter å drikke når sangen starter. Du drikker kun når ordet “Thunder” synges. Feil timing = drikk.",
+    "spotifyUrl": "https://open.spotify.com/track/57bgtoPSgt236HzfBOd8kj"
+  },
+  {
+    "id": "roxanne",
+    "title": "Roxanne",
+    "artist": "The Police",
+    "rules": "Del gruppa i to. “Roxanne” = gruppe 1 drikker. “You don’t have to…” = gruppe 2 drikker.",
+    "spotifyUrl": "https://open.spotify.com/track/3EYOJ48Et32uATr9ZlQolq"
+  },
+  {
+    "id": "sweet-caroline",
+    "title": "Sweet Caroline",
+    "artist": "Neil Diamond",
+    "rules": "Alle drikker på “BA BA BAA”.",
+    "spotifyUrl": "https://open.spotify.com/track/62AuGbAkt8Ox2IrFFb8GKV"
+  },
+  {
+    "id": "mr-brightside",
+    "title": "Mr. Brightside",
+    "artist": "The Killers",
+    "rules": "Drikk gjennom første vers. Refreng = allsang. Feil tekst = drikk.",
+    "spotifyUrl": "https://open.spotify.com/track/003vvx7Niy0yvhvHt4a68B"
+  },
+  {
+    "id": "bohemian-rhapsody",
+    "title": "Bohemian Rhapsody",
+    "artist": "Queen",
+    "rules": "Ballade = små slurker. Rock-del = kontinuerlig drikking. Opera-del = pause.",
+    "spotifyUrl": "https://open.spotify.com/track/3z8h0lnJfeAFC7kZRM6K0P"
+  },
+  {
+    "id": "ymca",
+    "title": "Y.M.C.A.",
+    "artist": "Village People",
+    "rules": "Gjør bokstavene. Feil eller for sent = drikk.",
+    "spotifyUrl": "https://open.spotify.com/track/1pThsAQ3C8e4y3j74jDJAb"
+  }
+]
