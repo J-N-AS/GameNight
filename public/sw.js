@@ -1,8 +1,5 @@
-const CACHE_NAME = 'gamenight-cache-v1';
-
-// These are the core files for the app shell.
-// This list should be updated if core assets change.
-const CORE_ASSETS = [
+const CACHE_NAME = 'gamenight-cache-v1.6'; // Incremented version to force update
+const urlsToCache = [
   '/',
   '/alle-spill',
   '/drikkeleker',
@@ -23,83 +20,126 @@ const CORE_ASSETS = [
   '/drikkeleker/benovator-ai-generated-9602834_1280.png'
 ];
 
+// List of all data files to pre-cache for offline use
+const dataUrlsToCache = [
+  // Games
+  '/data/after-dark.json',
+  '/data/afterparty.json',
+  '/data/dating-fails.json',
+  '/data/fyllevalg.json',
+  '/data/girl-power.json',
+  '/data/girls-vs-boys.json',
+  '/data/gutta.json',
+  '/data/hemmelig-bonus.json',
+  '/data/hemmeligheter.json',
+  '/data/jeg-har-aldri.json',
+  '/data/kaosrunden.json',
+  '/data/kjapp-party-runde.json',
+  '/data/party-klassikere.json',
+  '/data/pekefest.json',
+  '/data/pest-eller-kolera.json',
+  '/data/rolig-sosial.json',
+  '/data/sannhet-eller-shot.json',
+  '/data/sexy-action.json',
+  '/data/sexy-dares.json',
+  '/data/sexy-vibes.json',
+  '/data/singles-body.json',
+  '/data/singles-night.json',
+  '/data/spinn-flasken.json',
+  '/data/spinn-flasken-action.json',
+  '/data/spinn-flasken-sannhet.json',
+  '/data/snusboksen.json',
+  '/data/snusboksen-utfordring.json',
+  '/data/snusboksen-sannhet.json',
+  '/data/vorspiel-mix.json',
+  // Articles & Music
+  '/data/drikkeleker.json',
+  '/data/musikkleker.json',
+];
+
 self.addEventListener('install', event => {
+  console.log('Service Worker installing.');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        // Add all core assets to the cache.
-        return cache.addAll(CORE_ASSETS);
+        console.log('Opened cache');
+        // Cache basic app shell and images
+        const appShellPromise = cache.addAll(urlsToCache);
+        // Cache all game/article data
+        const dataPromise = cache.addAll(dataUrlsToCache);
+        return Promise.all([appShellPromise, dataPromise]);
       })
-      .catch(err => {
-        console.error('Failed to cache core assets:', err);
+      .then(() => {
+        console.log('All resources have been cached for offline use.');
+        return self.skipWaiting(); // Activate worker immediately
       })
-  );
-});
-
-self.addEventListener('fetch', event => {
-  const { request } = event;
-
-  // For navigation requests (HTML pages), use a network-first strategy.
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          // If the network is successful, cache the new response.
-          if (response.ok) {
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(request, responseToCache);
-              });
-          }
-          return response;
-        })
-        .catch(() => {
-          // If the network fails, serve the page from the cache.
-          // Fallback to '/' if the specific page isn't cached.
-          return caches.match(request).then(res => res || caches.match('/'));
-        })
-    );
-    return;
-  }
-
-  // For other requests (CSS, JS, images, fonts), use a cache-first strategy.
-  event.respondWith(
-    caches.match(request)
-      .then(response => {
-        // If we have a cached response, return it.
-        if (response) {
-          return response;
-        }
-        // Otherwise, fetch from the network, cache it, and return it.
-        return fetch(request).then(
-          networkResponse => {
-            if (networkResponse.ok) {
-              const responseToCache = networkResponse.clone();
-              caches.open(CACHE_NAME)
-                .then(cache => {
-                  cache.put(request, responseToCache);
-                });
-            }
-            return networkResponse;
-          }
-        );
+      .catch(error => {
+        console.error('Cache-all failed:', error);
       })
   );
 });
 
 self.addEventListener('activate', event => {
+  console.log('Service Worker activating.');
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            // Delete old caches.
+            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
+    }).then(() => {
+        console.log('Claiming clients.');
+        return self.clients.claim(); // Take control of all open clients
     })
   );
+});
+
+self.addEventListener('fetch', event => {
+  // We only want to handle GET requests
+  if (event.request.method !== 'GET') {
+    return;
+  }
+  
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+
+        // IMPORTANT: Clone the request. A request is a stream and
+        // can only be consumed once. Since we are consuming this
+        // once by cache and once by the browser for fetch, we need
+        // to clone the response.
+        const fetchRequest = event.request.clone();
+        
+        return fetch(fetchRequest).then(
+          (response) => {
+            // Check if we received a valid response
+            if(!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // IMPORTANT: Clone the response. A response is a stream
+            // and because we want the browser to consume the response
+            // as well as the cache consuming the response, we need
+            // to clone it so we have two streams.
+            const responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          }
+        );
+      })
+    );
 });

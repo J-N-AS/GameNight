@@ -4,7 +4,7 @@ import { notFound, useParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, CreditCard, Mail, Gamepad2, Library, Music } from 'lucide-react';
+import { ArrowLeft, CreditCard, Mail, Gamepad2, Library, Music, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AdBanner } from '@/components/ads/AdBanner';
 
@@ -41,6 +41,17 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
                     <p className="text-sm">Enkle drikkeleker basert på kjente sanger, med direkte lenke til Spotify.</p>
                 </div>
             </div>
+        </div>
+
+        <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
+          <Download className="mx-auto h-8 w-8 text-accent mb-2" />
+          <h3 className="font-semibold text-foreground text-xl">Installer som App for Offline Bruk</h3>
+          <p>
+            GameNight er bygget som en Progressive Web App (PWA). Det betyr at du kan installere den på mobilen din og bruke den som en vanlig app – helt gratis. Da vil alle spillene fungere selv om du mister internettforbindelsen på hytta eller i parken!
+          </p>
+          <p className="text-xs text-muted-foreground/80 pt-2">
+            Se etter en "Installer"-knapp på siden, eller bruk "Legg til på Hjem-skjerm"-funksjonen i nettleseren din.
+          </p>
         </div>
 
         <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
