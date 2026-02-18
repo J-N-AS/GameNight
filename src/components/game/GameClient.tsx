@@ -418,7 +418,7 @@ export function GameClient({ game }: { game: Game }) {
 
   if ((isSpinTheBottleMode && gameMode === 'physical') || isPhysicalItemGame) {
     const instructionText = isPhysicalItemGame
-      ? 'Kast gjenstanden til en annen spiller. Den som fanger den utfører oppgaven.'
+      ? "Les oppgaven høyt, og kast gjenstanden til den personen som passer best. Den som fanger, trykker 'Neste Oppgave' for sin tur."
       : 'Spinn den ekte flasken. Den flasken peker på må gjøre oppgaven som vises.';
 
     return (
