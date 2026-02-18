@@ -17,7 +17,7 @@ import { UserPlus, X, Trash2, Edit, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface PlayerSetupProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSetupComplete: () => void;
@@ -36,7 +36,6 @@ export function PlayerSetup({
   const [editingPlayerName, setEditingPlayerName] = useState('');
 
   useEffect(() => {
-    // Reset editing state when dialog closes
     if (!open) {
       setEditingPlayerId(null);
     }
@@ -87,11 +86,12 @@ export function PlayerSetup({
       handleSaveEdit();
     }
     onSetupComplete();
+    onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      {children && <DialogTrigger asChild>{children}</DialogTrigger>}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Hvem spiller?</DialogTitle>
@@ -197,34 +197,13 @@ export function PlayerSetup({
           <Button
             type="button"
             onClick={handleSetupAndClose}
-            disabled={
-              players.length < 1 &&
-              gameRequiresPlayers(players, onSetupComplete)
-            }
             className="w-full"
             size="lg"
           >
-            {players.length > 0 ? 'Fortsett' : 'Spill uten spillere'}
+            {players.length > 0 ? `Fortsett med ${players.length} spillere` : 'Lukk'}
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
-}
-
-// Helper function to determine if the next step requires players
-// This is a bit of a hack, but works for this flow.
-// A better solution would involve passing the selected game's `requiresPlayers` prop.
-function gameRequiresPlayers(
-  players: Player[],
-  onSetupComplete: () => void
-): boolean {
-  if (typeof window !== 'undefined') {
-    // onSetupComplete pushes to /spill/velg, so we are in the main lobby
-    // and no game is selected yet. We can allow continuing.
-    if (onSetupComplete.toString().includes('/spill/velg')) {
-      return false;
-    }
-  }
-  return players.length < 2;
 }

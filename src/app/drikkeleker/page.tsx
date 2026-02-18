@@ -1,97 +1,88 @@
+'use client';
 
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-  } from '@/components/ui/accordion'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import drikkeleker from '@/data/drikkeleker.json';
-import { ArrowLeft, Beer, Crown, Dice5, HelpCircle, Users } from 'lucide-react';
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import type { GameArticle } from '@/lib/articles';
+import { getArticles } from '@/lib/articles';
 
-export const metadata = {
-    title: 'Flere Drikkeleker | GameNight',
-    description: 'Regler for klassiske drikkeleker og kortspill som Ring of Fire, Beer Pong og mer.',
-};
+function DrikkelekerClient({ games }: { games: Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules'>[] }) {
+  return (
+    <div className="container mx-auto px-4 py-8 md:py-16 max-w-4xl">
+      <div className="mb-8">
+        <Button variant="ghost" asChild>
+          <Link href="/">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Tilbake til forsiden
+          </Link>
+        </Button>
+      </div>
+      <header className="text-center mb-10">
+        <h1 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter">
+          Klassiske Drikkeleker
+        </h1>
+        <p className="text-muted-foreground mt-3 text-lg max-w-2xl mx-auto">
+          Trenger dere en pause fra appen? Her er reglene til noen tidløse
+          klassikere som kun krever kort, kopper eller bare godt humør.
+        </p>
+      </header>
 
-type GameArticle = {
-    title: string;
-    description: string;
-    whatYouNeed: string[];
-    rules: string[];
-    cardRules?: { [key: string]: string };
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {games.map((game, index) => (
+          <motion.div
+            key={game.slug}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
+          >
+            <Link
+              href={`/drikkeleker/${game.slug}`}
+              className="group block h-full"
+            >
+              <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
+                    {game.title}
+                  </CardTitle>
+                  <CardDescription className="mt-1 text-muted-foreground/80">
+                    {game.description}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
+
 export default function DrikkelekerPage() {
-    const games: GameArticle[] = drikkeleker;
-  return (
-    <div className="container mx-auto px-4 py-8 md:py-16 max-w-3xl">
-        <div className="mb-8">
-            <Button variant="ghost" asChild>
-            <Link href="/">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Tilbake til forsiden
-            </Link>
-            </Button>
-        </div>
-        <header className="text-center mb-10">
-            <h1 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter">
-            Klassiske Drikkeleker
-            </h1>
-            <p className="text-muted-foreground mt-3 text-lg max-w-2xl mx-auto">
-            Trenger dere en pause fra appen? Her er reglene til noen tidløse klassikere som kun krever kort, kopper eller bare godt humør.
-            </p>
-        </header>
+  const [games, setGames] = useState<
+    Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules'>[]
+  >([]);
+  
+  const [loading, setLoading] = useState(true);
 
-        <Accordion type="single" collapsible className="w-full">
-            {games.map((game, index) => (
-                <AccordionItem value={`item-${index}`} key={index}>
-                    <AccordionTrigger className="text-xl hover:no-underline font-semibold">
-                        {game.title}
-                    </AccordionTrigger>
-                    <AccordionContent className="pt-2">
-                        <div className='space-y-6 text-muted-foreground'>
-                            <p className='text-base'>{game.description}</p>
-                            
-                            <div>
-                                <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2"> <Dice5 className='h-5 w-5' />Dette trenger dere:</h3>
-                                <ul className="list-disc list-inside space-y-1">
-                                    {game.whatYouNeed.map((item, i) => (
-                                        <li key={i}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                            
-                            <div>
-                                <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2"><HelpCircle className='h-5 w-5' />Slik spiller dere:</h3>
-                                <ol className="list-decimal list-inside space-y-2">
-                                    {game.rules.map((rule, i) => (
-                                        <li key={i}>{rule}</li>
-                                    ))}
-                                </ol>
-                            </div>
+  useEffect(() => {
+    getArticles().then(data => {
+      setGames(data);
+      setLoading(false);
+    });
+  }, []);
 
-                            {game.cardRules && (
-                                <div>
-                                    <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2"><Crown className='h-5 w-5' />Kortregler for Ring of Fire:</h3>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                        {Object.entries(game.cardRules).map(([card, rule]) => (
-                                            <div key={card} className="rounded-md border border-border/50 p-3 bg-card/40">
-                                                <p className="font-bold text-foreground">{card}</p>
-                                                <p>{rule}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
+  if (loading) {
+    return <div className="container mx-auto px-4 py-8 md:py-16 max-w-4xl text-center">Laster spill...</div>;
+  }
 
-                        </div>
-                    </AccordionContent>
-                </AccordionItem>
-            ))}
-        </Accordion>
-    </div>
-  )
+  return <DrikkelekerClient games={games} />;
 }

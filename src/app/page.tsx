@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Rocket, History, Beer } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Rocket, Beer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
@@ -11,15 +10,19 @@ import { GameMenu } from '@/components/game/GameMenu';
 import { motion } from 'framer-motion';
 import { usePlayers } from '@/hooks/usePlayers';
 import { Card } from '@/components/ui/card';
+import { GameSelector } from '@/components/game/GameSelector';
+import type { Game } from '@/lib/games';
+import { getGames } from '@/lib/games';
+import { AdBanner } from '@/components/ads/AdBanner';
 
-export default function Home() {
+type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
+
+function LobbyClient({ games }: { games: GameFromGetGames[] }) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
-  const router = useRouter();
   const { players, isLoaded } = usePlayers();
 
   const handleSetupComplete = () => {
     setIsPlayerSetupOpen(false);
-    router.push('/spill/velg');
   };
 
   const containerVariants = {
@@ -27,7 +30,7 @@ export default function Home() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.1,
       },
     },
   };
@@ -44,22 +47,9 @@ export default function Home() {
     },
   };
 
-  const delayedItemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 100,
-        delay: 0.2,
-      },
-    },
-  };
-
   return (
     <motion.div
-      className="container mx-auto flex flex-col items-center justify-center min-h-screen text-center py-12"
+      className="container mx-auto px-4 py-8 md:py-12"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -68,7 +58,10 @@ export default function Home() {
         <GameMenu context="lobby" />
       </div>
 
-      <motion.header className="mb-12" variants={itemVariants}>
+      <motion.header
+        className="text-center mb-10 md:mb-12"
+        variants={itemVariants}
+      >
         <Image
           src="/GameNight-logo-small.webp"
           alt="GameNight Logo"
@@ -83,7 +76,7 @@ export default function Home() {
       </motion.header>
 
       <motion.div
-        className="flex flex-col items-center gap-4"
+        className="flex flex-col items-center gap-4 mb-12"
         variants={itemVariants}
       >
         <PlayerSetup
@@ -101,41 +94,72 @@ export default function Home() {
           </Button>
         </PlayerSetup>
         
-        {isLoaded && players.length > 0 ? (
-          <Button variant="outline" asChild>
-            <Link href="/spill/velg">
-              <History className="mr-2 h-4 w-4" />
-              Fortsett med {players.length} spillere
-            </Link>
-          </Button>
-        ) : (
-          <Button variant="link" asChild>
-            <Link href="/spill/velg">Eller se alle spillene</Link>
-          </Button>
+        {isLoaded && players.length > 0 && (
+           <p className="text-sm text-muted-foreground">
+              {players.length} spillere klare.
+            </p>
         )}
       </motion.div>
 
+      <GameSelector games={games} />
+      
       <motion.div
-        className="mt-16 w-full max-w-md"
-        variants={delayedItemVariants}
+        className="mt-20 w-full max-w-5xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
       >
-        <Card className="transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
-          <Link href="/drikkeleker" className="block p-4 group">
-            <div className="flex items-center gap-4">
-              <div className="bg-accent/20 p-3 rounded-lg">
-                  <Beer className="h-6 w-6 text-accent" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-left text-foreground group-hover:text-accent transition-colors">Klassiske Drikkeleker</h3>
-                <p className="text-sm text-left text-muted-foreground">
-                  Regler for Ring of Fire, Beer Pong og mer.
+         <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
+            <Beer className="h-6 w-6 text-accent" />
+            Klassiske Drikkeleker
+          </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <Card className="transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
+              <Link href="/drikkeleker" className="block p-6 group">
+                <h3 className="text-lg font-semibold text-foreground group-hover:text-accent transition-colors">Se alle klassikerne</h3>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Lyst på en pause fra appen? Her finner du reglene for Beer Pong, Ring of Fire og mye mer.
                 </p>
-              </div>
-            </div>
-          </Link>
-        </Card>
+              </Link>
+            </Card>
+            <Card className="transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
+              <Link href="/info/om-oss" className="block p-6 group">
+                <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">Hvorfor er det gratis?</h3>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Les om hvorfor GameNight er gratis, og hvordan du kan støtte prosjektet hvis du vil.
+                </p>
+              </Link>
+            </Card>
+        </div>
       </motion.div>
-
+      
+      <motion.div
+        className="mt-16 flex justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+      >
+        <AdBanner />
+      </motion.div>
     </motion.div>
   );
+}
+
+
+export default function Home() {
+  const [games, setGames] = useState<GameFromGetGames[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getGames().then(data => {
+      setGames(data);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return <div className="container mx-auto flex h-screen items-center justify-center">Laster spill...</div>;
+  }
+
+  return <LobbyClient games={games} />;
 }

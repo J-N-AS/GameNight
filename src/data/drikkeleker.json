@@ -1,7 +1,7 @@
-
 [
     {
-        "title": "Ring of Fire (også kjent som Kings Cup)",
+        "slug": "ring-of-fire",
+        "title": "Ring of Fire (Kings Cup)",
         "description": "Et klassisk kortspill hvor hvert kort har en unik regel. Spillet fortsetter til den siste kongen trekkes.",
         "whatYouNeed": ["En kortstokk", "En stor kopp (King's Cup)", "Drikke til alle"],
         "rules": [
@@ -27,6 +27,7 @@
         }
     },
     {
+        "slug": "beer-pong",
         "title": "Beer Pong",
         "description": "Et lagspill hvor målet er å kaste en bordtennisball i motstanderens kopper. Treffer du, må de drikke!",
         "whatYouNeed": ["22 plastkopper", "Bordtennisballer", "Et langt bord", "Drikke (vanligvis øl)"],
@@ -40,6 +41,7 @@
         ]
     },
     {
+        "slug": "flip-cup",
         "title": "Flip Cup",
         "description": "Et fartsfylt lagspill hvor stafett og drikkeferdigheter settes på prøve. Perfekt for å få opp stemningen.",
         "whatYouNeed": ["Plastkopper (like mange som deltakere)", "Et bord", "Drikke"],
@@ -53,20 +55,47 @@
         ]
     },
     {
-        "title": "Busstur / Ride the Bus",
-        "description": "Et kortspill hvor en uheldig spiller må 'kjøre bussen' ved å gjette seg gjennom en rekke kort. Stor sjanse for mye drikking for bussjåføren.",
-        "whatYouNeed": ["En kortstokk", "Drikke"],
+        "slug": "sannhet-eller-promille",
+        "title": "Sannhet eller Promille",
+        "description": "En vri på den klassiske leken. Svar ærlig på et personlig spørsmål, eller ta en straffeslurk for å holde på hemmeligheten.",
+        "whatYouNeed": ["Drikke", "Gode spørsmål (eller fantasi)"],
         "rules": [
-            "Del ut en pyramide av kort med bildesiden ned (f.eks. 5 kort nederst, så 4, 3, 2, 1). Del ut resten av kortene til spillerne.",
-            "Første del: En runde med 'høyt eller lavt', 'rødt eller svart' etc. for å dele ut slurker og bestemme hvem som har flest kort på hånden.",
-            "Den som har flest kort, eller taper en siste utfordring, blir 'bussjåføren'.",
-            "Bussjåføren skal så snu ett og ett kort i pyramiden, fra bunnen av.",
-            "For hvert kort må sjåføren gjette om neste kort som snus er høyere eller lavere.",
-            "Gjetter man feil, må man drikke antall slurker tilsvarende raden man er på (1 slurk for nederste rad, 2 for neste osv.) og starte raden på nytt.",
-            "Målet er å komme seg gjennom hele pyramiden. Lykke til, sjåfør!"
+            "Samle dere i en sirkel.",
+            "En person starter med å spørre en annen: 'sannhet eller promille?'",
+            "Hvis personen velger 'sannhet', må de svare ærlig på et spørsmål fra spørsmålsstilleren.",
+            "Hvis de velger 'promille', må de ta en avtalt mengde drikke.",
+            "Spilleren som nettopp svarte (eller drakk) stiller så neste spørsmål til en ny person.",
+            "Tips: Spørsmålene kan variere fra uskyldige til mer dristige, avhengig av stemningen i gruppa."
         ]
     },
     {
+        "slug": "strip-poker-sfw",
+        "title": "Strip Poker (SFW versjon)",
+        "description": "En uskyldig og morsom versjon av klassikeren. Her er det sokker og hettegensere som står på spill, ikke verdigheten.",
+        "whatYouNeed": ["En kortstokk", "Drikke", "Spillere med flere lag klær (eller tilbehør som luer, skjerf, etc.)"],
+        "rules": [
+            "Spill en vanlig runde med 5-korts poker (eller en enklere variant).",
+            "Avtal på forhånd hva som er 'ett plagg'. Vi anbefaler tilbehør: sokker, luer, skjerf, smykker, eller det ytterste laget som en genser.",
+            "Taperen av hver pokerhånd må enten ta av seg ett avtalt plagg ELLER ta en straffeslurk.",
+            "Hovedregelen er at alle skal være komfortable. Målet er å ha det gøy og le, ikke å gjøre noen flaue.",
+            "Spillet avsluttes når stemningen er god, eller når noen har mistet alle sine 'strippe-plagg' og bare sitter igjen med vanlige klær."
+        ]
+    },
+    {
+        "slug": "busstur",
+        "title": "Busstur / Ride the Bus",
+        "description": "Et kortspill hvor en uheldig spiller må 'kjøre bussen' ved å gjette seg gjennom en rekke kort.",
+        "whatYouNeed": ["En kortstokk", "Drikke"],
+        "rules": [
+            "Første fase: Finn bussjåføren. Del ut alle kortene. Gå runden med 'rødt eller svart?', 'høyere eller lavere?', 'innenfor eller utenfor?', 'har du en makker?'. For hvert riktige svar kan du dele ut slurker. For feil svar, må du drikke selv. Den med flest kort på hånden til slutt, er sjåføren.",
+            "Bygg bussen: Legg en pyramide av kort med bildesiden ned (f.eks. 5-4-3-2-1). Dette er 'bussen'.",
+            "Bussjåføren starter på nederste rad. For hvert kort skal de gjette om det er et tallkort (2-10) eller bildekort (J, Q, K, A).",
+            "Gjetter sjåføren riktig, går de videre til neste kort. Gjetter de feil, må de drikke antall slurker tilsvarende raden (1 slurk for rad 1, 2 for rad 2 osv.) og starte raden på nytt.",
+            "Målet er å komme seg gjennom hele pyramiden uten å gjøre en feil. Lykke til, sjåfør!"
+        ]
+    },
+    {
+        "slug": "pyramide",
         "title": "Pyramide",
         "description": "Et spill som tester hukommelsen og evnen til å bløffe. Hvem husker hvor kortene er, og hvem må drikke?",
         "whatYouNeed": ["En kortstokk", "Drikke"],

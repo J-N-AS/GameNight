@@ -126,23 +126,9 @@ export function GameClient({ game }: { game: Game }) {
   }, [currentTask, players, isLoaded]);
 
   const cardVariants = {
-    enter: {
-      x: 300,
-      opacity: 0,
-      scale: 0.9
-    },
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: {
-      zIndex: 0,
-      x: -300,
-      opacity: 0,
-      scale: 0.9
-    },
+    enter: { opacity: 0 },
+    center: { opacity: 1 },
+    exit: { opacity: 0 },
   };
   
   const showLoading = !isLoaded || tasks.length === 0;
@@ -166,7 +152,7 @@ export function GameClient({ game }: { game: Game }) {
                   Spill igjen
               </Button>
               <Button variant="outline" size="lg" asChild className="transform transition-transform duration-200 hover:scale-105">
-                  <Link href="/spill/velg">
+                  <Link href="/">
                       <Home className="mr-2 h-5 w-5" />
                       Velg nytt spill
                   </Link>
@@ -199,7 +185,8 @@ export function GameClient({ game }: { game: Game }) {
           <GameMenu context="in-game" onRestart={handleRestart} />
       </div>
       
-      <div className="w-full max-w-3xl mx-auto flex-grow flex flex-col justify-center text-center">
+      {/* Game Stage */}
+      <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
         <div className="relative flex-grow flex items-center justify-center overflow-hidden">
             <AnimatePresence initial={false} mode="wait">
                 <motion.div
@@ -208,11 +195,7 @@ export function GameClient({ game }: { game: Game }) {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{
-                        x: { type: "spring", stiffness: 300, damping: 30 },
-                        opacity: { duration: 0.2 },
-                        scale: { duration: 0.2 }
-                    }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className="w-full"
                 >
                     {showLoading ? (
@@ -239,12 +222,12 @@ export function GameClient({ game }: { game: Game }) {
                 </Button>
              </motion.div>
         )}
+         <div className="text-center text-muted-foreground/60 text-sm h-6">
+          {!showLoading && tasks.length > 0 && `${currentIndex + 1} / ${tasks.length}`}
+        </div>
       </div>
 
-      <footer className="w-full flex-shrink-0">
-        <div className="text-center text-muted-foreground/60 text-sm h-6 mb-4">
-          {tasks.length > 0 && `${currentIndex + 1} / ${tasks.length}`}
-        </div>
+      <footer className="w-full flex-shrink-0 mt-4">
         {!showLoading && (
           <div className="flex justify-center">
             <AdBanner className="h-16" />

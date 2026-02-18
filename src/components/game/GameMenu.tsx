@@ -28,9 +28,7 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
   
   const handlePlayerSetupComplete = () => {
     setIsPlayerSetupOpen(false);
-    if(context === 'lobby') {
-        router.push('/spill/velg');
-    }
+    // No need to push, as player setup is now a global modal
   }
 
   return (
