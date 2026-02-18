@@ -22,7 +22,7 @@ export default function Home() {
       <header className="mb-12 animate-in fade-in-50 duration-1000">
         <h1 className="font-bold font-headline">
           <Image
-            src="/GameNight-logo-small.webp"
+            src="https://placehold.co/400x100/11221C/FF2E88?text=GameNight&font=poppins"
             alt="GameNight"
             width={400}
             height={100}
