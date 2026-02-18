@@ -2,57 +2,57 @@
   "placeholderImages": [
     {
       "id": "ring-of-fire",
-      "description": "Friends playing a card game around a table.",
-      "imageUrl": "https://images.unsplash.com/photo-1607438802263-ada36dae55c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjYXJkJTIwZ2FtZSUyMHBhcnR5fGVufDB8fHx8MTc3MTQyMzI1NXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "card game party"
+      "description": "Friends laughing while playing a card game around a wooden table.",
+      "imageUrl": "https://images.unsplash.com/photo-1559526324-c1f275fbfa32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmcmllbmRzJTIwcGxheWluZyUyMGNhcmRzfGVufDB8fHx8MTcyMTI0NzU5MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "friends cards"
     },
     {
       "id": "beer-pong",
-      "description": "A beer pong table set up for a game.",
-      "imageUrl": "https://images.unsplash.com/photo-1720236177709-6048d149d426?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YmVlciUyMHBvbmclMjBnYW1lfGVufDB8fHx8MTc3MTQyMzI1NXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "beer pong game"
+      "description": "A beer pong ball captured mid-air, about to land in a red cup.",
+      "imageUrl": "https://images.unsplash.com/photo-1557426985-a469741c448d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxiZWVyJTIwcG9uZyUyMGFjdGlvbnxlbnwwfHx8fDE3MjEyNDc3MDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "beer-pong action"
     },
     {
       "id": "flip-cup",
-      "description": "People playing flip cup at a party.",
-      "imageUrl": "https://images.unsplash.com/photo-1768850899420-fe996cd5e231?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwYXJ0eSUyMGdhbWUlMjBmcmllbmRzfGVufDB8fHx8MTc3MTQyMzI1NXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "party game friends"
+      "description": "A row of red solo cups ready for a game of flip cup on a table.",
+      "imageUrl": "https://images.unsplash.com/photo-1522880064562-4270525d1a88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmbGlwJTIwY3VwJTIwZ2FtZXxlbnwwfHx8fDE3MjEyNDc4MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "flip-cup"
     },
     {
       "id": "sannhet-eller-promille",
-      "description": "A group of friends talking and laughing together.",
-      "imageUrl": "https://images.unsplash.com/photo-1486704155675-e4c07f8ad160?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxmcmllbmRzJTIwdGFsa2luZ3xlbnwwfHx8fDE3NzE0MjMyNTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "friends talking"
+      "description": "Two friends whispering and sharing secrets at a party.",
+      "imageUrl": "https://images.unsplash.com/photo-1519671482727-a4d4b205f329?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmcmllbmRzJTIwc2hhcmluZyUyMHNlY3JldHMlMjBwYXJ0eXxlbnwwfHx8fDE3MjEyNDc4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "friends secrets"
     },
     {
       "id": "strip-poker-sfw",
-      "description": "A poker game with cards and chips on a table.",
-      "imageUrl": "https://images.unsplash.com/photo-1739133710741-1468de0acf26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwb2tlciUyMGdhbWUlMjBuaWdodHxlbnwwfHx8fDE3NzE0MjMyNTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "poker game night"
+      "description": "A group of friends laughing and having a good time while playing poker.",
+      "imageUrl": "https://images.unsplash.com/photo-1605335163884-25c0a911a3c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwb2tlciUyMGZyaWVuZHMlMjBsYXVnaGluZ3xlbnwwfHx8fDE3MjEyNDgwMDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "poker friends"
     },
     {
       "id": "busstur",
-      "description": "Playing cards spread out on a table.",
-      "imageUrl": "https://images.unsplash.com/photo-1622014402888-e78d0fd790d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwbGF5aW5nJTIwY2FyZHN8ZW58MHx8fHwxNzcxNDIzMjU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "playing cards"
-    },
-    {
-      "id": "pyramide",
-      "description": "A pyramid made of playing cards.",
-      "imageUrl": "https://images.unsplash.com/photo-1570054623229-2bb4f05d1560?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FyZCUyMHB5cmFtaWR8ZW58MHx8fHwxNzcxNDIzMjU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A pyramid of playing cards on a dark background, illustrating a card game structure.",
+      "imageUrl": "https://images.unsplash.com/photo-1544652478-66a9d88f63c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjYXJkJTIwZ2FtZSUyMHB5cmFtaWR8ZW58MHx8fHwxNzIxMjQ4MDc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "card pyramid"
     },
     {
+      "id": "pyramide",
+      "description": "Playing cards arranged in a pyramid shape for a drinking game.",
+      "imageUrl": "https://images.unsplash.com/photo-1614995166416-52b0f3b4a457?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxweXJhbWlkJTIwY2FyZHMlMjBnYW1lfGVufDB8fHx8MTcyMTI0ODIwN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pyramid cards"
+    },
+    {
       "id": "strip-poker-nsfw",
-      "description": "A dimly lit, sensual poker game setting.",
-      "imageUrl": "https://images.unsplash.com/photo-1614926120110-93781b7a24f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzZW5zdWFsJTIwcG9rZXJ8ZW58MHx8fHwxNzcxNTExOTI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "sensual poker"
+      "description": "A sultry, dimly lit scene with poker cards and a glass of whiskey.",
+      "imageUrl": "https://images.unsplash.com/photo-1621905333624-85734b419822?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdWx0cnklMjBwb2tlciUyMGdhbWV8ZW58MHx8fHwxNzIxMjQ4MjU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sultry poker"
     },
     {
       "id": "medusa",
-      "description": "A group of friends looking at each other intensely at a party.",
-      "imageUrl": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxpbnRlbnNlJTIwZXllJTIwY29udGFjdCUyMGZyaWVuZHN8ZW58MHx8fHwxNzcxNTExOTc0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "intense eye-contact"
+      "description": "A group of friends at a party, looking and staring at each other.",
+      "imageUrl": "https://images.unsplash.com/photo-1524250502761-5ac9f2e501a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmcmllbmRzJTIwc3RhcmluZyUyMHBhcnR5fGVufDB8fHx8MTcyMTI0ODMyN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "friends staring"
     }
   ]
 }
