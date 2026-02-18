@@ -28,7 +28,7 @@ const moods = [
     { name: 'Vorspiel', emoji: '🍻', link: '/alle-spill?kategori=Vorspiel' },
     { name: 'Party', emoji: '🥳', link: '/alle-spill?kategori=Party' },
     { name: 'Rolig', emoji: '🤔', link: '/alle-spill?kategori=Rolig' },
-    { name: 'Kaos', emoji: '💥', link: '/alle-spill?kategori=Kaos' },
+    { name: 'Sexy / 18+', emoji: '😈', link: '/alle-spill?kategori=18+' },
 ];
 
 export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGetGames[] }) {
