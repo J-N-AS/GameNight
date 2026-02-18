@@ -65,7 +65,7 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
     ),
   },
   'personvern': {
-    title: 'Personvernerklæring',
+    title: 'Personvernerklæring for GameNight',
     content: (
       <div className="space-y-6 text-muted-foreground">
         <p className="text-lg">
@@ -74,7 +74,7 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
         </p>
 
         <div>
-          <h3 className="font-semibold text-foreground text-xl mb-2">Spilldata (Lagret lokalt hos deg)</h3>
+          <h3 className="font-semibold text-foreground text-xl mb-2">Spilldata (Lagres kun hos deg)</h3>
           <p>
             For å gi deg en sømløs spillopplevelse, lagrer vi spillernavnene du legger inn lokalt i
             din egen nettleser ved hjelp av `localStorage`. Denne informasjonen forlater aldri din
@@ -83,14 +83,27 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
           </p>
         </div>
 
+        <div className="rounded-lg border border-border bg-card/50 p-6 space-y-3">
+            <h3 className="font-semibold text-foreground text-xl">Bruk av informasjonskapsler (Cookies)</h3>
+            <p>
+                GameNight bruker tredjeparts-tjenester som Google Analytics og Google AdSense. For å fungere, plasserer disse tjenestene små tekstfiler, kalt informasjonskapsler (cookies), på enheten din.
+            </p>
+            <p>
+                Disse brukes til å samle inn anonyme data om hvordan du bruker siden (analyse) og til å vise deg relevante annonser. Dette hjelper oss å forstå bruksmønstre og å finansiere driften av siden.
+            </p>
+             <p>
+                Du kan når som helst administrere eller slette informasjonskapsler via innstillingene i nettleseren din. Vær oppmerksom på at dette kan påvirke funksjonaliteten på enkelte nettsteder.
+            </p>
+        </div>
+
         <div>
           <h3 className="font-semibold text-foreground text-xl mb-2">Anonym Bruksanalyse (Google Analytics)</h3>
           <p>
             Vi bruker Google Analytics for å forstå hvordan GameNight blir brukt. Vi samler inn
-            anonym og aggregert statistikk, for eksempel hvilke spill som er mest populære, hvor
-            mange runder som spilles, og hvilke typer enheter som brukes. Dette hjelper oss med å
-            forbedre spillene og prioritere nye funksjoner. Ingen personlig identifiserbar
-            informasjon blir lagret i denne prosessen.
+            anonym og aggregert statistikk, for eksempel hvilke spill som er mest populære og
+            hvilke typer enheter som brukes. Dette hjelper oss med å forbedre spillene og
+            prioritere nye funksjoner. Ingen personlig identifiserbar informasjon blir lagret av oss
+            i denne prosessen.
           </p>
         </div>
 
@@ -98,9 +111,9 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
           <h3 className="font-semibold text-foreground text-xl mb-2">Annonsering (Google AdSense)</h3>
           <p>
             For å dekke driftskostnadene og holde tjenesten gratis, viser vi annonser levert av
-            Google AdSense og andre tredjepartsnettverk. Disse nettverkene kan bruke informasjonskapsler
-            (cookies) for å vise annonser basert på dine tidligere besøk på denne eller andre
-            nettsider. Dette bidrar til å gjøre annonsene mer relevante for deg.
+            Google AdSense. Som nevnt over, bruker AdSense informasjonskapsler for å tilpasse
+            annonser til deg, basert på dine tidligere besøk på denne eller andre
+            nettsider.
           </p>
           <p className="mt-2">
             Du kan velge bort personlig tilpasset annonsering ved å besøke{' '}
