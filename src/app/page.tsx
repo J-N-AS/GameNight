@@ -6,6 +6,7 @@ import { PartyPopper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
@@ -19,10 +20,17 @@ export default function Home() {
   return (
     <div className="container mx-auto px-4 flex flex-col items-center justify-center min-h-screen text-center">
       <header className="mb-12 animate-in fade-in-50 duration-1000">
-        <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-          GameNight
+        <h1 className="font-bold font-headline">
+          <Image
+            src="/GameNight-logo-small.webp"
+            alt="GameNight"
+            width={400}
+            height={100}
+            priority
+            className="w-auto h-auto mx-auto max-w-[300px] md:max-w-[400px]"
+          />
         </h1>
-        <p className="text-muted-foreground mt-2 text-lg">
+        <p className="text-muted-foreground mt-4 text-lg">
           Gratis partyspill, rett i nettleseren.
         </p>
       </header>

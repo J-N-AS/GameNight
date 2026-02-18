@@ -58,24 +58,25 @@ function processPlaceholders(text: string, players: { id: string; name: string }
 
 
 export function GameClient({ game }: { game: Game }) {
-  const { players } = usePlayers();
+  const { players, isLoaded } = usePlayers();
   const router = useRouter();
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
-    if (players.length === 0) {
-      // Redirect to home if no players are set up, maybe show a toast
-      router.push('/');
-      return;
+    if (isLoaded) {
+      if (players.length === 0) {
+        // Redirect to home if no players are set up.
+        router.push('/');
+      } else {
+        const gameTasks = game.shuffle === false ? game.items : shuffleArray(game.items);
+        setTasks(gameTasks);
+        setCurrentIndex(0);
+        setIsFinished(false);
+      }
     }
-    
-    const gameTasks = game.shuffle === false ? game.items : shuffleArray(game.items);
-    setTasks(gameTasks);
-    setCurrentIndex(0);
-    setIsFinished(false);
-  }, [game, players, router]);
+  }, [game, isLoaded, players, router]);
 
   const handleNextTask = () => {
     if (currentIndex < tasks.length - 1) {
@@ -86,9 +87,11 @@ export function GameClient({ game }: { game: Game }) {
   };
   
   const handleRestart = () => {
-    setTasks(game.shuffle === false ? game.items : shuffleArray(game.items));
-    setCurrentIndex(0);
-    setIsFinished(false);
+    if (isLoaded) {
+      setTasks(game.shuffle === false ? game.items : shuffleArray(game.items));
+      setCurrentIndex(0);
+      setIsFinished(false);
+    }
   }
 
   const currentTask = useMemo(
@@ -97,15 +100,15 @@ export function GameClient({ game }: { game: Game }) {
   );
   
   const processedContent = useMemo(() => {
-    if (!currentTask) return '';
+    if (!currentTask || !isLoaded || players.length === 0) return '';
     return processPlaceholders(currentTask.text, players);
-  }, [currentTask, players]);
+  }, [currentTask, players, isLoaded]);
 
 
-  if (players.length === 0) {
+  if (!isLoaded || (isLoaded && players.length === 0)) {
     return (
-      <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
-        <p>Henter spillere...</p>
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Laster spill...</p>
       </div>
     )
   }
