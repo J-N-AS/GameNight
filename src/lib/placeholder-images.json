@@ -41,6 +41,18 @@
       "description": "A pyramid made of playing cards.",
       "imageUrl": "https://images.unsplash.com/photo-1570054623229-2bb4f05d1560?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FyZCUyMHB5cmFtaWR8ZW58MHx8fHwxNzcxNDIzMjU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "card pyramid"
+    },
+    {
+      "id": "strip-poker-nsfw",
+      "description": "A dimly lit, sensual poker game setting.",
+      "imageUrl": "https://images.unsplash.com/photo-1614926120110-93781b7a24f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzZW5zdWFsJTIwcG9rZXJ8ZW58MHx8fHwxNzcxNTExOTI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sensual poker"
+    },
+    {
+      "id": "medusa",
+      "description": "A group of friends looking at each other intensely at a party.",
+      "imageUrl": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxpbnRlbnNlJTIwZXllJTIwY29udGFjdCUyMGZyaWVuZHN8ZW58MHx8fHwxNzcxNTExOTc0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "intense eye-contact"
     }
   ]
 }

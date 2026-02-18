@@ -107,5 +107,32 @@
             "Man kan også bløffe! Hvis du deler ut en slurk, kan den som mottar den utfordre deg ved å si 'bløff'. Hvis du har kortet, må de drikke dobbelt. Hvis du ikke har det, må du drikke dobbelt selv.",
             "Antall slurker som deles ut øker for hver rad oppover i pyramiden. Toppkortet er ofte verdt mange slurker eller en 'shot'."
         ]
+    },
+    {
+        "slug": "strip-poker-nsfw",
+        "title": "Strip Poker (NSFW 18+)",
+        "description": "Den klassiske, dristige versjonen av poker. Her er innsatsen høyere, og klærne færre. Kun for de som er komfortable.",
+        "whatYouNeed": ["En kortstokk", "Drikke", "Modige deltakere"],
+        "rules": [
+            "Spill en standard poker-variant (f.eks. 5-korts draw).",
+            "VIKTIG: Før spillet starter, må alle bli enige om grensene. Hva er man komfortabel med? Dette må respekteres.",
+            "I stedet for penger, er innsatsen klesplagg.",
+            "Etter hver runde, må taperen(e) fjerne ett klesplagg.",
+            "Alternativ regel: Man kan velge å ta en 'shot' eller et avtalt antall slurker for å slippe å kle av seg et plagg, men kun et begrenset antall ganger.",
+            "Spillet avsluttes når en spiller når sin avtalte grense, eller når gruppen bestemmer det. Målet er å ha det gøy, ikke å presse noen."
+        ]
+    },
+    {
+        "slug": "medusa",
+        "title": "Medusa",
+        "description": "Et intenst spill med øyekontakt. Se feil person i øynene, og du må drikke. Enkelt, raskt og farlig.",
+        "whatYouNeed": ["Drikke", "Et rundt bord (eller sitte i sirkel)"],
+        "rules": [
+            "Alle sitter i en sirkel med hodet ned og øynene lukket, eller ser ned på bordet.",
+            "På et gitt signal (f.eks. 'Én, to, tre, MEDUSA!'), ser alle opp og stirrer på en annen tilfeldig spiller.",
+            "Hvis du ser på noen som ikke ser på deg, er du trygg.",
+            "Hvis du ser direkte på en person som ser tilbake på deg, har dere øyekontakt. Begge roper 'MEDUSA!' og må drikke.",
+            "Spillet fortsetter i raskt tempo. Hold hodet kaldt og blikket strategisk."
+        ]
     }
 ]
