@@ -27,7 +27,7 @@ type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 const moods = [
     { name: 'Vorspiel', emoji: '🍻', link: '/alle-spill?kategori=Vorspiel' },
     { name: 'Party', emoji: '🥳', link: '/alle-spill?kategori=Party' },
-    { name: 'Rolig', emoji: '🤔', link: '/alle-spill?kategori=Rolig' },
+    { name: 'Kaos', emoji: '💥', link: '/alle-spill?kategori=Kaos' },
     { name: 'Sexy / 18+', emoji: '😈', link: '/alle-spill?kategori=18+' },
 ];
 
@@ -164,6 +164,14 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
                     </Card>
                 </Link>
             ))}
+        </div>
+        <div className="text-center mt-8">
+            <Button variant="secondary" asChild>
+                <Link href="/alle-spill">
+                    <Gamepad2 className="mr-2 h-5 w-5" />
+                    Se alle spill
+                </Link>
+            </Button>
         </div>
       </motion.div>
       
