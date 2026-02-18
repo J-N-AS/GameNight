@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -34,10 +34,15 @@ export function PlayerSetup({
   const [newPlayerName, setNewPlayerName] = useState('');
   const [editingPlayerId, setEditingPlayerId] = useState<string | null>(null);
   const [editingPlayerName, setEditingPlayerName] = useState('');
+  const addPlayerInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!open) {
       setEditingPlayerId(null);
+    } else {
+      setTimeout(() => {
+        addPlayerInputRef.current?.focus();
+      }, 100);
     }
   }, [open]);
 
@@ -45,6 +50,7 @@ export function PlayerSetup({
     if (newPlayerName.trim()) {
       addPlayer(newPlayerName);
       setNewPlayerName('');
+      addPlayerInputRef.current?.focus();
     }
   };
 
@@ -102,6 +108,7 @@ export function PlayerSetup({
 
         <div className="flex gap-2 py-4">
           <Input
+            ref={addPlayerInputRef}
             value={newPlayerName}
             onChange={e => setNewPlayerName(e.target.value)}
             onKeyDown={handleKeyDown}

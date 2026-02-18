@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { AppFooter } from '@/components/layout/AppFooter';
 import { CookieConsent } from '@/components/common/CookieConsent';
 import { AppProviders } from './providers';
+import { poppins } from './fonts';
 
 export const metadata: Metadata = {
   title: 'GameNight - Gratis Partyspill & Drikkeleker',
@@ -18,15 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="no" className="dark" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="no" className={`${poppins.variable} dark`} suppressHydrationWarning>
+      <head />
       <body className="font-body antialiased bg-background text-foreground animated-background">
         <AppProviders>
           <div className="relative flex min-h-screen flex-col">
