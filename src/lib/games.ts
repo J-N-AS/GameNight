@@ -17,6 +17,7 @@ export interface Game {
   requiresPlayers?: boolean;
   emoji?: string;
   color?: string;
+  hidden?: boolean;
 }
 
 const gamesDirectory = path.join(process.cwd(), 'src/data');
@@ -31,8 +32,8 @@ export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shu
           const filePath = path.join(gamesDirectory, filename);
           const fileContents = await fs.readFile(filePath, 'utf8');
           const gameData: Game = JSON.parse(fileContents);
-          // Don't include games with no items or that are deprecated
-          if (!gameData.items || gameData.items.length === 0) {
+          
+          if (!gameData.items || gameData.items.length === 0 || gameData.hidden) {
             return null;
           }
           return {
@@ -54,14 +55,17 @@ export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shu
 
 export async function getGame(id: string): Promise<Game> {
   const filenames = await fs.readdir(gamesDirectory);
-  const foundFile = filenames.find(name => name.endsWith('.json'));
+  
+  // Create a normalized ID for case-insensitive matching
+  const normalizedId = id.toLowerCase();
 
-  // First, try to find a file that is named {id}.json
-  let filePath = path.join(gamesDirectory, `${id}.json`);
+  // First, try to find a file that is named {normalizedId}.json
+  let filePath = path.join(gamesDirectory, `${normalizedId}.json`);
   try {
     const fileContents = await fs.readFile(filePath, 'utf8');
     const gameData: Game = JSON.parse(fileContents);
-    if (gameData.id === id) {
+    // Check if the ID inside the file also matches, case-insensitively
+    if (gameData.id.toLowerCase() === normalizedId) {
       return gameData;
     }
   } catch (error) {
@@ -71,7 +75,7 @@ export async function getGame(id: string): Promise<Game> {
             const loopFilePath = path.join(gamesDirectory, filename);
             const fileContents = await fs.readFile(loopFilePath, 'utf8');
             const gameData: Game = JSON.parse(fileContents);
-            if (gameData.id === id) {
+            if (gameData.id.toLowerCase() === normalizedId) {
                 return gameData;
             }
         }
