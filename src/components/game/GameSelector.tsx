@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePlayers } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
 import { PlayerSetup } from './PlayerSetup';
@@ -34,6 +34,15 @@ export function GameSelector({ games }: GameSelectorProps) {
   );
   const [code, setCode] = useState('');
 
+  useEffect(() => {
+    // This effect runs when the modal is closed AND a game had been selected.
+    if (selectedGame && !isPlayerSetupOpen && players.length > 0) {
+      router.push(`/spill/${selectedGame.id}`);
+      // Reset selectedGame so this doesn't run again unintentionally.
+      setSelectedGame(null);
+    }
+  }, [isPlayerSetupOpen, selectedGame, players, router]);
+
   const handleGameSelect = (e: React.MouseEvent, game: GameFromGetGames) => {
     if (game.requiresPlayers && players.length === 0) {
       e.preventDefault();
@@ -48,9 +57,7 @@ export function GameSelector({ games }: GameSelectorProps) {
 
   const handleSetupComplete = () => {
     setIsPlayerSetupOpen(false);
-    if (selectedGame) {
-      router.push(`/spill/${selectedGame.id}`);
-    }
+    // Navigation is now handled by the useEffect hook
   };
 
   const handleCodeSubmit = (e: React.FormEvent) => {

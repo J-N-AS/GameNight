@@ -10,6 +10,14 @@ export type Player = {
 
 const STORAGE_KEY = 'gamenight_players';
 
+function saveToStorage(players: Player[]) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(players));
+  } catch (error) {
+    console.error('Failed to save players to localStorage', error);
+  }
+}
+
 export function usePlayers() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -27,35 +35,39 @@ export function usePlayers() {
     }
   }, []);
 
-  const savePlayers = useCallback((newPlayers: Player[]) => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newPlayers));
-      setPlayers(newPlayers);
-    } catch (error) {
-      console.error('Failed to save players to localStorage', error);
+  const addPlayer = useCallback((name: string) => {
+    if (name.trim()) {
+      const newPlayer = { id: uuidv4(), name: name.trim() };
+      setPlayers(prevPlayers => {
+        const newPlayers = [...prevPlayers, newPlayer];
+        saveToStorage(newPlayers);
+        return newPlayers;
+      });
     }
   }, []);
 
-  const addPlayer = (name: string) => {
-    if (name.trim()) {
-      const newPlayer = { id: uuidv4(), name: name.trim() };
-      savePlayers([...players, newPlayer]);
-    }
-  };
+  const removePlayer = useCallback((id: string) => {
+    setPlayers(prevPlayers => {
+      const newPlayers = prevPlayers.filter(p => p.id !== id);
+      saveToStorage(newPlayers);
+      return newPlayers;
+    });
+  }, []);
 
-  const removePlayer = (id: string) => {
-    const newPlayers = players.filter((p) => p.id !== id);
-    savePlayers(newPlayers);
-  };
-  
-  const updatePlayerName = (id: string, newName: string) => {
-    const newPlayers = players.map(p => p.id === id ? {...p, name: newName.trim()} : p);
-    savePlayers(newPlayers);
-  };
+  const updatePlayerName = useCallback((id: string, newName: string) => {
+    setPlayers(prevPlayers => {
+      const newPlayers = prevPlayers.map(p =>
+        p.id === id ? { ...p, name: newName.trim() } : p
+      );
+      saveToStorage(newPlayers);
+      return newPlayers;
+    });
+  }, []);
 
   const removeAllPlayers = useCallback(() => {
-    savePlayers([]);
-  }, [savePlayers]);
+    setPlayers([]);
+    saveToStorage([]);
+  }, []);
 
   return {
     players,
