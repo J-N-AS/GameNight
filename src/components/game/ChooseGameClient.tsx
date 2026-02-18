@@ -7,12 +7,28 @@ import { Button } from '@/components/ui/button';
 import { Home } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
 import { motion } from 'framer-motion';
+import { AdBanner } from '../ads/AdBanner';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
 export function ChooseGameClient({ games }: { games: GameFromGetGames[] }) {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
+    <motion.div
+      className="container mx-auto px-4 py-8 md:py-12"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="absolute top-4 left-4 z-10">
         <Button variant="ghost" size="sm" asChild>
           <Link href="/">
@@ -39,6 +55,15 @@ export function ChooseGameClient({ games }: { games: GameFromGetGames[] }) {
         </p>
       </motion.header>
       <GameSelector games={games} />
-    </div>
+
+      <motion.div
+        className="mt-16 flex justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+      >
+        <AdBanner />
+      </motion.div>
+    </motion.div>
   );
 }

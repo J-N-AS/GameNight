@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameMenu } from './GameMenu';
 import { useToast } from '@/hooks/use-toast';
+import { AdBanner } from '../ads/AdBanner';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -67,7 +68,6 @@ export function GameClient({ game }: { game: Game }) {
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
-  const [direction, setDirection] = useState(1);
 
   const setupGame = useCallback(() => {
     const gameTasks = game.shuffle === false ? game.items : shuffleArray(game.items);
@@ -92,7 +92,6 @@ export function GameClient({ game }: { game: Game }) {
   }, [game, isLoaded, players.length, game.requiresPlayers, router, toast, setupGame]);
 
   const handleNextTask = () => {
-    setDirection(1);
     if (currentIndex < tasks.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -126,23 +125,26 @@ export function GameClient({ game }: { game: Game }) {
     return text;
   }, [currentTask, players, isLoaded]);
 
-  const variants = {
+  const cardVariants = {
     enter: {
       x: 300,
       opacity: 0,
+      scale: 0.9
     },
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
+      scale: 1,
     },
     exit: {
       zIndex: 0,
       x: -300,
       opacity: 0,
+      scale: 0.9
     },
   };
-
+  
   const showLoading = !isLoaded || tasks.length === 0;
 
   if (isFinished) {
@@ -151,29 +153,39 @@ export function GameClient({ game }: { game: Game }) {
         className="flex flex-col items-center justify-center min-h-screen text-center p-4"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ type: 'spring', duration: 0.5 }}
+        transition={{ type: 'spring', duration: 0.5, delay: 0.2 }}
       >
-          <PartyPopper className="h-16 w-16 text-primary mb-6" />
+          <motion.div initial={{ scale: 0, rotate: -30 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring', delay: 0.4, duration: 0.5 }}>
+            <PartyPopper className="h-16 w-16 text-primary mb-6" />
+          </motion.div>
           <h2 className="text-4xl font-bold mb-4">Spillet er ferdig!</h2>
           <p className="text-muted-foreground mb-8">Bra spilt! Hva vil dere gjøre nå?</p>
           <div className="flex flex-col sm:flex-row gap-4">
-              <Button onClick={handleRestart} size="lg">
+              <Button onClick={handleRestart} size="lg" className="transform transition-transform duration-200 hover:scale-105">
                   <Repeat className="mr-2 h-5 w-5" />
                   Spill igjen
               </Button>
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="outline" size="lg" asChild className="transform transition-transform duration-200 hover:scale-105">
                   <Link href="/spill/velg">
                       <Home className="mr-2 h-5 w-5" />
                       Velg nytt spill
                   </Link>
               </Button>
           </div>
+          <motion.div
+            className="mt-12 w-full flex justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
+            <AdBanner />
+          </motion.div>
       </motion.div>
     )
   }
 
   return (
-    <div className="flex flex-col min-h-screen p-4 md:p-8 justify-center items-center">
+    <div className="flex flex-col min-h-screen p-4 md:p-8">
       <div className="absolute top-4 left-4 z-10">
          <Button variant="ghost" size="sm" asChild>
             <Link href="/">
@@ -186,21 +198,20 @@ export function GameClient({ game }: { game: Game }) {
       <div className="absolute top-4 right-4 z-10">
           <GameMenu context="in-game" onRestart={handleRestart} />
       </div>
-
-      {/* Game Stage */}
-      <div className="w-full max-w-3xl flex-grow flex flex-col justify-center text-center">
+      
+      <div className="w-full max-w-3xl mx-auto flex-grow flex flex-col justify-center text-center">
         <div className="relative flex-grow flex items-center justify-center overflow-hidden">
-            <AnimatePresence initial={false} custom={direction} mode="wait">
+            <AnimatePresence initial={false} mode="wait">
                 <motion.div
                     key={currentIndex}
-                    custom={direction}
-                    variants={variants}
+                    variants={cardVariants}
                     initial="enter"
                     animate="center"
                     exit="exit"
                     transition={{
                         x: { type: "spring", stiffness: 300, damping: 30 },
                         opacity: { duration: 0.2 },
+                        scale: { duration: 0.2 }
                     }}
                     className="w-full"
                 >
@@ -223,16 +234,23 @@ export function GameClient({ game }: { game: Game }) {
                 <Button 
                     onClick={handleNextTask} 
                     size="lg" 
-                    className="w-full max-w-xs mx-auto h-14 text-lg">
+                    className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-primary/30">
                     Neste
                 </Button>
              </motion.div>
         )}
       </div>
 
-      <div className="text-center text-muted-foreground/60 text-sm h-6">
-        {tasks.length > 0 && `${currentIndex + 1} / ${tasks.length}`}
-      </div>
+      <footer className="w-full flex-shrink-0">
+        <div className="text-center text-muted-foreground/60 text-sm h-6 mb-4">
+          {tasks.length > 0 && `${currentIndex + 1} / ${tasks.length}`}
+        </div>
+        {!showLoading && (
+          <div className="flex justify-center">
+            <AdBanner className="h-16" />
+          </div>
+        )}
+      </footer>
     </div>
   );
 }

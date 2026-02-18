@@ -2,17 +2,20 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Rocket } from 'lucide-react';
+import { Rocket, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
 import Image from 'next/image';
 import { GameMenu } from '@/components/game/GameMenu';
 import { motion } from 'framer-motion';
+import { usePlayers } from '@/hooks/usePlayers';
+import { AdBanner } from '@/components/ads/AdBanner';
 
 export default function Home() {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
   const router = useRouter();
+  const { players, isLoaded } = usePlayers();
 
   const handleSetupComplete = () => {
     setIsPlayerSetupOpen(false);
@@ -84,16 +87,24 @@ export default function Home() {
             Start en runde
           </Button>
         </PlayerSetup>
+        
+        {isLoaded && players.length > 0 ? (
+          <Button variant="outline" asChild>
+            <Link href="/spill/velg">
+              <History className="mr-2 h-4 w-4" />
+              Fortsett med {players.length} spillere
+            </Link>
+          </Button>
+        ) : (
+          <Button variant="link" asChild>
+            <Link href="/spill/velg">Eller se alle spillene</Link>
+          </Button>
+        )}
 
-        <Button variant="link" asChild>
-          <Link href="/spill/velg">Eller se alle spillene</Link>
-        </Button>
       </motion.div>
 
-      <footer className="absolute bottom-0 left-0 right-0 flex items-center justify-center h-16">
-        <p className="text-sm text-muted-foreground/50">
-          Laget med ❤️ for festen
-        </p>
+      <footer className="absolute bottom-0 left-0 right-0 p-4 flex justify-center">
+        <AdBanner />
       </footer>
     </motion.div>
   );
