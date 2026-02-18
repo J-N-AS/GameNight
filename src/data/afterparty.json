@@ -1,0 +1,83 @@
+{
+  "id": "afterparty",
+  "title": "Afterparty",
+  "description": "Når tempoet roer seg og samtalene blir ekte. Rolige spørsmål, refleksjon og ærlighet.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🌙",
+  "color": "hsl(220 60% 55%)",
+  "items": [
+    { "type": "prompt", "text": "Hvordan føler du deg akkurat nå?" },
+    { "type": "challenge", "text": "{player}, ta én rolig slurk og pust dypt." },
+    { "type": "pointing", "text": "Hvem her er best å snakke med sent på kvelden?" },
+    { "type": "prompt", "text": "Hva var høydepunktet i kveld?" },
+    { "type": "challenge", "text": "Alle tar én slurk for god stemning." },
+
+    { "type": "prompt", "text": "Hva tenker du mest på for tiden?" },
+    { "type": "challenge", "text": "{player}, del én ting som gjør deg rolig – eller drikk." },
+    { "type": "pointing", "text": "Hvem her gir best råd?" },
+    { "type": "prompt", "text": "Hva savner du akkurat nå?" },
+    { "type": "challenge", "text": "Alle som kjenner seg igjen: drikk." },
+
+    { "type": "prompt", "text": "Når følte du deg sist skikkelig trygg?" },
+    { "type": "challenge", "text": "{player}, svar ærlig eller ta 2 slurker." },
+    { "type": "pointing", "text": "Hvem her er mest empatisk?" },
+    { "type": "prompt", "text": "Hva gjør deg genuint glad?" },
+    { "type": "challenge", "text": "Alle tar én slurk for takknemlighet." },
+
+    { "type": "prompt", "text": "Hva er noe du er stolt av, men sjelden sier?" },
+    { "type": "challenge", "text": "{player}, del – eller drikk." },
+    { "type": "pointing", "text": "Hvem her lytter best?" },
+    { "type": "prompt", "text": "Hva er en liten ting som betyr mye for deg?" },
+    { "type": "challenge", "text": "Alle som nikker: ta én slurk." },
+
+    { "type": "prompt", "text": "Hva er det vanskeligste du har lært?" },
+    { "type": "challenge", "text": "{player}, ta en slurk og del én innsikt." },
+    { "type": "pointing", "text": "Hvem her har vokst mest det siste året?" },
+    { "type": "prompt", "text": "Hva skulle du ønske folk forstod bedre om deg?" },
+    { "type": "challenge", "text": "Alle tar én rolig slurk." },
+
+    { "type": "prompt", "text": "Når føler du deg mest som deg selv?" },
+    { "type": "challenge", "text": "{player}, svar eller drikk 2." },
+    { "type": "pointing", "text": "Hvem her er mest til stede akkurat nå?" },
+    { "type": "prompt", "text": "Hva gir deg håp fremover?" },
+    { "type": "challenge", "text": "Alle som føler håp: drikk." },
+
+    { "type": "prompt", "text": "Hva er en ting du vil bli bedre på?" },
+    { "type": "challenge", "text": "{player}, del én konkret ting – eller drikk." },
+    { "type": "pointing", "text": "Hvem her er best på selvrefleksjon?" },
+    { "type": "prompt", "text": "Hva er noe som gir deg ro før du legger deg?" },
+    { "type": "challenge", "text": "Alle tar én slurk i stillhet." },
+
+    { "type": "prompt", "text": "Hva er et minne som alltid gjør deg varm?" },
+    { "type": "challenge", "text": "{player}, del kort – eller ta en slurk." },
+    { "type": "pointing", "text": "Hvem her gir trygg energi?" },
+    { "type": "prompt", "text": "Hva er noe du gleder deg til?" },
+    { "type": "challenge", "text": "Alle tar én slurk for fremtiden." },
+
+    { "type": "prompt", "text": "Hva er din beste måte å roe ned på?" },
+    { "type": "challenge", "text": "{player}, foreslå en rolig aktivitet for gruppa." },
+    { "type": "pointing", "text": "Hvem her kunne snakket hele natten?" },
+    { "type": "prompt", "text": "Hva betyr vennskap for deg?" },
+    { "type": "challenge", "text": "Alle som verdsetter vennskap: drikk." },
+
+    { "type": "prompt", "text": "Hva er noe du vil ta med deg fra i kveld?" },
+    { "type": "challenge", "text": "{player}, del én setning – eller drikk." },
+    { "type": "pointing", "text": "Hvem her har gjort kvelden bedre?" },
+    { "type": "prompt", "text": "Hva er en ting du vil gjøre mer av?" },
+    { "type": "challenge", "text": "Alle tar én slurk for nye vaner." },
+
+    { "type": "prompt", "text": "Hva er en sannhet om deg som har endret seg?" },
+    { "type": "challenge", "text": "{player}, svar ærlig eller drikk 2." },
+    { "type": "pointing", "text": "Hvem her gir deg ro bare ved å være der?" },
+    { "type": "prompt", "text": "Hva er din beste påminnelse til deg selv?" },
+    { "type": "challenge", "text": "Alle tar én slurk i stillhet." },
+
+    { "type": "prompt", "text": "Hva er en ting du er takknemlig for akkurat nå?" },
+    { "type": "challenge", "text": "{player}, del én ting – eller drikk." },
+    { "type": "pointing", "text": "Hvem her fortjener en klem?" },
+    { "type": "prompt", "text": "Hva har kvelden gitt deg?" },
+    { "type": "challenge", "text": "Alle skåler rolig og tar en siste slurk." }
+  ]
+}

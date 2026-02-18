@@ -1,0 +1,77 @@
+{
+  "id": "hemmeligheter",
+  "title": "Hemmeligheter",
+  "description": "Ærlige svar, skjulte tanker og ting du vanligvis ikke sier høyt. Del – eller drikk.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🤫",
+  "color": "hsl(260 70% 60%)",
+  "items": [
+    { "type": "challenge", "text": "{player}, del en hemmelighet – eller ta en shot." },
+    { "type": "prompt", "text": "Hva er noe få mennesker vet om deg?" },
+    { "type": "pointing", "text": "Hvem her har flest hemmeligheter?" },
+    { "type": "challenge", "text": "{player}, svar ærlig eller drikk 2 slurker." },
+    { "type": "prompt", "text": "Hva er den største løgnen du har levd med?" },
+
+    { "type": "prompt", "text": "Har du noen gang løyet for å beskytte deg selv?" },
+    { "type": "challenge", "text": "Alle som svarer ja: ta én slurk." },
+    { "type": "pointing", "text": "Hvem her er best til å holde på hemmeligheter?" },
+    { "type": "prompt", "text": "Hva er en tanke du ofte har, men aldri sier høyt?" },
+    { "type": "challenge", "text": "{player}, del eller drikk." },
+
+    { "type": "prompt", "text": "Hva er det flaueste du har gjort alene?" },
+    { "type": "challenge", "text": "{player}, ta 2 slurker hvis du nekter å svare." },
+    { "type": "pointing", "text": "Hvem her ville du betrodd en stor hemmelighet?" },
+    { "type": "prompt", "text": "Hva er noe du later som ikke betyr noe for deg?" },
+    { "type": "challenge", "text": "Alle som kjenner seg igjen: drikk." },
+
+    { "type": "prompt", "text": "Har du noen gang vært sjalu uten å innrømme det?" },
+    { "type": "challenge", "text": "{player}, svar ærlig eller ta en shot." },
+    { "type": "pointing", "text": "Hvem her skjuler følelsene sine best?" },
+    { "type": "prompt", "text": "Hva er den største feilen du har lært mest av?" },
+    { "type": "challenge", "text": "{player}, del én ting du angrer på." },
+
+    { "type": "prompt", "text": "Hva er en hemmelighet du har delt med feil person?" },
+    { "type": "challenge", "text": "Alle som har opplevd det: ta én slurk." },
+    { "type": "pointing", "text": "Hvem her virker mest uskyldig, men er det ikke?" },
+    { "type": "prompt", "text": "Hva er noe du er redd for å miste?" },
+    { "type": "challenge", "text": "{player}, svar eller drikk 2." },
+
+    { "type": "prompt", "text": "Har du noen gang latt være å si sannheten for å unngå konflikt?" },
+    { "type": "challenge", "text": "Alle som svarer ja: drikk." },
+    { "type": "pointing", "text": "Hvem her overtenker mest?" },
+    { "type": "prompt", "text": "Hva er din største usikkerhet?" },
+    { "type": "challenge", "text": "{player}, del – eller ta en shot." },
+
+    { "type": "prompt", "text": "Hva er en hemmelig drøm du har?" },
+    { "type": "challenge", "text": "{player}, svar ærlig eller drikk." },
+    { "type": "pointing", "text": "Hvem her kjenner deg best?" },
+    { "type": "prompt", "text": "Hva er det mest sårbare du har delt med noen?" },
+    { "type": "challenge", "text": "Alle tar én slurk for ærlighet." },
+
+    { "type": "prompt", "text": "Har du noen gang vært forelsket i feil person?" },
+    { "type": "challenge", "text": "Shot hvis svaret er ja." },
+    { "type": "pointing", "text": "Hvem her har størst hjerte?" },
+    { "type": "prompt", "text": "Hva er noe du skulle ønske folk forstod bedre om deg?" },
+    { "type": "challenge", "text": "{player}, del én ting du aldri har sagt høyt før." },
+
+    { "type": "prompt", "text": "Hva er den største hemmeligheten du har holdt for en venn?" },
+    { "type": "challenge", "text": "{player}, svar eller drikk 2 slurker." },
+    { "type": "pointing", "text": "Hvem her er mest emosjonell innerst inne?" },
+    { "type": "prompt", "text": "Hva er noe du er stolt av, men sjelden sier?" },
+    { "type": "challenge", "text": "Alle som blir rørt: ta én slurk." },
+
+    { "type": "prompt", "text": "Har du noen gang ønsket deg et helt annet liv?" },
+    { "type": "challenge", "text": "{player}, del kort – eller ta en shot." },
+    { "type": "pointing", "text": "Hvem her har forandret seg mest de siste årene?" },
+    { "type": "prompt", "text": "Hva er den største hemmeligheten du har akkurat nå?" },
+    { "type": "challenge", "text": "Alle tar én slurk for tillit." },
+
+    { "type": "prompt", "text": "Hva er noe du aldri ville postet offentlig?" },
+    { "type": "challenge", "text": "{player}, svar eller drikk." },
+    { "type": "pointing", "text": "Hvem her er mest redd for å bli misforstått?" },
+    { "type": "prompt", "text": "Hva er det mest ærlige du har sagt i kveld?" },
+    { "type": "challenge", "text": "Alle roper «hemmelig!» og tar en siste slurk." }
+  ]
+}

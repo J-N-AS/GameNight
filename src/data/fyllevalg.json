@@ -1,0 +1,83 @@
+{
+  "id": "fyllevalg",
+  "title": "Fyllevalg",
+  "description": "Dårlige avgjørelser, ærlige svar og klassiske «det virket som en god idé»-øyeblikk.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🤦‍♂️",
+  "color": "hsl(25 85% 55%)",
+  "items": [
+    { "type": "prompt", "text": "Hva er det dummeste fyllevalget du har tatt?" },
+    { "type": "challenge", "text": "{player}, del et fyllevalg – eller drikk 2 slurker." },
+    { "type": "pointing", "text": "Hvem her tar de verste avgjørelsene på fylla?" },
+    { "type": "prompt", "text": "Har du noen gang sendt en melding du angret på dagen etter?" },
+    { "type": "challenge", "text": "Alle som har gjort det: drikk." },
+
+    { "type": "prompt", "text": "Hva er det dyreste du har brukt penger på i fylla?" },
+    { "type": "challenge", "text": "{player}, ta én slurk for hvert fyllevalg du angrer på i år." },
+    { "type": "pointing", "text": "Hvem her sier oftest «det går fint»?" },
+    { "type": "prompt", "text": "Har du noen gang blitt værende altfor lenge?" },
+    { "type": "challenge", "text": "Shot hvis svaret er ja." },
+
+    { "type": "prompt", "text": "Hva er det rareste stedet du har havnet etter en kveld ute?" },
+    { "type": "challenge", "text": "{player}, svar ærlig eller drikk." },
+    { "type": "pointing", "text": "Hvem her burde hatt en fylleverge?" },
+    { "type": "prompt", "text": "Hva er det mest impulsive du har gjort på fylla?" },
+    { "type": "challenge", "text": "Alle tar én slurk for dårlig impulskontroll." },
+
+    { "type": "prompt", "text": "Har du noen gang ringt noen du absolutt ikke burde ringt?" },
+    { "type": "challenge", "text": "{player}, ta 2 slurker hvis du fortsatt har nummeret lagret." },
+    { "type": "pointing", "text": "Hvem her mister dømmekraften først?" },
+    { "type": "prompt", "text": "Hva er det mest ufornuftige du har sagt ja til?" },
+    { "type": "challenge", "text": "Alle som kjenner seg igjen: drikk." },
+
+    { "type": "prompt", "text": "Hva er det klassiske fyllevalget du alltid gjentar?" },
+    { "type": "challenge", "text": "{player}, innrøm et mønster – eller ta en shot." },
+    { "type": "pointing", "text": "Hvem her lærer aldri?" },
+    { "type": "prompt", "text": "Har du noen gang gått hjem med feil person?" },
+    { "type": "challenge", "text": "Shot hvis svaret er ja." },
+
+    { "type": "prompt", "text": "Hva er det mest overdrevne du har lovet i fylla?" },
+    { "type": "challenge", "text": "{player}, ta én slurk for hvert tomme løfte." },
+    { "type": "pointing", "text": "Hvem her blir plutselig veldig ærlig?" },
+    { "type": "prompt", "text": "Hva er det flaueste fyllevalget som fortsatt blir nevnt?" },
+    { "type": "challenge", "text": "Alle tar én slurk for minner som aldri forsvinner." },
+
+    { "type": "prompt", "text": "Har du noen gang ignorert et åpenbart rødt flagg?" },
+    { "type": "challenge", "text": "{player}, svar eller drikk 2." },
+    { "type": "pointing", "text": "Hvem her tiltrekkes av kaos?" },
+    { "type": "prompt", "text": "Hva er det dummeste du har sagt til en bartender?" },
+    { "type": "challenge", "text": "Alle som har prøvd å forhandle i fylla: drikk." },
+
+    { "type": "prompt", "text": "Hva er det mest urealistiske du har tenkt på fylla?" },
+    { "type": "challenge", "text": "{player}, del eller ta en shot." },
+    { "type": "pointing", "text": "Hvem her blir plutselig filosof?" },
+    { "type": "prompt", "text": "Har du noen gang tatt en avgjørelse du ikke husker?" },
+    { "type": "challenge", "text": "Shot hvis svaret er ja." },
+
+    { "type": "prompt", "text": "Hva er det verste «det ordner seg»-øyeblikket?" },
+    { "type": "challenge", "text": "{player}, ta 2 slurker for selvtillit uten grunn." },
+    { "type": "pointing", "text": "Hvem her overvurderer egne evner?" },
+    { "type": "prompt", "text": "Hva er det mest kaotiske fyllevalget du har sett?" },
+    { "type": "challenge", "text": "Alle tar én slurk for vitner til kaos." },
+
+    { "type": "prompt", "text": "Har du noen gang blitt igjen når alle andre dro?" },
+    { "type": "challenge", "text": "{player}, svar ærlig eller drikk." },
+    { "type": "pointing", "text": "Hvem her burde lagt seg tidligere oftere?" },
+    { "type": "prompt", "text": "Hva er det dummeste du har googlet i fylla?" },
+    { "type": "challenge", "text": "Alle som har gjort det: drikk." },
+
+    { "type": "prompt", "text": "Hva er ditt mest «det var verdt det»-fyllevalg?" },
+    { "type": "challenge", "text": "{player}, del ett godt og ett dårlig valg." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å gjøre det igjen?" },
+    { "type": "prompt", "text": "Hva har du lært av dine fyllevalg?" },
+    { "type": "challenge", "text": "Alle tar én slurk for livserfaring." },
+
+    { "type": "prompt", "text": "Hva er det eneste fyllevalget du aldri angrer på?" },
+    { "type": "challenge", "text": "{player}, avslør eller ta en shot." },
+    { "type": "pointing", "text": "Hvem her burde skrive en bok om fyllevalg?" },
+    { "type": "prompt", "text": "Hva er det mest typiske deg å gjøre i fylla?" },
+    { "type": "challenge", "text": "Alle skåler for bedre valg – og tar en siste slurk." }
+  ]
+}

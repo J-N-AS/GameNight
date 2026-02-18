@@ -1,0 +1,77 @@
+{
+  "id": "dating-fails",
+  "title": "Dating Fails",
+  "description": "Pinlige øyeblikk, røde flagg og dater som aldri burde skjedd. Le av smerten – sammen.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "💔",
+  "color": "hsl(345 75% 60%)",
+  "items": [
+    { "type": "prompt", "text": "Hva er den verste daten du har vært på?" },
+    { "type": "challenge", "text": "{player}, del en dating-fail – eller drikk 2 slurker." },
+    { "type": "pointing", "text": "Hvem her har flest dårlige dater bak seg?" },
+    { "type": "prompt", "text": "Hva var første røde flagg du ignorerte?" },
+    { "type": "challenge", "text": "Alle som har ignorert et rødt flagg: drikk." },
+
+    { "type": "prompt", "text": "Har du noen gang ghostet noen?" },
+    { "type": "challenge", "text": "Shot hvis svaret er ja." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å bli ghostet?" },
+    { "type": "prompt", "text": "Hva er den kleineste daten du har vært på?" },
+    { "type": "challenge", "text": "{player}, svar ærlig eller drikk." },
+
+    { "type": "prompt", "text": "Hva er det rareste noen har sagt på date?" },
+    { "type": "challenge", "text": "{player}, ta 2 slurker hvis du fortsatt tenker på det." },
+    { "type": "pointing", "text": "Hvem her tiltrekker seg kaos i dating?" },
+    { "type": "prompt", "text": "Hva er din største dating-ick?" },
+    { "type": "challenge", "text": "Alle som har en sterk ick: drikk." },
+
+    { "type": "prompt", "text": "Har du noen gang vært på date uten å ville være der?" },
+    { "type": "challenge", "text": "Shot hvis svaret er ja." },
+    { "type": "pointing", "text": "Hvem her gir flest sjanser?" },
+    { "type": "prompt", "text": "Hva er det flaueste som har skjedd på en date?" },
+    { "type": "challenge", "text": "{player}, del – eller ta en shot." },
+
+    { "type": "prompt", "text": "Hva er den største løgnen du har hørt på date?" },
+    { "type": "challenge", "text": "Alle som har blitt løyet til: drikk." },
+    { "type": "pointing", "text": "Hvem her blir lettest forelsket?" },
+    { "type": "prompt", "text": "Hva er ditt dårligste valg av date-lokasjon?" },
+    { "type": "challenge", "text": "{player}, ta 2 slurker for dårlig planlegging." },
+
+    { "type": "prompt", "text": "Har du noen gang innsett midt i daten at dette er feil?" },
+    { "type": "challenge", "text": "Shot hvis svaret er ja." },
+    { "type": "pointing", "text": "Hvem her har blitt catfished?" },
+    { "type": "prompt", "text": "Hva er det mest overdrevne komplimentet du har fått?" },
+    { "type": "challenge", "text": "Alle som har fått et falskt kompliment: drikk." },
+
+    { "type": "prompt", "text": "Hva er den mest desperate daten du har vært på?" },
+    { "type": "challenge", "text": "{player}, svar ærlig eller drikk 2." },
+    { "type": "pointing", "text": "Hvem her blir alltid altfor investert?" },
+    { "type": "prompt", "text": "Hva er den verste meldingen du har fått etter en date?" },
+    { "type": "challenge", "text": "Shot hvis du fortsatt husker den." },
+
+    { "type": "prompt", "text": "Har du noen gang gått hjem med feil person?" },
+    { "type": "challenge", "text": "Shot hvis svaret er ja." },
+    { "type": "pointing", "text": "Hvem her gjør de samme dating-feilene igjen?" },
+    { "type": "prompt", "text": "Hva er det mest ubehagelige øyeblikket på date?" },
+    { "type": "challenge", "text": "{player}, del eller drikk." },
+
+    { "type": "prompt", "text": "Hva er det dummeste du har unnskyldt hos en date?" },
+    { "type": "challenge", "text": "{player}, ta 2 slurker for håp uten grunn." },
+    { "type": "pointing", "text": "Hvem her har dårligst dating-smak?" },
+    { "type": "prompt", "text": "Hva er ditt største «jeg burde visst bedre»-øyeblikk?" },
+    { "type": "challenge", "text": "Alle tar én slurk for livserfaring." },
+
+    { "type": "prompt", "text": "Har du noen gang latet som daten gikk bra?" },
+    { "type": "challenge", "text": "Alle som har gjort det: drikk." },
+    { "type": "pointing", "text": "Hvem her er best på å late som?" },
+    { "type": "prompt", "text": "Hva er den raskeste daten du har hatt?" },
+    { "type": "challenge", "text": "{player}, svar eller ta en shot." },
+
+    { "type": "prompt", "text": "Hva er den største lærdommen fra dine dating-fails?" },
+    { "type": "challenge", "text": "{player}, del én ting du aldri gjør igjen." },
+    { "type": "pointing", "text": "Hvem her har blitt bedre av dating-fails?" },
+    { "type": "prompt", "text": "Hva er det mest komiske dating-øyeblikket ditt?" },
+    { "type": "challenge", "text": "Alle skåler for bedre dater og tar en siste slurk." }
+  ]
+}
