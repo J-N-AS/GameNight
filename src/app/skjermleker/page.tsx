@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { getScreenGames } from '@/lib/screen-games';
 import { SkjermlekerClient } from '@/components/skjermleker/SkjermlekerClient';
 import type { ScreenGameCategory } from '@/lib/types';
+import screenGamesData from '@/data/screen-games.json';
 
 export const metadata: Metadata = {
   title: 'Skjermleker: Spill til Film, TV og Sport | GameNight',
@@ -9,6 +9,6 @@ export const metadata: Metadata = {
 };
 
 export default function SkjermlekerPage() {
-  const categories: ScreenGameCategory[] = getScreenGames();
+  const categories: ScreenGameCategory[] = screenGamesData.categories;
   return <SkjermlekerClient categories={categories} />;
 }
