@@ -3,8 +3,9 @@
 import type { GameArticle } from './types';
 import drikkeleker from '@/data/drikkeleker.json';
 import { PlaceHolderImages } from './placeholder-images';
+import { cache } from 'react';
 
-async function loadArticles(): Promise<GameArticle[]> {
+const loadArticles = cache(async (): Promise<GameArticle[]> => {
   const articles = drikkeleker as Omit<GameArticle, 'imageUrl' | 'imageHint' | 'attributionHtml'>[];
   
   return articles.map(article => {
@@ -16,11 +17,11 @@ async function loadArticles(): Promise<GameArticle[]> {
       attributionHtml: imageData?.attributionHtml,
     };
   });
-}
+});
 
-export async function getArticles(): Promise<
+export const getArticles = cache(async (): Promise<
   Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules' | 'attributionHtml'>[]
-> {
+> => {
   const articles = await loadArticles();
   return articles.map(({ slug, title, description, imageUrl, imageHint }) => ({
     slug,
@@ -29,9 +30,9 @@ export async function getArticles(): Promise<
     imageUrl,
     imageHint,
   }));
-}
+});
 
-export async function getArticle(slug: string): Promise<GameArticle | undefined> {
+export const getArticle = cache(async (slug: string): Promise<GameArticle | undefined> => {
   const articles = await loadArticles();
   return articles.find(article => article.slug === slug);
-}
+});

@@ -2,6 +2,7 @@
 
 import { notFound } from 'next/navigation';
 import type { Game } from './types';
+import { cache } from 'react';
 
 // Helper function to dynamically import game data
 async function loadGameData(id: string): Promise<Game | null> {
@@ -48,7 +49,7 @@ const allGameIds = [
   // Note: 'utfordringer-deprecated' is intentionally not included as it's empty/deprecated.
 ];
 
-export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> {
+export const getGames = cache(async (): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> => {
   const games = await Promise.all(
     allGameIds.map(async (id) => {
       const gameData = await loadGameData(id);
@@ -71,9 +72,9 @@ export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shu
     })
   );
   return games.filter(Boolean) as Omit<Game, 'items' | 'language' | 'shuffle'>[];
-}
+});
 
-export async function getGame(id: string): Promise<Game> {
+export const getGame = cache(async (id: string): Promise<Game> => {
   const normalizedId = id.toLowerCase();
   
   // First, try to load by the ID directly, assuming it might match the filename
@@ -92,4 +93,4 @@ export async function getGame(id: string): Promise<Game> {
   }
 
   notFound();
-}
+});
