@@ -4,24 +4,63 @@ import { notFound, useParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, CreditCard } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
   'om-oss': {
-    title: 'Om GameNight',
+    title: 'Vårt Løfte: Gratis Fest, For Alltid',
     content: (
-      <div className="space-y-4 text-muted-foreground">
-        <p>
-          GameNight er en gratis, nettleserbasert partyspill-plattform designet for å gjøre enhver
-          sosial sammenkomst litt morsommere. Vårt mål er å tilby enkle, engasjerende og umiddelbart
-          spillbare spill som ikke krever nedlastning eller komplisert oppsett.
-        </p>
-        <p>
-          Enten det er vorspiel, en rolig kveld med venner eller en stor fest, har GameNight et
-          spill som passer anledningen.
-        </p>
-        <p>Takk for at du spiller!</p>
+      <div className="space-y-8 text-muted-foreground">
+        <div className="space-y-2 text-lg">
+          <p>
+            GameNight ble startet som en reaksjon på en frustrerende trend: At de beste
+            partyspillene låses bak dyre abonnementer.
+          </p>
+          <p className="font-semibold text-foreground">
+            Vi mener at det å ha det gøy med venner ikke skal koste skjorta.
+          </p>
+          <p>
+            Vårt mål er enkelt: Å tilby de beste drikke- og partyspillene helt gratis, rett i
+            nettleseren din. Ingen app-nedlastninger, ingen "premium"-funksjoner, bare ren og
+            uforfalsket moro.
+          </p>
+        </div>
+
+        <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
+          <h3 className="font-semibold text-foreground text-xl">Hvorfor viser vi reklame?</h3>
+          <p>
+            Å holde GameNight gratis for alle betyr at vi har driftskostnader for servere og
+            videreutvikling. Annonsene hjelper oss med å dekke disse kostnadene, slik at vi kan
+            fortsette å tilby og forbedre spillene uten å måtte ta betalt fra deg.
+          </p>
+        </div>
+
+        <div className="space-y-4 rounded-lg border-2 border-dashed border-primary/50 bg-card/50 p-6 text-center">
+          <h3 className="font-bold text-primary text-2xl">Liker du det vi gjør? Støtt oss!</h3>
+          <p>
+            Hvis GameNight har gjort festen din bedre, blir vi utrolig takknemlige for et
+            frivillig bidrag. Hver krone går direkte til å holde serverne i gang og utvikle nye,
+            morsomme spill til deg og vennene dine.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2">
+            <Button size="lg" asChild className="transform transition-transform duration-200 hover:scale-105">
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <CreditCard className="mr-2 h-5 w-5" />
+                Doner med Kort
+              </a>
+            </Button>
+            <Button size="lg" variant="secondary" asChild className="transform transition-transform duration-200 hover:scale-105">
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <span className="mr-2 text-lg">🇳🇴</span>
+                Doner med Vipps
+              </a>
+            </Button>
+          </div>
+          <p className="text-xs text-muted-foreground/80 pt-2">
+              Donasjon via kort (Stripe) støtter Apple Pay og Google Pay for enklest mulig betaling.
+          </p>
+        </div>
       </div>
     ),
   },
