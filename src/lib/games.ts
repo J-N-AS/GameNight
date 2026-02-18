@@ -13,24 +13,24 @@ async function loadGameData(id: string): Promise<Game | null> {
   }
 }
 
-// Helper function to get all game IDs (filenames without .json)
-// In a real app, you might have a manifest file or a more robust discovery method
+// Helper function to get all game IDs (filenames without .json).
+// This list must contain the filenames to ensure they are found.
 const allGameIds = [
   'afterparty',
   'dating-fails',
   'fyllevalg',
   'hemmelig-bonus',
   'hemmeligheter',
-  'jeg-har-aldri-klassisk',
+  'jeg-har-aldri',
   'kaosrunden',
   'kjapp-party-runde',
   'party-klassikere',
-  'pekefest-klassisk',
+  'pekefest',
   'rolig-sosial',
   'sannhet-eller-shot',
   'sexy-vibes',
-  'utfordringer-deprecated',
   'vorspiel-mix',
+  // Note: 'utfordringer' is intentionally not included as it's empty/deprecated.
 ];
 
 export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> {
@@ -55,15 +55,17 @@ export async function getGames(): Promise<Omit<Game, 'items' | 'language' | 'shu
 
 export async function getGame(id: string): Promise<Game> {
   const normalizedId = id.toLowerCase();
-  const gameData = await loadGameData(normalizedId);
   
+  // First, try to load by the ID directly, assuming it might match the filename
+  const gameData = await loadGameData(normalizedId);
   if (gameData && gameData.id.toLowerCase() === normalizedId) {
     return gameData;
   }
 
-  // Fallback search if the filename doesn't directly match the id
-  for (const gameId of allGameIds) {
-    const data = await loadGameData(gameId);
+  // Fallback search for cases where filename and game.id differ
+  // (e.g. filename is 'jeg-har-aldri' but internal id is 'jeg-har-aldri-klassisk')
+  for (const gameFile of allGameIds) {
+    const data = await loadGameData(gameFile);
     if (data && data.id.toLowerCase() === normalizedId) {
       return data;
     }
