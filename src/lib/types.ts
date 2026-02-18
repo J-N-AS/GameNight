@@ -63,3 +63,12 @@ export interface MusicGame {
   rules: string;
   spotifyUrl: string;
 }
+
+export interface Theme {
+  slug: string;
+  title: string;
+  metaDescription: string;
+  content: string[];
+  gameIds: string[];
+  emoji: string;
+}

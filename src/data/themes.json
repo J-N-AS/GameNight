@@ -1,0 +1,36 @@
+[
+  {
+    "slug": "julebord",
+    "title": "Spill & Leker til Julebordet",
+    "metaDescription": "Den ultimate samlingen av leker, spill og isbrytere for julebordet. Skap uforglemmelig stemning med kolleger eller venner!",
+    "emoji": "🎅",
+    "content": [
+      "Julebordet er årets høydepunkt for mange, enten det er med jobben eller vennegjengen. Det er en tid for god mat, drikke, og ikke minst – sosialt samvær. Men hvordan sørger man for at stemningen går fra høflig prat til rungende latter? Med de riktige selskapslekene, selvfølgelig!",
+      "Her har vi samlet en perfekt blanding av spill som passer utmerket til julebordsesongen. Vi har alt fra enkle isbrytere som får praten i gang, til mer livlige festspill som løfter taket. Enten dere trenger en rolig start på kvelden eller en aktivitet som rister løs på dansefoten, finner dere det her. Disse spillene er designet for å være enkle å forstå, krever minimalt med forberedelser, og garanterer god stemning.",
+      "Så senk skuldrene, fyll glasset, og la GameNight ta seg av underholdningen. Utforsk spillene nedenfor og finn de perfekte aktivitetene for deres julebord. God fest!"
+    ],
+    "gameIds": [
+      "julebord",
+      "pekefest-klassisk",
+      "party-klassikere",
+      "sannhet-eller-shot"
+    ]
+  },
+  {
+    "slug": "vorspiel",
+    "title": "Den Perfekte Starten: Spill for Vorspiel",
+    "metaDescription": "Kickstart festen med de beste vorspiel-spillene! Her finner du en kuratert liste med isbrytere og partystartere som garanterer god stemning.",
+    "emoji": "🍻",
+    "content": [
+      "Vorspielet setter tonen for resten av kvelden. Det er her man går fra en vanlig dag til festmodus, og de rette aktivitetene kan utgjøre hele forskjellen. Et vellykket vorspiel handler om å bryte isen, få i gang praten, og bygge opp forventningene til kvelden som kommer. Kjedelige small-talk hører ikke hjemme her!",
+      "Vi har håndplukket spillene som er perfekte for nettopp dette. I denne samlingen finner du en blanding av enkle pekefester som får alle til å le, klassiske drikkeleker som løsner på stemningen, og samtale-startere som får dere til å bli bedre kjent. Alle spillene er designet for å være raske å lære og enkle å delta i, slik at ingen faller utenfor.",
+      "Glem kleine stillheter og la GameNight være din partner-in-crime for å arrangere det ultimate vorspielet. Utforsk spillene nedenfor og gjør deg klar for en kveld fylt med latter, gode historier og en uslåelig start på festen."
+    ],
+    "gameIds": [
+      "vorspiel-mix",
+      "jeg-har-aldri-klassisk",
+      "pekefest-klassisk",
+      "kjapp-party-runde"
+    ]
+  }
+]

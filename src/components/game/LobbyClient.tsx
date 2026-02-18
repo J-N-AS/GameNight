@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, PartyPopper, Music } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, PartyPopper, Music, Wand2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
-import type { Game } from '@/lib/types';
+import type { Game, Theme } from '@/lib/types';
 import { AdBanner } from '@/components/ads/AdBanner';
 import { PartyTools } from './PartyTools';
 
@@ -32,7 +32,7 @@ const moods = [
     { name: 'Sexy / 18+', emoji: '😈', link: '/alle-spill?kategori=18+' },
 ];
 
-export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGetGames[] }) {
+export function LobbyClient({ recommendedGames, themes }: { recommendedGames: GameFromGetGames[], themes: Theme[] }) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
   const { players, isLoaded } = usePlayers();
   const [code, setCode] = useState('');
@@ -161,31 +161,23 @@ export function LobbyClient({ recommendedGames }: { recommendedGames: GameFromGe
         </motion.div>
       )}
 
-      {/* Moods */}
+      {/* Themes */}
       <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
         <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
-            🎉 Hva slags kveld er dette?
+            <Wand2 className="h-6 w-6 text-primary" /> Utforsk temaer
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            {moods.map(mood => (
-                <Link key={mood.name} href={mood.link} className="group block">
+            {themes.map(theme => (
+                <Link key={theme.slug} href={`/tema/${theme.slug}`} className="group block">
                     <Card className="text-center p-6 transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
-                        <div className="text-4xl mb-2">{mood.emoji}</div>
-                        <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">{mood.name}</h3>
+                        <div className="text-4xl mb-2">{theme.emoji}</div>
+                        <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">{theme.title.split(':')[0]}</h3>
                     </Card>
                 </Link>
             ))}
         </div>
-        <div className="text-center mt-8">
-            <Button variant="secondary" asChild>
-                <Link href="/alle-spill">
-                    <Gamepad2 className="mr-2 h-5 w-5" />
-                    Se alle spill
-                </Link>
-            </Button>
-        </div>
       </motion.div>
-      
+
       {/* Secret Code, Classic Games & Music Games */}
       <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
           <section className="text-center">

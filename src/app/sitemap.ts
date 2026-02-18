@@ -1,5 +1,6 @@
 import { getGames } from '@/lib/games';
 import { getArticles } from '@/lib/articles';
+import { getThemes } from '@/lib/themes';
 import type { MetadataRoute } from 'next';
 
 const URL = 'https://gamenight.no';
@@ -7,6 +8,7 @@ const URL = 'https://gamenight.no';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const games = await getGames();
   const articles = await getArticles();
+  const themes = await getThemes();
 
   const gameUrls = games.map(game => ({
     url: `${URL}/spill/${game.id}`,
@@ -20,6 +22,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
+  }));
+
+  const themeUrls = themes.map(theme => ({
+    url: `${URL}/tema/${theme.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
   }));
 
   const staticUrls: MetadataRoute.Sitemap = [
@@ -67,5 +76,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  return [...staticUrls, ...gameUrls, ...articleUrls];
+  return [...staticUrls, ...gameUrls, ...articleUrls, ...themeUrls];
 }
