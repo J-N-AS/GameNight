@@ -30,6 +30,8 @@ export interface Game {
   teams?: {
     team1: string;
     team2: string;
+    team1Color?: string;
+    team2Color?: string;
   };
 }
 

@@ -13,7 +13,9 @@
   "gameType": "versus",
   "teams": {
     "team1": "Jentene",
-    "team2": "Gutta"
+    "team2": "Gutta",
+    "team1Color": "hsl(330 90% 65%)",
+    "team2Color": "hsl(210 90% 60%)"
   },
   "items": [
     { "type": "challenge", "text": "Del dere i to lag: {team1} vs {team2}. Alle skåler for en god kamp!" },

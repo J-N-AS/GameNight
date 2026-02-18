@@ -158,6 +158,18 @@ export function GameClient({ game }: { game: Game }) {
     tasks.length > 0 ? ((currentIndex + 1) / tasks.length) * 100 : 0;
 
   const showConsent = game.warning && !consentGiven;
+  
+  const extractHslValues = (hslString?: string) => {
+    if (!hslString) return '';
+    const match = hslString.match(/(\d+\s* \d+%\s* \d+%)/);
+    return match ? match[1] : '';
+  };
+
+  const cssVars = {
+    '--team1-color-hsl': extractHslValues(game.teams?.team1Color),
+    '--team2-color-hsl': extractHslValues(game.teams?.team2Color),
+  } as React.CSSProperties;
+
 
   if (showConsent) {
     return (
@@ -177,6 +189,7 @@ export function GameClient({ game }: { game: Game }) {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: 'spring', duration: 0.5, delay: 0.2 }}
+        style={cssVars}
       >
         <motion.div
           initial={{ scale: 0, rotate: -30 }}
@@ -191,11 +204,11 @@ export function GameClient({ game }: { game: Game }) {
           <div className="mb-8 text-lg">
             <p className="font-semibold text-2xl mb-4">Resultat:</p>
             <div className="flex justify-center gap-8 text-xl">
-              <p>{game.teams.team1}: <span className="font-bold text-accent">{team1Score} poeng</span></p>
-              <p>{game.teams.team2}: <span className="font-bold text-primary">{team2Score} poeng</span></p>
+              <p><span className="player-highlight">{game.teams.team1}: {team1Score} poeng</span></p>
+              <p><span className="player-highlight-2">{game.teams.team2}: {team2Score} poeng</span></p>
             </div>
             {winner ? (
-              <p className="mt-6 text-3xl font-bold">Vinneren er <span className={team1Score > team2Score ? "text-accent" : "text-primary"}>{winner}!</span></p>
+              <p className="mt-6 text-3xl font-bold">Vinneren er <span className={team1Score > team2Score ? "player-highlight" : "player-highlight-2"}>{winner}!</span></p>
             ) : (
               <p className="mt-6 text-3xl font-bold">Det ble uavgjort!</p>
             )}
@@ -239,7 +252,7 @@ export function GameClient({ game }: { game: Game }) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen p-4 md:p-8">
+    <div className="flex flex-col min-h-screen p-4 md:p-8" style={cssVars}>
       <div className="absolute top-4 left-4 z-10">
         <Button variant="ghost" size="sm" asChild>
           <Link href="/">
@@ -260,8 +273,8 @@ export function GameClient({ game }: { game: Game }) {
             <div className="w-full max-w-sm mx-auto">
                {isVersusMode && game.teams && (
                  <div className="flex justify-between text-lg font-bold mb-2">
-                    <span className="text-accent">{game.teams.team1}: {team1Score}</span>
-                    <span className="text-primary">{game.teams.team2}: {team2Score}</span>
+                    <span className="player-highlight">{game.teams.team1}: {team1Score}</span>
+                    <span className="player-highlight-2">{game.teams.team2}: {team2Score}</span>
                  </div>
               )}
               <Progress value={progressValue} className="h-2" />

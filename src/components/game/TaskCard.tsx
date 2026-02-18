@@ -1,4 +1,4 @@
-import type { GameTask } from '@/lib/games';
+import type { Game, GameTask } from '@/lib/games';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Beer, Hand, MessageSquareQuote, Flame, HelpCircle, Swords } from 'lucide-react';
@@ -42,7 +42,7 @@ type TaskCardProps = {
     type: GameTask['type'];
     content: React.ReactNode;
     onVote?: (winner: 'team1' | 'team2') => void;
-    teams?: { team1: string; team2: string };
+    teams?: Game['teams'];
 }
 
 export function TaskCard({ type, content, onVote, teams }: TaskCardProps) {
@@ -70,16 +70,14 @@ export function TaskCard({ type, content, onVote, teams }: TaskCardProps) {
             <Button
               onClick={() => onVote('team1')}
               size="lg"
-              variant="outline"
-              className="h-14 text-lg border-2 border-accent hover:bg-accent/10 hover:text-accent-foreground"
+              className="h-14 text-lg border-2 bg-transparent text-[hsl(var(--team1-color-hsl,var(--accent)))] border-[hsl(var(--team1-color-hsl,var(--accent)))] hover:bg-[hsl(var(--team1-color-hsl,var(--accent)))/10] hover:text-[hsl(var(--team1-color-hsl,var(--accent)))]"
             >
               {teams.team1} vinner!
             </Button>
             <Button
               onClick={() => onVote('team2')}
               size="lg"
-              variant="outline"
-              className="h-14 text-lg border-2 border-primary hover:bg-primary/10 hover:text-primary-foreground"
+              className="h-14 text-lg border-2 bg-transparent text-[hsl(var(--team2-color-hsl,var(--primary)))] border-[hsl(var(--team2-color-hsl,var(--primary)))] hover:bg-[hsl(var(--team2-color-hsl,var(--primary)))/10] hover:text-[hsl(var(--team2-color-hsl,var(--primary)))]"
             >
               {teams.team2} vinner!
             </Button>
