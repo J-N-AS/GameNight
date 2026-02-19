@@ -25,11 +25,10 @@ function shuffleArray<T>(array: T[]): T[] {
 
 interface GameClientProps {
   game: Game;
-  onRestart: () => void;
   gameMode?: 'virtual' | 'physical' | null;
 }
 
-export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
+export function GameClient({ game, gameMode }: GameClientProps) {
   const { players, isLoaded, updatePlayerStat } = useSession();
   const router = useRouter();
   const { toast } = useToast();
@@ -252,7 +251,7 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
 
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <Button
-            onClick={onRestart}
+            onClick={setupGame}
             size="lg"
             className="transform transition-transform duration-200 hover:scale-105"
           >
@@ -262,13 +261,11 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
           <Button
             variant="outline"
             size="lg"
-            asChild
             className="transform transition-transform duration-200 hover:scale-105"
+            onClick={() => router.push('/')}
           >
-            <Link href="/">
-              <Home className="mr-2 h-5 w-5" />
-              Velg nytt spill
-            </Link>
+            <Home className="mr-2 h-5 w-5" />
+            Velg nytt spill
           </Button>
         </div>
         <motion.div
@@ -295,7 +292,7 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
           </Button>
         </div>
         <div className="absolute top-4 right-4 z-10">
-          <GameMenu context="in-game" onRestart={onRestart} />
+          <GameMenu context="in-game" onRestart={setupGame} />
         </div>
   
         <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
@@ -378,7 +375,7 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
         </div>
 
         <div className="absolute top-4 right-4 z-10">
-          <GameMenu context="in-game" onRestart={onRestart} />
+          <GameMenu context="in-game" onRestart={setupGame} />
         </div>
         
         <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
@@ -456,7 +453,7 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
       </div>
 
       <div className="absolute top-4 right-4 z-10">
-        <GameMenu context="in-game" onRestart={onRestart} />
+        <GameMenu context="in-game" onRestart={setupGame} />
       </div>
 
       {/* Game Stage */}

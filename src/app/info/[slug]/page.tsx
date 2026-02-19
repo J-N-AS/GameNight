@@ -4,7 +4,7 @@ import { notFound, useParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, CreditCard, Mail, Gamepad2, Library, Music, Download } from 'lucide-react';
+import { ArrowLeft, CreditCard, Mail, Gamepad2, Library, Music, Download, Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AdBanner } from '@/components/ads/AdBanner';
 
@@ -41,6 +41,17 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
                     <p className="text-sm">Enkle drikkeleker basert på kjente sanger, med direkte lenke til Spotify.</p>
                 </div>
             </div>
+        </div>
+
+        <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
+          <Trophy className="mx-auto h-8 w-8 text-accent mb-2" />
+          <h3 className="font-semibold text-foreground text-xl">"Kveldens Oppsummering": Delbar Moro</h3>
+          <p>
+            Etter en endt kveld kan dere få en unik, visuell oppsummering med morsomme kåringer som "Kveldens MVP" og "Kveldens Skyteskive". Dette bildet er designet for å deles direkte til Instagram eller Snapchat stories.
+          </p>
+          <p className="text-xs text-muted-foreground/80 pt-2">
+            Hver deling er en personlig anbefaling som hjelper oss med å vokse organisk – helt uten serverkostnader for oss, takket være smart klientside-teknologi!
+          </p>
         </div>
 
         <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">

@@ -87,7 +87,7 @@ export function GameFlow({ game }: { game: Game }) {
         return <CustomGameLobby game={game} onStart={advanceStep} />;
 
     case 'playing':
-      return <GameClient game={game} onRestart={handleRestart} gameMode={gameMode} />;
+      return <GameClient game={game} gameMode={gameMode} />;
 
     default:
       return <p>Laster spill...</p>;
