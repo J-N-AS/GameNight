@@ -1,7 +1,7 @@
 'use client';
 
 import type { Game, GameTask, Player } from '@/lib/types';
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { TaskCard } from './TaskCard';
 import { Button } from '@/components/ui/button';
 import { Repeat, Home, PartyPopper, Trophy } from 'lucide-react';
@@ -38,6 +38,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   const [isFinished, setIsFinished] = useState(false);
   
   const [taskPlayers, setTaskPlayers] = useState<{player1: Player | null; player2: Player | null} | null>(null);
+  const processedIndexRef = useRef<number | null>(null);
 
   // Versus mode state
   const [team1Score, setTeam1Score] = useState(0);
@@ -61,6 +62,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     setTeam2Score(0);
     setShowSpinResult(false);
     setIsSpinning(false);
+    processedIndexRef.current = null;
   }, [game]);
 
   useEffect(() => {
@@ -84,26 +86,32 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   );
   
   useEffect(() => {
-    if (currentTask && players.length > 0) {
+    // Only select new players if the task index is new and players are loaded
+    if (processedIndexRef.current !== currentIndex && isLoaded && players.length > 0) {
       let availablePlayers = [...players];
       
       const player1Index = Math.floor(Math.random() * availablePlayers.length);
       const player1 = availablePlayers[player1Index];
-      if (player1) {
-        updatePlayerStat(player1.id, 'timesTargeted');
-        // If it's a challenge, assume the player completes it.
-        if (currentTask.type === 'challenge') {
-            updatePlayerStat(player1.id, 'tasksCompleted');
-        }
-      }
       availablePlayers.splice(player1Index, 1);
 
       const player2Index = availablePlayers.length > 0 ? Math.floor(Math.random() * availablePlayers.length) : -1;
       const player2 = player2Index !== -1 ? availablePlayers[player2Index] : null;
       
+      // Set the players for the current task
       setTaskPlayers({ player1, player2 });
+      
+      // Update stats for the selected player
+      if (player1) {
+        updatePlayerStat(player1.id, 'timesTargeted');
+        if (currentTask?.type === 'challenge') {
+            updatePlayerStat(player1.id, 'tasksCompleted');
+        }
+      }
+      
+      // Mark this index as processed to prevent re-running the selection logic
+      processedIndexRef.current = currentIndex;
     }
-  }, [currentIndex, players, currentTask, updatePlayerStat]);
+  }, [currentIndex, isLoaded, players, currentTask, updatePlayerStat]);
 
 
   const handleNextTask = () => {
