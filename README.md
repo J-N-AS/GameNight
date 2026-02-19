@@ -30,7 +30,7 @@ Velkommen til GameNight-prosjektet! Dette dokumentet gir en grundig oversikt ove
 -   **Full Offline-støtte:** Takket være PWA-teknologi kan hele appen brukes uten internettforbindelse etter første besøk.
 -   **Installerbar App:** Brukere kan legge til GameNight på hjemskjermen på mobilen for en app-lignende opplevelse.
 -   **Globalt Spiller-system:** Et avansert system som holder styr på spillere og statistikk (`timesTargeted`, `tasksCompleted`, `penalties`) gjennom en hel kveld, på tvers av flere spill.
--   **"Kveldens Oppsummering":** En delbar, visuell oppsummering som genereres på klientsiden etter endt kveld. Den viser morsomme kåringer basert på statistikk og har valgbare temaer for å maksimere viral spredning på sosiale medier.
+-   **"Kveldens Oppsummering":** En delbar, visuell oppsummering som genereres på klientsiden etter endt kveld. Den viser morsomme kåringer basert på statistikk og har flere valgbare fargetemaer (inkludert gradients) for å skape et personlig og delbart bilde.
 -   **Vipps-donasjoner:** En fullt integrert, men valgfri, løsning for å motta donasjoner via Vipps for å støtte prosjektet.
 -   **Dedikerte Hub-sider:** Spesialbygde landingssider for store anledninger som `/fadderuka` og `/russetiden` for å tiltrekke målrettet trafikk.
 -   **Custom Spill for Russegrupper:** Mulighet for russegrupper til å bestille sitt eget, skreddersydde spill med interne vitser og eget design.
@@ -122,7 +122,7 @@ Vi har implementert en komplett og sikker løsning for å motta donasjoner via V
 
 I stedet for betalt markedsføring, fokuserer prosjektet på innebygde, organiske vekstmekanismer.
 
--   **"Kveldens Oppsummering":** Dette er prosjektets viktigste markedsføringsverktøy. Etter endt kveld genereres et stilig, delbart bilde med "Spotify Wrapped"-estetikk, komplett med valgbare temaer.
+-   **"Kveldens Oppsummering":** Dette er prosjektets viktigste markedsføringsverktøy. Etter endt kveld genereres et stilig, delbart bilde med "Spotify Wrapped"-estetikk, komplett med et utvalg av flere valgbare fargetemaer (fra enkle farger til dynamiske gradients).
     -   **Viralt Potensial:** Brukere kan enkelt dele et personlig og morsomt sammendrag til Snapchat- eller Instagram-stories. Hver deling fungerer som en personlig anbefaling.
     -   **Kostnadseffektivt:** Siden bildegenereringen skjer 100 % i brukerens nettleser med `html-to-image`, påløper det ingen serverkostnader.
 -   **Viral-loop for Russegrupper:** Den innebygde promo-generatoren lar russegrupper lage og laste ned egne bilder med QR-koder som peker direkte til deres spill. Dette oppfordrer til deling i sosiale medier og på trykksaker (russedress/russekort).
