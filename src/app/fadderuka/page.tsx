@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
+import { AdBanner } from '@/components/ads/AdBanner';
+import { motion } from 'framer-motion';
 
 
 export const metadata: Metadata = {
@@ -111,6 +113,15 @@ export default async function FadderukaHubPage() {
                 day3Games={day3Games}
                 day5Games={day5Games}
             />
+
+            <motion.div
+                className="mt-16 flex justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+            >
+                <AdBanner />
+            </motion.div>
 
             <div className="container mx-auto px-4 pb-12">
                 <IcebreakerArticles />

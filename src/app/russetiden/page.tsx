@@ -7,6 +7,8 @@ import { ArrowLeft, Gamepad2 } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
 import { RussetidenClient } from '@/components/game/RussetidenClient';
 import { Separator } from '@/components/ui/separator';
+import { AdBanner } from '@/components/ads/AdBanner';
+import { motion } from 'framer-motion';
 
 export const metadata: Metadata = {
   title: 'Russetid 2026: Gjør rullingen legendarisk | GameNight',
@@ -24,7 +26,7 @@ const SeoArticle = () => (
         <div className="prose prose-invert mx-auto text-muted-foreground text-lg leading-relaxed">
             <h3>Unngå Dødtid</h3>
             <p>
-                Rulling kan innebære mye venting – enten det er i kø, på en parkeringsplass eller mellom stopp. Her er selskapsleker deres beste venn. Spill som ikke krever utstyr, som 'Jeg har aldri' eller 'Pekefest', er perfekte for å holde energien oppe og unngå at folk tyr til mobilen. Planlegg noen leker på forhånd, så har dere alltid noe å falle tilbake på når stemningen daler.
+                Rulling kan innebære mye venting – enten det er i kø, på en parkeringsplass eller mellom stopp. Her er selskapsleker deres beste venn. Spill som ikke krever utstyr, som 'Jeg har aldri' eller 'Pekefest', er perfekte for å holde energien oppe og unngå at folk tyr til mobilen. Planlegg noen leker på forhånd, så har dere alltid noe å falle tilbake på når dere merker at stemningen daler.
             </p>
             <h3>Inkluder Alle</h3>
             <p>
@@ -83,6 +85,15 @@ export default async function RussetidenPage() {
                     </Link>
                 </Button>
             </div>
+
+            <motion.div
+              className="mt-16 flex justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              <AdBanner />
+            </motion.div>
 
             <div className="container mx-auto px-4 pb-12">
                 <SeoArticle />
