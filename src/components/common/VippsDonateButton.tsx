@@ -35,10 +35,10 @@ export function VippsDonateButton({
     if (!document.getElementById(scriptId)) {
       const script = document.createElement('script');
       script.id = scriptId;
-      script.src = 'https://checkout.vipps.no/vipps-mobilepay-checkout-web-components/v1/vipps-mobilepay.js';
+      script.src = 'https://checkout.vipps.no/checkout-button/v1/vipps-checkout-button.js';
       script.type = 'module';
       script.async = true;
-      document.head.appendChild(script);
+      document.body.appendChild(script);
     }
   }, []);
 
