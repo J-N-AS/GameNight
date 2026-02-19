@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { Rocket, QrCode, Download, Share2, Loader2, Instagram, Copy, Check } from 'lucide-react';
+import { Mail, QrCode, Download, Share2, Loader2, Instagram, Copy, Check } from 'lucide-react';
 import QRCode from 'react-qr-code';
 import * as htmlToImage from 'html-to-image';
 import { Label } from '../ui/label';
@@ -255,12 +255,12 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                             <Card className="h-full flex flex-col items-center justify-center text-center p-6 bg-card/80 border-2 border-dashed border-primary/50">
                                  <CardTitle className="text-xl font-bold mb-2">Bygg et eget spill for deres gruppe!</CardTitle>
-                                 <CardDescription className="mb-4">Lag deres helt egne kortstokk med interne vitser og straffer. Det er 100 % gratis, og dere får deres egen QR-kode til å dele med gruppa.</CardDescription>
+                                 <CardDescription className="mb-4">Få en skreddersydd kortstokk med interne vitser og unike utfordringer for deres buss eller van.</CardDescription>
                                  <Button asChild>
-                                     <a href="https://gamenight-builder.web.app/" target="_blank" rel="noopener noreferrer">
-                                         <Rocket className="mr-2" />
-                                         Start Spill-byggeren
-                                     </a>
+                                     <Link href="/info/kontakt-oss">
+                                         <Mail className="mr-2" />
+                                         Ta kontakt
+                                     </Link>
                                  </Button>
                             </Card>
                         </motion.div>
