@@ -39,7 +39,7 @@ const SeoArticle = () => (
         <h3>5. Mingle-Bingo</h3>
         <p>Lag et bingobrett med ulike påstander som 'Har samme favorittfilm som deg', 'Har vært i Asia', 'Snakker mer enn to språk'. Målet er å mingle og finne en person som passer til hver rute. Førstemann som får bingo, vinner heder og ære!</p>
         <Button asChild>
-            <Link href="/print/mingle-bingo" target="_blank" rel="noopener noreferrer">
+            <Link href="/print/mingle-bingo">
                 <PartyPopper className="mr-2 h-4 w-4" />
                 Lag Mingle-Bingo her
             </Link>
