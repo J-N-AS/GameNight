@@ -25,6 +25,16 @@
     { "type": "prompt", "text": "Kast til den som er mest romantisk." },
     { "type": "prompt", "text": "Kast til den du tror har den verste morgenen i morgen." },
     { "type": "prompt", "text": "Kast til den som er mest sentimental." },
-    { "type": "prompt", "text": "Kast til den du tror har den kleineste historien fra en date." }
+    { "type": "prompt", "text": "Kast til den du tror har den kleineste historien fra en date." },
+    { "type": "prompt", "text": "Kast til den du tror har de villeste historiene." },
+    { "type": "prompt", "text": "Kast til den som er mest åpen om følelsene sine." },
+    { "type": "prompt", "text": "Kast til den som er mest mystisk." },
+    { "type": "prompt", "text": "Kast til den du tror skjuler et talent." },
+    { "type": "prompt", "text": "Kast til den som har det mest kompliserte kjærlighetslivet." },
+    { "type": "prompt", "text": "Kast til den som er mest lojal." },
+    { "type": "prompt", "text": "Kast til den du tror er mest eventyrlysten." },
+    { "type": "prompt", "text": "Kast til den som har den tørreste humoren." },
+    { "type": "prompt", "text": "Kast til den du tror er mest nostalgisk." },
+    { "type": "prompt", "text": "Kast til den som har den sterkeste viljen." }
   ]
 }

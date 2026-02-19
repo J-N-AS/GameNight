@@ -25,6 +25,16 @@
     { "type": "challenge", "text": "Kast til den som hadde vunnet i en slåsskamp." },
     { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å danse på bordet." },
     { "type": "challenge", "text": "Kast til den som er den verste sjåføren." },
-    { "type": "challenge", "text": "Kast til den som er den beste kokken." }
+    { "type": "challenge", "text": "Kast til den som er den beste kokken." },
+    { "type": "challenge", "text": "Kast til den som er mest kreativ." },
+    { "type": "challenge", "text": "Kast til den du ville utfordret i en debatt." },
+    { "type": "challenge", "text": "Kast til den som er den beste historiefortelleren." },
+    { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å ta en spontan tatovering." },
+    { "type": "challenge", "text": "Kast til den du tror er den beste løgneren (i spill)." },
+    { "type": "challenge", "text": "Kast til den som er den beste wingman/wingwoman." },
+    { "type": "challenge", "text": "Kast til den du tror er flinkest til å overtale andre." },
+    { "type": "challenge", "text": "Kast til den som hadde holdt den beste talen." },
+    { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å overleve en skrekkfilm." },
+    { "type": "challenge", "text": "Kast til den som er mest sta." }
   ]
 }

@@ -34,6 +34,20 @@
     { "type": "prompt", "text": "Sannhet: Hva er en hemmelighet du aldri har fortalt noen her?" },
     { "type": "prompt", "text": "Sannhet: Hva angrer du mest på fra forrige helg?" },
     { "type": "prompt", "text": "Sannhet: Hva er din 'guilty pleasure' sang?" },
-    { "type": "prompt", "text": "Sannhet: Hva er det mest impulsive du har gjort?" }
+    { "type": "prompt", "text": "Sannhet: Hva er det mest impulsive du har gjort?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det mest ulovlige du har gjort?" },
+    { "type": "prompt", "text": "Sannhet: Hvem her inne ville du helst vært strandet på en øde øy med?" },
+    { "type": "prompt", "text": "Sannhet: Hva er ditt mest pinlige øyeblikk?" },
+    { "type": "prompt", "text": "Sannhet: Hvem er den siste du søkte opp på Instagram?" },
+    { "type": "prompt", "text": "Sannhet: Hva er din mest kontroversielle mening?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det siste du løy om?" },
+    { "type": "prompt", "text": "Sannhet: Hvem har du et lite crush på for tiden?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det flaueste som har skjedd deg på date?" },
+    { "type": "prompt", "text": "Sannhet: Hva er din største usikkerhet?" },
+    { "type": "prompt", "text": "Sannhet: Hvis du måtte date en i dette rommet, hvem ville det vært?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det rareste du har googlet i det siste?" },
+    { "type": "prompt", "text": "Sannhet: Hva er det mest barnslige du fortsatt gjør?" },
+    { "type": "prompt", "text": "Sannhet: Hvem er den siste personen du stalket på sosiale medier?" },
+    { "type": "prompt", "text": "Sannhet: Hva er en hemmelighet du aldri har fortalt noen her?" }
   ]
 }

@@ -35,6 +35,20 @@
     { "type": "challenge", "text": "Personen flasken peker på må sitte på fanget til personen til venstre for seg i én runde." },
     { "type": "challenge", "text": "Personen flasken peker på må ta av seg ett klesplagg (valgfritt, f.eks. sokk, genser) eller drikke 3 slurker." },
     { "type": "prompt", "text": "Sannhet: Personen flasken peker på må svare: Hvis du måtte date en i dette rommet, hvem ville det vært?" },
-    { "type": "challenge", "text": "Personen flasken peker på må kysse den personen flasken peker MEST på." }
+    { "type": "challenge", "text": "Personen flasken peker på må kysse den personen flasken peker MEST på." },
+    { "type": "prompt", "text": "Sannhet: Den flasken peker på må fortelle om sitt første kyss." },
+    { "type": "challenge", "text": "Den flasken peker på må gi en klem til personen tvers overfor seg." },
+    { "type": "prompt", "text": "Sannhet: Hva er det rareste stedet du har sovet?" },
+    { "type": "challenge", "text": "Den flasken peker på må velge en person som skal være 'drikke-buddy' for neste runde." },
+    { "type": "prompt", "text": "Sannhet: Hva er din mest 'guilty pleasure' film eller serie?" },
+    { "type": "challenge", "text": "Den flasken peker på må imitere en annen person i rommet." },
+    { "type": "prompt", "text": "Sannhet: Hva er den beste gaven du har fått?" },
+    { "type": "challenge", "text": "Den flasken peker på må ta av én sokk og bruke den som en hanske til neste spinn." },
+    { "type": "prompt", "text": "Sannhet: Hva er en ting du er skikkelig dårlig til?" },
+    { "type": "challenge", "text": "Den flasken peker på må danse i 15 sekunder." },
+    { "type": "prompt", "text": "Sannhet: Hvem i rommet har du kjent lengst?" },
+    { "type": "challenge", "text": "Den flasken peker på må gi et kompliment til personen til venstre for seg." },
+    { "type": "prompt", "text": "Sannhet: Hva er den mest spontane turen du har vært på?" },
+    { "type": "challenge", "text": "Den flasken peker på må si en setning baklengs." }
   ]
 }
