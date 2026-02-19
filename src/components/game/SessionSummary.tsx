@@ -13,12 +13,16 @@ export function SessionSummary() {
   const summaryRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isShareSupported, setIsShareSupported] = useState(false);
+  const [logoUrl, setLogoUrl] = useState('');
   const { toast } = useToast();
 
   useEffect(() => {
+    // navigator.share is only available in secure contexts (https)
     if (navigator.share && navigator.canShare) {
       setIsShareSupported(true);
     }
+    // Construct an absolute URL for the logo to ensure html-to-image can find it
+    setLogoUrl(`${window.location.origin}/GameNight-logo-small.webp`);
   }, []);
 
   const shuffledPlayers = useMemo(() => {
@@ -49,7 +53,7 @@ export function SessionSummary() {
           backgroundColor: '#1C1717', // Match the background color
       });
 
-      if (action === 'share') {
+      if (action === 'share' && isShareSupported) {
         const blob = await (await fetch(dataUrl)).blob();
         const file = new File([blob], "gamenight-oppsummering.png", { type: "image/png" });
 
@@ -62,10 +66,13 @@ export function SessionSummary() {
         } else {
           // Fallback for devices that support share but not file sharing
           toast({
-            title: "Deling av filer er ikke støttet",
-            description: "Prøv å laste ned bildet i stedet.",
-            variant: "destructive"
+            title: "Deling av filer støttes ikke av denne appen",
+            description: "Bildet blir lastet ned i stedet. Prøv å dele fra kamerarullen.",
           });
+          const link = document.createElement('a');
+          link.download = 'gamenight-oppsummering.png';
+          link.href = dataUrl;
+          link.click();
         }
       } else { // download
         const link = document.createElement('a');
@@ -83,7 +90,7 @@ export function SessionSummary() {
     } finally {
       setIsGenerating(false);
     }
-  }, [toast]);
+  }, [toast, isShareSupported]);
 
   return (
     <motion.div 
@@ -112,14 +119,15 @@ export function SessionSummary() {
         </div>
 
         <div className="mt-auto flex justify-center">
-             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
-                src="/GameNight-logo-small.webp"
-                alt="GameNight Logo"
-                width="150"
-                height="37"
-                className="opacity-70"
-            />
+             {logoUrl && (
+                <img 
+                    src={logoUrl}
+                    alt="GameNight Logo"
+                    width="150"
+                    height="37"
+                    className="opacity-70"
+                />
+             )}
         </div>
       </div>
 
@@ -137,7 +145,7 @@ export function SessionSummary() {
         )}
       </div>
        <p className="text-xs text-muted-foreground max-w-xs text-center mt-2">
-            Del kveldens høydepunkter på Instagram eller Snapchat!
+            Del kveldens høydepunkter! Tips: Hvis deling til Snapchat/Instagram ikke fungerer, last ned bildet og del det manuelt.
         </p>
     </motion.div>
   );
