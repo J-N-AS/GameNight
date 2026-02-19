@@ -142,7 +142,7 @@ function OmOssContent() {
                     </Button>
                 ))}
             </div>
-            <div className="mt-4">
+            <div className="mt-4 min-h-[48px]">
                 <vipps-mobilepay-button
                     variant="primary"
                     verb="donate"

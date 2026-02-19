@@ -119,7 +119,7 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
         const response = await fetch('/api/vipps/donate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: 10 })
+            body: JSON.stringify({ amount: 25 })
         });
 
         const data = await response.json();
@@ -223,16 +223,18 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
             
             <div className="w-full max-w-sm mx-auto space-y-4 text-center border-t border-border pt-6">
                 <p className="text-sm text-muted-foreground">Gjorde GameNight kvelden deres bedre? <br/> Spander en tier på utviklerne!</p>
-                <vipps-mobilepay-button
-                    variant="primary"
-                    verb="donate"
-                    language="no"
-                    brand="vipps"
-                    amount="10"
-                    loading={isDonating.toString()}
-                    onClick={handleDonate}
-                    stretched
-                ></vipps-mobilepay-button>
+                <div className="min-h-[48px]">
+                    <vipps-mobilepay-button
+                        variant="primary"
+                        verb="donate"
+                        language="no"
+                        brand="vipps"
+                        amount="25"
+                        loading={isDonating.toString()}
+                        onClick={handleDonate}
+                        stretched
+                    ></vipps-mobilepay-button>
+                </div>
             </div>
 
             <DialogFooter className="mt-4">
