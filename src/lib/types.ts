@@ -49,6 +49,9 @@ export interface Game {
   instagram?: string;
   logo?: string;
   tags?: string[];
+  isHiddenFromMain?: boolean;
+  region?: string;
+  kommune?: string;
 }
 
 export interface GameArticle {

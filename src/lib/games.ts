@@ -55,6 +55,9 @@ export const getGames = cache(async (options: { includeHidden?: boolean } = {}):
         tags: gameData.tags,
         logo: gameData.logo,
         instagram: gameData.instagram,
+        isHiddenFromMain: gameData.isHiddenFromMain,
+        region: gameData.region,
+        kommune: gameData.kommune,
       };
     })
   );

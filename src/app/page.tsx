@@ -6,9 +6,11 @@ import type { Game, Theme } from '@/lib/types';
 const RECOMMENDED_GAME_IDS = ['vorspiel-mix', 'party-klassikere', 'pekefest'];
 
 export default async function Home() {
-  const allGames = await getGames();
-  const recommendedGames = allGames.filter(g => RECOMMENDED_GAME_IDS.includes(g.id));
+  const allGames = await getGames({ includeHidden: true });
   const themes = await getThemes();
+
+  const publicGames = allGames.filter(game => !game.isHiddenFromMain);
+  const recommendedGames = publicGames.filter(g => RECOMMENDED_GAME_IDS.includes(g.id));
   
-  return <LobbyClient allGames={allGames} recommendedGames={recommendedGames} themes={themes} />;
+  return <LobbyClient allGames={publicGames} recommendedGames={recommendedGames} themes={themes} />;
 }

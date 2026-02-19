@@ -21,6 +21,9 @@ export function AppFooter() {
            <Link href="/fadderuka" className="hover:text-foreground transition-colors">
             Fadderuka
           </Link>
+          <Link href="/russetiden" className="hover:text-foreground transition-colors font-semibold text-primary">
+            🚌 Russetiden
+          </Link>
           <Link href="/alle-spill" className="hover:text-foreground transition-colors">
             Alle Spill
           </Link>
