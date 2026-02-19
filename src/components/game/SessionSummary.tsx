@@ -5,7 +5,6 @@ import { usePlayers } from '@/hooks/usePlayers';
 import { Button } from '@/components/ui/button';
 import { Share2, Download, Zap, Laugh, BrainCircuit, Loader2 } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
-import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 
@@ -47,6 +46,7 @@ export function SessionSummary() {
       // Use a higher pixel density for better quality
       const dataUrl = await htmlToImage.toPng(summaryRef.current, { 
           pixelRatio: 2,
+          backgroundColor: '#1C1717', // Match the background color
       });
 
       if (action === 'share') {
@@ -95,7 +95,7 @@ export function SessionSummary() {
       {/* This is the component that will be converted to an image */}
       <div 
         ref={summaryRef} 
-        className="aspect-[9/16] w-full max-w-[280px] bg-background rounded-2xl p-6 flex flex-col text-center shadow-2xl border-2 border-primary/20"
+        className="aspect-[9/16] w-full max-w-sm bg-background rounded-2xl p-6 flex flex-col text-center shadow-2xl border-2 border-primary/20"
         >
         <h3 className="text-3xl font-bold font-headline tracking-tighter text-foreground">Kveldens Dom</h3>
         <p className="text-lg text-primary font-semibold">⚖️</p>
@@ -112,11 +112,12 @@ export function SessionSummary() {
         </div>
 
         <div className="mt-auto flex justify-center">
-            <Image 
+             {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img 
                 src="/GameNight-logo-small.webp"
                 alt="GameNight Logo"
-                width={150}
-                height={37}
+                width="150"
+                height="37"
                 className="opacity-70"
             />
         </div>
