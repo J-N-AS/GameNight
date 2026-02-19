@@ -14,6 +14,24 @@
           "title": "Ringenes Herre 🌋💍",
           "artist": "Film-trilogi",
           "rules": "Skål for hvert episk drone-skudd av folk som går. Ta en straff når Gimli klager. Del ut en slurk hver gang Ringen hvisker."
+        },
+        {
+          "id": "skrekkfilm",
+          "title": "Skrekkfilm-Overlevelse 👻🔪",
+          "artist": "Skrekkfilm-kveld",
+          "rules": "Skål hver gang en karakter går alene inn i et mørkt rom. Ta en straff for hvert 'jump scare'. Del ut en slurk når noen sier 'hallo?' ut i mørket."
+        },
+        {
+          "id": "rom-com",
+          "title": "Rom-Com Klisjéer 💖🍿",
+          "artist": "Romantisk Komedie",
+          "rules": "Skål ved en klein misforståelse som kunne vært løst med én setning. Ta en straff når noen løper gjennom en flyplass. Del ut slurker når det regner under et dramatisk kyss."
+        },
+        {
+          "id": "actionfilm",
+          "title": "Klassiske Actionfilmer 🍸🔫",
+          "artist": "James Bond, Mission Impossible etc.",
+          "rules": "Skål når helten overlever en usannsynlig eksplosjon. Ta en straff når helten leverer en tørr 'one-liner'. Del ut slurker når skurken holder en unødvendig lang monolog."
         }
       ]
     },
@@ -31,6 +49,12 @@
           "title": "Klassisk Reality-TV 🌴💅",
           "artist": "Forræder, Ex on the Beach etc.",
           "rules": "Skål hver gang noen gråter. Ta en straff når noen sier de er der '100 prosent'. Del ut slurker ved åpenbar baksnakking."
+        },
+        {
+          "id": "norsk-reality",
+          "title": "Norsk Reality 🪖🌲",
+          "artist": "Kompani, 71 Grader Nord etc.",
+          "rules": "Skål hver gang noen sier de skal 'gi alt' eller 'pushe grenser'. Ta en straff når en deltaker gråter. Del ut slurker når noen nekter å gi seg."
         }
       ]
     },
