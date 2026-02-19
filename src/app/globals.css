@@ -89,50 +89,6 @@
   }
 }
 
-@layer utilities {
-    /* Screen-only styles for the print page preview */
-    #print-area.single {
-        @apply max-w-md mx-auto;
-    }
-    #print-area.double {
-        @apply max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8;
-    }
-
-    @media print {
-        @page {
-            size: A4;
-            margin: 1.5cm;
-        }
-
-        body {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-            background-color: white !important;
-        }
-        
-        .bingo-board {
-            break-inside: avoid;
-        }
-
-        /* Styles for one board per A4 page */
-        #print-area.single {
-            @apply w-full h-full flex items-center justify-center;
-        }
-        #print-area.single .bingo-board {
-            @apply w-full max-w-full;
-             height: 24cm; /* A4 height - margins */
-        }
-        
-        /* Styles for two boards per A4 page */
-        #print-area.double {
-            @apply w-full h-full flex flex-col justify-between gap-[1cm];
-        }
-        #print-area.double .bingo-board {
-            @apply h-[12cm];
-        }
-    }
-}
-
 
 @keyframes gradient-animation {
   0% {

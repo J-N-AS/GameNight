@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { Printer, Heart } from 'lucide-react';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Download, RefreshCw, PartyPopper } from 'lucide-react';
+import { motion } from 'framer-motion';
+import * as htmlToImage from 'html-to-image';
+import { useToast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
-const bingoItems = [
+const baseBingoItems = [
     "Har reist alene",
     "Snakker mer enn to språk",
     "Har et kjæledyr som ikke er hund eller katt",
@@ -33,7 +36,7 @@ const bingoItems = [
     "Har vært på en festival i utlandet"
 ];
 
-// Helper to shuffle the array for the second board, keeping the free spot in the middle
+// Helper to shuffle the array
 const shuffleArray = (array: string[]) => {
     const freeSpotValue = 'GRATIS RUTE ✨';
     const itemsToShuffle = array.filter(item => item !== freeSpotValue);
@@ -43,65 +46,113 @@ const shuffleArray = (array: string[]) => {
         [itemsToShuffle[i], itemsToShuffle[j]] = [itemsToShuffle[j], itemsToShuffle[i]];
     }
 
+    // Insert free spot back in the middle
     itemsToShuffle.splice(12, 0, freeSpotValue);
     return itemsToShuffle;
 };
 
-// A self-contained Bingo Board component
 function BingoBoard({ items }: { items: string[] }) {
     return (
-        <div className="bingo-board flex flex-col border-4 border-primary rounded-lg p-2 bg-card print:border-2 print:border-black print:bg-white print:text-black print:p-0 print:shadow-none">
-             <div className="hidden print:block text-center p-2 border-b-2 border-black">
-                <h2 className="text-xl font-bold">Mingle-Bingo</h2>
-                <p className="text-xs">Finn én person for hver rute. Førstemann til 5 på rad vinner!</p>
+        <div className="bingo-board-image flex flex-col border-4 border-primary rounded-xl p-4 bg-background text-foreground shadow-2xl shadow-primary/20 aspect-square w-full max-w-md">
+            <div className="text-center pb-3 border-b-2 border-border">
+                <h2 className="text-2xl font-bold font-headline">Mingle-Bingo</h2>
+                <p className="text-sm text-muted-foreground">Finn én person for hver rute!</p>
             </div>
-             <div className="grid grid-cols-5 grid-rows-5 gap-2 flex-grow print:gap-0 print:border-t-2 print:border-black">
+            <div className="grid grid-cols-5 grid-rows-5 gap-2 flex-grow pt-3">
                 {items.map((item, index) => (
-                    <div key={index} className={`flex items-center justify-center text-center text-xs sm:text-sm font-semibold p-2 aspect-square rounded-md print:rounded-none print:border print:border-black print:aspect-auto print:p-1 print:text-[10px] print:leading-tight ${item.includes('GRATIS') ? 'bg-primary text-primary-foreground print:bg-gray-200 print:text-black print:text-sm' : 'bg-background print:bg-white print:text-black'}`}>
+                    <div 
+                        key={index} 
+                        className={`flex items-center justify-center text-center text-[10px] sm:text-xs font-semibold p-1 aspect-square rounded-md ${item.includes('GRATIS') ? 'bg-primary text-primary-foreground text-sm' : 'bg-background/50'}`}
+                    >
                         {item}
                     </div>
                 ))}
             </div>
-            <div className="hidden print:flex justify-between items-center text-xs text-gray-600 p-1 border-t-2 border-black">
-                <span className="flex items-center gap-1">Laget med <Heart className="inline h-3 w-3" /> på <strong>GameNight.no</strong></span>
-                <span>Finn flere gratis spill!</span>
+            <div className="flex justify-between items-center text-xs text-muted-foreground pt-3 border-t-2 border-border mt-2">
+                <span className="flex items-center gap-1.5 font-semibold">Laget med <PartyPopper className="inline h-4 w-4 text-primary" /></span>
+                <span className="font-bold text-lg">GameNight.no</span>
             </div>
         </div>
     );
 }
 
-export default function MingleBingoPrintPage() {
-    const [layout, setLayout] = useState<'single' | 'double'>('single');
-    const shuffledBingoItems = useMemo(() => shuffleArray(bingoItems), []);
+export default function MingleBingoGeneratorPage() {
+    const [boardItems, setBoardItems] = useState(() => shuffleArray(baseBingoItems));
+    const boardRef = useRef<HTMLDivElement>(null);
+    const { toast } = useToast();
+    const [isDownloading, setIsDownloading] = useState(false);
+
+    const generateNewBoard = useCallback(() => {
+        setBoardItems(shuffleArray(baseBingoItems));
+    }, []);
+    
+    const handleDownload = useCallback(async () => {
+        if (!boardRef.current) {
+            toast({ title: "Feil", description: "Kunne ikke finne bingobrettet.", variant: "destructive" });
+            return;
+        }
+
+        setIsDownloading(true);
+        try {
+            const dataUrl = await htmlToImage.toPng(boardRef.current, { 
+                pixelRatio: 3, // Higher resolution for printing
+                backgroundColor: '#1c1717', // Match the dark theme background
+                style: {
+                    margin: '0',
+                }
+            });
+            const link = document.createElement('a');
+            link.download = `gamenight-mingle-bingo.png`;
+            link.href = dataUrl;
+            link.click();
+             toast({
+                title: "Bildet er lastet ned!",
+                description: "Du finner det i nedlastingsmappen din.",
+            });
+        } catch (error) {
+            console.error("Could not generate image:", error);
+            toast({
+                title: "Noe gikk galt",
+                description: "Kunne ikke generere bildet. Prøv igjen.",
+                variant: "destructive"
+            });
+        } finally {
+            setIsDownloading(false);
+        }
+    }, [toast]);
 
     return (
-        <div className="bg-background text-foreground min-h-screen p-4 sm:p-8 print:p-0 print:bg-white">
-            <header className="text-center mb-8 max-w-lg mx-auto print:hidden">
-                <h1 className="text-3xl font-bold font-headline">Utskriftsvennlig Mingle-Bingo</h1>
-                <p className="text-muted-foreground mt-2">Velg utskriftsformat nedenfor, og trykk 'Skriv ut'. Optimalisert for A4-ark.</p>
-                
-                <Tabs defaultValue="single" onValueChange={(value) => setLayout(value as 'single' | 'double')} className="mt-6">
-                    <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="single">Ett brett per side</TabsTrigger>
-                        <TabsTrigger value="double">To brett per side</TabsTrigger>
-                    </TabsList>
-                </Tabs>
-                
-                <Button onClick={() => window.print()} className="mt-6">
-                    <Printer className="mr-2 h-5 w-5" />
-                    Skriv ut eller lagre som PDF
-                </Button>
+        <div className="bg-background text-foreground min-h-screen p-4 sm:p-8 flex flex-col items-center">
+            <header className="text-center mb-8 max-w-lg mx-auto">
+                <h1 className="text-3xl font-bold font-headline">Lag Mingle-Bingo</h1>
+                <p className="text-muted-foreground mt-2">Her kan du lage og laste ned unike bingobrett som bilder. Perfekt for å dele digitalt eller skrive ut flere på ett ark.</p>
             </header>
 
-            {/* This is the main content area, styled for both screen and print */}
-            <main id="print-area" className={layout}>
-                 <BingoBoard items={bingoItems} />
-                {/* The second board is only rendered if layout is double */}
-                {layout === 'double' && <BingoBoard items={shuffledBingoItems} />}
-            </main>
+            <motion.div 
+                ref={boardRef} 
+                className="w-full max-w-md mb-8"
+                key={boardItems.join('-')} // Re-trigger animation on change
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+            >
+                <BingoBoard items={boardItems} />
+            </motion.div>
 
-            <footer className="text-center mt-8 print:hidden">
-                <Button variant="link" onClick={() => window.close()}>Lukk vindu</Button>
+            <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+                <Button onClick={handleDownload} size="lg" className="flex-1 h-12" disabled={isDownloading}>
+                    <Download className="mr-2 h-5 w-5" />
+                    {isDownloading ? 'Laster ned...' : 'Last ned bilde'}
+                </Button>
+                <Button onClick={generateNewBoard} size="lg" variant="outline" className="flex-1 h-12">
+                    <RefreshCw className="mr-2 h-5 w-5" />
+                    Lag et nytt brett
+                </Button>
+            </div>
+
+            <footer className="text-center mt-8">
+                 <Button variant="link" asChild>
+                    <Link href="/fadderuka">Tilbake til Fadderuka-siden</Link>
+                </Button>
             </footer>
         </div>
     );
