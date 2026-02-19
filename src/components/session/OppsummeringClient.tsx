@@ -224,21 +224,21 @@ export function OppsummeringClient() {
                 <div 
                     ref={summaryRef} 
                     className={cn(
-                        "aspect-[9/16] w-full max-w-sm rounded-2xl p-8 pb-12 flex flex-col text-center shadow-2xl transition-colors duration-300",
+                        "aspect-[9/16] w-full max-w-sm rounded-2xl p-6 pb-10 flex flex-col text-center shadow-2xl transition-colors duration-300",
                         currentThemeDetails?.className
                     )}
                 >
-                    <h3 className="text-4xl font-bold font-headline tracking-tighter">Kveldens Dom</h3>
-                    <p className="text-2xl font-semibold mt-1">⚖️</p>
+                    <h3 className="text-3xl font-bold font-headline tracking-tighter">Kveldens Dom</h3>
+                    <p className="text-xl font-semibold mt-1">⚖️</p>
                     
-                    <div className="flex-grow flex flex-col justify-center gap-8 my-4">
+                    <div className="flex-grow flex flex-col justify-center gap-6 my-2">
                     {awards.map((award, index) => (
                         <div key={index} className="flex flex-col items-center">
-                            <p className="text-6xl mb-2">{award.emoji}</p>
-                            <p className="text-base font-semibold opacity-80">{award.title}</p>
-                            <p className="text-sm opacity-70">{award.subtitle}</p>
+                            <p className="text-5xl mb-1">{award.emoji}</p>
+                            <p className="text-sm font-semibold opacity-80">{award.title}</p>
+                            <p className="text-xs opacity-70">{award.subtitle}</p>
                             <p className={cn(
-                                "text-5xl font-extrabold mt-2 truncate max-w-full drop-shadow-lg",
+                                "text-4xl font-extrabold mt-1 truncate max-w-full drop-shadow-lg",
                                 activeTheme === 'dark' && "text-accent",
                                 activeTheme === 'light' && "text-primary",
                                 activeTheme === 'festive' && "text-white"
@@ -247,7 +247,7 @@ export function OppsummeringClient() {
                     ))}
                     </div>
 
-                    <p className="mt-auto pt-8 font-medium text-sm opacity-80">🎲 Opplevd på GameNight.no</p>
+                    <p className="mt-auto pt-4 font-medium text-sm opacity-80 text-center">🎲 Opplevd på GameNight.no</p>
                 </div>
 
                 <Card className="w-full p-4 bg-card/80">
