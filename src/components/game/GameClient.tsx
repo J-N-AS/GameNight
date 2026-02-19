@@ -90,16 +90,13 @@ export function GameClient({ game, gameMode }: GameClientProps) {
       const player1Index = Math.floor(Math.random() * availablePlayers.length);
       const player1 = availablePlayers[player1Index];
       if (player1) {
+        // This is the only stat that is updated somewhat reliably
         updatePlayerStat(player1.id, 'timesTargeted');
-        updatePlayerStat(player1.id, 'tasksCompleted');
       }
       availablePlayers.splice(player1Index, 1);
 
       const player2Index = availablePlayers.length > 0 ? Math.floor(Math.random() * availablePlayers.length) : -1;
       const player2 = player2Index !== -1 ? availablePlayers[player2Index] : null;
-      if (player2 && currentTask.type === 'challenge') {
-          updatePlayerStat(player2.id, 'penalties');
-      }
       
       setTaskPlayers({ player1, player2 });
     }

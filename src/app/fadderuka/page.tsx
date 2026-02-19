@@ -73,7 +73,7 @@ export default async function FadderukaHubPage() {
   
     const gameIds = {
         day1: ['icebreakeren', 'rolig-sosial'],
-        day3: ['vorspiel-mix', 'pekefest-klassisk'],
+        day3: ['vorspiel-mix', 'pekefest'],
         day5: ['fadderkampen', 'kaosrunden'],
     };
 

@@ -40,7 +40,7 @@ export const getGames = cache(async (options: { includeHidden?: boolean } = {}):
       
       // Return a stripped-down version of the game data for lobby/listing pages
       return {
-        id: id, // Use the file-based id for the URL
+        id: gameData.id, // Use the ID from the file for consistency
         title: gameData.title,
         description: gameData.description,
         requiresPlayers: gameData.requiresPlayers,

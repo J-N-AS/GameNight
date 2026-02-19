@@ -42,7 +42,7 @@ const SeoArticle = () => (
 export default async function RussetidenPage() {
     const allGames = await getGames({ includeHidden: true });
   
-    const standardGameIds = ['gutta-stemning-bros-banter', 'girl-power-jenta-stemning', 'kaosrunden', 'hemmeligheter'];
+    const standardGameIds = ['gutta', 'girl-power', 'kaosrunden', 'hemmeligheter'];
     const standardGames = standardGameIds.map(id => allGames.find(g => g.id === id)).filter(Boolean) as Omit<Game, 'items' | 'language' | 'shuffle'>[];
     
     const customGames = allGames.filter(g => g.isHiddenFromMain);

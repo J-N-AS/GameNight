@@ -1,5 +1,3 @@
-'use client';
-
 import { getArticle } from '@/lib/articles';
 import { DrikkelekArticleClient } from '@/components/drikkeleker/DrikkelekArticleClient';
 import { notFound } from 'next/navigation';

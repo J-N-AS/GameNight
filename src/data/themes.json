@@ -12,7 +12,7 @@
       ],
       "gameIds": [
         "julebord",
-        "pekefest-klassisk",
+        "pekefest",
         "party-klassikere"
       ]
     },
@@ -28,8 +28,8 @@
       ],
       "gameIds": [
         "vorspiel-mix",
-        "jeg-har-aldri-klassisk",
-        "pekefest-klassisk"
+        "jeg-har-aldri",
+        "pekefest"
       ]
     },
     {
@@ -43,8 +43,8 @@
         "Så finn frem boblene, skru opp favoritt-spillelisten, og la disse spillene sette den perfekte stemningen for en legendarisk jentekveld!"
       ],
       "gameIds": [
-        "girl-power-jenta-stemning",
-        "pekefest-klassisk",
+        "girl-power",
+        "pekefest",
         "sexy-vibes"
       ]
     },
@@ -59,9 +59,9 @@
         "Så, enten målet er å bli bedre kjent, skape litt romantisk spenning, eller bare ha en utrolig morsom kveld, er disse spillene den perfekte katalysatoren."
       ],
       "gameIds": [
-        "singles-night-flort-kjemi",
-        "singles-body-language",
-        "pekefest-klassisk"
+        "singles-night",
+        "singles-body",
+        "pekefest"
       ]
     },
     {
@@ -109,7 +109,7 @@
       "gameIds": [
         "bursdags-roast",
         "party-klassikere",
-        "pekefest-klassisk"
+        "pekefest"
       ]
     },
     {
@@ -123,7 +123,7 @@
         "Så enten dere skal avgjøre hvem som er kongen av konkurranse eller bare le av hverandres dårlige beslutninger, er disse spillene det perfekte utgangspunktet for en legendarisk kveld med gutta."
       ],
       "gameIds": [
-        "gutta-stemning-bros-banter",
+        "gutta",
         "kaosrunden",
         "fyllevalg"
       ]
@@ -141,7 +141,7 @@
       "gameIds": [
         "icebreakeren",
         "rolig-sosial",
-        "pekefest-klassisk"
+        "pekefest"
       ]
     },
     {
