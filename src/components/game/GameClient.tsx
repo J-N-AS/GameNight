@@ -90,8 +90,11 @@ export function GameClient({ game, gameMode }: GameClientProps) {
       const player1Index = Math.floor(Math.random() * availablePlayers.length);
       const player1 = availablePlayers[player1Index];
       if (player1) {
-        // This is the only stat that is updated somewhat reliably
         updatePlayerStat(player1.id, 'timesTargeted');
+        // If it's a challenge, assume the player completes it.
+        if (currentTask.type === 'challenge') {
+            updatePlayerStat(player1.id, 'tasksCompleted');
+        }
       }
       availablePlayers.splice(player1Index, 1);
 

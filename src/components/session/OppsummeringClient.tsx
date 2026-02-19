@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import Confetti from 'react-confetti';
+import type { PlayerStats } from '@/lib/types';
 
 
 type SummaryTheme = 'dark' | 'light' | 'festive';
@@ -66,29 +67,37 @@ export function OppsummeringClient() {
 
   const awards = useMemo(() => {
     if (!players || players.length < 2) return [];
-    
-    const mvp = [...players].sort((a, b) => b.stats.tasksCompleted - a.stats.tasksCompleted)[0];
-    const skyteskive = [...players].sort((a, b) => b.stats.timesTargeted - a.stats.timesTargeted)[0];
-    const teflon = [...players].sort((a, b) => a.stats.penalties - b.stats.penalties)[0];
 
-    const awardPlayers = [mvp, skyteskive, teflon].filter(Boolean);
-    const uniqueAwardPlayers = [...new Set(awardPlayers)];
-    
-    // Fill up with other players if we have duplicates but more players are available
-    while (uniqueAwardPlayers.length < 3 && players.length > uniqueAwardPlayers.length) {
-      const availablePlayers = players.filter(p => !uniqueAwardPlayers.includes(p));
-      if (availablePlayers.length > 0) {
-          uniqueAwardPlayers.push(availablePlayers[0]);
-      } else {
-          break; // Should not happen if players.length > uniqueAwardPlayers.length
-      }
-    }
+    const getWinner = (stat: keyof PlayerStats, order: 'asc' | 'desc') => {
+        const sortedPlayers = [...players].sort((a, b) => {
+            return order === 'desc' 
+                ? b.stats[stat] - a.stats[stat]
+                : a.stats[stat] - b.stats[stat];
+        });
 
-    return [
-      { emoji: '🏆', title: 'Kveldens MVP', subtitle: 'Fullførte flest oppgaver', player: uniqueAwardPlayers[0] || mvp },
-      { emoji: '🎯', title: 'Kveldens Skyteskive', subtitle: 'Mest utsatt for pek og valg', player: uniqueAwardPlayers[1] || skyteskive },
-      { emoji: '🛡️', title: 'Teflon-pannen', subtitle: 'Unnslapp flest straffer', player: uniqueAwardPlayers[2] || teflon },
-    ].filter(a => a.player);
+        // Don't award if top score is 0 for descending scores
+        if (order === 'desc' && sortedPlayers[0].stats[stat] === 0) {
+            return null;
+        }
+        
+        return sortedPlayers[0];
+    };
+    
+    const mvp = getWinner('tasksCompleted', 'desc');
+    const skyteskive = getWinner('timesTargeted', 'desc');
+    
+    const teflonCandidates = [...players].sort((a, b) => a.stats.timesTargeted - b.stats.timesTargeted);
+    const teflon = (teflonCandidates.length > 1 && teflonCandidates[0].stats.timesTargeted < teflonCandidates[1].stats.timesTargeted) 
+        ? teflonCandidates[0] 
+        : null;
+
+    const allAwards = [
+      { emoji: '🏆', title: 'Kveldens MVP', subtitle: 'Fullførte flest oppgaver', player: mvp },
+      { emoji: '🎯', title: 'Kveldens Skyteskive', subtitle: 'Mest utsatt for valg', player: skyteskive },
+      { emoji: '🛡️', title: 'Den Unnvikende', subtitle: 'Ble valgt ut færrest ganger', player: teflon },
+    ];
+
+    return allAwards.filter(a => a.player); // Only show awards that have a valid winner.
   }, [players]);
 
   const generateImageAnd = useCallback(async (action: 'share' | 'download') => {
@@ -199,7 +208,7 @@ export function OppsummeringClient() {
       )
   }
 
-  const showAwards = players.length >= 2;
+  const showAwards = players.length >= 2 && awards.length > 0;
 
   const currentThemeDetails = themes.find(t => t.id === activeTheme);
 
@@ -215,7 +224,7 @@ export function OppsummeringClient() {
         <div className="text-center">
             <h1 className="text-3xl font-bold font-headline">Kveldens Oppsummering</h1>
             <p className="text-muted-foreground mt-2">
-                {showAwards ? "Her er kveldens kåringer. Del den med venner!" : "Bra spilt! Klar for en ny kveld?"}
+                {showAwards ? "Her er kveldens kåringer. Del den med venner!" : "Bra spilt! Ser ut som det trengs flere runder for å kåre vinnere."}
             </p>
         </div>
 
