@@ -83,10 +83,30 @@ Prosjektet er designet for å kjøre på **Firebase Hosting** på grunn av den g
 **Inntektsmodell:**
 Modellen er todelt: annonser for å dekke løpende kostnader og valgfrie donasjoner for å støtte videreutvikling.
 
-**1. Annonser (Google AdSense):**
+**Annonser (Google AdSense):**
 For å minimere risikoen knyttet til AdSense's retningslinjer for innhold om drikking, har vi utført en "AdSense-vask" der direkte oppfordringer er byttet ut med tryggere formuleringer. Vi har også en tydelig ansvarsfraskrivelse i bunnteksten.
 
-**2. Donasjoner (Vipps ePayment API):**
+**Strategiske Annonseplasseringer:**
+Annonsebannere (`AdBanner`-komponenten) er strategisk plassert for å generere inntekter uten å forstyrre kjerneopplevelsen. Alle annonser er tydelig merket som "Annonse".
+
+**Annonser vises på følgende steder:**
+*   **Forsiden (`/`):** Nederst på siden.
+*   **Under Spilling (`/spill/[gameId]`):** En banner vises nederst på skjermen under spillets gang, samt på "spillet er ferdig"-skjermen. Dette sikrer synlighet uten å avbryte selve oppgavekortet.
+*   **Artikkel- og Listesider:** Bannere er plassert nederst på alle innholdssider, inkludert:
+    *   `/alle-spill`
+    *   `/drikkeleker` og individuelle artikler (`/drikkeleker/[slug]`)
+    *   `/musikkleker`
+    *   `/skjermleker`
+    *   Alle tematiske sider (`/tema/[slug]`)
+*   **Informasjonssider (`/info/...`):** Nederst på sider som "Om oss" og "Personvern".
+
+**Annonsefrie Soner:**
+For å prioritere en god brukeropplevelse i kritiske øyeblikk, er følgende områder bevisst holdt frie for annonser:
+*   **"Kveldens Oppsummering" (`/oppsummering`):** Denne siden fokuserer utelukkende på den delbare oppsummeringen og en donasjons-CTA for å maksimere viral spredning og brukerglede.
+*   **Advarsel- og Instruksjonsskjermer:** Før spill med 18+ innhold eller spesielle instruksjoner starter, vises ingen annonser for å unngå distraksjon.
+*   **Lobby for Custom Spill:** Landingssiden for et skreddersydd russebuss-spill er reklamefri for å gi en premium og personlig opplevelse.
+
+**Donasjoner (Vipps ePayment API):**
 Vi har implementert en komplett og sikker løsning for å motta donasjoner via Vipps.
 
 -   **Arkitektur:**
