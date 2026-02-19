@@ -10,7 +10,6 @@
   "intensity": "medium",
   "audience": "18+",
   "category": ["Rolig", "18+"],
-  "hidden": true,
   "warning": {
     "title": "Advarsel: Flørtete Innhold",
     "description": [
@@ -69,7 +68,7 @@
     { "type": "prompt", "text": "{player}, hva er den beste måten å bryte isen på?" },
     { "type": "challenge", "text": "{player}, gi et oppriktig kompliment til rommet." },
     { "type": "pointing", "text": "Hvem her er mest flørtbar akkurat nå?" },
-    { "type": "prompt", "text": "{player}, hva er din favoritt-type date-stemning?" },
+    { "type": "prompt", "text": "{player}, hva er din favoritt-date-stemning?" },
     { "type": "challenge", "text": "Alle skåler med noen de liker energien til." },
     { "type": "prompt", "text": "{player}, hva er en ting som gjør deg ekstra tiltrukket?" },
     { "type": "challenge", "text": "{player}, velg en person som må ta én slurk med deg." },

@@ -28,9 +28,14 @@ export const getGames = cache(async (options: { includeHidden?: boolean } = {}):
     allGameIds.map(async (id) => {
       const gameData = await loadGameData(id);
       
-      // Filter out games that don't load, have no items, or are hidden (based on options)
-      if (!gameData || !gameData.items || gameData.items.length === 0 || (gameData.hidden && !options.includeHidden)) {
+      // Filter out games that don't load or have no items.
+      if (!gameData || !gameData.items || gameData.items.length === 0) {
         return null;
+      }
+      
+      // Special handling for hidden games, mainly for theme pages.
+      if (gameData.hidden && !options.includeHidden) {
+          return null;
       }
       
       // Return a stripped-down version of the game data for lobby/listing pages
@@ -54,8 +59,23 @@ export const getGames = cache(async (options: { includeHidden?: boolean } = {}):
     })
   );
 
-  // Filter out any null values from games that failed to load or were filtered out
-  return games.filter(Boolean) as Omit<Game, 'items' | 'language' | 'shuffle'>[];
+  const validGames = games.filter(Boolean) as Omit<Game, 'items' | 'language' | 'shuffle'>[];
+
+  // Sort the games to place "spicy" ones lower in the list
+  const intensityOrder = { low: 1, medium: 2, high: 3 };
+  const audienceOrder = { all: 1, '18+': 2 };
+
+  validGames.sort((a, b) => {
+    const audienceComparison = audienceOrder[a.audience] - audienceOrder[b.audience];
+    if (audienceComparison !== 0) return audienceComparison;
+
+    const intensityComparison = intensityOrder[a.intensity] - intensityOrder[b.intensity];
+    if (intensityComparison !== 0) return intensityComparison;
+
+    return a.title.localeCompare(b.title);
+  });
+
+  return validGames;
 });
 
 export const getGame = cache(async (id: string): Promise<Game> => {
