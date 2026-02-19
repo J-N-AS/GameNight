@@ -231,7 +231,7 @@ export function OppsummeringClient() {
                     <h3 className="text-4xl font-bold font-headline tracking-tighter">Kveldens Dom</h3>
                     <p className="text-2xl font-semibold mt-1">⚖️</p>
                     
-                    <div className="flex-grow flex flex-col justify-center gap-8 my-8">
+                    <div className="flex-grow flex flex-col justify-center gap-6 my-6">
                     {awards.map((award, index) => (
                         <div key={index} className="flex flex-col items-center">
                             <p className="text-6xl mb-2">{award.emoji}</p>
@@ -247,9 +247,7 @@ export function OppsummeringClient() {
                     ))}
                     </div>
 
-                    <div className="mt-auto flex justify-center">
-                        <p className="font-semibold text-sm opacity-60">🎲 Opplevd på GameNight.no</p>
-                    </div>
+                    <p className="mt-auto pt-4 font-medium text-sm opacity-80">🎲 Opplevd på GameNight.no</p>
                 </div>
 
                 <Card className="w-full p-4">
@@ -290,7 +288,7 @@ export function OppsummeringClient() {
         )}
         
         <div className="w-full space-y-4 text-center border-t border-border pt-6 mt-4">
-            <p className="text-sm text-muted-foreground">Gjorde GameNight kvelden deres bedre? <br/> Spander en kaffe på utviklerne!</p>
+            <p className="text-sm text-muted-foreground">Gjorde GameNight kvelden deres bedre? <br/> Spander en kaffe på utviklerne (25 kr) ☕</p>
             <div className="flex justify-center items-center min-h-[48px]">
               <div className="w-full max-w-[280px]">
                   <Button
