@@ -295,6 +295,9 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
               
               <h3>4. Ha GameNight klar på mobilen</h3>
               <p>Når de fysiske lekene er spilt ut, er det ingenting som slår en runde med 'Kaosrunden' eller 'Pekefest'. Dra opp GameNight, la skjermen styre utfordringene, og la straffene (og vann-skålene) rulle!</p>
+              
+              <h3>5. Samtykke er Alt: ‘Nei er Nei’</h3>
+              <p>Dette er det absolutt viktigste punktet. Russetiden handler om å ha det gøy, men det MÅ skje på en trygg måte. Husk at alle selskapsleker og all interaksjon, spesielt de som er flørtende eller utfordrende, krever tydelig og entusiastisk samtykke fra alle involverte. ‘Nei er nei’-kampanjen gjelder overalt, også i leken. Respekter hverandres grenser, og sørg for at alle er komfortable til enhver tid. En god fest er en trygg fest for alle.</p>
             </article>
 
             <motion.div
