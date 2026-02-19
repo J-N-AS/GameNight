@@ -4,13 +4,14 @@ import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react'
 import { useSession } from '@/hooks/usePlayers';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { Share2, Download, Trophy, Shield, Crosshair, Loader2, PartyPopper, Palette } from 'lucide-react';
+import { Share2, Download, Loader2, PartyPopper, Palette } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import Confetti from 'react-confetti';
 
 
 type SummaryTheme = 'dark' | 'light' | 'festive';
@@ -18,8 +19,24 @@ type SummaryTheme = 'dark' | 'light' | 'festive';
 const themes: {id: SummaryTheme, name: string, className: string}[] = [
     { id: 'dark', name: 'Mørk', className: 'bg-background text-foreground' },
     { id: 'light', name: 'Lys', className: 'bg-white text-black' },
-    { id: 'festive', name: 'Festlig', className: 'bg-gradient-to-br from-primary to-accent text-primary-foreground' },
+    { id: 'festive', name: 'Festlig', className: 'bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white' },
 ];
+
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    if (typeof window !== 'undefined') {
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }
+  }, []);
+  return { width: size[0], height: size[1] };
+}
+
 
 export function OppsummeringClient() {
   const { players, removeAllPlayers } = useSession();
@@ -29,7 +46,14 @@ export function OppsummeringClient() {
   const [isShareSupported, setIsShareSupported] = useState(false);
   const [isDonating, setIsDonating] = useState(false);
   const [activeTheme, setActiveTheme] = useState<SummaryTheme>('dark');
-  const { toast } = useToast();
+  const [showConfetti, setShowConfetti] = useState(true);
+
+  const { width, height } = useWindowSize();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowConfetti(false), 8000); // Let it rain for 8 seconds
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -60,9 +84,9 @@ export function OppsummeringClient() {
     }
 
     return [
-      { icon: Trophy, title: 'Kveldens MVP', subtitle: 'Fullførte flest oppgaver', player: uniqueAwardPlayers[0] || mvp },
-      { icon: Crosshair, title: 'Kveldens Skyteskive', subtitle: 'Mest utsatt for pek og valg', player: uniqueAwardPlayers[1] || skyteskive },
-      { icon: Shield, title: 'Teflon-pannen', subtitle: 'Unnslapp flest straffer', player: uniqueAwardPlayers[2] || teflon },
+      { emoji: '🏆', title: 'Kveldens MVP', subtitle: 'Fullførte flest oppgaver', player: uniqueAwardPlayers[0] || mvp },
+      { emoji: '🎯', title: 'Kveldens Skyteskive', subtitle: 'Mest utsatt for pek og valg', player: uniqueAwardPlayers[1] || skyteskive },
+      { emoji: '🛡️', title: 'Teflon-pannen', subtitle: 'Unnslapp flest straffer', player: uniqueAwardPlayers[2] || teflon },
     ].filter(a => a.player);
   }, [players]);
 
@@ -72,7 +96,7 @@ export function OppsummeringClient() {
     setIsGenerating(true);
     try {
       const currentTheme = themes.find(t => t.id === activeTheme);
-      const backgroundColor = currentTheme?.id === 'light' ? '#ffffff' : '#1c1717';
+      const backgroundColor = currentTheme?.id === 'light' ? '#ffffff' : '#1a1a1a'; // Darker background for dark theme image
 
       const dataUrl = await htmlToImage.toPng(summaryRef.current, { 
           pixelRatio: 2.5,
@@ -179,6 +203,8 @@ export function OppsummeringClient() {
   const currentThemeDetails = themes.find(t => t.id === activeTheme);
 
   return (
+    <>
+    {showConfetti && <Confetti width={width} height={height} recycle={false} numberOfPieces={500} />}
     <motion.div 
         className="w-full max-w-md flex flex-col items-center gap-6 py-4"
         initial={{ opacity: 0, y: 20 }}
@@ -207,25 +233,21 @@ export function OppsummeringClient() {
                     <div className="flex-grow flex flex-col justify-center gap-8 my-8">
                     {awards.map((award, index) => (
                         <div key={index} className="flex flex-col items-center">
-                        <award.icon className="w-10 h-10 opacity-80 mb-2" />
-                        <p className="text-base font-semibold opacity-80">{award.title}</p>
-                        <p className="text-sm opacity-70">{award.subtitle}</p>
-                        <p className={cn(
-                            "text-2xl font-bold mt-1 truncate max-w-full",
-                            activeTheme === 'dark' ? "text-accent" : "text-primary"
-                        )}>{award.player.name}</p>
+                            <p className="text-6xl mb-2">{award.emoji}</p>
+                            <p className="text-base font-semibold opacity-80">{award.title}</p>
+                            <p className="text-sm opacity-70">{award.subtitle}</p>
+                            <p className={cn(
+                                "text-5xl font-extrabold mt-2 truncate max-w-full drop-shadow-lg",
+                                activeTheme === 'dark' && "text-accent",
+                                activeTheme === 'light' && "text-primary",
+                                activeTheme === 'festive' && "text-white"
+                            )}>{award.player.name}</p>
                         </div>
                     ))}
                     </div>
 
                     <div className="mt-auto flex justify-center">
-                        <img
-                            src="/GameNight-logo-small.webp"
-                            alt="GameNight Logo"
-                            width="150"
-                            height="37"
-                            className={cn("opacity-70", activeTheme === 'light' && 'invert')}
-                        />
+                        <p className="font-semibold text-sm opacity-60">🎲 Opplevd på GameNight.no</p>
                     </div>
                 </div>
 
@@ -299,5 +321,6 @@ export function OppsummeringClient() {
             <PartyPopper className="mr-2 h-4 w-4" /> Start en ny kveld
         </Button>
     </motion.div>
+    </>
   );
 }
