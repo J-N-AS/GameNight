@@ -18,7 +18,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ThemePageProps): Promise<Metadata> {
-  const theme = await getTheme(params.slug);
+  const { slug } = params;
+  const theme = await getTheme(slug);
 
   if (!theme) {
     return {
