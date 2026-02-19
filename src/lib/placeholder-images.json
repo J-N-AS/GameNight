@@ -62,6 +62,27 @@
       "imageUrl": "/drikkeleker/benovator-ai-generated-9602834_1280.png",
       "imageHint": "medusa snakes",
       "attributionHtml": "Image by <a href=\"https://pixabay.com/users/benovator-43434340/\" target=\"_blank\" rel=\"noopener noreferrer\">Benovator</a> from <a href=\"https://pixabay.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Pixabay</a>"
+    },
+    {
+      "id": "kortskalle",
+      "description": "Playing cards held in a hand with a blurry background.",
+      "imageUrl": "/drikkeleker/alexas_fotos-playing-cards-1068147_1280.jpg",
+      "imageHint": "playing cards",
+      "attributionHtml": "Image by <a href=\"https://pixabay.com/users/alexas_fotos-686414/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1068147\">Alexa</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1068147\">Pixabay</a>"
+    },
+    {
+      "id": "tre-mann",
+      "description": "Two white dice on a wooden surface.",
+      "imageUrl": "/drikkeleker/denizimo01-dice-2430016_1280.jpg",
+      "imageHint": "dice game",
+      "attributionHtml": "Image by <a href=\"https://pixabay.com/users/denizimo01-4999079/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2430016\">Deniz Avsar</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2430016\">Pixabay</a>"
+    },
+    {
+      "id": "party-jenga",
+      "description": "A Jenga tower against a blurred background.",
+      "imageUrl": "/drikkeleker/zaimful-jenga-1941500_1280.jpg",
+      "imageHint": "jenga tower",
+      "attributionHtml": "Image by <a href=\"https://pixabay.com/users/zaimful-2736382/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1941500\">Amy Moore</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1941500\">Pixabay</a>"
     }
   ]
 }
