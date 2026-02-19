@@ -275,8 +275,26 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
             </div>
 
             <article className="prose prose-invert lg:prose-lg max-w-4xl mx-auto mt-24 mb-16 px-4">
-                <h2>Den ultimate guiden: Slik holder russegruppa stemningen på topp</h2>
-                <p>Russetiden er et maraton, ikke en sprint. Uansett om dere er en konseptgruppe, ruller i van, er vandruss eller bare samles til et episk vorspiel før russekroa, er det viktig å holde koken. Her er våre beste tips for en legendarisk kveld – pluss tre geniale leker som ikke krever noe utstyr.</p>
+              <h2>Den ultimate guiden: Slik holder russegruppa stemningen på topp</h2>
+              <p>Russetiden er et maraton, ikke en sprint. Uansett om dere er en konseptgruppe, ruller i van, er vandruss eller bare samles til et episk vorspiel før russekroa, er det viktig å holde koken. Her er våre beste tips for en legendarisk kveld – pluss tre geniale leker som ikke krever noe utstyr.</p>
+              
+              <h3>1. Husk vann-regelen (Pace dere selv!)</h3>
+              <p>Det høres kanskje kjedelig ut når musikken pumper, men det absolutt viktigste tipset for å overleve mai er å drikke vann. Et genialt triks er å bygge inn 'vann-skåler' i selskapslekene deres. Å ta et glass vann mellom slagene holder energien oppe, forhindrer at kvelden peaker for tidlig, og sikrer at hele gruppa faktisk husker hvor gøy dere hadde det dagen etter.</p>
+              
+              <h3>2. Unngå dødtid i gruppa</h3>
+              <p>Enten dere venter på at alle skal ankomme vorspielet eller står i kø utenfor kroa, er 'dødtid' stemningens største fiende. Ha alltid et par raske leker i bakhånd for å unngå at alle blir sittende og scrolle på mobilen.</p>
+              
+              <h3>👀 Lek: Morderen på Vorspielet (Wink Murder)</h3>
+              <p>En perfekt lek for alle typer grupper! Alle sitter i en ring. Én person velges hemmelig til å være 'Morderen' (for eksempel ved at alle lukker øynene og en leder tapper morderen på skulderen). Morderen eliminerer andre ved å blunke diskret til dem. Den som blir blunket til må vente noen sekunder før de dramatisk 'dør'. Resten av gruppa må prøve å avsløre morderen før det er for sent!</p>
+              
+              <h3>3. Bryt isen på tvers av klikker</h3>
+              <p>Selv i sammensveisede russegrupper har folk en tendens til å prate med de samme tre personene hele kvelden. Felles leker som krever at alle følger med, er den beste måten å samle hele gruppa på.</p>
+              
+              <h3>⏱️ Lek: Tikk-Takk-Kaos (Tick Tock)</h3>
+              <p>En intens konsentrasjonslek som alltid kollapser i latter! Dere trenger to små gjenstander (f.eks. en snusboks og en nøkkel). Lederen sender snusboksen til høyre og sier: 'Dette er en Tikk'. Personen til høyre må spørre 'En hva?', lederen svarer 'En Tikk', og gjenstanden sendes videre. Samtidig sendes den andre gjenstanden til venstre som 'En Takk'. Når disse to gjenstandene krysser hverandre i sirkelen, kortslutter hjernen til folk fullstendig!</p>
+              
+              <h3>4. Ha GameNight klar på mobilen</h3>
+              <p>Når de fysiske lekene er spilt ut, er det ingenting som slår en runde med 'Kaosrunden' eller 'Pekefest'. Dra opp GameNight, la skjermen styre utfordringene, og la straffene (og vann-skålene) rulle!</p>
             </article>
 
             <motion.div
