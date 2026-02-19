@@ -9,8 +9,9 @@ type GamePageProps = {
 };
 
 export async function generateMetadata({ params }: GamePageProps) {
+  const { gameId } = params;
   try {
-    const game = await getGame(params.gameId);
+    const game = await getGame(gameId);
     return {
       title: `${game.title} | GameNight`,
       description: game.description,
