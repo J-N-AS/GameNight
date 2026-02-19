@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { usePlayers } from '@/hooks/usePlayers';
+import { useSession } from '@/hooks/usePlayers';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -21,7 +21,7 @@ const tools = [
 ];
 
 export function PartyTools() {
-  const { players, isLoaded } = usePlayers();
+  const { players, isLoaded } = useSession();
   const { toast } = useToast();
   const [isRolling, setIsRolling] = useState(false);
 

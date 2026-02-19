@@ -9,11 +9,12 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { MoreVertical, Users, Repeat, LogOut, Trash2 } from 'lucide-react';
+import { MoreVertical, Users, Repeat, LogOut, Trash2, Trophy } from 'lucide-react';
 import { PlayerSetup } from './PlayerSetup';
 import { useRouter } from 'next/navigation';
-import { usePlayers } from '@/hooks/usePlayers';
+import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
+import { GlobalSessionSummary } from '../session/GlobalSessionSummary';
 
 interface GameMenuProps {
   context: 'lobby' | 'in-game';
@@ -22,8 +23,9 @@ interface GameMenuProps {
 
 export function GameMenu({ context, onRestart }: GameMenuProps) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
+  const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const router = useRouter();
-  const { players, removeAllPlayers } = usePlayers();
+  const { players, removeAllPlayers } = useSession();
   const { toast } = useToast();
 
   const handleLeaveGame = () => {
@@ -32,14 +34,13 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
 
   const handlePlayerSetupComplete = () => {
     setIsPlayerSetupOpen(false);
-    // No need to push, as player setup is now a global modal
   };
 
   const handleRemoveAllPlayers = () => {
     removeAllPlayers();
     toast({
         title: 'Alle spillere fjernet',
-        description: 'Spillerlisten er nå tom.'
+        description: 'Spillerlisten og all statistikk er nå nullstilt.'
     })
   };
 
@@ -51,6 +52,10 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
         open={isPlayerSetupOpen}
         onOpenChange={setIsPlayerSetupOpen}
         onSetupComplete={handlePlayerSetupComplete}
+      />
+      <GlobalSessionSummary 
+        open={isSummaryOpen}
+        onOpenChange={setIsSummaryOpen}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -68,10 +73,18 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
             <Users className="mr-2 h-4 w-4" />
             <span>Endre spillere</span>
           </DropdownMenuItem>
+
           {context === 'in-game' && onRestart && (
             <DropdownMenuItem onSelect={onRestart}>
               <Repeat className="mr-2 h-4 w-4" />
               <span>Spill igjen</span>
+            </DropdownMenuItem>
+          )}
+
+          {players.length > 0 && (
+            <DropdownMenuItem onSelect={() => setIsSummaryOpen(true)}>
+              <Trophy className="mr-2 h-4 w-4" />
+              <span>Avslutt & Se Oppsummering</span>
             </DropdownMenuItem>
           )}
 
@@ -83,7 +96,7 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
               className="text-destructive focus:text-destructive"
             >
               <Trash2 className="mr-2 h-4 w-4" />
-              <span>Fjern alle spillere</span>
+              <span>Start ny kveld</span>
             </DropdownMenuItem>
           )}
           

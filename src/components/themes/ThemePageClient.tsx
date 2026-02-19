@@ -12,12 +12,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { AdBanner } from '../ads/AdBanner';
-import { usePlayers } from '@/hooks/usePlayers';
+import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
 import { GameMenu } from '@/components/game/GameMenu';
 
 export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
-  const { players } = usePlayers();
+  const { players } = useSession();
   const { toast } = useToast();
 
   const handleGameSelect = (e: React.MouseEvent, game: ThemeWithGames['games'][0]) => {

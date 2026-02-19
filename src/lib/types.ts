@@ -1,5 +1,17 @@
 // This file can be used to share types between server and client components.
 
+export type PlayerStats = {
+  timesTargeted: number;
+  tasksCompleted: number;
+  penalties: number;
+};
+
+export type Player = {
+  id: string;
+  name: string;
+  stats: PlayerStats;
+};
+
 export interface GameTask {
   type: 'challenge' | 'never_have_i_ever' | 'prompt' | 'pointing' | 'versus';
   text: string;

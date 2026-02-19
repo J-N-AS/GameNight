@@ -2,17 +2,17 @@
 
 import { useContext } from 'react';
 import {
-  PlayersContext,
-  type Player,
-  type PlayersContextType,
+  SessionContext,
+  type SessionContextType,
 } from '@/app/providers';
+import type { Player } from '@/lib/types';
 
-export type { Player };
+export { type Player };
 
-export function usePlayers(): PlayersContextType {
-  const context = useContext(PlayersContext);
+export function useSession(): SessionContextType {
+  const context = useContext(SessionContext);
   if (context === undefined) {
-    throw new Error('usePlayers must be used within a PlayersProvider');
+    throw new Error('useSession must be used within a SessionProvider');
   }
   return context;
 }

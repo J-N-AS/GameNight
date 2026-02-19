@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { usePlayers, type Player } from '@/hooks/usePlayers';
+import { useSession, type Player } from '@/hooks/usePlayers';
 import { UserPlus, X, Trash2, Edit, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -30,7 +30,7 @@ export function PlayerSetup({
   onSetupComplete,
 }: PlayerSetupProps) {
   const { players, addPlayer, removePlayer, updatePlayerName, isLoaded } =
-    usePlayers();
+    useSession();
   const [newPlayerName, setNewPlayerName] = useState('');
   const [editingPlayerId, setEditingPlayerId] = useState<string | null>(null);
   const [editingPlayerName, setEditingPlayerName] = useState('');

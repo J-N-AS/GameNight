@@ -27,6 +27,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon-192x192.png"></link>
+        <script type="module" src="https://checkout.vipps.no/vipps-mobilepay-checkout-web-components/v1/vipps-mobilepay.js" async></script>
       </head>
       <body className="font-body antialiased bg-background text-foreground animated-background">
         <AppProviders>

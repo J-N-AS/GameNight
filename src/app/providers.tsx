@@ -8,28 +8,25 @@ import {
   type ReactNode,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import type { Player, PlayerStats } from '@/lib/types';
 
-export type Player = {
-  id: string;
-  name: string;
-};
-
-export interface PlayersContextType {
+export interface SessionContextType {
   players: Player[];
   addPlayer: (name: string) => void;
   removePlayer: (id: string) => void;
   updatePlayerName: (id: string, newName: string) => void;
   removeAllPlayers: () => void;
+  updatePlayerStat: (playerId: string, stat: keyof PlayerStats, amount?: number) => void;
   isLoaded: boolean;
 }
 
-export const PlayersContext = createContext<PlayersContextType | undefined>(
+export const SessionContext = createContext<SessionContextType | undefined>(
   undefined
 );
 
 const STORAGE_KEY = 'gamenight_players';
 
-function PlayersProvider({ children }: { children: ReactNode }) {
+function SessionProvider({ children }: { children: ReactNode }) {
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -37,7 +34,12 @@ function PlayersProvider({ children }: { children: ReactNode }) {
     try {
       const storedPlayers = localStorage.getItem(STORAGE_KEY);
       if (storedPlayers) {
-        setPlayers(JSON.parse(storedPlayers));
+        // Hydrate stats if they don't exist from older versions
+        const parsedPlayers = JSON.parse(storedPlayers).map((p: any) => ({
+          ...p,
+          stats: p.stats || { timesTargeted: 0, tasksCompleted: 0, penalties: 0 },
+        }));
+        setPlayers(parsedPlayers);
       }
     } catch (error) {
       console.error('Failed to load players from localStorage', error);
@@ -58,7 +60,11 @@ function PlayersProvider({ children }: { children: ReactNode }) {
 
   const addPlayer = useCallback((name: string) => {
     if (name.trim()) {
-      const newPlayer = { id: uuidv4(), name: name.trim() };
+      const newPlayer: Player = { 
+        id: uuidv4(), 
+        name: name.trim(),
+        stats: { timesTargeted: 0, tasksCompleted: 0, penalties: 0 },
+      };
       setPlayers(prevPlayers => [...prevPlayers, newPlayer]);
     }
   }, []);
@@ -70,7 +76,7 @@ function PlayersProvider({ children }: { children: ReactNode }) {
   const updatePlayerName = useCallback((id: string, newName: string) => {
     setPlayers(prevPlayers =>
       prevPlayers.map(p =>
-        p.id === id ? { ...p, name: newName.trim() } : p
+        p.id === id ? { ...p, name: newName.trim(), stats: p.stats || { timesTargeted: 0, tasksCompleted: 0, penalties: 0 } } : p
       )
     );
   }, []);
@@ -79,17 +85,27 @@ function PlayersProvider({ children }: { children: ReactNode }) {
     setPlayers([]);
   }, []);
 
-  const value: PlayersContextType = {
+  const updatePlayerStat = useCallback((playerId: string, stat: keyof PlayerStats, amount = 1) => {
+    setPlayers(prevPlayers =>
+      prevPlayers.map(p =>
+        p.id === playerId ? { ...p, stats: { ...p.stats, [stat]: p.stats[stat] + amount } } : p
+      )
+    );
+  }, []);
+
+
+  const value: SessionContextType = {
     players,
     addPlayer,
     removePlayer,
     updatePlayerName,
     removeAllPlayers,
+    updatePlayerStat,
     isLoaded,
   };
 
   return (
-    <PlayersContext.Provider value={value}>{children}</PlayersContext.Provider>
+    <SessionContext.Provider value={value}>{children}</SessionContext.Provider>
   );
 }
 
@@ -104,5 +120,5 @@ export function AppProviders({ children }: { children: ReactNode }) {
     }
   }, []);
   
-  return <PlayersProvider>{children}</PlayersProvider>;
+  return <SessionProvider>{children}</SessionProvider>;
 }

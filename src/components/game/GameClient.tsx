@@ -1,19 +1,18 @@
 'use client';
 
-import type { Game, GameTask } from '@/lib/games';
+import type { Game, GameTask, Player } from '@/lib/types';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TaskCard } from './TaskCard';
 import { Button } from '@/components/ui/button';
 import { Repeat, Home, PartyPopper, Trophy } from 'lucide-react';
 import Link from 'next/link';
-import { usePlayers } from '@/hooks/usePlayers';
+import { useSession } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameMenu } from './GameMenu';
 import { useToast } from '@/hooks/use-toast';
 import { AdBanner } from '../ads/AdBanner';
 import { Progress } from '@/components/ui/progress';
-import { SessionSummary } from './SessionSummary';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -31,7 +30,7 @@ interface GameClientProps {
 }
 
 export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
-  const { players, isLoaded } = usePlayers();
+  const { players, isLoaded, updatePlayerStat } = useSession();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -39,7 +38,7 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   
-  const [taskPlayers, setTaskPlayers] = useState<{player1: string; player2: string} | null>(null);
+  const [taskPlayers, setTaskPlayers] = useState<{player1: Player | null; player2: Player | null} | null>(null);
 
   // Versus mode state
   const [team1Score, setTeam1Score] = useState(0);
@@ -88,16 +87,24 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
   useEffect(() => {
     if (currentTask && players.length > 0) {
       let availablePlayers = [...players];
+      
       const player1Index = Math.floor(Math.random() * availablePlayers.length);
-      const player1 = availablePlayers[player1Index]?.name || 'Noen';
+      const player1 = availablePlayers[player1Index];
+      if (player1) {
+        updatePlayerStat(player1.id, 'timesTargeted');
+        updatePlayerStat(player1.id, 'tasksCompleted');
+      }
       availablePlayers.splice(player1Index, 1);
 
       const player2Index = availablePlayers.length > 0 ? Math.floor(Math.random() * availablePlayers.length) : -1;
-      const player2 = player2Index !== -1 ? availablePlayers[player2Index]?.name : 'En annen';
+      const player2 = player2Index !== -1 ? availablePlayers[player2Index] : null;
+      if (player2 && currentTask.type === 'challenge') {
+          updatePlayerStat(player2.id, 'penalties');
+      }
       
       setTaskPlayers({ player1, player2 });
     }
-  }, [currentIndex, players, currentTask]);
+  }, [currentIndex, players, currentTask, updatePlayerStat]);
 
 
   const handleNextTask = () => {
@@ -143,7 +150,6 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
     if (!currentTask || !isLoaded) return '';
     let { text } = currentTask;
     
-    // For spin the bottle or physical item games, we don't process player names.
     if (isSpinTheBottleMode || isPhysicalItemGame) {
         return text;
     }
@@ -154,7 +160,9 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
     const placeholderRegex = /(\{team1\}|\{team2\}|\{player\}|\{player2\}|\{all\})/g;
 
     if (placeholderRegex.test(text) && taskPlayers) {
-      const { player1, player2 } = taskPlayers;
+      const player1Name = taskPlayers.player1?.name || 'Noen';
+      const player2Name = taskPlayers.player2?.name || 'En annen';
+
       const parts = text.split(placeholderRegex);
       content = (
         <React.Fragment>
@@ -165,9 +173,9 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
               case '{team2}':
                 return <span key={index} className="player-highlight-2">{game.teams?.team2 || 'Lag 2'}</span>;
               case '{player}':
-                return isNameForbidden ? 'Noen' : <span key={index} className="player-highlight">{player1}</span>;
+                return isNameForbidden ? 'Noen' : <span key={index} className="player-highlight">{player1Name}</span>;
               case '{player2}':
-                return isNameForbidden ? 'En annen' : <span key={index} className="player-highlight-2">{player2}</span>;
+                return isNameForbidden ? 'En annen' : <span key={index} className="player-highlight-2">{player2Name}</span>;
               case '{all}':
                 return <strong key={index} className="text-prompt font-semibold">Alle</strong>;
               default:
@@ -241,8 +249,6 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
         <p className="text-muted-foreground mb-8">
           Bra spilt! Hva vil dere gjøre nå?
         </p>
-
-        {players.length > 0 && <SessionSummary />}
 
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <Button

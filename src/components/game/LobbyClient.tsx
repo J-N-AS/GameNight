@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { GameMenu } from '@/components/game/GameMenu';
 import { motion } from 'framer-motion';
-import { usePlayers } from '@/hooks/usePlayers';
+import { useSession } from '@/hooks/usePlayers';
 import {
   Card,
   CardContent,
@@ -38,7 +38,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   const [isSurpriseMeOpen, setIsSurpriseMeOpen] = useState(false);
   const [surpriseGame, setSurpriseGame] = useState<GameFromGetGames | null>(null);
   
-  const { players, isLoaded } = usePlayers();
+  const { players, isLoaded } = useSession();
   const router = useRouter();
   const { toast } = useToast();
 

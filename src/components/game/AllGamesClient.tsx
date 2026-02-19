@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useState, useMemo, useEffect } from 'react';
-import { usePlayers } from '@/hooks/usePlayers';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from '@/hooks/usePlayers';
+import { useSearchParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -28,7 +28,7 @@ const intensityMap = {
 
 export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
   const searchParams = useSearchParams();
-  const { players } = usePlayers();
+  const { players } = useSession();
   const { toast } = useToast();
 
   const [searchTerm, setSearchTerm] = useState('');
