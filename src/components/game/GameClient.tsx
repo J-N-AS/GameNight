@@ -4,7 +4,7 @@ import type { Game, GameTask } from '@/lib/games';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TaskCard } from './TaskCard';
 import { Button } from '@/components/ui/button';
-import { Repeat, Home, PartyPopper, Trophy, Package } from 'lucide-react';
+import { Repeat, Home, PartyPopper, Trophy } from 'lucide-react';
 import Link from 'next/link';
 import { usePlayers } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
@@ -13,6 +13,7 @@ import { GameMenu } from './GameMenu';
 import { useToast } from '@/hooks/use-toast';
 import { AdBanner } from '../ads/AdBanner';
 import { Progress } from '@/components/ui/progress';
+import { SessionSummary } from './SessionSummary';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -240,7 +241,10 @@ export function GameClient({ game, onRestart, gameMode }: GameClientProps) {
         <p className="text-muted-foreground mb-8">
           Bra spilt! Hva vil dere gjøre nå?
         </p>
-        <div className="flex flex-col sm:flex-row gap-4">
+
+        {players.length > 0 && <SessionSummary />}
+
+        <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <Button
             onClick={onRestart}
             size="lg"
