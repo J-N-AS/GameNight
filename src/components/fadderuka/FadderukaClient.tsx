@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { AdBanner } from '@/components/ads/AdBanner';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
 
 type ListedGame = Omit<Game, 'items' | 'language' | 'shuffle'>;
@@ -38,6 +38,12 @@ const SeoArticle = () => (
 
         <h3>5. Mingle-Bingo</h3>
         <p>Lag et bingobrett med ulike påstander som 'Har samme favorittfilm som deg', 'Har vært i Asia', 'Snakker mer enn to språk'. Målet er å mingle og finne en person som passer til hver rute. Førstemann som får bingo, vinner heder og ære!</p>
+        <Button asChild>
+            <Link href="/print/mingle-bingo" target="_blank" rel="noopener noreferrer">
+                <Download className="mr-2 h-4 w-4" />
+                Last ned Mingle-Bingobrett her
+            </Link>
+        </Button>
     </article>
 );
 
