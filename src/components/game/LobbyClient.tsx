@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from '@/components/game/PlayerSetup';
 import Link from 'next/link';
@@ -148,8 +148,14 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                           </motion.div>
                       ))}
                   </CardContent>
-                  <CardFooter>
-                      <Button variant="outline" className="w-full" onClick={() => setIsPlayerSetupOpen(true)}>Endre spillere</Button>
+                  <CardFooter className="grid grid-cols-2 gap-2 pt-4">
+                    <Button variant="outline" className="w-full" onClick={() => setIsPlayerSetupOpen(true)}>Endre spillere</Button>
+                    <Button asChild>
+                      <Link href="/oppsummering">
+                          <Trophy className="mr-2 h-5 w-5" />
+                          Oppsummering
+                      </Link>
+                    </Button>
                   </CardFooter>
                   </Card>
               </motion.div>

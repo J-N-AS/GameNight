@@ -14,7 +14,6 @@ import { PlayerSetup } from './PlayerSetup';
 import { useRouter } from 'next/navigation';
 import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
-import { GlobalSessionSummary } from '../session/GlobalSessionSummary';
 
 interface GameMenuProps {
   context: 'lobby' | 'in-game';
@@ -23,7 +22,6 @@ interface GameMenuProps {
 
 export function GameMenu({ context, onRestart }: GameMenuProps) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
-  const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const router = useRouter();
   const { players, removeAllPlayers } = useSession();
   const { toast } = useToast();
@@ -44,6 +42,10 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
     })
   };
 
+  const handleShowSummary = () => {
+      router.push('/oppsummering');
+  }
+
   const showDestructiveSeparator = context === 'in-game' || players.length > 0;
 
   return (
@@ -52,10 +54,6 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
         open={isPlayerSetupOpen}
         onOpenChange={setIsPlayerSetupOpen}
         onSetupComplete={handlePlayerSetupComplete}
-      />
-      <GlobalSessionSummary 
-        open={isSummaryOpen}
-        onOpenChange={setIsSummaryOpen}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -82,9 +80,9 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
           )}
 
           {players.length > 0 && (
-            <DropdownMenuItem onSelect={() => setIsSummaryOpen(true)}>
+            <DropdownMenuItem onSelect={handleShowSummary}>
               <Trophy className="mr-2 h-4 w-4" />
-              <span>Avslutt & Se Oppsummering</span>
+              <span>Se Oppsummering</span>
             </DropdownMenuItem>
           )}
 
