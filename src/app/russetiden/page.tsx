@@ -3,7 +3,7 @@ import type { Game } from '@/lib/types';
 import type { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Gamepad2 } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
 import { RussetidenClient } from '@/components/game/RussetidenClient';
 import { Separator } from '@/components/ui/separator';
@@ -74,6 +74,15 @@ export default async function RussetidenPage() {
                 standardGames={standardGames}
                 customGames={customGames}
             />
+
+            <div className="my-16 text-center">
+                <Button asChild size="lg" variant="outline">
+                    <Link href="/alle-spill">
+                        <Gamepad2 className="mr-2 h-5 w-5" />
+                        Se alle spill
+                    </Link>
+                </Button>
+            </div>
 
             <div className="container mx-auto px-4 pb-12">
                 <SeoArticle />

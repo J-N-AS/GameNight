@@ -11,9 +11,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { Rocket, QrCode, Download, Share2, Loader2, Instagram } from 'lucide-react';
+import { Rocket, QrCode, Download, Share2, Loader2, Instagram, Copy, Check } from 'lucide-react';
 import QRCode from 'react-qr-code';
 import * as htmlToImage from 'html-to-image';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
 
 
 type ListedGame = Omit<Game, 'items' | 'language' | 'shuffle'>;
@@ -27,6 +29,7 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
     const storyRef = useRef<HTMLDivElement>(null);
     const qrOnlyRef = useRef<HTMLDivElement>(null);
     const [isLoading, setIsLoading] = useState<'story' | 'qr' | null>(null);
+    const [isCopied, setIsCopied] = useState(false);
     const { toast } = useToast();
 
     if (!game) return null;
@@ -55,21 +58,49 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
             setIsLoading(null);
         }
     };
+    
+    const handleCopyLink = () => {
+        navigator.clipboard.writeText(gameUrl).then(() => {
+            toast({
+                title: "Lenke kopiert!",
+                description: "Du kan nå lime den inn hvor du vil.",
+            });
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2500);
+        }).catch(err => {
+            toast({
+                title: "Kunne ikke kopiere",
+                description: "En feil oppstod. Prøv å kopiere manuelt.",
+                variant: "destructive"
+            });
+        });
+    };
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Promo for {game.title}</DialogTitle>
+                    <DialogTitle>Del spillet: {game.title}</DialogTitle>
                     <DialogDescription>
-                        Last ned materiell for å dele spillet med gjengen. Perfekt for Instagram Story!
+                        Del en direkte lenke, eller last ned materiell for å dele spillet med gjengen.
                     </DialogDescription>
                 </DialogHeader>
 
-                <div className="space-y-4 py-4">
-                     <p className="text-sm font-semibold text-center">Forhåndsvisning (Instagram Story)</p>
+                <div className="space-y-6 py-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="game-link">Direkte lenke til spillet</Label>
+                        <div className="flex items-center gap-2">
+                            <Input id="game-link" readOnly value={gameUrl} />
+                            <Button onClick={handleCopyLink} variant="outline" size="icon" className="shrink-0">
+                                {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+                                <span className="sr-only">Kopier lenke</span>
+                            </Button>
+                        </div>
+                    </div>
+                     <p className="text-sm font-semibold text-center text-muted-foreground pt-4">Eller lag en story</p>
                      <div className="w-full max-w-[250px] mx-auto aspect-[9/16] rounded-lg overflow-hidden border">
                         <div 
+                            ref={storyRef}
                             className="w-full h-full p-6 flex flex-col items-center justify-between text-white bg-gradient-to-br from-gray-900 via-gray-800 to-black"
                         >
                             <div className="text-center">
@@ -105,24 +136,6 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
             </DialogContent>
             
             <div className="fixed -z-10 -left-[9999px] top-0">
-                <div ref={storyRef} className="w-[1080px] h-[1920px] p-24 flex flex-col items-center justify-between text-white bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-                     <div className="text-center">
-                        <div 
-                            className="w-[300px] h-[300px] rounded-3xl flex items-center justify-center mx-auto mb-8"
-                            style={{ backgroundColor: game.color || 'hsl(var(--primary))' }}
-                        >
-                            <span className="text-8xl">{game.emoji}</span>
-                        </div>
-                        <h3 className="text-8xl font-bold leading-tight">{game.title}</h3>
-                    </div>
-                    <div className="flex flex-col items-center gap-8">
-                        <p className="font-semibold text-center text-5xl">Spill vårt vorspiel-spill gratis på</p>
-                         <div className="bg-white p-4 rounded-2xl">
-                            <QRCode value={gameUrl} size={350} />
-                        </div>
-                        <p className="font-bold text-6xl">GameNight.no</p>
-                    </div>
-                </div>
                  <div ref={qrOnlyRef} className="p-4 bg-white inline-block">
                     <QRCode value={gameUrl} size={512} />
                 </div>
@@ -170,7 +183,7 @@ const CustomGameCard = ({ game, onPromoClick }: { game: ListedGame, onPromoClick
             <CardFooter className="mt-auto pt-4 grid grid-cols-2 gap-2">
                 <Button onClick={onPromoClick} variant="secondary">
                     <Share2 className="mr-2" />
-                    Lag Promo
+                    Del
                 </Button>
                  {game.instagram && (
                     <Button asChild variant="outline">
