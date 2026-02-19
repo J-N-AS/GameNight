@@ -22,8 +22,8 @@ export const getTheme = cache(async (slug: string): Promise<ThemeWithGames | und
     return undefined;
   }
 
-  // Fetch all games, then filter by the IDs in the theme
-  const allGames = await getGames();
+  // Fetch all games, INCLUDING hidden ones, to match against theme.gameIds
+  const allGames = await getGames({ includeHidden: true });
   
   // We should also respect the order from gameIds
   const orderedGames = theme.gameIds

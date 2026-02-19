@@ -7,6 +7,7 @@
   "requiresPlayers": true,
   "emoji": "🌑",
   "color": "hsl(240 50% 40%)",
+  "hidden": true,
   "intensity": "high",
   "audience": "18+",
   "category": ["Rolig", "18+"],

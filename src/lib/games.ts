@@ -23,13 +23,13 @@ const allGameIds = [
 ];
 
 
-export const getGames = cache(async (): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> => {
+export const getGames = cache(async (options: { includeHidden?: boolean } = {}): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> => {
   const games = await Promise.all(
     allGameIds.map(async (id) => {
       const gameData = await loadGameData(id);
       
-      // Filter out games that don't load, have no items, or are explicitly hidden
-      if (!gameData || !gameData.items || gameData.items.length === 0 || gameData.hidden) {
+      // Filter out games that don't load, have no items, or are hidden (based on options)
+      if (!gameData || !gameData.items || gameData.items.length === 0 || (gameData.hidden && !options.includeHidden)) {
         return null;
       }
       
