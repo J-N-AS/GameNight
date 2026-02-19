@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Printer } from 'lucide-react';
+import { Printer, Heart } from 'lucide-react';
 
 // Static list of items for the bingo board
 const bingoItems = [
@@ -35,34 +35,36 @@ const bingoItems = [
 export default function MingleBingoPrintPage() {
     return (
         <div className="bg-background text-foreground min-h-screen p-4 sm:p-8 print:p-2 print:bg-white">
-            <div className="max-w-2xl mx-auto">
-                <header className="text-center mb-8 print:hidden">
-                    <h1 className="text-3xl font-bold font-headline">Mingle-Bingo for Fadderuka</h1>
-                    <p className="text-muted-foreground mt-2">Finn én person for hver rute. Førstemann til å få 5 på rad vinner!</p>
-                    <Button onClick={() => window.print()} className="mt-6">
-                        <Printer className="mr-2 h-5 w-5" />
-                        Skriv ut eller lagre som PDF
-                    </Button>
-                </header>
+            <header className="text-center mb-8 print:hidden">
+                <h1 className="text-3xl font-bold font-headline">Mingle-Bingo for Fadderuka</h1>
+                <p className="text-muted-foreground mt-2">Finn én person for hver rute. Førstemann til å få 5 på rad vinner!</p>
+                <Button onClick={() => window.print()} className="mt-6">
+                    <Printer className="mr-2 h-5 w-5" />
+                    Skriv ut eller lagre som PDF
+                </Button>
+            </header>
 
-                <main id="bingo-board" className="border-4 border-primary rounded-lg p-2 bg-card print:border-black print:bg-white print:text-black print:rounded-none print:p-0">
-                    <div className="hidden print:block text-center p-4">
-                        <h2 className="text-2xl font-bold">Mingle-Bingo</h2>
-                        <p className="text-sm">Finn én person for hver rute. Førstemann til 5 på rad vinner!</p>
-                    </div>
-                     <div className="grid grid-cols-5 grid-rows-5 gap-2 print:gap-0">
-                        {bingoItems.map((item, index) => (
-                            <div key={index} className={`flex items-center justify-center text-center text-xs sm:text-sm font-medium p-2 aspect-square rounded-md print:rounded-none print:border print:border-gray-300 print:aspect-auto print:h-24 ${item.includes('GRATIS') ? 'bg-primary text-primary-foreground text-base print:bg-gray-200' : 'bg-background print:bg-white'}`}>
-                                {item}
-                            </div>
-                        ))}
-                    </div>
-                </main>
+            <main id="bingo-board" className="border-4 border-primary rounded-lg p-2 bg-card print:border-black print:bg-white print:text-black print:rounded-none print:p-0">
+                <div className="hidden print:block text-center p-4 border-b border-gray-300">
+                    <h2 className="text-2xl font-bold">Mingle-Bingo</h2>
+                    <p className="text-sm">Finn én person for hver rute. Førstemann til 5 på rad vinner!</p>
+                </div>
+                 <div className="grid grid-cols-5 grid-rows-5 gap-2 print:gap-0">
+                    {bingoItems.map((item, index) => (
+                        <div key={index} className={`flex items-center justify-center text-center text-xs sm:text-sm font-medium p-2 aspect-square rounded-md print:rounded-none print:border print:border-gray-300 print:aspect-auto print:h-24 print:text-black ${item.includes('GRATIS') ? 'bg-primary text-primary-foreground text-base print:bg-gray-200' : 'bg-background print:bg-white'}`}>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+                <div className="hidden print:flex justify-between items-center text-xs text-gray-600 p-2 mt-1 border-t border-gray-300">
+                    <span className="flex items-center gap-1">Laget med <Heart className="inline h-3 w-3" /> på <strong>GameNight.no</strong></span>
+                    <span>Finn flere gratis spill!</span>
+                </div>
+            </main>
 
-                 <footer className="text-center mt-8 print:hidden">
-                    <Button variant="link" onClick={() => window.close()}>Lukk vindu</Button>
-                </footer>
-            </div>
+             <footer className="text-center mt-8 print:hidden">
+                <Button variant="link" onClick={() => window.close()}>Lukk vindu</Button>
+            </footer>
         </div>
     );
 }
