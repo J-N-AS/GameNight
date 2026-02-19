@@ -193,9 +193,9 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
 
       <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
         <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
-            <Star className="h-6 w-6 text-primary" /> Spesielle Anledninger
+            <Wand2 className="h-6 w-6 text-primary" /> Utforsk temaer
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
             <Link href="/russetiden" className="group block">
                 <Card className="text-center p-6 transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
                     <div className="text-4xl mb-2">🚌</div>
@@ -208,14 +208,6 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                     <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">Fadderuka</h3>
                 </Card>
             </Link>
-        </div>
-      </motion.div>
-
-      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
-        <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
-            <Wand2 className="h-6 w-6 text-primary" /> Utforsk temaer
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
             {themes.map(theme => (
                 <Link key={theme.slug} href={`/tema/${theme.slug}`} className="group block">
                     <Card className="text-center p-6 transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
@@ -227,7 +219,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         </div>
       </motion.div>
 
-      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.7 } } }}>
+      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
           <section className="text-center">
              <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <Beer className="h-6 w-6 text-accent" /> Klassiske Drikkeleker
@@ -257,7 +249,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           </section>
       </motion.div>
 
-      <motion.div className="mt-16 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.5 }}>
+      <motion.div className="mt-16 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.5 }}>
         <AdBanner />
       </motion.div>
       
