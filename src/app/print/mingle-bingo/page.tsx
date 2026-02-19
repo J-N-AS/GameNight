@@ -53,24 +53,24 @@ const shuffleArray = (array: string[]) => {
 
 function BingoBoard({ items }: { items: string[] }) {
     return (
-        <div className="bingo-board-image flex flex-col border-4 border-primary rounded-xl p-4 bg-background text-foreground shadow-2xl shadow-primary/20 aspect-square w-full max-w-md">
-            <div className="text-center pb-3 border-b-2 border-border">
-                <h2 className="text-2xl font-bold font-headline">Mingle-Bingo</h2>
-                <p className="text-sm text-muted-foreground">Finn én person for hver rute!</p>
+        <div className="bingo-board-image flex flex-col border-4 border-primary rounded-xl p-4 bg-white text-black shadow-2xl shadow-primary/20 aspect-square w-full max-w-md">
+            <div className="text-center pb-3 border-b-2 border-slate-200">
+                <h2 className="text-2xl font-bold font-headline text-slate-800">Mingle-Bingo</h2>
+                <p className="text-sm text-slate-500">Finn én person for hver rute!</p>
             </div>
             <div className="grid grid-cols-5 grid-rows-5 gap-2 flex-grow pt-3">
                 {items.map((item, index) => (
                     <div 
                         key={index} 
-                        className={`flex items-center justify-center text-center text-[10px] sm:text-xs font-semibold p-1 aspect-square rounded-md ${item.includes('GRATIS') ? 'bg-primary text-primary-foreground text-sm' : 'bg-background/50'}`}
+                        className={`flex items-center justify-center text-center text-[10px] sm:text-xs font-semibold p-1 aspect-square rounded-md ${item.includes('GRATIS') ? 'bg-primary text-primary-foreground text-sm' : 'bg-slate-100 text-slate-700'}`}
                     >
                         {item}
                     </div>
                 ))}
             </div>
-            <div className="flex justify-between items-center text-xs text-muted-foreground pt-3 border-t-2 border-border mt-2">
+            <div className="flex justify-between items-center text-xs text-slate-500 pt-3 border-t-2 border-slate-200 mt-2">
                 <span className="flex items-center gap-1.5 font-semibold">Laget med <PartyPopper className="inline h-4 w-4 text-primary" /></span>
-                <span className="font-bold text-lg">GameNight.no</span>
+                <span className="font-bold text-lg text-slate-800">GameNight.no</span>
             </div>
         </div>
     );
@@ -96,7 +96,7 @@ export default function MingleBingoGeneratorPage() {
         try {
             const dataUrl = await htmlToImage.toPng(boardRef.current, { 
                 pixelRatio: 3, // Higher resolution for printing
-                backgroundColor: '#1c1717', // Match the dark theme background
+                backgroundColor: '#ffffff', // Set a white background for the generated image
                 style: {
                     margin: '0',
                 }
