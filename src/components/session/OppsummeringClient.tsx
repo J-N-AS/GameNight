@@ -224,14 +224,14 @@ export function OppsummeringClient() {
                 <div 
                     ref={summaryRef} 
                     className={cn(
-                        "aspect-[9/16] w-full max-w-sm rounded-2xl p-8 flex flex-col text-center shadow-2xl transition-colors duration-300",
+                        "aspect-[9/16] w-full max-w-sm rounded-2xl p-8 pb-12 flex flex-col text-center shadow-2xl transition-colors duration-300",
                         currentThemeDetails?.className
                     )}
                 >
                     <h3 className="text-4xl font-bold font-headline tracking-tighter">Kveldens Dom</h3>
                     <p className="text-2xl font-semibold mt-1">⚖️</p>
                     
-                    <div className="flex-grow flex flex-col justify-center gap-6 my-6">
+                    <div className="flex-grow flex flex-col justify-center gap-8 my-4">
                     {awards.map((award, index) => (
                         <div key={index} className="flex flex-col items-center">
                             <p className="text-6xl mb-2">{award.emoji}</p>
@@ -247,10 +247,10 @@ export function OppsummeringClient() {
                     ))}
                     </div>
 
-                    <p className="mt-auto pt-4 font-medium text-sm opacity-80">🎲 Opplevd på GameNight.no</p>
+                    <p className="mt-auto pt-8 font-medium text-sm opacity-80">🎲 Opplevd på GameNight.no</p>
                 </div>
 
-                <Card className="w-full p-4">
+                <Card className="w-full p-4 bg-card/80">
                     <CardContent className="p-0">
                         <p className="text-sm font-medium mb-3 text-center flex items-center justify-center gap-2"><Palette className="h-4 w-4" /> Velg tema</p>
                         <div className="flex justify-center gap-2">
