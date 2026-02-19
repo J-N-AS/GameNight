@@ -11,7 +11,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { Share2, Download, Trophy, Shield, Crosshair, Loader2, PartyPopper } from 'lucide-react';
+import { Share2, Download, Trophy, Shield, Crosshair, Loader2, PartyPopper, Heart } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
@@ -34,6 +34,7 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
   const [isGenerating, setIsGenerating] = useState(false);
   const [isShareSupported, setIsShareSupported] = useState(false);
   const [logoUrl, setLogoUrl] = useState('');
+  const [isDonating, setIsDonating] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -113,6 +114,37 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
     })
   }
   
+  const handleDonate = async () => {
+    setIsDonating(true);
+    try {
+        const response = await fetch('/api/vipps/donate', {
+            method: 'POST'
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'not_configured') {
+            toast({
+                title: 'Tusen takk for tanken! ❤️',
+                description: 'Donasjoner er ikke aktivert helt enda, men vi setter utrolig stor pris på at du ville støtte oss!',
+            });
+        } else if (data.status === 'success' && data.checkoutFrontendUrl) {
+            window.location.href = data.checkoutFrontendUrl;
+        } else {
+            throw new Error(data.message || 'En ukjent feil oppstod');
+        }
+    } catch (error) {
+        console.error("Donation failed:", error);
+        toast({
+            title: 'Noe gikk galt',
+            description: 'Kunne ikke starte donasjonen. Vennligst prøv igjen senere.',
+            variant: 'destructive',
+        });
+    } finally {
+        setIsDonating(false);
+    }
+  };
+
   if (players.length === 0) {
       return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -189,18 +221,16 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
             </div>
             
             <div className="w-full max-w-sm mx-auto space-y-4 text-center border-t border-border pt-6">
-                <p className="text-sm text-muted-foreground">Gjorde GameNight kvelden deres bedre? <br/> Spander en kaffe på utviklerne!</p>
+                <p className="text-sm text-muted-foreground">Gjorde GameNight kvelden deres bedre? <br/> Spander en tier på utviklerne!</p>
                 <vipps-mobilepay-button
-                    type="button"
-                    brand="vipps"
-                    language="no"
                     variant="primary"
-                    rounded="false"
                     verb="donate"
-                    stretched="true"
-                    branded="true"
-                    loading="false"
-                    onClick={() => console.log('Vipps button clicked!')}
+                    language="no"
+                    brand="vipps"
+                    amount="10"
+                    loading={isDonating.toString()}
+                    onClick={handleDonate}
+                    stretched
                 ></vipps-mobilepay-button>
             </div>
 
