@@ -3,50 +3,50 @@
         "slug": "ring-of-fire",
         "title": "Ring of Fire (Kings Cup)",
         "description": "Et klassisk kortspill hvor hvert kort har en unik regel. Spillet fortsetter til den siste kongen trekkes.",
-        "whatYouNeed": ["En kortstokk", "En stor kopp (King's Cup)", "Drikke til alle"],
+        "whatYouNeed": ["En kortstokk", "En stor kopp (King's Cup)", "Valgfri drikke"],
         "rules": [
             "Plasser koppen i midten og spre kortstokken med bildesiden ned i en sirkel rundt den.",
-            "Spillerne bytter på å trekke ett kort. Hvert kort har en regel.",
+            "Spillerne bytter på å trekke ett kort, og følger regelen for kortet.",
             "Når en konge trekkes, heller spilleren litt av sin egen drikke i 'King's Cup'.",
-            "Den som trekker den fjerde og siste kongen, må drikke hele innholdet i King's Cup. Spillet er da over."
+            "Den som trekker den fjerde og siste kongen, får den store æren av å tømme 'King's Cup'. Spillet er da over."
         ],
         "cardRules": {
-            "Ess": "Waterfall - Alle begynner å drikke. Ingen kan stoppe før personen til høyre for dem stopper.",
-            "To": "You - Du velger en person som må drikke.",
-            "Tre": "Me - Du må drikke selv.",
-            "Fire": "Floor - Alle må ta på gulvet. Sistemann drikker.",
-            "Fem": "Thumb Master - Personen som trakk kortet blir 'Thumb Master' og kan når som helst sette tommelen på bordet. Sistemann som følger etter, må drikke.",
-            "Seks": "Chicks - Alle jenter/kvinner drikker.",
-            "Syv": "Heaven - Alle peker mot himmelen. Sistemann drikker.",
-            "Åtte": "Mate - Velg en 'mate' som må drikke hver gang du drikker (og omvendt) resten av spillet.",
-            "Ni": "Rhyme - Si et ord. Personen til venstre må si et ord som rimer. Fortsett til noen ikke finner et ord. Den personen drikker.",
-            "Ti": "Categories - Velg en kategori (f.eks. bilmerker). Fortsett rundt sirkelen til noen ikke klarer å nevne noe i kategorien. Den personen drikker.",
-            "Knekt": "Ny regel - Lag en ny regel som gjelder for resten av spillet.",
-            "Dame": "Question Master - Du blir 'Question Master'. Hvis noen svarer på et spørsmål fra deg, må de drikke. (Hint: spør 'hva sa du?').",
-            "Konge": "King's Cup - Hell litt av drikken din i koppen i midten. Den som trekker den siste kongen, drikker alt."
+            "Ess": "Fossefall - Alle starter en skål. Ingen kan stoppe før personen til høyre for dem stopper.",
+            "To": "Del ut - Du velger en person som må ta en straff.",
+            "Tre": "Ta selv - Du må ta en straff selv.",
+            "Fire": "Gulvet - Alle må ta på gulvet. Sistemann får en straff.",
+            "Fem": "Tommel-mester - Du er 'Tommel-mester' til neste 5-er trekkes. Du kan når som helst sette tommelen på bordet, og sistemann som følger etter, får en straff.",
+            "Seks": "Jentene - Alle jenter/kvinner tar en skål.",
+            "Syv": "Himmelen - Alle peker mot himmelen. Sistemann får en straff.",
+            "Åtte": "Partner - Velg en 'partner' som må ta en skål hver gang du må det (og omvendt) resten av spillet.",
+            "Ni": "Rim - Si et ord. Spilleren til venstre må si et ord som rimer. Slik fortsetter det til noen ikke finner et ord og får en straff.",
+            "Ti": "Kategorier - Velg en kategori (f.eks. bilmerker). Fortsett rundt bordet til noen ikke klarer å nevne noe i kategorien. Den personen får en straff.",
+            "Knekt": "Ny regel - Lag en ny regel som gjelder for resten av spillet (f.eks. 'ingen lov å si 'ja' eller 'nei'').",
+            "Dame": "Spørsmåls-mester - Du er 'Spørsmåls-mester'. Hvis noen svarer på et spørsmål fra deg, får de en straff.",
+            "Konge": "King's Cup - Hell litt av drikken din i koppen i midten. Den som trekker den siste kongen, tømmer alt."
         }
     },
     {
         "slug": "beer-pong",
         "title": "Beer Pong",
-        "description": "Et lagspill hvor målet er å kaste en bordtennisball i motstanderens kopper. Treffer du, må de drikke!",
-        "whatYouNeed": ["22 plastkopper", "Bordtennisballer", "Et langt bord", "Drikke (vanligvis øl)"],
+        "description": "Et lagspill hvor målet er å kaste en bordtennisball i motstanderens kopper. Treffer du, må de ta en straff!",
+        "whatYouNeed": ["22 plastkopper", "Bordtennisballer", "Et langt bord", "Valgfri drikke"],
         "rules": [
             "Sett opp 10 kopper i en trekantformasjon på hver sin ende av bordet.",
-            "Fyll koppene ca. 1/3 fulle med drikke.",
+            "Fyll koppene ca. 1/3 fulle med valgfri drikke.",
             "Del inn i to lag. Hvert lag står på sin side av bordet.",
             "Lagene bytter på å kaste en ball mot motstanderens kopper.",
-            "Hvis ballen lander i en kopp, må en fra motstanderlaget drikke innholdet og fjerne koppen.",
+            "Hvis ballen lander i en kopp, må en fra motstanderlaget tømme innholdet og fjerne koppen.",
             "Første lag som blir kvitt alle motstanderens kopper, vinner spillet."
         ],
         "variants": [
             {
                 "title": "Rage Cage / Stack Cup",
-                "description": "En kaotisk og fartsfylt versjon av Flip Cup, hvor to spillere kjemper mot klokka for å unngå å drikke.",
+                "description": "En kaotisk og fartsfylt versjon av Flip Cup, hvor to spillere kjemper mot klokka for å unngå å få en straff.",
                 "rules": [
                     "Plasser en stor haug med fylte kopper i midten av bordet. Alle tar en kopp.",
                     "To spillere starter med hver sin tomme kopp og en bordtennisball.",
-                    "På 'gå!', drikker de to startspillerne, plasserer koppen sin på bordet og prøver å treffe ballen oppi.",
+                    "På 'gå!', tømmer de to startspillerne koppen sin, plasserer den på bordet og prøver å treffe ballen oppi.",
                     "Når de treffer, sender de ballen og koppen til spilleren til venstre for seg.",
                     "Hvis en spiller tar igjen spilleren foran seg (dvs. treffer i koppen sin før spilleren foran gjør det), kan de stable koppen sin oppå koppen til den andre spilleren.",
                     "Spilleren som fikk koppen sin 'stablet', må ta en ny, full kopp fra midten og starte på nytt.",
@@ -55,21 +55,21 @@
             },
             {
                 "title": "Beirut (Original Beer Pong)",
-                "description": "'Old school' Beer Pong uten ekstra regler. Ren kasteferdighet og drikking.",
+                "description": "'Old school' Beer Pong uten ekstra regler. Ren kasteferdighet og konkurranse.",
                 "rules": [
                     "Dette er i hovedsak Beer Pong med de grunnleggende reglene.",
                     "Ingen 'bounce'-skudd som teller for to kopper.",
                     "Ingen 're-racks' (omorganisering av kopper).",
-                    "Bare ren, enkel kasting. Ballen i koppen = drikk."
+                    "Bare ren, enkel kasting. Ballen i koppen = motstanderen må tømme koppen."
                 ]
             },
             {
                 "title": "Shot Pong",
                 "description": "En høy-innsats versjon av Beer Pong der øl byttes ut med shots. Spilles vanligvis med færre kopper.",
                 "rules": [
-                    "Sett opp 3 eller 6 kopper på hver side, fylt med en shot (eller en blanding av sprit og blandevann).",
+                    "Sett opp 3 eller 6 kopper på hver side, fylt med en valgfri shot (eller en blanding av sprit og blandevann).",
                     "Reglene er de samme som vanlig Beer Pong.",
-                    "Når en ball treffer en kopp, drikker motstanderlaget shotten.",
+                    "Når en ball treffer en kopp, tømmer motstanderlaget shotten.",
                     "Vær forsiktig, dette er en intens versjon! Anbefales å spille med færre kopper."
                 ]
             }
@@ -78,40 +78,40 @@
     {
         "slug": "flip-cup",
         "title": "Flip Cup",
-        "description": "Et fartsfylt lagspill hvor stafett og drikkeferdigheter settes på prøve. Perfekt for å få opp stemningen.",
-        "whatYouNeed": ["Plastkopper (like mange som deltakere)", "Et bord", "Drikke"],
+        "description": "Et fartsfylt lagspill hvor stafett og presisjon settes på prøve. Perfekt for å få opp stemningen.",
+        "whatYouNeed": ["Plastkopper (like mange som deltakere)", "Et bord", "Valgfri drikke"],
         "rules": [
             "Del inn i to jevnstore lag som stiller seg på hver sin side av bordet.",
             "Hver spiller får en kopp med en liten mengde drikke.",
-            "På 'klar, ferdig, gå!', begynner den første personen på hvert lag å drikke opp innholdet i koppen sin.",
+            "På 'klar, ferdig, gå!', begynner den første personen på hvert lag å tømme innholdet i koppen sin.",
             "Når koppen er tom, plasseres den på bordkanten med bunnen opp, og spilleren må prøve å 'flippe' den slik at den lander med åpningen ned.",
             "Så fort en spiller klarer det, kan neste person på laget begynne.",
             "Det første laget hvor alle har fullført, vinner."
         ]
     },
     {
-        "slug": "sannhet-eller-promille",
-        "title": "Sannhet eller Promille",
-        "description": "En vri på den klassiske leken. Svar ærlig på et personlig spørsmål, eller ta en straffeslurk for å holde på hemmeligheten.",
-        "whatYouNeed": ["Drikke", "Gode spørsmål (eller fantasi)"],
+        "slug": "sannhet-eller-straff",
+        "title": "Sannhet eller Straff",
+        "description": "En vri på den klassiske leken. Svar ærlig på et personlig spørsmål, eller ta konsekvensene for å holde på hemmeligheten.",
+        "whatYouNeed": ["Valgfri drikke", "Gode spørsmål (eller fantasi)"],
         "rules": [
             "Samle dere i en sirkel.",
-            "En person starter med å spørre en annen: 'sannhet eller promille?'",
+            "En person starter med å spørre en annen: 'sannhet eller straff?'",
             "Hvis personen velger 'sannhet', må de svare ærlig på et spørsmål fra spørsmålsstilleren.",
-            "Hvis de velger 'promille', må de ta en avtalt mengde drikke.",
-            "Spilleren som nettopp svarte (eller drakk) stiller så neste spørsmål til en ny person.",
+            "Hvis de velger 'straff', må de ta en avtalt straff.",
+            "Spilleren som nettopp svarte (eller tok straffen) stiller så neste spørsmål til en ny person.",
             "Tips: Spørsmålene kan variere fra uskyldige til mer dristige, avhengig av stemningen i gruppa."
         ]
     },
     {
-        "slug": "strip-poker-sfw",
-        "title": "Strip Poker (SFW versjon)",
+        "slug": "klespoker-partyversjon",
+        "title": "Klespoker (Partyversjon)",
         "description": "En uskyldig og morsom versjon av klassikeren. Her er det sokker og hettegensere som står på spill, ikke verdigheten.",
-        "whatYouNeed": ["En kortstokk", "Drikke", "Spillere med flere lag klær (eller tilbehør som luer, skjerf, etc.)"],
+        "whatYouNeed": ["En kortstokk", "Valgfri drikke", "Spillere med flere lag klær (eller tilbehør som luer, skjerf, etc.)"],
         "rules": [
             "Spill en vanlig runde med 5-korts poker (eller en enklere variant).",
             "Avtal på forhånd hva som er 'ett plagg'. Vi anbefaler tilbehør: sokker, luer, skjerf, smykker, eller det ytterste laget som en genser.",
-            "Taperen av hver pokerhånd må enten ta av seg ett avtalt plagg ELLER ta en straffeslurk.",
+            "Taperen av hver pokerhånd må enten ta av seg ett avtalt plagg ELLER ta en avtalt straff.",
             "Hovedregelen er at alle skal være komfortable. Målet er å ha det gøy og le, ikke å gjøre noen flaue.",
             "Spillet avsluttes når stemningen er god, eller når noen har mistet alle sine 'strippe-plagg' og bare sitter igjen med vanlige klær."
         ]
@@ -120,54 +120,95 @@
         "slug": "busstur",
         "title": "Busstur / Ride the Bus",
         "description": "Et kortspill hvor en uheldig spiller må 'kjøre bussen' ved å gjette seg gjennom en rekke kort.",
-        "whatYouNeed": ["En kortstokk", "Drikke"],
+        "whatYouNeed": ["En kortstokk", "Valgfri drikke"],
         "rules": [
-            "Første fase: Finn bussjåføren. Del ut alle kortene. Gå runden med 'rødt eller svart?', 'høyere eller lavere?', 'innenfor eller utenfor?', 'har du en makker?'. For hvert riktige svar kan du dele ut slurker. For feil svar, må du drikke selv. Den med flest kort på hånden til slutt, er sjåføren.",
+            "Første fase: Finn bussjåføren. Del ut alle kortene. Gå runden med 'rødt eller svart?', 'høyere eller lavere?', 'innenfor eller utenfor?', 'har du en makker?'. For hvert riktige svar kan du dele ut straffer. For feil svar, må du ta en straff selv. Den med flest kort på hånden til slutt, er sjåføren.",
             "Bygg bussen: Legg en pyramide av kort med bildesiden ned (f.eks. 5-4-3-2-1). Dette er 'bussen'.",
             "Bussjåføren starter på nederste rad. For hvert kort skal de gjette om det er et tallkort (2-10) eller bildekort (J, Q, K, A).",
-            "Gjetter sjåføren riktig, går de videre til neste kort. Gjetter de feil, må de drikke antall slurker tilsvarende raden (1 slurk for rad 1, 2 for rad 2 osv.) og starte raden på nytt.",
+            "Gjetter sjåføren riktig, går de videre til neste kort. Gjetter de feil, får de en straff tilsvarende raden (1 for rad 1, 2 for rad 2 osv.) og må starte raden på nytt.",
             "Målet er å komme seg gjennom hele pyramiden uten å gjøre en feil. Lykke til, sjåfør!"
         ]
     },
     {
         "slug": "pyramide",
         "title": "Pyramide",
-        "description": "Et spill som tester hukommelsen og evnen til å bløffe. Hvem husker hvor kortene er, og hvem må drikke?",
-        "whatYouNeed": ["En kortstokk", "Drikke"],
+        "description": "Et spill som tester hukommelsen og evnen til å bløffe. Hvem husker hvor kortene er, og hvem må ta en straff?",
+        "whatYouNeed": ["En kortstokk", "Valgfri drikke"],
         "rules": [
             "Legg ut en pyramide av kort med bildesiden ned (f.eks. 5-4-3-2-1).",
             "Del ut 3-4 kort til hver spiller. Alle ser på sine egne kort, men holder dem hemmelige.",
             "Start med å snu ett og ett kort i den nederste raden av pyramiden.",
-            "For hvert kort som snus, kan spillere som har et kort med samme verdi på hånden, dele ut slurker. F.eks. hvis en 7-er snus, kan en spiller med en 7-er på hånden si 'Per, ta en slurk'.",
-            "Man kan også bløffe! Hvis du deler ut en slurk, kan den som mottar den utfordre deg ved å si 'bløff'. Hvis du har kortet, må de drikke dobbelt. Hvis du ikke har det, må du drikke dobbelt selv.",
-            "Antall slurker som deles ut øker for hver rad oppover i pyramiden. Toppkortet er ofte verdt mange slurker eller en 'shot'."
+            "For hvert kort som snus, kan spillere som har et kort med samme verdi på hånden, dele ut straffer. F.eks. hvis en 7-er snus, kan en spiller med en 7-er på hånden si 'Per, ta en straff'.",
+            "Man kan også bløffe! Hvis du deler ut en straff, kan den som mottar den utfordre deg ved å si 'bløff'. Hvis du har kortet, må de ta dobbel straff. Hvis du ikke har det, må du ta dobbel straff selv.",
+            "Antall straffer øker for hver rad oppover i pyramiden. Toppkortet er ofte verdt mange straffer eller en spesiell oppgave."
         ]
     },
     {
-        "slug": "strip-poker-nsfw",
-        "title": "Strip Poker (NSFW 18+)",
-        "description": "Den klassiske, dristige versjonen av poker. Her er innsatsen høyere, og klærne færre. Kun for de som er komfortable.",
-        "whatYouNeed": ["En kortstokk", "Drikke", "Modige deltakere"],
+        "slug": "klespoker-high-stakes",
+        "title": "Klespoker: High Stakes (18+)",
+        "description": "Den dristige versjonen for de aller tøffeste. Her er det plagg for plagg som gjelder. Sørg for at rommet er varmt og at alle er 100 % komfortable med at grensene tøyes.",
+        "whatYouNeed": ["En kortstokk", "Valgfri drikke", "Modige deltakere"],
         "rules": [
             "Spill en standard poker-variant (f.eks. 5-korts draw).",
             "VIKTIG: Før spillet starter, må alle bli enige om grensene. Hva er man komfortabel med? Dette må respekteres.",
             "I stedet for penger, er innsatsen klesplagg.",
             "Etter hver runde, må taperen(e) fjerne ett klesplagg.",
-            "Alternativ regel: Man kan velge å ta en 'shot' eller et avtalt antall slurker for å slippe å kle av seg et plagg, men kun et begrenset antall ganger.",
+            "Alternativ regel: Man kan velge å ta en avtalt straff for å slippe å kle av seg et plagg, men kun et begrenset antall ganger.",
             "Spillet avsluttes når en spiller når sin avtalte grense, eller når gruppen bestemmer det. Målet er å ha det gøy, ikke å presse noen."
         ]
     },
     {
         "slug": "medusa",
         "title": "Medusa",
-        "description": "Et intenst spill med øyekontakt. Se feil person i øynene, og du må drikke. Enkelt, raskt og farlig.",
-        "whatYouNeed": ["Drikke", "Et rundt bord (eller sitte i sirkel)"],
+        "description": "Et intenst spill med øyekontakt. Se feil person i øynene, og du får en straff. Enkelt, raskt og farlig.",
+        "whatYouNeed": ["Valgfri drikke", "Et rundt bord (eller sitte i sirkel)"],
         "rules": [
             "Alle sitter i en sirkel med hodet ned og øynene lukket, eller ser ned på bordet.",
             "På et gitt signal (f.eks. 'Én, to, tre, MEDUSA!'), ser alle opp og stirrer på en annen tilfeldig spiller.",
             "Hvis du ser på noen som ikke ser på deg, er du trygg.",
-            "Hvis du ser direkte på en person som ser tilbake på deg, har dere øyekontakt. Begge roper 'MEDUSA!' og må drikke.",
+            "Hvis du ser direkte på en person som ser tilbake på deg, har dere øyekontakt. Begge roper 'MEDUSA!' og får en straff.",
             "Spillet fortsetter i raskt tempo. Hold hodet kaldt og blikket strategisk."
+        ]
+    },
+    {
+        "slug": "kortskalle",
+        "title": "Kortskalle (Indianer)",
+        "description": "Et hysterisk morsomt spill der alle fester et kort i panna uten å se på det selv. Målet er å gjette sin egen kortverdi. Taperen tar en straff!",
+        "whatYouNeed": ["En kortstokk", "Valgfri drikke", "Noe å feste kortet med (f.eks. under lue-kanten)"],
+        "rules": [
+            "Alle trekker et kort uten å se på det, og fester det i pannen slik at alle andre kan se det.",
+            "Den som starter ser på de andres kort og gjetter om sitt eget kort er høyere eller lavere enn et spesifikt kort (f.eks. 'Er mitt kort høyere enn Pers 7-er?').",
+            "De andre svarer kun ja eller nei.",
+            "Man har ett gjett per runde. Gjetter man feil, må man ta en straff. Gjetter man riktig, er man trygg og turen går videre.",
+            "En annen variant: Gå runden og la alle stille ja/nei-spørsmål for å finne ut hvilket kort de har. Den siste som gjetter kortet sitt, taper runden."
+        ]
+    },
+    {
+        "slug": "tre-mann",
+        "title": "Tre-Mann (Terningleken)",
+        "description": "En legendarisk terninglek der en spiller utnevnes til 'Tre-Mann' og må ta en skål hver gang noen triller en treer.",
+        "whatYouNeed": ["To terninger", "En kopp", "Valgfri drikke"],
+        "rules": [
+            "Første spiller som slår en 3-er (enten 2+1 eller en 3-er på en terning) blir 'Tre-Mann'.",
+            "Turen går på rundgang. Hver spiller slår terningene.",
+            "Hvis summen er 7, må spilleren til høyre for deg ta en straff. Hvis summen er 11, må spilleren til venstre ta en straff.",
+            "Slår du to like (par), kan du dele ut like mange straffer som øynene på én av terningene.",
+            "Hvis en 3-er dukker opp i et hvilket som helst kast (enten som en terning eller i sum), må 'Tre-Mann' ta en skål!",
+            "Hvis du slår en ny 3-er (2+1 eller en 3-er på en terning), kan du sende 'Tre-Mann'-tittelen videre til en annen spiller."
+        ]
+    },
+    {
+        "slug": "party-jenga",
+        "title": "Party-Jenga",
+        "description": "En genial vri på klassikeren! Skriv oppgaver på klossene, og den som trekker klossen må utføre oppgaven. Den som river tårnet, får kveldens hovedstraff.",
+        "whatYouNeed": ["Et Jenga-tårn", "En tusj", "Kreativitet"],
+        "rules": [
+            "Før spillet starter, skriv små, morsomme oppgaver eller regler på et utvalg av Jenga-klossene.",
+            "Eksempler: 'Del ut 2 straffer', 'Fortell en hemmelighet', 'Lag en ny regel', 'Ta en skål med naboen', 'Snakk med dialekt neste runde'.",
+            "Bygg tårnet som vanlig.",
+            "Spillerne bytter på å trekke en kloss.",
+            "Hvis klossen har en oppgave på seg, må spilleren utføre den før de plasserer klossen på toppen av tårnet.",
+            "Spilleren som til slutt river tårnet, må utføre en på forhånd avtalt 'hovedstraff'."
         ]
     }
 ]
