@@ -53,7 +53,7 @@ const shuffleArray = (array: string[]) => {
 
 function BingoBoard({ items }: { items: string[] }) {
     return (
-        <div className="bingo-board-image flex flex-col border-4 border-primary rounded-xl p-4 bg-white text-black shadow-2xl shadow-primary/20 aspect-square w-full max-w-md">
+        <div className="bingo-board-image flex flex-col border-4 border-primary rounded-xl p-4 bg-white text-black shadow-2xl shadow-primary/20 aspect-square w-full">
             <div className="text-center pb-3 border-b-2 border-slate-200">
                 <h2 className="text-2xl font-bold font-headline text-slate-800">Mingle-Bingo</h2>
                 <p className="text-sm text-slate-500">Finn én person for hver rute!</p>
@@ -62,7 +62,7 @@ function BingoBoard({ items }: { items: string[] }) {
                 {items.map((item, index) => (
                     <div 
                         key={index} 
-                        className={`flex items-center justify-center text-center text-[10px] sm:text-xs font-semibold p-1 aspect-square rounded-md ${item.includes('GRATIS') ? 'bg-primary text-primary-foreground text-sm' : 'bg-slate-100 text-slate-700'}`}
+                        className={`flex items-center justify-center text-center text-[10px] leading-tight font-semibold p-1 aspect-square rounded-md ${item.includes('GRATIS') ? 'bg-primary text-primary-foreground text-base' : 'bg-slate-100 text-slate-700'}`}
                     >
                         {item}
                     </div>
@@ -124,8 +124,8 @@ export default function MingleBingoGeneratorPage() {
     return (
         <div className="bg-background text-foreground min-h-screen p-4 sm:p-8 flex flex-col items-center">
             <header className="text-center mb-8 max-w-lg mx-auto">
-                <h1 className="text-3xl font-bold font-headline">Lag Mingle-Bingo</h1>
-                <p className="text-muted-foreground mt-2">Her kan du lage og laste ned unike bingobrett som bilder. Perfekt for å dele digitalt eller skrive ut flere på ett ark.</p>
+                <h1 className="text-3xl font-bold font-headline">Mingle-Bingo Generator</h1>
+                <p className="text-muted-foreground mt-2">Generer og last ned unike bingobrett for å bryte isen. Hvert trykk på "Lag nytt brett" gir en helt ny kombinasjon, perfekt for å dele ut forskjellige versjoner til gruppen.</p>
             </header>
 
             <motion.div 
