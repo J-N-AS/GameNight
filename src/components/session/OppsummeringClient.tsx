@@ -47,6 +47,7 @@ export function OppsummeringClient() {
   const [isDonating, setIsDonating] = useState(false);
   const [activeTheme, setActiveTheme] = useState<SummaryTheme>('dark');
   const [showConfetti, setShowConfetti] = useState(true);
+  const { toast } = useToast();
 
   const { width, height } = useWindowSize();
 
