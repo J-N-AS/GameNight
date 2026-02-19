@@ -1,6 +1,22 @@
 {
   "themes": [
     {
+      "slug": "fadderuka",
+      "title": "Fadderuka: Spill & Leker for Studiestart",
+      "metaDescription": "Den ultimate guiden for fadderuken! Finn de beste isbryterne, selskapslekene og partyspillene som garanterer en uforglemmelig studiestart.",
+      "emoji": "🎉",
+      "content": [
+          "Fadderuka er en virvelvind av nye fjes, nye steder og uforglemmelige opplevelser. Det er den viktigste uken for å bygge vennskap som kan vare livet ut. Men hvordan bryter man isen i en stor gruppe der ingen kjenner noen? Med de riktige spillene, selvfølgelig!",
+          "Denne samlingen er skreddersydd for faddergrupper, vorspiel på studenthybelen og alle sosiale sammenkomster i studiestarten. Her finner du en perfekt miks av enkle isbrytere, morsomme partyspill og klassiske leker som får praten til å flyte og latteren til å sitte løst.",
+          "Glem kleine stillheter og la GameNight være deres hemmelige våpen for en vellykket fadderuke. Utforsk spillene nedenfor, bli kjent med dine medstudenter, og skap minner for livet. Lykke til med studiestarten!"
+      ],
+      "gameIds": [
+        "fadderkampen",
+        "icebreakeren",
+        "vorspiel-mix"
+      ]
+    },
+    {
       "slug": "julebord",
       "title": "Spill & Leker til Julebordet",
       "metaDescription": "Den ultimate samlingen av leker, spill og isbrytere for julebordet. Skap uforglemmelig stemning med kolleger eller venner!",

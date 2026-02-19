@@ -18,6 +18,9 @@ export function AppFooter() {
           <Link href="/info/om-oss" className="hover:text-foreground transition-colors">
             Om oss
           </Link>
+           <Link href="/fadderuka" className="hover:text-foreground transition-colors">
+            Fadderuka
+          </Link>
           <Link href="/alle-spill" className="hover:text-foreground transition-colors">
             Alle Spill
           </Link>

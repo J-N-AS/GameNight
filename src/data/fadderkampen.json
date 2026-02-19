@@ -1,0 +1,28 @@
+{
+  "id": "fadderkampen",
+  "title": "Fadderkampen",
+  "description": "Den ultimate isbryteren for fadderuka! En blanding av kleine introduksjoner, utfordringer og starten på nye vennskap.",
+  "language": "no",
+  "shuffle": true,
+  "requiresPlayers": true,
+  "emoji": "🎓",
+  "color": "hsl(var(--primary))",
+  "intensity": "medium",
+  "audience": "all",
+  "category": ["Vorspiel", "Sosialt"],
+  "tags": ["Fadderuka", "Student"],
+  "items": [
+    { "type": "prompt", "text": "{player}, hva studerer du, og hva var drømmejobben din som liten?" },
+    { "type": "pointing", "text": "Hvem her virker som de kommer til å være mest aktiv i studentforeningen?" },
+    { "type": "challenge", "text": "FATTIG STUDENT: Lånekassen har ikke betalt ut stipendet enda. Vipps 5 kr til personen til høyre for deg, ELLER del ut 3 straffer til deg selv." },
+    { "type": "never_have_i_ever", "text": "gått meg vill på campus allerede." },
+    { "type": "challenge", "text": "{player}, nevn 3 ting du har på hybelen din. Hvis du ikke har flyttet inn enda, nevn 3 ting du GLEDER deg til å ha der." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å prokrastinere til siste liten før eksamen?" },
+    { "type": "prompt", "text": "Hva er den rareste tingen du har med deg på vors?" },
+    { "type": "challenge", "text": "Alle som er nye i denne byen tar en skål sammen!" },
+    { "type": "prompt", "text": "{player}, hva er din go-to nudel-oppskrift?" },
+    { "type": "pointing", "text": "Hvem her kommer til å ha den ryddigste hybelen?" },
+    { "type": "never_have_i_ever", "text": "meldt meg på en forelesning jeg ikke tilhører." },
+    { "type": "challenge", "text": "Regelmester! {player}, lag en 'campus-regel' for de neste 3 rundene (f.eks. 'alle må referere til en pensumbok')." }
+  ]
+}
