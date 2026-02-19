@@ -13,8 +13,7 @@
       "gameIds": [
         "julebord",
         "pekefest-klassisk",
-        "party-klassikere",
-        "rolig-sosial"
+        "party-klassikere"
       ]
     },
     {
@@ -30,8 +29,7 @@
       "gameIds": [
         "vorspiel-mix",
         "jeg-har-aldri-klassisk",
-        "pekefest-klassisk",
-        "kjapp-party-runde"
+        "pekefest-klassisk"
       ]
     },
     {
@@ -47,8 +45,7 @@
       "gameIds": [
         "girl-power-jenta-stemning",
         "pekefest-klassisk",
-        "sexy-vibes",
-        "jeg-har-aldri-klassisk"
+        "sexy-vibes"
       ]
     },
     {
@@ -64,8 +61,7 @@
       "gameIds": [
         "singles-night-flort-kjemi",
         "singles-body-language",
-        "pekefest-klassisk",
-        "spinn-flasken-action"
+        "pekefest-klassisk"
       ]
     },
     {
@@ -81,8 +77,7 @@
       "gameIds": [
         "kaosrunden",
         "fyllevalg",
-        "girls-vs-boys",
-        "dating-fails"
+        "girls-vs-boys"
       ]
     },
     {
@@ -98,8 +93,7 @@
       "gameIds": [
         "sannhet-eller-shot",
         "sexy-dares",
-        "hemmeligheter",
-        "after-dark"
+        "hemmeligheter"
       ]
     },
     {
@@ -115,8 +109,7 @@
       "gameIds": [
         "bursdags-roast",
         "party-klassikere",
-        "pekefest-klassisk",
-        "kjapp-party-runde"
+        "pekefest-klassisk"
       ]
     },
     {
@@ -132,8 +125,7 @@
       "gameIds": [
         "gutta-stemning-bros-banter",
         "kaosrunden",
-        "fyllevalg",
-        "party-klassikere"
+        "fyllevalg"
       ]
     },
     {
@@ -149,8 +141,7 @@
       "gameIds": [
         "icebreakeren",
         "rolig-sosial",
-        "pekefest-klassisk",
-        "pest-eller-kolera"
+        "pekefest-klassisk"
       ]
     },
     {
@@ -166,8 +157,23 @@
       "gameIds": [
         "hyttekos-afterski",
         "pest-eller-kolera",
-        "rolig-sosial",
-        "party-klassikere"
+        "rolig-sosial"
+      ]
+    },
+    {
+      "slug": "fysiske-leker",
+      "title": "Fysiske Leker: Spill som Beveger",
+      "metaDescription": "En samling av spill som krever mer enn bare prat. Perfekt for å få opp energien, med leker som 'Snusboksen' og 'Spinn Flasken'.",
+      "emoji": "🏆",
+      "content": [
+        "Noen ganger trenger en fest litt mer bevegelse og fysisk interaksjon. Denne samlingen er for de kveldene der dere vil gjøre mer enn bare å sitte rundt et bord. Her finner du spill som involverer kasting, spinning, og andre lette fysiske utfordringer som garantert får opp energien og latteren.",
+        "Spill som 'Snusboksen' og 'Spinn Flasken' er perfekte eksempler. De er enkle å sette i gang, krever minimalt med utstyr, og engasjerer hele gruppen på en aktiv måte. Enten du vil teste treffsikkerheten, balansen eller bare se hvem som tør å ta en utfordring, er dette spillene for deg.",
+        "Gjør dere klare for en mer aktiv og dynamisk spillkveld. Disse lekene er ideelle for å bryte opp stillesittende mønstre og skape en ny type energi i rommet."
+      ],
+      "gameIds": [
+        "snusboksen",
+        "spinn-flasken",
+        "snusboksen-utfordring"
       ]
     }
   ]
