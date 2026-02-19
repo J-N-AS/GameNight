@@ -27,7 +27,6 @@ export function OppsummeringClient() {
   const summaryRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isShareSupported, setIsShareSupported] = useState(false);
-  const [logoUrl, setLogoUrl] = useState('');
   const [isDonating, setIsDonating] = useState(false);
   const [activeTheme, setActiveTheme] = useState<SummaryTheme>('dark');
   const { toast } = useToast();
@@ -37,7 +36,6 @@ export function OppsummeringClient() {
         if (navigator.share && navigator.canShare) {
             setIsShareSupported(true);
         }
-        setLogoUrl(new URL('/GameNight-logo-small.webp', window.location.origin).href);
     }
   }, []);
 
@@ -221,15 +219,13 @@ export function OppsummeringClient() {
                     </div>
 
                     <div className="mt-auto flex justify-center">
-                        {logoUrl && (
-                            <Image
-                                src={logoUrl}
-                                alt="GameNight Logo"
-                                width="150"
-                                height="37"
-                                className={cn("opacity-70", activeTheme === 'light' && 'invert')}
-                            />
-                        )}
+                        <img
+                            src="/GameNight-logo-small.webp"
+                            alt="GameNight Logo"
+                            width="150"
+                            height="37"
+                            className={cn("opacity-70", activeTheme === 'light' && 'invert')}
+                        />
                     </div>
                 </div>
 

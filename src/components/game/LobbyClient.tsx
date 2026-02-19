@@ -99,7 +99,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           width={400}
           height={100}
           priority
-          className="w-auto h-auto mx-auto max-w-[300px] md:max-w-[400px] drop-shadow-[0_5px_15px_rgba(0,0,0,0.2)]"
+          className="h-auto mx-auto max-w-[300px] md:max-w-[400px] drop-shadow-[0_5px_15px_rgba(0,0,0,0.2)]"
         />
         <p className="text-muted-foreground mt-4 text-lg md:text-xl">
           Start festen med de beste gratis partyspillene!
