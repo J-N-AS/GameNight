@@ -4,15 +4,59 @@ import { notFound, useParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, CreditCard, Mail, Gamepad2, Library, Music, Download, Trophy } from 'lucide-react';
+import { ArrowLeft, Mail, Gamepad2, Library, Music, Download, Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AdBanner } from '@/components/ads/AdBanner';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
-const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
-  'om-oss': {
-    title: 'Vårt Mål: Mer Moro, Mindre Styr',
-    content: (
-      <div className="space-y-8 text-muted-foreground">
+// For Vipps Web Component
+declare namespace JSX {
+    interface IntrinsicElements {
+        'vipps-mobilepay-button': any;
+    }
+}
+
+function OmOssContent() {
+    const [donationAmount, setDonationAmount] = useState(50);
+    const [isDonating, setIsDonating] = useState(false);
+    const { toast } = useToast();
+
+    const handleDonate = async () => {
+        setIsDonating(true);
+        try {
+            const response = await fetch('/api/vipps/donate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: donationAmount })
+            });
+    
+            const data = await response.json();
+    
+            if (data.status === 'not_configured') {
+                toast({
+                    title: 'Tusen takk for tanken! ❤️',
+                    description: 'Donasjoner er ikke aktivert helt enda, men vi setter utrolig stor pris på at du ville støtte oss!',
+                });
+            } else if (data.status === 'success' && data.checkoutFrontendUrl) {
+                window.location.href = data.checkoutFrontendUrl;
+            } else {
+                throw new Error(data.message || 'En ukjent feil oppstod');
+            }
+        } catch (error) {
+            console.error("Donation failed:", error);
+            toast({
+                title: 'Noe gikk galt',
+                description: 'Kunne ikke starte donasjonen. Vennligst prøv igjen senere.',
+                variant: 'destructive',
+            });
+        } finally {
+            setIsDonating(false);
+        }
+    };
+
+    return (
+        <div className="space-y-8 text-muted-foreground">
         <div className="space-y-4 text-lg">
           <p>
             GameNight ble startet med én enkel idé: Å gjøre det lettere å ha det gøy sammen. Vi ønsker å være din digitale verktøykasse for enhver festlig anledning, enten det er vorspiel, parkheng eller en rolig kveld med venner.
@@ -80,32 +124,49 @@ const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
         </div>
 
         <div className="space-y-4 rounded-lg border-2 border-dashed border-primary/50 bg-card/50 p-6 text-center">
-          <h3 className="font-bold text-primary text-2xl">Liker du det vi gjør? Støtt oss!</h3>
-          <p>
-            Hvis GameNight har gjort festen din bedre, blir vi utrolig takknemlige for et
-            frivillig bidrag. Hver krone går direkte til å holde serverne i gang og utvikle nye,
-            morsomme spill til deg og vennene dine.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2">
-            <Button size="lg" asChild className="transform transition-transform duration-200 hover:scale-105">
-              <a href="https://www.buymeacoffee.com/gamenight" target="_blank" rel="noopener noreferrer">
-                <CreditCard className="mr-2 h-5 w-5" />
-                Doner med Kort
-              </a>
-            </Button>
-            <Button size="lg" variant="secondary" asChild className="transform transition-transform duration-200 hover:scale-105">
-              <a href="https://vipps.no/privat/" target="_blank" rel="noopener noreferrer">
-                <span className="mr-2 text-lg">🇳🇴</span>
-                Doner med Vipps
-              </a>
-            </Button>
-          </div>
-          <p className="text-xs text-muted-foreground/80 pt-2">
-              Donasjon via kort (Stripe) støtter Apple Pay og Google Pay for enklest mulig betaling.
-          </p>
+            <h3 className="font-bold text-primary text-2xl">Liker du det vi gjør? Støtt oss!</h3>
+            <p>
+                Hvis GameNight har gjort festen din bedre, blir vi utrolig takknemlige for et
+                frivillig bidrag. Hver krone går direkte til å holde serverne i gang og utvikle nye,
+                morsomme spill til deg og vennene dine.
+            </p>
+            <div className="flex justify-center gap-2 pt-2">
+                {[25, 50, 100].map(amount => (
+                    <Button 
+                        key={amount} 
+                        variant={donationAmount === amount ? 'default' : 'outline'}
+                        onClick={() => setDonationAmount(amount)}
+                        className="transform transition-transform duration-200 hover:scale-105"
+                    >
+                        {amount} kr
+                    </Button>
+                ))}
+            </div>
+            <div className="mt-4">
+                <vipps-mobilepay-button
+                    variant="primary"
+                    verb="donate"
+                    language="no"
+                    brand="vipps"
+                    amount={donationAmount}
+                    loading={isDonating.toString()}
+                    onClick={handleDonate}
+                    stretched
+                ></vipps-mobilepay-button>
+            </div>
+            <p className="text-xs text-muted-foreground/80 pt-2">
+              Donasjon via Vipps er den enkleste og tryggeste måten å støtte oss på.
+            </p>
         </div>
       </div>
-    ),
+    );
+}
+
+
+const pages: { [key: string]: { title: string; content: React.ReactNode } } = {
+  'om-oss': {
+    title: 'Vårt Mål: Mer Moro, Mindre Styr',
+    content: <OmOssContent />,
   },
   'personvern': {
     title: 'Personvernerklæring for GameNight',

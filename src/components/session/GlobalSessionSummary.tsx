@@ -11,10 +11,9 @@ import {
   DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { Share2, Download, Trophy, Shield, Crosshair, Loader2, PartyPopper, Heart } from 'lucide-react';
+import { Share2, Download, Trophy, Shield, Crosshair, Loader2, PartyPopper } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 import { useToast } from '@/hooks/use-toast';
-import { motion } from 'framer-motion';
 
 // For Vipps Web Component
 declare namespace JSX {
@@ -118,7 +117,9 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
     setIsDonating(true);
     try {
         const response = await fetch('/api/vipps/donate', {
-            method: 'POST'
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: 10 })
         });
 
         const data = await response.json();

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 
 // Helper function to get an access token from Vipps
@@ -27,7 +27,7 @@ async function getVippsAccessToken(clientId: string, clientSecret: string, subKe
   return data.access_token;
 }
 
-export async function POST() {
+export async function POST(request: NextRequest) {
   const { 
     VIPPS_CLIENT_ID, 
     VIPPS_CLIENT_SECRET, 
@@ -45,6 +45,16 @@ export async function POST() {
   }
 
   try {
+    const { amount } = await request.json();
+
+    if (!amount || typeof amount !== 'number' || amount < 10) {
+      return NextResponse.json(
+          { status: 'error', message: 'Ugyldig beløp. Minimumsbeløp er 10 NOK.' },
+          { status: 400 }
+      );
+    }
+    const amountInOere = amount * 100;
+
     // 2. Get Access Token
     const accessToken = await getVippsAccessToken(
       VIPPS_CLIENT_ID,
@@ -72,7 +82,7 @@ export async function POST() {
       body: JSON.stringify({
         amount: {
           currency: 'NOK',
-          value: 1000, // 10 NOK (value is in øre)
+          value: amountInOere,
         },
         paymentMethod: {
           type: 'WALLET',
@@ -81,7 +91,7 @@ export async function POST() {
         returnUrl: fallbackUrl,
         transaction: {
           reference: orderId,
-          paymentDescription: 'Donasjon til GameNight',
+          paymentDescription: `Donasjon til GameNight (${amount} NOK)`,
         },
       }),
     });
