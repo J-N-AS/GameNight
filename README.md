@@ -1,4 +1,3 @@
-
 # GameNight: Den Komplette Guiden til Prosjektet
 
 Velkommen til GameNight-prosjektet! Dette dokumentet gir en grundig oversikt over prosjektets mål, tekniske arkitektur, forretningsstrategi og fremtidsvisjoner. Målet er å fungere som en sentral informasjonskilde for utvikling og strategiske diskusjoner.
@@ -60,7 +59,7 @@ Prosjektet er organisert for å være lett å vedlikeholde og utvide.
 -   `src/components/`: Gjenbrukbare React-komponenter, inkludert spillkomponenter (`GameFlow`, `TaskCard`), UI-elementer og den globale oppsummeringsskjermen.
 -   **`src/data/` - Hjertet av innholdet:** Alt innhold administreres via enkle JSON-filer, noe som gjør det ekstremt lett å legge til nye spill og artikler.
     -   **Spill (`[spill-id].json`):** Hvert spill har sin egen fil. Strukturen er som følger:
-        -   `id`: Unik identifikator (filnavn).
+        -   `id`: Unik identifikator (må matche filnavn).
         -   `title`, `description`, `emoji`: Visuell informasjon.
         -   `intensity`, `audience`, `category`, `tags`: For filtrering og kategorisering.
         -   `requiresPlayers`: `true` hvis spillere må legges til.
