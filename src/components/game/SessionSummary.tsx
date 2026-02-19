@@ -3,12 +3,11 @@
 import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import { usePlayers } from '@/hooks/usePlayers';
 import { Button } from '@/components/ui/button';
-import { Share2, Download, Crosshair, Droplet, Flame, Loader2 } from 'lucide-react';
+import { Share2, Download, Zap, Laugh, BrainCircuit, Loader2 } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
 
 export function SessionSummary() {
   const { players } = usePlayers();
@@ -35,9 +34,9 @@ export function SessionSummary() {
   };
 
   const awards = [
-    { icon: Crosshair, title: 'Kveldens Skyteskive', subtitle: 'Mest utsatt', player: getPlayerName(0) },
-    { icon: Droplet, title: 'Hydreringssjefen', subtitle: 'Trengte vann', player: getPlayerName(1) },
-    { icon: Flame, title: 'Kveldens Grensesprenger', subtitle: 'Drøyest', player: getPlayerName(2) },
+    { icon: Zap, title: 'Kaos-agenten', subtitle: 'Skapte mest liv', player: getPlayerName(0) },
+    { icon: Laugh, title: 'Kveldens Komiker', subtitle: 'Mest underholdende', player: getPlayerName(1) },
+    { icon: BrainCircuit, title: 'Festens Strateg', subtitle: 'Tenkte (litt for) mye', player: getPlayerName(2) },
   ];
 
   const generateImageAnd = useCallback(async (action: 'share' | 'download') => {
@@ -48,9 +47,6 @@ export function SessionSummary() {
       // Use a higher pixel density for better quality
       const dataUrl = await htmlToImage.toPng(summaryRef.current, { 
           pixelRatio: 2,
-          // Set canvas dimensions to match the element for consistency
-          canvasWidth: summaryRef.current.clientWidth * 2,
-          canvasHeight: summaryRef.current.clientHeight * 2,
       });
 
       if (action === 'share') {
