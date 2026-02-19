@@ -11,7 +11,7 @@ export function AppFooter() {
   }, []);
 
   return (
-    <footer className="w-full flex-shrink-0 py-6 px-4 md:px-6 z-10">
+    <footer className="w-full flex-shrink-0 py-6 px-4 md:px-6 z-10 print:hidden">
       <div className="container mx-auto flex flex-col items-center justify-center gap-4 text-center text-sm text-muted-foreground">
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
           {year && <span>&copy; {year} GameNight</span>}
