@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Star } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Star, HardHat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from './PlayerSetup';
 import Link from 'next/link';
@@ -161,6 +161,13 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           )}
       </motion.div>
 
+      <motion.div
+        className="mb-16 w-full max-w-md mx-auto"
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.4 } } }}
+      >
+        <PartyTools />
+      </motion.div>
+
       <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}>
           <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
             ⭐ Anbefalt Nå
@@ -181,15 +188,6 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
               ))}
           </div>
       </motion.div>
-
-      {isLoaded && players.length > 0 && (
-        <motion.div
-          className="mb-16 w-full max-w-md mx-auto"
-          variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.4 } } }}
-        >
-          <PartyTools />
-        </motion.div>
-      )}
 
       <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
         <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
@@ -281,3 +279,5 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
     </motion.div>
   );
 }
+
+    
