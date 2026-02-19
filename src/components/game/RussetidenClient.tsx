@@ -3,7 +3,6 @@
 import { useState, useRef } from 'react';
 import type { Game } from '@/lib/types';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -37,7 +36,7 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
     const gameUrl = `https://gamenight.no/spill/${game.id}`;
     
     const storyPromoStyle = {
-      background: `linear-gradient(to bottom right, ${game.color?.replace(')', ', 0.35)').replace('hsl(','hsla(') || 'hsl(var(--primary))'}, #111010)`
+      background: `linear-gradient(to bottom right, ${game.color?.replace('hsl', 'hsla').replace(')', '/ 0.35)') || 'hsl(var(--primary))'}, #111010)`
     }
 
     const handleDownload = async (type: 'story' | 'qr') => {
@@ -109,11 +108,7 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
                             style={storyPromoStyle}
                         >
                             <div className="text-center">
-                                <div 
-                                    className="w-20 h-20 flex items-center justify-center mx-auto mb-4"
-                                >
-                                    <span className="text-4xl">{game.emoji}</span>
-                                </div>
+                                <div className="text-4xl mb-4">{game.emoji}</div>
                                 <h3 className="text-2xl font-bold leading-tight">{game.title}</h3>
                             </div>
                             <div className="flex flex-col items-center gap-4">
@@ -167,18 +162,18 @@ const CustomGameCard = ({ game, onPromoClick }: { game: ListedGame, onPromoClick
         }
     };
     
-    const cardStyle = {
-        background: `radial-gradient(circle at top, ${game.color?.replace(')', ', 0.15)').replace('hsl(','hsla(') || 'hsl(var(--primary))'}, hsl(var(--card)) 70%)`
-    }
-
     return (
         <Card 
             className="h-full flex flex-col transition-all duration-300 backdrop-blur-sm border-border hover:border-primary hover:shadow-2xl hover:shadow-primary/10"
-            style={cardStyle}
         >
             <div onClick={handleGameSelect} className="cursor-pointer group h-full flex flex-col">
                 <CardHeader className="flex-row items-start gap-4">
-                    <div className="text-4xl mt-1">{game.emoji}</div>
+                    <div 
+                        className="w-16 h-16 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: game.color ? game.color.replace('hsl','hsla').replace(')',' / 0.2)') : 'hsl(var(--primary) / 0.2)' }}
+                    >
+                        <span className="text-3xl">{game.emoji}</span>
+                    </div>
                     <div>
                         <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">{game.title}</CardTitle>
                         <CardDescription className="mt-1 text-muted-foreground/80">{game.description}</CardDescription>

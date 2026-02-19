@@ -4,7 +4,6 @@ import type { Game } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Instagram, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { GameMenu } from './GameMenu';
 import Link from 'next/link';
 
@@ -17,8 +16,9 @@ export function CustomGameLobby({ game, onStart }: CustomGameLobbyProps) {
   
   const extractHslValues = (hslString?: string) => {
     if (!hslString) return '';
-    const match = hslString.match(/(\d+)\s+(\d+)%\s+(\d+)%/);
-    return match ? `${match[1]} ${match[2]}% ${match[3]}%` : '';
+    // Extracts "280 75% 55%" from "hsl(280 75% 55%)"
+    const match = hslString.match(/hsl\((.*?)\)/);
+    return match ? match[1] : '';
   };
   
   const accentColor = extractHslValues(game.color) || '45 93% 47%';
@@ -54,18 +54,7 @@ export function CustomGameLobby({ game, onStart }: CustomGameLobbyProps) {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: 'spring', delay: 0.2, duration: 0.7 }}
           >
-            {game.logo ? (
-              <Image 
-                src={game.logo} 
-                alt={`${game.title} logo`} 
-                width={150} 
-                height={150} 
-                className="rounded-2xl shadow-2xl object-contain"
-                priority
-              />
-            ) : (
-              <div className="text-8xl">{game.emoji}</div>
-            )}
+            <div className="text-8xl">{game.emoji}</div>
           </motion.div>
           
           <motion.h1
