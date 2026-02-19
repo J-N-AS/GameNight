@@ -12,11 +12,9 @@
   "category": ["Party", "Kaos", "18+"],
   "tags": ["Russ"],
   "custom": true,
-  "hidden": true,
   "isHiddenFromMain": true,
   "region": "Akershus",
   "kommune": "Bærum",
-  "logo": "/logos/rt-2025-dummy-logo.png",
   "instagram": "https://www.instagram.com/gamenight.no",
   "items": [
     { "type": "pointing", "text": "Hvem er bussens mest kaotiske medlem?" },

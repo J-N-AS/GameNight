@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import type { Game } from '@/lib/types';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { Mail, QrCode, Download, Share2, Loader2, Instagram } from 'lucide-react';
+import { Rocket, QrCode, Download, Share2, Loader2, Instagram } from 'lucide-react';
 import QRCode from 'react-qr-code';
 import * as htmlToImage from 'html-to-image';
 
@@ -69,12 +69,16 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
                 <div className="space-y-4 py-4">
                      <p className="text-sm font-semibold text-center">Forhåndsvisning (Instagram Story)</p>
                      <div className="w-full max-w-[250px] mx-auto aspect-[9/16] rounded-lg overflow-hidden border">
-                         {/* This is the visible preview, not the one we download */}
                         <div 
                             className="w-full h-full p-6 flex flex-col items-center justify-between text-white bg-gradient-to-br from-gray-900 via-gray-800 to-black"
                         >
                             <div className="text-center">
-                                {game.logo && <Image src={game.logo} alt={`${game.title} Logo`} width={80} height={80} className="mx-auto rounded-xl mb-4" />}
+                                <div 
+                                    className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto mb-4" 
+                                    style={{ backgroundColor: game.color || 'hsl(var(--primary))' }}
+                                >
+                                    <span className="text-4xl">{game.emoji}</span>
+                                </div>
                                 <h3 className="text-2xl font-bold leading-tight">{game.title}</h3>
                             </div>
                             <div className="flex flex-col items-center gap-4">
@@ -100,11 +104,15 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
                 </DialogFooter>
             </DialogContent>
             
-            {/* Hidden elements for image generation */}
             <div className="fixed -z-10 -left-[9999px] top-0">
                 <div ref={storyRef} className="w-[1080px] h-[1920px] p-24 flex flex-col items-center justify-between text-white bg-gradient-to-br from-gray-900 via-gray-800 to-black">
                      <div className="text-center">
-                        {game.logo && <Image src={game.logo} alt={`${game.title} Logo`} width={300} height={300} className="mx-auto rounded-3xl mb-8" />}
+                        <div 
+                            className="w-[300px] h-[300px] rounded-3xl flex items-center justify-center mx-auto mb-8"
+                            style={{ backgroundColor: game.color || 'hsl(var(--primary))' }}
+                        >
+                            <span className="text-8xl">{game.emoji}</span>
+                        </div>
                         <h3 className="text-8xl font-bold leading-tight">{game.title}</h3>
                     </div>
                     <div className="flex flex-col items-center gap-8">
@@ -146,11 +154,12 @@ const CustomGameCard = ({ game, onPromoClick }: { game: ListedGame, onPromoClick
         <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:shadow-2xl hover:shadow-primary/10">
             <div onClick={handleGameSelect} className="cursor-pointer group h-full flex flex-col">
                 <CardHeader className="flex-row items-start gap-4">
-                    {game.logo ? (
-                         <Image src={game.logo} alt={`${game.title} Logo`} width={60} height={60} className="rounded-lg mt-1" />
-                    ) : (
-                        <div className="text-4xl mt-1">{game.emoji}</div>
-                    )}
+                    <div
+                        className="w-16 h-16 rounded-xl flex items-center justify-center shrink-0 mt-1"
+                        style={{ backgroundColor: game.color || 'hsl(var(--primary))' }}
+                    >
+                        <span className="text-4xl">{game.emoji}</span>
+                    </div>
                     <div>
                         <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">{game.title}</CardTitle>
                         <CardDescription className="mt-1 text-muted-foreground/80">{game.description}</CardDescription>
@@ -217,7 +226,7 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
                 </section>
                 
                 <section>
-                    <h2 className="text-3xl font-bold font-headline tracking-tighter text-center mb-6">Eksklusive Buss-spill</h2>
+                    <h2 className="text-3xl font-bold font-headline tracking-tighter text-center mb-6">Eksklusive Gruppespill</h2>
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                         {customGames.map((game) => (
                            <motion.div key={game.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -226,12 +235,12 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
                         ))}
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                             <Card className="h-full flex flex-col items-center justify-center text-center p-6 bg-card/80 border-2 border-dashed border-primary/50">
-                                 <CardTitle className="text-xl font-bold mb-2">Vil din gruppe ha sitt eget spill?</CardTitle>
-                                 <CardDescription className="mb-4">Vi bygger en skreddersydd kortstokk for deres buss eller van med deres interne vitser og straffer.</CardDescription>
+                                 <CardTitle className="text-xl font-bold mb-2">Bygg et eget spill for deres gruppe!</CardTitle>
+                                 <CardDescription className="mb-4">Lag deres helt egne kortstokk med interne vitser og straffer. Det er 100 % gratis, og dere får deres egen QR-kode til å dele med gruppa.</CardDescription>
                                  <Button asChild>
-                                     <a href="mailto:kontakt@gamenight.no?subject=Custom%20Spill%20Russetiden">
-                                         <Mail className="mr-2" />
-                                         Kontakt oss for pris
+                                     <a href="https://gamenight-builder.web.app/" target="_blank" rel="noopener noreferrer">
+                                         <Rocket className="mr-2" />
+                                         Start Spill-byggeren
                                      </a>
                                  </Button>
                             </Card>

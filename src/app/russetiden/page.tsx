@@ -3,10 +3,9 @@ import type { Game } from '@/lib/types';
 import type { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowLeft, Mail } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
 import { RussetidenClient } from '@/components/game/RussetidenClient';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
 export const metadata: Metadata = {

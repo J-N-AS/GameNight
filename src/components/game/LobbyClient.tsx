@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PlayerSetup } from '@/components/game/PlayerSetup';
+import { PlayerSetup } from './PlayerSetup';
 import Link from 'next/link';
 import Image from 'next/image';
-import { GameMenu } from '@/components/game/GameMenu';
+import { GameMenu } from './GameMenu';
 import { motion } from 'framer-motion';
 import { useSession } from '@/hooks/usePlayers';
 import {
@@ -106,7 +106,6 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         </p>
       </motion.header>
       
-      {/* Hero CTA */}
       <motion.div 
         className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.1 } } }}
@@ -162,7 +161,6 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           )}
       </motion.div>
 
-      {/* Recommended Games */}
       <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}>
           <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
             ⭐ Anbefalt Nå
@@ -184,7 +182,6 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           </div>
       </motion.div>
 
-      {/* Party Tools */}
       {isLoaded && players.length > 0 && (
         <motion.div
           className="mb-16 w-full max-w-md mx-auto"
@@ -194,8 +191,27 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         </motion.div>
       )}
 
-      {/* Themes */}
       <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
+        <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
+            <Star className="h-6 w-6 text-primary" /> Spesielle Anledninger
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <Link href="/russetiden" className="group block">
+                <Card className="text-center p-6 transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
+                    <div className="text-4xl mb-2">🚌</div>
+                    <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">Russetiden</h3>
+                </Card>
+            </Link>
+            <Link href="/fadderuka" className="group block">
+                <Card className="text-center p-6 transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
+                    <div className="text-4xl mb-2">🎉</div>
+                    <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">Fadderuka</h3>
+                </Card>
+            </Link>
+        </div>
+      </motion.div>
+
+      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
         <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
             <Wand2 className="h-6 w-6 text-primary" /> Utforsk temaer
         </h2>
@@ -211,8 +227,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         </div>
       </motion.div>
 
-      {/* Classic Games & Music Games */}
-      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
+      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.7 } } }}>
           <section className="text-center">
              <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <Beer className="h-6 w-6 text-accent" /> Klassiske Drikkeleker
@@ -242,7 +257,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           </section>
       </motion.div>
 
-      <motion.div className="mt-16 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.5 }}>
+      <motion.div className="mt-16 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.5 }}>
         <AdBanner />
       </motion.div>
       
