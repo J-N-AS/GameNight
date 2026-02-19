@@ -5,9 +5,11 @@ import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { AdBanner } from '@/components/ads/AdBanner';
-import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import { GameMenu } from '@/components/game/GameMenu';
 
 type ListedGame = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -17,56 +19,26 @@ interface FadderukaClientProps {
     day5Games: ListedGame[];
 }
 
-const IcebreakerArticles = () => (
-    <div className="mt-16 md:mt-24 max-w-4xl mx-auto">
-        <Separator />
-        <div className="text-center py-12">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline tracking-tighter">
-                Topp 3 fysiske isbrytere for faddergruppen
-            </h2>
-            <p className="text-muted-foreground mt-3 text-lg max-w-2xl mx-auto">
-                Trenger dere en pause fra kortene? Her er tre enkle og hysterisk morsomme leker som garantert får opp energien og samholdet.
-            </p>
-        </div>
-        <div className="space-y-8">
-            <Card className="bg-card/60 backdrop-blur-sm">
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-2xl font-headline">
-                        <span className="text-2xl">🏷️</span>
-                        Hvem er jeg? (Kjendis-leken)
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="text-muted-foreground space-y-3 text-base leading-relaxed">
-                    <p>En sikker vinner mens folk ankommer vorspielet! Skriv navnet på kjente personer på Post-it lapper, og fest en lapp i panna eller på ryggen til hver deltaker.</p>
-                    <p>Deltakerne må mingle og stille hverandre ja/nei-spørsmål for å finne ut hvem de er. Taperne tar en felles skål til slutt!</p>
-                </CardContent>
-            </Card>
-            <Card className="bg-card/60 backdrop-blur-sm">
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-2xl font-headline">
-                        <span className="text-2xl">🦖</span>
-                        Evolusjonsleken
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="text-muted-foreground space-y-3 text-base leading-relaxed">
-                    <p>Den ultimate energibomben. Alle starter som et 'Egg' ved å vralte rundt og si 'egg, egg, egg'. Når to egg møtes, spiller de stein-saks-papir. Vinneren utvikler seg til en 'Kylling' (flaks med armene), mens taperen forblir et egg.</p>
-                    <p>Kyllinger møter kyllinger, og vinnerne blir 'Fugler', og til slutt 'Supermenn' (med armene i været). Det er hysterisk kaos!</p>
-                </CardContent>
-            </Card>
-            <Card className="bg-card/60 backdrop-blur-sm">
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-2xl font-headline">
-                        <span className="text-2xl">🪢</span>
-                        Menneskeknuten
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="text-muted-foreground space-y-3 text-base leading-relaxed">
-                    <p>Stå i en tett sirkel. Alle lukker øynene og strekker hendene frem, og griper to tilfeldige hender (men ikke fra personen rett ved siden av).</p>
-                    <p>Nå åpner dere øynene, og gruppen må samarbeide for å 'vikle ut' knuten uten at noen slipper taket. Den perfekte teambuilderen!</p>
-                </CardContent>
-            </Card>
-        </div>
-    </div>
+const SeoArticle = () => (
+    <article className="prose prose-invert lg:prose-lg max-w-4xl mx-auto mt-24 mb-16 px-4">
+        <h2>Den ultimate guiden til fysiske bli-kjent-leker i Fadderuka</h2>
+        <p>Fadderuka er en virvelvind av nye fjes, og som fadder er din viktigste jobb å knuse den kleine stillheten. Å stole utelukkende på at praten går av seg selv fungerer sjelden. Her er fem skuddsikre isbrytere som ikke krever verken apper eller dyrt utstyr, og som garantert får stemningen i taket.</p>
+
+        <h3>1. Hvem er jeg? (Kjendis-leken)</h3>
+        <p>En sikker vinner mens folk ankommer vorspielet! Skriv navnet på kjente personer på Post-it lapper, og fest en lapp i panna eller på ryggen til hver deltaker. Deltakerne må mingle og stille hverandre ja/nei-spørsmål for å finne ut hvem de er. Taperne tar en felles skål til slutt!</p>
+
+        <h3>2. Evolusjonsleken</h3>
+        <p>Den ultimate energibomben. Alle starter som et 'Egg' ved å vralte rundt og si 'egg, egg, egg'. Når to egg møtes, spiller de stein-saks-papir. Vinneren utvikler seg til en 'Kylling' (flaks med armene), mens taperen forblir et egg. Kyllinger møter kyllinger, og vinnerne blir 'Fugler', og til slutt 'Supermenn' (med armene i været). Det er hysterisk kaos!</p>
+
+        <h3>3. Menneskeknuten</h3>
+        <p>Stå i en tett sirkel. Alle lukker øynene og strekker hendene frem, og griper to tilfeldige hender (men ikke fra personen rett ved siden av). Nå åpner dere øynene, og gruppen må samarbeide for å 'vikle ut' knuten uten at noen slipper taket. Den perfekte teambuilderen!</p>
+        
+        <h3>4. To Sannheter og En Løgn</h3>
+        <p>Alle sitter i en sirkel. Hver person forteller tre 'fakta' om seg selv – to som er sanne, og én som er løgn. Gruppen diskuterer og stemmer over hvilken påstand de tror er løgnen. Det er en fantastisk måte å lære overraskende ting om hverandre på.</p>
+
+        <h3>5. Mingle-Bingo</h3>
+        <p>Lag et bingobrett med ulike påstander som 'Har samme favorittfilm som deg', 'Har vært i Asia', 'Snakker mer enn to språk'. Målet er å mingle og finne en person som passer til hver rute. Førstemann som får bingo, vinner heder og ære!</p>
+    </article>
 );
 
 
@@ -109,25 +81,44 @@ export function FadderukaClient({ day1Games, day3Games, day5Games }: FadderukaCl
     );
 
     return (
-        <>
+        <div className="container mx-auto px-4 py-8 md:py-12">
+            <div className="absolute top-4 left-4 z-10">
+                <Button variant="ghost" asChild>
+                    <Link href="/">
+                        <ArrowLeft className="mr-2 h-4 w-4" />
+                        Tilbake til forsiden
+                    </Link>
+                </Button>
+            </div>
+            <div className="absolute top-4 right-4 z-10">
+                <GameMenu context="lobby" />
+            </div>
+
+            <header className="text-center my-10 md:my-12 pt-8">
+                <h1 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter">
+                    Fadderuka: Den ultimate verktøykassen for faddere
+                </h1>
+                <p className="text-muted-foreground mt-3 text-lg max-w-2xl mx-auto">
+                    Gjør vorspielet episk, inkluderende og gøy. Bli-kjent-leker, lagkonkurranser og klassiske selskapsleker – alt samlet på ett sted, 100 % gratis.
+                </p>
+            </header>
+            
             <div className="space-y-12">
                 {renderGameSection("Dag 1: Bryt isen (Null drikkepress)", day1Games)}
                 {renderGameSection("Dag 3: Vorspielet tar fyr", day3Games)}
                 {renderGameSection("Dag 5: Faddergruppenes Kamp", day5Games)}
             </div>
-            
+
+            <SeoArticle />
+
             <motion.div
-                className="mt-16 flex justify-center"
+                className="w-full flex justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
             >
                 <AdBanner />
             </motion.div>
-
-            <div className="container mx-auto px-4 pb-12">
-                <IcebreakerArticles />
-            </div>
-        </>
+        </div>
     );
 }
