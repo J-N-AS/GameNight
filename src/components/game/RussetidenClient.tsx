@@ -241,6 +241,15 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
                     </div>
                 </section>
                 
+                <div className="my-12 text-center">
+                    <Button asChild size="lg" variant="outline">
+                        <Link href="/alle-spill">
+                            <Gamepad2 className="mr-2 h-5 w-5" />
+                            Se flere spill
+                        </Link>
+                    </Button>
+                </div>
+                
                 <section>
                     <h2 className="text-3xl font-bold font-headline tracking-tighter text-center mb-6">Eksklusive Gruppespill</h2>
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -263,15 +272,6 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
                         </motion.div>
                     </div>
                 </section>
-            </div>
-
-            <div className="my-16 text-center">
-                <Button asChild size="lg" variant="outline">
-                    <Link href="/alle-spill">
-                        <Gamepad2 className="mr-2 h-5 w-5" />
-                        Se alle spill
-                    </Link>
-                </Button>
             </div>
 
             <article className="prose prose-invert lg:prose-lg max-w-4xl mx-auto mt-24 mb-16 px-4">
