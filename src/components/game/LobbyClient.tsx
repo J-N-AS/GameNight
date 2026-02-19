@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Star, HardHat } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Star, HardHat, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from './PlayerSetup';
 import Link from 'next/link';
@@ -37,6 +37,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
   const [isSurpriseMeOpen, setIsSurpriseMeOpen] = useState(false);
   const [surpriseGame, setSurpriseGame] = useState<GameFromGetGames | null>(null);
+  const [isDonating, setIsDonating] = useState(false);
   
   const { players, isLoaded } = useSession();
   const router = useRouter();
@@ -75,6 +76,39 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         return;
       }
       router.push(`/spill/${surpriseGame.id}`);
+    }
+  };
+
+  const handleDonate = async () => {
+    setIsDonating(true);
+    try {
+        const response = await fetch('/api/vipps/donate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: 25 })
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'not_configured') {
+            toast({
+                title: 'Tusen takk for tanken! ❤️',
+                description: 'Donasjoner er ikke aktivert helt enda, men vi setter utrolig stor pris på at du ville støtte oss!',
+            });
+        } else if (data.status === 'success' && data.checkoutFrontendUrl) {
+            window.location.href = data.checkoutFrontendUrl;
+        } else {
+            throw new Error(data.message || 'En ukjent feil oppstod');
+        }
+    } catch (error) {
+        console.error("Donation failed:", error);
+        toast({
+            title: 'Noe gikk galt',
+            description: 'Kunne ikke starte donasjonen. Vennligst prøv igjen senere.',
+            variant: 'destructive',
+        });
+    } finally {
+        setIsDonating(false);
     }
   };
 
@@ -249,6 +283,40 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
 
       <motion.div className="mt-16 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.5 }}>
         <AdBanner />
+      </motion.div>
+
+      <motion.div 
+        className="mt-8 text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
+      >
+          <p className="text-sm text-muted-foreground">Liker du GameNight? Støtt oss med en kaffe (25 kr)! ☕</p>
+          <div className="mt-4 flex justify-center items-center min-h-[48px]">
+              <div className="w-full max-w-[280px]">
+                  <Button
+                      onClick={handleDonate}
+                      disabled={isDonating}
+                      className="w-full h-auto p-0 bg-transparent hover:bg-transparent disabled:opacity-50"
+                      aria-label="Doner 25 kr med Vipps"
+                  >
+                      {isDonating ? (
+                          <div className="flex items-center justify-center w-full h-[48px] bg-muted/50 rounded-lg">
+                              <Loader2 className="h-6 w-6 animate-spin" />
+                          </div>
+                      ) : (
+                          <Image
+                              src="/vipps-button.svg"
+                              alt="Doner 25 kr med Vipps"
+                              width={280}
+                              height={48}
+                              className="w-full h-auto rounded-lg"
+                              priority
+                          />
+                      )}
+                  </Button>
+              </div>
+          </div>
       </motion.div>
       
       <Dialog open={isSurpriseMeOpen} onOpenChange={setIsSurpriseMeOpen}>

@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Mail, Gamepad2, Library, Music, Download, Trophy, Loader2 } from 'lucide-react';
+import { ArrowLeft, Mail, Gamepad2, Library, Music, Download, Trophy, Loader2, Lightbulb, DatabaseZap, Code } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AdBanner } from '@/components/ads/AdBanner';
 import { useState } from 'react';
@@ -103,18 +103,28 @@ function OmOssContent() {
             Se etter en "Installer"-knapp på siden, eller bruk "Legg til på Hjem-skjerm"-funksjonen i nettleseren din.
           </p>
         </div>
-
-        <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
-          <h3 className="font-semibold text-foreground text-xl">Hvordan holder vi det gratis?</h3>
-          <p>
-            Vårt håp er å kunne holde GameNight gratis så lenge som mulig. For å dekke kostnadene for servere og videreutvikling, viser vi annonser. Dette lar oss fortsette å lage nye spill og forbedre siden uten å måtte ta betalt fra deg.
-          </p>
-        </div>
         
         <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
-          <h3 className="font-semibold text-foreground text-xl">Et lidenskapsprosjekt</h3>
+          <Lightbulb className="mx-auto h-8 w-8 text-accent mb-2" />
+          <h3 className="font-semibold text-foreground text-xl">Vår Filosofi: Et Lidenskapsprosjekt</h3>
           <p>
-            GameNight er et lidenskapsprosjekt som utvikles på fritiden. Det betyr at nye funksjoner og spill kommer når inspirasjonen (og tiden) strekker til. Vi setter utrolig stor pris på tålmodigheten og støtten fra dere!
+            GameNight er et lidenskapsprosjekt som utvikles på fritiden. Kvalitet og brukeropplevelse trumfer alt. Forretningsmodellen med annonser og donasjoner er designet for å støtte prosjektet, ikke for å maksimere profitt. Målet er å vokse organisk gjennom fornøyde brukere som deler siden videre.
+          </p>
+        </div>
+
+        <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
+          <DatabaseZap className="mx-auto h-8 w-8 text-accent mb-2" />
+          <h3 className="font-semibold text-foreground text-xl">Enkel Innholdsstrategi</h3>
+          <p>
+            Alt spillinnhold, fra oppgaver i 'Pekefest' til reglene i 'Beer Pong', styres av enkle JSON-filer. Dette gjør det ekstremt lett for oss å legge til nye spill, oppdatere innhold og til og med lage skreddersydde spill for spesielle anledninger som for russegrupper – helt uten å endre koden.
+          </p>
+        </div>
+
+        <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
+          <Code className="mx-auto h-8 w-8 text-accent mb-2" />
+          <h3 className="font-semibold text-foreground text-xl">Bygget på Moderne Teknologi</h3>
+          <p>
+            For å sikre en rask og pålitelig opplevelse er GameNight bygget med <strong>Next.js (App Router)</strong> for optimal ytelse og SEO. Vi bruker <strong>ShadCN UI</strong> og <strong>Tailwind CSS</strong> for et rent og responsivt design. Hele appen er en <strong>PWA (Progressive Web App)</strong>, som sikrer full offline-funksjonalitet.
           </p>
         </div>
 
