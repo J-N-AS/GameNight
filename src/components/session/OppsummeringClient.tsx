@@ -15,12 +15,16 @@ import Confetti from 'react-confetti';
 import type { PlayerStats } from '@/lib/types';
 
 
-type SummaryTheme = 'dark' | 'light' | 'festive';
+type SummaryTheme = 'dark' | 'light' | 'festive' | 'sunset' | 'ocean' | 'forest' | 'aurora';
 
-const themes: {id: SummaryTheme, name: string, className: string}[] = [
-    { id: 'dark', name: 'Mørk', className: 'bg-background text-foreground' },
-    { id: 'light', name: 'Lys', className: 'bg-white text-black' },
-    { id: 'festive', name: 'Festlig', className: 'bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white' },
+const themes: {id: SummaryTheme, name: string, className: string, textColor: string}[] = [
+    { id: 'dark', name: 'Mørk', className: 'bg-background text-foreground', textColor: 'text-accent' },
+    { id: 'light', name: 'Lys', className: 'bg-white text-black', textColor: 'text-primary' },
+    { id: 'festive', name: 'Festlig', className: 'bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white', textColor: 'text-white' },
+    { id: 'sunset', name: 'Solnedgang', className: 'bg-gradient-to-br from-orange-400 via-red-500 to-purple-600 text-white', textColor: 'text-white' },
+    { id: 'ocean', name: 'Havblå', className: 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white', textColor: 'text-white' },
+    { id: 'forest', name: 'Skog', className: 'bg-gradient-to-br from-green-500 to-teal-700 text-white', textColor: 'text-white' },
+    { id: 'aurora', name: 'Nordlys', className: 'bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 text-white', textColor: 'text-white' },
 ];
 
 function useWindowSize() {
@@ -46,7 +50,7 @@ export function OppsummeringClient() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isShareSupported, setIsShareSupported] = useState(false);
   const [isDonating, setIsDonating] = useState(false);
-  const [activeTheme, setActiveTheme] = useState<SummaryTheme>('dark');
+  const [activeTheme, setActiveTheme] = useState<SummaryTheme>('festive');
   const [showConfetti, setShowConfetti] = useState(true);
   const { toast } = useToast();
 
@@ -106,13 +110,14 @@ export function OppsummeringClient() {
     setIsGenerating(true);
     try {
       const currentTheme = themes.find(t => t.id === activeTheme);
-      const backgroundColor = currentTheme?.id === 'light' ? '#ffffff' : '#1a1a1a'; // Darker background for dark theme image
+      const isGradient = currentTheme?.className.includes('bg-gradient');
+      const backgroundColor = currentTheme?.id === 'light' ? '#ffffff' : '#1c1717';
 
       const dataUrl = await htmlToImage.toPng(summaryRef.current, { 
           pixelRatio: 2.5,
           cacheBust: true,
           skipAutoScale: true,
-          backgroundColor: currentTheme?.id !== 'festive' ? backgroundColor : undefined,
+          backgroundColor: !isGradient ? backgroundColor : undefined,
        });
 
       if (action === 'share' && isShareSupported) {
@@ -248,9 +253,7 @@ export function OppsummeringClient() {
                             <p className="text-xs opacity-70">{award.subtitle}</p>
                             <p className={cn(
                                 "text-4xl font-extrabold mt-1 truncate max-w-full drop-shadow-lg",
-                                activeTheme === 'dark' && "text-accent",
-                                activeTheme === 'light' && "text-primary",
-                                activeTheme === 'festive' && "text-white"
+                                currentThemeDetails?.textColor
                             )}>{award.player.name}</p>
                         </div>
                     ))}
@@ -262,16 +265,20 @@ export function OppsummeringClient() {
                 <Card className="w-full p-4 bg-card/80">
                     <CardContent className="p-0">
                         <p className="text-sm font-medium mb-3 text-center flex items-center justify-center gap-2"><Palette className="h-4 w-4" /> Velg tema</p>
-                        <div className="flex justify-center gap-2">
+                        <div className="flex flex-wrap justify-center gap-3">
                             {themes.map(theme => (
-                                <Button 
+                                <button
                                     key={theme.id}
-                                    variant={activeTheme === theme.id ? 'default' : 'outline'}
                                     onClick={() => setActiveTheme(theme.id)}
-                                    size="sm"
-                                >
-                                    {theme.name}
-                                </Button>
+                                    title={theme.name}
+                                    aria-label={`Velg tema: ${theme.name}`}
+                                    className={cn(
+                                        "h-8 w-8 rounded-full border-2 transition-all duration-200 transform hover:scale-110",
+                                        "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring focus:ring-offset-background",
+                                        activeTheme === theme.id ? 'border-primary scale-125' : 'border-transparent',
+                                        theme.className
+                                    )}
+                                />
                             ))}
                         </div>
                     </CardContent>
