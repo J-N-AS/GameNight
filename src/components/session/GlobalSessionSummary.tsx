@@ -14,13 +14,7 @@ import {
 import { Share2, Download, Trophy, Shield, Crosshair, Loader2, PartyPopper } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 import { useToast } from '@/hooks/use-toast';
-
-// For Vipps Web Component
-declare namespace JSX {
-    interface IntrinsicElements {
-        'vipps-mobilepay-button': any;
-    }
-}
+import { VippsDonateButton } from '../common/VippsDonateButton';
 
 interface GlobalSessionSummaryProps {
   open: boolean;
@@ -224,16 +218,11 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
             <div className="w-full max-w-sm mx-auto space-y-4 text-center border-t border-border pt-6">
                 <p className="text-sm text-muted-foreground">Gjorde GameNight kvelden deres bedre? <br/> Spander en tier på utviklerne!</p>
                 <div className="min-h-[48px]">
-                    <vipps-mobilepay-button
-                        variant="primary"
-                        verb="donate"
-                        language="no"
-                        brand="vipps"
-                        amount="25"
-                        loading={isDonating.toString()}
+                    <VippsDonateButton
+                        amount={25}
+                        loading={isDonating}
                         onClick={handleDonate}
-                        stretched
-                    ></vipps-mobilepay-button>
+                    />
                 </div>
             </div>
 

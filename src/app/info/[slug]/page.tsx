@@ -9,13 +9,8 @@ import { motion } from 'framer-motion';
 import { AdBanner } from '@/components/ads/AdBanner';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { VippsDonateButton } from '@/components/common/VippsDonateButton';
 
-// For Vipps Web Component
-declare namespace JSX {
-    interface IntrinsicElements {
-        'vipps-mobilepay-button': any;
-    }
-}
 
 function OmOssContent() {
     const [donationAmount, setDonationAmount] = useState(50);
@@ -143,16 +138,11 @@ function OmOssContent() {
                 ))}
             </div>
             <div className="mt-4 min-h-[48px]">
-                <vipps-mobilepay-button
-                    variant="primary"
-                    verb="donate"
-                    language="no"
-                    brand="vipps"
+                <VippsDonateButton
                     amount={donationAmount}
-                    loading={isDonating.toString()}
+                    loading={isDonating}
                     onClick={handleDonate}
-                    stretched
-                ></vipps-mobilepay-button>
+                />
             </div>
             <p className="text-xs text-muted-foreground/80 pt-2">
               Donasjon via Vipps er den enkleste og tryggeste måten å støtte oss på.
