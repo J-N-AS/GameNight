@@ -3,7 +3,7 @@ import { getThemes } from '@/lib/themes';
 import { LobbyClient } from '@/components/game/LobbyClient';
 import type { Game, Theme } from '@/lib/types';
 
-const RECOMMENDED_GAME_IDS = ['vorspiel-mix', 'party-klassikere', 'pekefest-klassisk'];
+const RECOMMENDED_GAME_IDS = ['vorspiel-mix', 'party-klassikere', 'pekefest'];
 
 export default async function Home() {
   const allGames = await getGames();
