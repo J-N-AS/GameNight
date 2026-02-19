@@ -3,6 +3,7 @@
 import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import { useSession } from '@/hooks/usePlayers';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +15,6 @@ import {
 import { Share2, Download, Trophy, Shield, Crosshair, Loader2, PartyPopper } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 import { useToast } from '@/hooks/use-toast';
-import { VippsDonateButton } from '../common/VippsDonateButton';
 
 interface GlobalSessionSummaryProps {
   open: boolean;
@@ -35,21 +35,33 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
         if (navigator.share && navigator.canShare) {
             setIsShareSupported(true);
         }
-        setLogoUrl(`${window.location.origin}/GameNight-logo-small.webp`);
+        setLogoUrl(new URL('/GameNight-logo-small.webp', window.location.origin).href);
     }
   }, []);
 
   const awards = useMemo(() => {
-    if (!players || players.length === 0) return [];
+    if (!players || players.length < 2) return [];
     
     const mvp = [...players].sort((a, b) => b.stats.tasksCompleted - a.stats.tasksCompleted)[0];
     const skyteskive = [...players].sort((a, b) => b.stats.timesTargeted - a.stats.timesTargeted)[0];
     const teflon = [...players].sort((a, b) => a.stats.penalties - b.stats.penalties)[0];
 
+    // Ensure we don't have duplicate players for awards if there are few players
+    const awardPlayers = [mvp, skyteskive, teflon];
+    const uniqueAwardPlayers = [...new Set(awardPlayers)];
+    while (uniqueAwardPlayers.length < 3 && players.length > uniqueAwardPlayers.length) {
+      const availablePlayers = players.filter(p => !uniqueAwardPlayers.includes(p));
+      if (availablePlayers.length > 0) {
+          uniqueAwardPlayers.push(availablePlayers[0]);
+      } else {
+          break; // Should not happen if players.length > uniqueAwardPlayers.length
+      }
+    }
+
     return [
-      { icon: Crosshair, title: 'Kveldens Skyteskive', subtitle: 'Mest utsatt', player: skyteskive },
-      { icon: Shield, title: 'Teflon-pannen', subtitle: 'Unnslapp flest straffer', player: teflon },
-      { icon: Trophy, title: 'Kveldens MVP', subtitle: 'Fullførte flest oppgaver', player: mvp },
+      { icon: Trophy, title: 'Kveldens MVP', subtitle: 'Fullførte flest oppgaver', player: uniqueAwardPlayers[0] || mvp },
+      { icon: Crosshair, title: 'Kveldens Skyteskive', subtitle: 'Mest utsatt for pek og valg', player: uniqueAwardPlayers[1] || skyteskive },
+      { icon: Shield, title: 'Teflon-pannen', subtitle: 'Unnslapp flest straffer', player: uniqueAwardPlayers[2] || teflon },
     ];
   }, [players]);
 
@@ -58,7 +70,14 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
 
     setIsGenerating(true);
     try {
-      const dataUrl = await htmlToImage.toPng(summaryRef.current, { pixelRatio: 2, cacheBust: true, skipAutoScale: true });
+      const dataUrl = await htmlToImage.toPng(summaryRef.current, { 
+          pixelRatio: 2.5, // Increased for better quality
+          cacheBust: true,
+          skipAutoScale: true,
+          fontEmbedCSS: '', // Attempt to fix font issues
+          width: summaryRef.current.clientWidth,
+          height: summaryRef.current.clientHeight,
+       });
 
       if (action === 'share' && isShareSupported) {
         const blob = await (await fetch(dataUrl)).blob();
@@ -140,7 +159,7 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
     }
   };
 
-  if (players.length === 0) {
+  if (!players || players.length === 0) {
       return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
@@ -155,74 +174,98 @@ export function GlobalSessionSummary({ open, onOpenChange }: GlobalSessionSummar
       )
   }
 
+  const showAwards = players.length >= 2;
+
   return (
      <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-md w-full">
              <DialogHeader>
                 <DialogTitle className="text-center text-2xl font-bold">Kvelden er over!</DialogTitle>
-                <DialogDescription className="text-center">Her er kveldens kåringer. Del den med venner!</DialogDescription>
+                <DialogDescription className="text-center">
+                  {showAwards ? "Her er kveldens kåringer. Del den med venner!" : "Bra spilt! Klar for en ny kveld?"}
+                </DialogDescription>
             </DialogHeader>
 
-            <div className="flex flex-col items-center gap-6 py-4">
-                {/* This is the component that will be converted to an image */}
-                <div 
-                    ref={summaryRef} 
-                    className="aspect-[9/16] w-full max-w-sm bg-background rounded-2xl p-6 flex flex-col text-center shadow-2xl border-2 border-primary/20"
-                    style={{ backgroundColor: '#1C1717' }} // Hardcoded background for image generation
-                >
-                    <h3 className="text-3xl font-bold font-headline tracking-tighter text-foreground">Kveldens Dom</h3>
-                    <p className="text-lg text-primary font-semibold">⚖️</p>
-                    
-                    <div className="flex-grow flex flex-col justify-center gap-6 my-6">
-                    {awards.map((award, index) => (
-                        <div key={index} className="flex flex-col items-center">
-                        <award.icon className="w-8 h-8 text-muted-foreground mb-2" />
-                        <p className="text-sm font-semibold text-muted-foreground">{award.title}</p>
-                        <p className="text-xs text-muted-foreground/70">{award.subtitle}</p>
-                        <p className="text-xl font-bold text-accent mt-1 truncate max-w-full">{award.player.name}</p>
-                        </div>
-                    ))}
-                    </div>
+            {showAwards && (
+              <div className="flex flex-col items-center gap-6 py-4">
+                  {/* This is the component that will be converted to an image */}
+                  <div 
+                      ref={summaryRef} 
+                      className="aspect-[9/16] w-full max-w-sm bg-background rounded-2xl p-8 flex flex-col text-center shadow-2xl border-2 border-primary/20"
+                      style={{ backgroundColor: '#1C1717' }} // Hardcoded background for image generation
+                  >
+                      <h3 className="text-4xl font-bold font-headline tracking-tighter text-foreground">Kveldens Dom</h3>
+                      <p className="text-2xl text-primary font-semibold mt-1">⚖️</p>
+                      
+                      <div className="flex-grow flex flex-col justify-center gap-8 my-8">
+                      {awards.map((award, index) => (
+                          <div key={index} className="flex flex-col items-center">
+                          <award.icon className="w-10 h-10 text-muted-foreground mb-2" />
+                          <p className="text-base font-semibold text-muted-foreground">{award.title}</p>
+                          <p className="text-sm text-muted-foreground/70">{award.subtitle}</p>
+                          <p className="text-2xl font-bold text-accent mt-1 truncate max-w-full">{award.player.name}</p>
+                          </div>
+                      ))}
+                      </div>
 
-                    <div className="mt-auto flex justify-center">
-                        {logoUrl && (
-                            <img 
-                                src={logoUrl}
-                                alt="GameNight Logo"
-                                width="150"
-                                height="37"
-                                className="opacity-70"
-                            />
-                        )}
-                    </div>
-                </div>
+                      <div className="mt-auto flex justify-center">
+                          {logoUrl && (
+                              <img 
+                                  src={logoUrl}
+                                  alt="GameNight Logo"
+                                  width="150"
+                                  height="37"
+                                  className="opacity-70"
+                              />
+                          )}
+                      </div>
+                  </div>
 
-                <div className="w-full max-w-sm flex items-center gap-3">
-                    {isShareSupported ? (
-                    <Button onClick={() => generateImageAnd('share')} disabled={isGenerating} size="lg" className="flex-1">
-                        {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Share2 className="mr-2 h-4 w-4" />}
-                        Del
-                    </Button>
-                    ) : (
-                    <Button onClick={() => generateImageAnd('download')} disabled={isGenerating} size="lg" className="flex-1">
-                        {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
-                        Last ned
-                    </Button>
-                    )}
-                </div>
-                 <p className="text-xs text-muted-foreground max-w-xs text-center px-4">
-                    Tips: Hvis deling til Snapchat/Instagram ikke fungerer, last ned bildet og del det manuelt fra kamerarullen.
-                </p>
-            </div>
+                  <div className="w-full max-w-sm flex items-center gap-3">
+                      {isShareSupported ? (
+                      <Button onClick={() => generateImageAnd('share')} disabled={isGenerating} size="lg" className="flex-1">
+                          {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Share2 className="mr-2 h-4 w-4" />}
+                          Del
+                      </Button>
+                      ) : (
+                      <Button onClick={() => generateImageAnd('download')} disabled={isGenerating} size="lg" className="flex-1">
+                          {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
+                          Last ned
+                      </Button>
+                      )}
+                  </div>
+                  <p className="text-xs text-muted-foreground max-w-xs text-center px-4">
+                      Tips: Hvis deling til Snapchat/Instagram ikke fungerer, last ned bildet og del det manuelt fra kamerarullen.
+                  </p>
+              </div>
+            )}
             
             <div className="w-full max-w-sm mx-auto space-y-4 text-center border-t border-border pt-6">
                 <p className="text-sm text-muted-foreground">Gjorde GameNight kvelden deres bedre? <br/> Spander en tier på utviklerne!</p>
-                <div className="min-h-[48px]">
-                    <VippsDonateButton
-                        amount={25}
-                        loading={isDonating}
-                        onClick={handleDonate}
-                    />
+                <div className="flex justify-center items-center min-h-[48px]">
+                  <div className="w-full max-w-[280px]">
+                      <Button
+                          onClick={handleDonate}
+                          disabled={isDonating}
+                          className="w-full h-auto p-0 bg-transparent hover:bg-transparent disabled:opacity-50"
+                          aria-label="Doner 25 kr med Vipps"
+                      >
+                          {isDonating ? (
+                              <div className="flex items-center justify-center w-full h-[48px] bg-muted/50 rounded-lg">
+                                  <Loader2 className="h-6 w-6 animate-spin" />
+                              </div>
+                          ) : (
+                              <Image
+                                  src="/vipps-button.svg"
+                                  alt="Doner 25 kr med Vipps"
+                                  width={280}
+                                  height={48}
+                                  className="w-full h-auto rounded-lg"
+                                  priority
+                              />
+                          )}
+                      </Button>
+                  </div>
                 </div>
             </div>
 

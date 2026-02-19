@@ -3,13 +3,13 @@
 import { notFound, useParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Mail, Gamepad2, Library, Music, Download, Trophy } from 'lucide-react';
+import { ArrowLeft, Mail, Gamepad2, Library, Music, Download, Trophy, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AdBanner } from '@/components/ads/AdBanner';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { VippsDonateButton } from '@/components/common/VippsDonateButton';
 
 
 function OmOssContent() {
@@ -137,12 +137,30 @@ function OmOssContent() {
                     </Button>
                 ))}
             </div>
-            <div className="mt-4 min-h-[48px]">
-                <VippsDonateButton
-                    amount={donationAmount}
-                    loading={isDonating}
-                    onClick={handleDonate}
-                />
+            <div className="mt-4 flex justify-center items-center min-h-[48px]">
+              <div className="w-full max-w-[280px]">
+                  <Button
+                      onClick={handleDonate}
+                      disabled={isDonating}
+                      className="w-full h-auto p-0 bg-transparent hover:bg-transparent disabled:opacity-50"
+                      aria-label={`Doner ${donationAmount} kr med Vipps`}
+                  >
+                      {isDonating ? (
+                          <div className="flex items-center justify-center w-full h-[48px] bg-muted/50 rounded-lg">
+                              <Loader2 className="h-6 w-6 animate-spin" />
+                          </div>
+                      ) : (
+                          <Image
+                              src="/vipps-button.svg"
+                              alt={`Doner ${donationAmount} kr med Vipps`}
+                              width={280}
+                              height={48}
+                              className="w-full h-auto rounded-lg"
+                              priority
+                          />
+                      )}
+                  </Button>
+              </div>
             </div>
             <p className="text-xs text-muted-foreground/80 pt-2">
               Donasjon via Vipps er den enkleste og tryggeste måten å støtte oss på.

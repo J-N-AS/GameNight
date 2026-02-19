@@ -1,57 +1,47 @@
 'use client';
 
 import { useEffect } from 'react';
-
-// This is necessary to make TypeScript happy with the custom web component
-// and to prevent it from stripping props.
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'vipps-mobilepay-button': any;
-    }
-  }
-}
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 interface VippsDonateButtonProps {
   amount: number;
   onClick: () => void;
   loading: boolean;
-  variant?: 'primary' | 'secondary' | 'tertiary';
-  verb?: 'donate' | 'pay' | 'checkout';
-  stretched?: boolean;
 }
 
 export function VippsDonateButton({
   amount,
   onClick,
   loading,
-  variant = 'primary',
-  verb = 'donate',
-  stretched = true,
 }: VippsDonateButtonProps) {
-  useEffect(() => {
-    const scriptId = 'vipps-checkout-script';
-    // Check if the script is already in the document to avoid duplicates
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script');
-      script.id = scriptId;
-      script.src = 'https://checkout.vipps.no/checkout-button/v1/vipps-checkout-button.js';
-      script.type = 'module';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
-
+  
   return (
-    <vipps-mobilepay-button
-      variant={variant}
-      verb={verb}
-      language="no"
-      brand="vipps"
-      amount={amount}
-      loading={loading.toString()}
-      onClick={onClick}
-      stretched={stretched}
-    ></vipps-mobilepay-button>
+    <div className="flex justify-center items-center min-h-[48px]">
+        <div className="w-full max-w-[280px]">
+            <Button
+                onClick={onClick}
+                disabled={loading}
+                className="w-full h-auto p-0 bg-transparent hover:bg-transparent disabled:opacity-50"
+                aria-label={`Doner ${amount} kr med Vipps`}
+            >
+                {loading ? (
+                    <div className="flex items-center justify-center w-full h-[48px] bg-muted/50 rounded-lg">
+                        <Loader2 className="h-6 w-6 animate-spin" />
+                    </div>
+                ) : (
+                    <Image
+                        src="/vipps-button.svg"
+                        alt={`Doner ${amount} kr med Vipps`}
+                        width={280}
+                        height={48}
+                        className="w-full h-auto rounded-lg"
+                        priority
+                    />
+                )}
+            </Button>
+        </div>
+    </div>
   );
 }
