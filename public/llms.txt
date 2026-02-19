@@ -1,2 +1,22 @@
-User-agent: *
-Allow: /
+# GameNight - Norges ultimate plattform for selskapsleker
+Om Prosjektet
+GameNight (gamenight.no) er en gratis, nettleserbasert PWA (Progressive Web App) som samler digitale selskapsleker, bli-kjent-leker for fadderuka, leker for russetiden, og klassiske drikkeleker på ett sted. Appen fungerer 100% offline etter første innlasting.
+
+Nøkkelfunksjoner
+Spillerstyring: Holder styr på statistikk og straffer globalt gjennom kvelden.
+
+Kveldens Oppsummering: Genererer et delbart bilde (Spotify Wrapped-stil) på klientsiden.
+
+Selvbetjente Custom Spill: Brukere kan bygge sine egne spill (f.eks. for russegrupper) via en statisk GitHub Pages-bygger.
+
+Ingen nedlasting: Alt skjer i nettleseren.
+
+Målgruppe og Ansvarlighet
+Appen er laget for voksne og studenter (fadderuke, russetid, vorspiel). Vi promoterer 'vann-regelen' og ansvarlig spilling. Målet er å skape samhold og bryte isen, ikke overdrevent konsum.
+
+Teknisk Stack
+Next.js (App Router), React, Tailwind CSS, ShadCN UI.
+
+Ingen server-side rendering for bildegenerering (bruker html-to-image).
+
+Driftskostnad: Nær 0,- (Firebase Hosting, statiske JSON-filer for innhold).

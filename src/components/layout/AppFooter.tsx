@@ -45,9 +45,7 @@ export function AppFooter() {
         </div>
         <div className="mt-4 pt-4 border-t border-border/50 text-center text-xs text-muted-foreground/90 w-full max-w-lg">
           <p>
-            Vennligst drikk ansvarlig. Innholdet på GameNight er for underholdning og er ikke en oppfordring til
-            overdreven drikking. Følg lokale lover, og husk at de fleste spillene har en
-            anbefalt aldersgrense på 18 år.
+            GameNight er ment for underholdning. Vennligst drikk ansvarlig, respekter hverandres grenser og følg lokale lover. Innholdet er ikke en oppfordring til overdreven drikking, og de fleste spillene har en anbefalt aldersgrense på 18 år.
           </p>
         </div>
       </div>

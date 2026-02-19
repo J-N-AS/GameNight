@@ -8,8 +8,8 @@ import { poppins } from './fonts';
 import { PwaInstallPrompt } from '@/components/common/PwaInstallPrompt';
 
 export const metadata: Metadata = {
-  title: 'GameNight - Gratis Partyspill & Drikkeleker',
-  description: 'Start festen med de beste gratis partyspillene og drikkelekene, rett i nettleseren. Ingen installasjon, bare moro!',
+  title: 'GameNight - Gratis Selskapsleker, Partyspill & Drikkeleker',
+  description: 'Start festen med de beste gratis selskapslekene, partyspillene og drikkelekene, rett i nettleseren. Perfekt for vorspiel, fadderuke og russetid.',
   manifest: '/manifest.json',
 };
 
