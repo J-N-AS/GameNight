@@ -18,11 +18,11 @@
     { "type": "challenge", "text": "{player}, nevn tre ting du ønsker deg til jul på 5 sekunder. Hvis ikke, drikk." },
     { "type": "never_have_i_ever", "text": "åpnet en julegave før julaften." },
     { "type": "pointing", "text": "Hvem her hadde spist mest julemat?" },
-    { "type": "challenge", "text": "Regel: Ingen får si ordet 'jul'. Den som bryter regelen, drikker." },
+    { "type": "challenge", "text": "Juleforbud! I de neste 4 rundene er ordet 'jul' forbudt. Sier du det, tar du 1 slurk. Et nytt forbuds-kort erstatter det gamle." },
     { "type": "prompt", "text": "{player}, hva er den verste julegaven du har fått?" },
-    { "type": "challenge", "text": "{player}, del ut 3 slurker til den personen du tror er den største nissen." },
+    { "type": "challenge", "text": "Nissemester! {player} styrer nisselua i 3 runder. Når {player} later som de retter på en usynlig nisselue, må alle gjøre det samme. Sistemann drikker." },
     { "type": "pointing", "text": "Hvem her pynter tidligst til jul?" },
-    { "type": "challenge", "text": "Alle som er ferdige med julegavene, kan dele ut 2 slurker." },
+    { "type": "challenge", "text": "Nissevenner! {player} og {player2} er nissevenner i 3 runder. Når en av dere drikker, må den andre også drikke. Et nytt nissevenn-kort erstatter det gamle paret." },
     { "type": "prompt", "text": "Pest eller kolera: Kun spise ribbe eller kun spise pinnekjøtt resten av året?" },
     { "type": "never_have_i_ever", "text": "gått på julebord med jobben og angret dagen etter." },
     { "type": "challenge", "text": "{player} må synge første vers av 'På låven sitter nissen'. Hvis du klarer det, del ut 5 slurker." },
@@ -31,6 +31,6 @@
     { "type": "challenge", "text": "Alle som elsker gløgg, tar en slurk." },
     { "type": "never_have_i_ever", "text": "gitt bort en gave du har fått selv." },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å kjøpe alle julegavene på lille julaften?" },
-    { "type": "challenge", "text": "Skål for alle som jobber i romjulen! Alle tar en slurk." }
+    { "type": "challenge", "text": "Regelpause! Alle aktive jule-regler er nå opphevet. Nå er bordet tilbake i normal drift." }
   ]
 }

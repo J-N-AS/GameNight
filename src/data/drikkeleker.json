@@ -7,6 +7,7 @@
         "rules": [
             "Plasser koppen i midten og spre kortstokken med bildesiden ned i en sirkel rundt den.",
             "Spillerne bytter på å trekke ett kort, og følger regelen for kortet.",
+            "Hvis et kort lager en vedvarende regel, varer den til kortteksten sier noe annet. Trekkes samme korttype igjen, erstatter den nye regelen den gamle.",
             "Når en konge trekkes, heller spilleren litt av sin egen drikke i 'King's Cup'.",
             "Den som trekker den fjerde og siste kongen, får den store æren av å tømme 'King's Cup'. Spillet er da over."
         ],
@@ -15,14 +16,14 @@
             "To": "Del ut - Du velger en person som må ta en straff.",
             "Tre": "Ta selv - Du må ta en straff selv.",
             "Fire": "Gulvet - Alle må ta på gulvet. Sistemann får en straff.",
-            "Fem": "Tommel-mester - Du er 'Tommel-mester' til neste 5-er trekkes. Du kan når som helst sette tommelen på bordet, og sistemann som følger etter, får en straff.",
+            "Fem": "Tommel-mester - Du er 'Tommel-mester' til neste 5-er trekkes. Når du legger tommelen på bordet, må alle andre følge etter. Sistemann får en straff.",
             "Seks": "Jentene - Alle jenter/kvinner tar en skål.",
             "Syv": "Himmelen - Alle peker mot himmelen. Sistemann får en straff.",
-            "Åtte": "Partner - Velg en 'partner' som må ta en skål hver gang du må det (og omvendt) resten av spillet.",
+            "Åtte": "Drikkevenner - Velg en 'partner'. Dere må ta en skål sammen til neste 8-er trekkes. Når en ny 8-er kommer, oppheves det gamle paret.",
             "Ni": "Rim - Si et ord. Spilleren til venstre må si et ord som rimer. Slik fortsetter det til noen ikke finner et ord og får en straff.",
             "Ti": "Kategorier - Velg en kategori (f.eks. bilmerker). Fortsett rundt bordet til noen ikke klarer å nevne noe i kategorien. Den personen får en straff.",
-            "Knekt": "Ny regel - Lag en ny regel som gjelder for resten av spillet (f.eks. 'ingen lov å si 'ja' eller 'nei'').",
-            "Dame": "Spørsmåls-mester - Du er 'Spørsmåls-mester'. Hvis noen svarer på et spørsmål fra deg, får de en straff.",
+            "Knekt": "Husregel - Lag én enkel regel som gjelder til neste knekt trekkes. Når en ny knekt kommer, oppheves den gamle regelen og erstattes av den nye.",
+            "Dame": "Spørsmåls-mester - Du er 'Spørsmåls-mester' til neste dame trekkes. Hvis noen svarer på et spørsmål fra deg, får de en straff.",
             "Konge": "King's Cup - Hell litt av drikken din i koppen i midten. Den som trekker den siste kongen, tømmer alt."
         }
     },
