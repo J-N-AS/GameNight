@@ -14,8 +14,6 @@ import {
   Trophy,
   Loader2,
   Lightbulb,
-  DatabaseZap,
-  Code,
   Smartphone,
   Cast,
 } from 'lucide-react';
@@ -65,15 +63,61 @@ function OmOssContent() {
     <div className="space-y-8 text-muted-foreground">
       <div className="space-y-4 text-lg">
         <p>
-          GameNight ble startet med én enkel idé: Å gjøre det lettere å ha det
-          gøy sammen. Vi ønsker å være din digitale verktøykasse for enhver
-          festlig anledning, enten det er vorspiel, parkheng eller en rolig
-          kveld med venner.
+          GameNight er en norsk nettside for drikkespill, festspill,
+          vorspiel-spill, isbrytere og sosiale spill for voksne 18+. Målet er å
+          gjøre det lett å få i gang stemningen på vors, studentfest, hyttetur,
+          julebord eller en helt vanlig kveld med venner.
         </p>
         <p className="font-semibold text-foreground">
-          Målet vårt er å samle de beste digitale partyspillene, klassiske
-          drikkelekene og morsomme musikalske utfordringer – alt på ett sted og
-          rett i nettleseren din.
+          Åpne siden, velg et spill og sett i gang. Ingen login. Ingen
+          abonnement. Ingen betalte spillpakker. Én mobil eller nettleser styrer
+          hele spilløkten.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="rounded-lg border border-border bg-card/50 p-5 text-center">
+          <Gamepad2 className="mx-auto mb-2 h-8 w-8 text-primary" />
+          <h3 className="font-semibold text-foreground">Gratis å bruke</h3>
+          <p className="mt-2 text-sm">
+            GameNight skal være gratis. Dere trenger ikke konto, abonnement
+            eller ekstra kjøp for å komme i gang.
+          </p>
+        </div>
+        <div className="rounded-lg border border-border bg-card/50 p-5 text-center">
+          <Smartphone className="mx-auto mb-2 h-8 w-8 text-primary" />
+          <h3 className="font-semibold text-foreground">Én mobil styrer</h3>
+          <p className="mt-2 text-sm">
+            Én person åpner GameNight og styrer kortene. Resten spiller sammen
+            rundt samme skjerm.
+          </p>
+        </div>
+        <div className="rounded-lg border border-border bg-card/50 p-5 text-center">
+          <Cast className="mx-auto mb-2 h-8 w-8 text-primary" />
+          <h3 className="font-semibold text-foreground">Fungerer også på TV</h3>
+          <p className="mt-2 text-sm">
+            Når dere vil at hele rommet skal se, kan mobilen deles til TV med
+            AirPlay, Cast eller vanlig skjermdeling.
+          </p>
+        </div>
+      </div>
+
+      <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6">
+        <Lightbulb className="mb-2 h-8 w-8 text-accent" />
+        <h3 className="text-xl font-semibold text-foreground">
+          Hvorfor GameNight finnes
+        </h3>
+        <p>
+          GameNight ble laget som et enklere alternativ til drikkespill-apper
+          som låser de morsomste spillene bak abonnement, betalte spillpakker
+          eller konto.
+          Her skal det være lett å starte, lett å forstå og lett å dele med
+          vennene dine.
+        </p>
+        <p>
+          Ambisjonen er å bygge et varig norsk underholdningsprodukt for voksne
+          som vil ha drikkeleker, festspill, flørtete spill og sosiale
+          isbrytere samlet på ett sted.
         </p>
       </div>
 
@@ -84,28 +128,26 @@ function OmOssContent() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <div className="rounded-lg border border-border bg-card/50 p-4">
             <Gamepad2 className="mx-auto h-8 w-8 text-primary mb-2" />
-            <h4 className="font-semibold text-foreground">Digitale Spill</h4>
+            <h4 className="font-semibold text-foreground">Spill dere starter med én gang</h4>
             <p className="text-sm">
-              Interaktive spill som "Pekefest" og "Spinn flasken", klare til å
-              spilles direkte på skjermen.
+              Raske partyspill som Pekefest, Spinn flasken og andre kortbaserte
+              favoritter som fungerer rett i nettleseren.
             </p>
           </div>
           <div className="rounded-lg border border-border bg-card/50 p-4">
             <Library className="mx-auto h-8 w-8 text-primary mb-2" />
-            <h4 className="font-semibold text-foreground">
-              Klassiske Drikkeleker
-            </h4>
+            <h4 className="font-semibold text-foreground">Klassiske drikkeleker</h4>
             <p className="text-sm">
-              Reglene til tidløse favoritter som "Beer Pong" og "Ring of Fire",
-              lett tilgjengelig.
+              Regler og forklaringer til kjente drikkeleker og vorspiel-spill
+              som Beer Pong, Ring of Fire og andre klassikere.
             </p>
           </div>
           <div className="rounded-lg border border-border bg-card/50 p-4">
             <Music className="mx-auto h-8 w-8 text-primary mb-2" />
-            <h4 className="font-semibold text-foreground">Musikkeleker</h4>
+            <h4 className="font-semibold text-foreground">Musikk, skjerm og sosiale leker</h4>
             <p className="text-sm">
-              Enkle drikkeleker basert på kjente sanger, med direkte lenke til
-              Spotify.
+              Musikkeleker, skjermleker, isbrytere og flørtete spill for kvelder
+              som trenger litt ekstra energi.
             </p>
           </div>
         </div>
@@ -114,18 +156,12 @@ function OmOssContent() {
       <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
         <Trophy className="mx-auto h-8 w-8 text-accent mb-2" />
         <h3 className="font-semibold text-foreground text-xl">
-          "Kveldens Oppsummering": Delbar Moro
+          Oppsummering som avslutter kvelden med stil
         </h3>
         <p>
-          Etter en endt kveld kan dere få en unik, visuell oppsummering med
-          morsomme kåringer som "Kveldens MVP" og "Kveldens Skyteskive". Dette
-          bildet er designet for å deles direkte til Instagram eller Snapchat
-          stories.
-        </p>
-        <p className="text-xs text-muted-foreground/80 pt-2">
-          Hver deling er en personlig anbefaling som hjelper oss med å vokse
-          organisk – helt uten serverkostnader for oss, takket være smart
-          klientside-teknologi!
+          Etter en spilløkt kan dere få en morsom oppsummering med kåringer som
+          kveldens MVP og kveldens skyteskive. Perfekt når noen vil dele kveldens
+          høydepunkter videre.
         </p>
       </div>
 
@@ -139,30 +175,34 @@ function OmOssContent() {
             Bruk GameNight på én mobil eller på TV
           </h3>
           <p>
-            GameNight er laget for én skjerm og én felles session. Én person
-            styrer kortene på mobil, og resten spiller sammen rundt samme skjerm
-            eller via casting til TV.
+            GameNight er laget for én felles skjerm. Én person styrer kortene på
+            mobil eller i nettleseren, og resten spiller sammen rundt bordet
+            eller via delt skjerm på TV.
           </p>
         </div>
 
         <div className="rounded-lg border border-border/60 bg-background/40 p-4 space-y-2">
           <p className="font-semibold text-foreground flex items-center gap-2">
             <Download className="h-4 w-4" />
-            Installer / legg til på hjemskjerm
+            Installasjon er valgfritt
           </p>
           <ul className="list-disc pl-5 space-y-1 text-sm">
             <li>
-              <strong>iPhone (Safari):</strong> Trykk Del-knappen og velg{' '}
-              <em>Legg til på Hjem-skjerm</em>.
+              Du trenger ikke installere noe for å spille. GameNight fungerer
+              direkte i nettleseren.
             </li>
             <li>
-              <strong>Android (Chrome):</strong> Trykk menyen (tre prikker) og
-              velg <em>Installer app</em> eller <em>Legg til på startskjerm</em>.
+              <strong>iPhone:</strong> Åpne i Safari, trykk Del og velg{' '}
+              <em>Legg til på Hjem-skjerm</em> hvis du vil ha raskere tilgang.
+            </li>
+            <li>
+              <strong>Android:</strong> Åpne i Chrome og velg{' '}
+              <em>Installer app</em> eller <em>Legg til på startskjerm</em> om
+              du vil ha den lett tilgjengelig.
             </li>
           </ul>
           <p className="text-xs text-muted-foreground/80">
-            Etter første besøk med nett blir appen raskere å åpne, og mye av
-            innholdet er tilgjengelig selv ved ustabil dekning.
+            Installasjon er mest en snarvei. Selve spillingen fungerer fint uten.
           </p>
         </div>
 
@@ -174,7 +214,8 @@ function OmOssContent() {
           <ul className="list-disc pl-5 space-y-1 text-sm">
             <li>
               <strong>iPhone:</strong> Åpne Kontrollsenter og bruk{' '}
-              <em>Skjermspeiling (AirPlay)</em> til Apple TV eller kompatibel TV.
+              <em>Skjermspeiling</em> via AirPlay til Apple TV eller kompatibel
+              TV.
             </li>
             <li>
               <strong>Android:</strong> Bruk <em>Cast</em> /{' '}
@@ -188,57 +229,47 @@ function OmOssContent() {
         </div>
       </div>
 
-      <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
-        <Lightbulb className="mx-auto h-8 w-8 text-accent mb-2" />
+      <div className="space-y-3 rounded-lg border border-border bg-card/50 p-6">
+        <Library className="h-8 w-8 text-accent" />
         <h3 className="font-semibold text-foreground text-xl">
-          Vår Filosofi: Et Lidenskapsprosjekt
+          Trygg og sosial bruk først
         </h3>
         <p>
-          GameNight er et lidenskapsprosjekt som utvikles på fritiden. Kvalitet
-          og brukeropplevelse trumfer alt. Forretningsmodellen med annonser og
-          donasjoner er designet for å støtte prosjektet, ikke for å maksimere
-          profitt. Målet er å vokse organisk gjennom fornøyde brukere som deler
-          siden videre.
+          Noen spill hos GameNight er drikkespill. Andre fungerer like godt som
+          festspill eller isbrytere uten alkohol. Dere bestemmer selv nivået.
         </p>
+        <ul className="list-disc space-y-1 pl-5 text-sm">
+          <li>Du må ikke drikke alkohol for å bruke GameNight.</li>
+          <li>Bytt gjerne ut alkohol med vann, brus, poeng eller andre regler som passer gruppa.</li>
+          <li>Hopp over oppgaver som ikke passer, og respekter alltid grenser og samtykke.</li>
+          <li>GameNight er laget for voksne 18+ og skal brukes med sunn dømmekraft.</li>
+        </ul>
       </div>
 
-      <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
-        <DatabaseZap className="mx-auto h-8 w-8 text-accent mb-2" />
+      <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6">
+        <Lightbulb className="h-8 w-8 text-accent" />
         <h3 className="font-semibold text-foreground text-xl">
-          Enkel Innholdsstrategi
+          Gratis nå, bærekraftig over tid
         </h3>
         <p>
-          Alt spillinnhold, fra oppgaver i 'Pekefest' til reglene i 'Beer Pong',
-          styres av enkle JSON-filer. Dette gjør det ekstremt lett for oss å
-          legge til nye spill, oppdatere innhold og til og med lage skreddersydde
-          spill for spesielle anledninger som for russegrupper – helt uten å
-          endre koden.
+          Målet er at GameNight skal fortsette å være gratis å bruke. Over tid
+          skal driften bæres av annonser og frivillige donasjoner, ikke av
+          abonnement eller låste spillpakker.
         </p>
-      </div>
-
-      <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
-        <Code className="mx-auto h-8 w-8 text-accent mb-2" />
-        <h3 className="font-semibold text-foreground text-xl">
-          Bygget på Moderne Teknologi
-        </h3>
         <p>
-          For å sikre en rask og pålitelig opplevelse er GameNight bygget med{' '}
-          <strong>Next.js (App Router)</strong> for optimal ytelse og SEO. Vi
-          bruker <strong>ShadCN UI</strong> og <strong>Tailwind CSS</strong> for
-          et rent og responsivt design. Hele appen er en{' '}
-          <strong>PWA (Progressive Web App)</strong>, som gjør den enkel å
-          installere og robust nok til bruk med varierende nett.
+          Hvis du vil bidra, kan du støtte GameNight frivillig. Det hjelper oss
+          å utvikle nye spill, holde siden ved like og gjøre produktet bedre for
+          neste spillkveld.
         </p>
       </div>
 
       <div className="space-y-4 rounded-lg border-2 border-dashed border-primary/50 bg-card/50 p-6 text-center">
         <h3 className="font-bold text-primary text-2xl">
-          Liker du det vi gjør? Støtt oss!
+          Vil du holde GameNight gratis? Støtt oss gjerne
         </h3>
         <p>
-          Hvis GameNight har gjort festen din bedre, blir vi utrolig takknemlige
-          for et frivillig bidrag. Hver krone går direkte til å holde serverne i
-          gang og utvikle nye, morsomme spill til deg og vennene dine.
+          Hvis GameNight har reddet vorspielet, hytteturen eller festen, setter
+          vi stor pris på et frivillig bidrag. Donasjon er helt valgfritt.
         </p>
         <div className="flex justify-center gap-2 pt-2">
           {[25, 50, 100].map((amount) => (
@@ -278,7 +309,7 @@ function OmOssContent() {
           </div>
         </div>
         <p className="text-xs text-muted-foreground/80 pt-2">
-          Donasjon via Vipps er den enkleste og tryggeste måten å støtte oss på.
+          Vipps brukes som en enkel betalingsflyt når donasjon er aktivert.
         </p>
       </div>
     </div>
@@ -288,130 +319,114 @@ function OmOssContent() {
 const pages: Record<InfoPageSlug, { title: string; content: ReactNode }> =
   {
     'om-oss': {
-      title: 'Vårt Mål: Mer Moro, Mindre Styr',
+      title: 'Om GameNight',
       content: <OmOssContent />,
     },
     personvern: {
-      title: 'Personvernerklæring for GameNight',
+      title: 'Personvern i GameNight',
       content: (
         <div className="space-y-6 text-muted-foreground">
           <p className="text-lg">
-            Din tillit er viktig for oss. Her forklarer vi hvilken informasjon vi
-            samler inn, hvorfor vi gjør det, og hvordan vi bruker den for å gjøre
-            GameNight bedre for alle.
+            GameNight er laget for å være enkelt å bruke uten konto eller login.
+            Her forklarer vi hva som faktisk lagres, hva som ikke gjør det, og
+            hva som skjer hvis du velger å støtte tjenesten med donasjon.
           </p>
 
           <div>
             <h3 className="font-semibold text-foreground text-xl mb-2">
-              Spilldata (Lagres kun hos deg)
+              Ingen konto, ingen profil
             </h3>
             <p>
-              For å gi deg en sømløs spillopplevelse, lagrer vi spillernavnene du
-              legger inn lokalt i din egen nettleser ved hjelp av `localStorage`.
-              Denne informasjonen forlater aldri din enhet, sendes ikke til våre
-              servere, og er kun tilgjengelig for deg. Du kan når som helst slette
-              denne dataen ved å tømme nettleserdataene dine.
+              Du kan bruke GameNight uten å registrere deg, lage passord eller
+              opprette profil. Vi ber heller ikke om fødselsdato eller andre
+              personopplysninger for å starte en vanlig spilløkt.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground text-xl">
+              Hva som lagres lokalt hos deg
+            </h3>
+            <p>
+              Spillernavn, enkel oppsummeringsdata og samtykkevalg lagres lokalt
+              i nettleseren på enheten du bruker. Det gjør at dere kan fortsette
+              kvelden uten å legge inn alt på nytt med én gang.
+            </p>
+            <p>
+              Denne informasjonen blir liggende på enheten din til du sletter
+              nettleserdataene. Den brukes for spillflyt på din side, ikke for å
+              bygge en personlig profil hos oss.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground text-xl mb-2">
+              Lokal lagring og raskere åpning
+            </h3>
+            <p>
+              Nettleseren din kan også lagre deler av GameNight lokalt for å
+              gjøre siden raskere å åpne igjen og mer stabil ved svak dekning.
+              Dette er tekniske filer som hjelper opplevelsen på enheten din.
             </p>
           </div>
 
           <div className="rounded-lg border border-border bg-card/50 p-6 space-y-3">
-            <h3 className="font-semibold text-foreground text-xl">
-              Bruk av informasjonskapsler (Cookies)
+            <h3 className="font-semibold text-foreground text-xl mb-2">
+              Samtykke, cookies og fremtidige endringer
             </h3>
             <p>
-              GameNight bruker tredjeparts-tjenester som Google Analytics og
-              Google AdSense. For å fungere, plasserer disse tjenestene små
-              tekstfiler, kalt informasjonskapsler (cookies), på enheten din.
+              GameNight bruker lokal lagring for å huske samtykke og enkle
+              innstillinger i nettleseren. Per i dag kjører vi ikke aktive
+              annonse- eller analyseverktøy i selve appen som bygger egne
+              brukerprofiler.
             </p>
             <p>
-              Disse brukes til å samle inn anonyme data om hvordan du bruker siden
-              (analyse) og til å vise deg relevante annonser. Dette hjelper oss å
-              forstå bruksmønstre og å finansiere driften av siden.
-            </p>
-            <p>
-              Du kan når som helst administrere eller slette informasjonskapsler
-              via innstillingene i nettleseren din. Vær oppmerksom på at dette kan
-              påvirke funksjonaliteten på enkelte nettsteder.
+              Hvis vi aktiverer annonser, analyse eller andre tredjepartstjenester
+              senere, oppdaterer vi denne siden før de tas i bruk.
             </p>
           </div>
 
           <div>
             <h3 className="font-semibold text-foreground text-xl mb-2">
-              Anonym Bruksanalyse (Google Analytics)
+              Donasjoner
             </h3>
             <p>
-              Vi bruker Google Analytics for å forstå hvordan GameNight blir
-              brukt. Vi samler inn anonym og aggregert statistikk, for eksempel
-              hvilke spill som er mest populære og hvilke typer enheter som brukes.
-              Dette hjelper oss med å forbedre spillene og prioritere nye
-              funksjoner. Ingen personlig identifiserbar informasjon blir lagret av
-              oss i denne prosessen.
+              Hvis du velger å støtte GameNight, sendes du videre til en ekstern
+              betalingsflyt. For å starte denne kan valgt beløp deles med
+              donasjonstjenesten. Selve betalingen behandles utenfor GameNight.
             </p>
           </div>
 
           <div>
             <h3 className="font-semibold text-foreground text-xl mb-2">
-              Annonsering (Google AdSense)
+              Kontakt
             </h3>
             <p>
-              For å dekke driftskostnadene og holde tjenesten gratis, viser vi
-              annonser levert av Google AdSense. Som nevnt over, bruker AdSense
-              informasjonskapsler for å tilpasse annonser til deg, basert på dine
-              tidligere besøk på denne eller andre nettsider.
-            </p>
-            <p className="mt-2">
-              Du kan velge bort personlig tilpasset annonsering ved å besøke{' '}
-              <a
-                href="https://www.google.com/settings/ads"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary underline"
-              >
-                Googles Annonseinnstillinger
+              Spørsmål om personvern kan sendes til{' '}
+              <a href="mailto:hei@gamenight.no" className="text-primary hover:underline">
+                hei@gamenight.no
               </a>
               .
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-foreground text-xl mb-2">
-              Søkestatistikk (Google Search Console)
-            </h3>
-            <p>
-              Vi bruker Google Search Console for å se hvordan brukere finner
-              GameNight via Google-søk. Dette hjelper oss å forstå hvilke søkeord
-              som fører til siden vår, slik at vi kan gjøre den mer synlig for
-              andre som leter etter partyspill. Denne dataen er anonym og brukes
-              kun for å forbedre vår synlighet i søkemotorer.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-foreground text-xl mb-2">
-              Endringer i erklæringen
-            </h3>
-            <p>
-              Denne personvernerklæringen kan bli oppdatert. Vi anbefaler at du
-              ser gjennom den jevnlig for å holde deg informert.
             </p>
           </div>
         </div>
       ),
     },
     'kontakt-oss': {
-      title: 'Kontakt Oss',
+      title: 'Kontakt GameNight',
       content: (
         <div className="space-y-6 text-muted-foreground">
           <p className="text-lg">
-            Vi elsker å høre fra dere! Enten du har ris, ros, en idé til et nytt
-            spill, eller bare vil si hei, er du velkommen til å ta kontakt.
+            Kontakt oss hvis du har spørsmål om spill, forslag til nye
+            drikkeleker eller festspill, oppdager en feil, eller trenger
+            informasjon om GameNight som produkt og utgiver.
           </p>
 
           <div className="rounded-lg border border-border bg-card/50 p-6 space-y-3">
             <h3 className="font-semibold text-foreground text-xl">E-post</h3>
             <p>
-              Den enkleste måten å nå oss på er via e-post. Vi leser alt og prøver
-              å svare så fort vi kan.
+              Den enkleste måten å nå GameNight på er via e-post. Vi leser alt
+              og svarer så raskt vi kan.
             </p>
             <Button asChild>
               <a href="mailto:hei@gamenight.no">
@@ -420,20 +435,38 @@ const pages: Record<InfoPageSlug, { title: string; content: ReactNode }> =
               </a>
             </Button>
             <p className="text-sm pt-2">
-              Siden GameNight er et lidenskapsprosjekt som drives på fritiden, kan
-              det ta litt tid før du får svar. Vi setter stor pris på din
-              tålmodighet!
+              I travle perioder kan svartiden være litt lengre, men alle
+              henvendelser blir lest.
             </p>
           </div>
 
           <div className="space-y-2">
             <h3 className="font-semibold text-foreground text-xl">
-              Rapportere en feil?
+              Typiske henvendelser
+            </h3>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>forslag til nye spill, temaer eller forbedringer</li>
+              <li>feil, skrivefeil eller innhold som bør justeres</li>
+              <li>spørsmål om donasjoner, personvern eller vilkår</li>
+              <li>henvendelser om samarbeid eller publisherinformasjon</li>
+            </ul>
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="font-semibold text-foreground text-xl">
+              Utgiver og publisherinformasjon
             </h3>
             <p>
-              Opplever du en teknisk feil eller en skrivefeil i spillet? Send oss
-              gjerne en e-post med en kort beskrivelse av problemet og hvilken
-              enhet/nettleser du bruker, så skal vi se på det!
+              GameNight publiseres i dag under merkenavnet GameNight. Når den
+              formelle virksomhetsstrukturen er på plass, oppdaterer vi denne
+              siden med full selskapsinformasjon.
+            </p>
+            <p>
+              Frem til da er{' '}
+              <a href="mailto:hei@gamenight.no" className="text-primary hover:underline">
+                hei@gamenight.no
+              </a>{' '}
+              hovedkontakt for alle bruker- og publisherhenvendelser.
             </p>
           </div>
         </div>

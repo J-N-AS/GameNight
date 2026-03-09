@@ -1,17 +1,18 @@
 export const INFO_PAGE_META = {
   'om-oss': {
-    title: 'Vårt Mål: Mer Moro, Mindre Styr',
+    title: 'Om GameNight',
     description:
-      'Om GameNight, én-enhets-opplevelsen (mobil/TV), og hvordan prosjektet finansieres.',
+      'Hva GameNight er, hvorfor tjenesten finnes, hvordan dere spiller på én mobil eller TV, og hvorfor den er gratis uten login eller abonnement.',
   },
   personvern: {
-    title: 'Personvernerklæring',
+    title: 'Personvern',
     description:
-      'Hvordan GameNight håndterer lokal lagring, cookies og tredjepartstjenester.',
+      'Hva GameNight lagrer lokalt i nettleseren din, hvordan samtykke håndteres, og hva som skjer hvis du bruker donasjon.',
   },
   'kontakt-oss': {
-    title: 'Kontakt Oss',
-    description: 'Hvordan du kontakter teamet bak GameNight.',
+    title: 'Kontakt GameNight',
+    description:
+      'Kontakt GameNight for spørsmål, feil, forslag til spill og publisherinformasjon.',
   },
 } as const;
 

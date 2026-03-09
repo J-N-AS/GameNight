@@ -49,8 +49,9 @@ export function CookieConsent() {
             <div className="flex items-start gap-3 text-sm text-muted-foreground">
               <Cookie className="h-5 w-5 flex-shrink-0 mt-0.5" />
               <p>
-                Vi bruker informasjonskapsler (cookies) for å forbedre opplevelsen din og vise
-                relevante annonser. Ved å fortsette godtar du vår bruk av cookies.
+                Vi bruker lokal lagring i nettleseren din for å huske
+                spillerliste, samtykke og enkle innstillinger. Les mer om
+                hvordan GameNight håndterer personvern på infosiden vår.
               </p>
             </div>
             <div className="flex flex-shrink-0 gap-2">

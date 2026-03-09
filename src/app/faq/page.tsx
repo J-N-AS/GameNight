@@ -11,49 +11,69 @@ const FAQ_ITEMS = [
   {
     question: 'Hva er GameNight?',
     answer:
-      'GameNight er en norsk, nettleserbasert samling av selskapsleker, partyspill og drikkelek-guider. Dere spiller på én enhet og følger samme flyt i rommet.',
+      'GameNight er en norsk nettside for gratis drikkespill, festspill, vorspiel-spill og isbrytere for voksne 18+. Dere spiller direkte i nettleseren på én mobil eller deler skjermen til TV.',
   },
   {
-    question: 'Må jeg installere appen?',
+    question: 'Må alle laste ned appen?',
     answer:
-      'Nei. GameNight fungerer direkte i nettleseren. Du kan i tillegg legge siden til på hjemskjermen som en PWA for raskere tilgang.',
+      'Nei. Ingen trenger å laste ned noe for å spille. Én mobil eller nettleser styrer spillet, og det er valgfritt å legge GameNight til på hjemskjermen for raskere åpning.',
   },
   {
-    question: 'Hvordan spiller vi på én mobil?',
+    question: 'Hvordan spiller man på én mobil?',
     answer:
-      'Én person styrer kortene og knappene på mobilen, mens resten spiller sammen rundt samme skjerm. Dere kan også bruke skjermdeling eller casting til TV.',
+      'Én person åpner GameNight og styrer kortene, mens resten spiller sammen rundt samme skjerm. Det gjør GameNight enkelt å bruke på vors, studentfest, hyttetur og andre sosiale kvelder.',
   },
   {
-    question: 'Kan vi caste til TV?',
+    question: 'Kan man caste eller skjermdele til TV?',
     answer:
-      'Ja. Dere kan bruke AirPlay, Chromecast eller annen skjermdeling fra mobilen. Da ser hele gruppen samme spillvisning samtidig.',
+      'Ja. På iPhone kan dere bruke AirPlay eller skjermspeiling. På Android kan dere bruke Cast eller skjermdeling. Da ser hele gruppen samme spillvisning samtidig, mens én person trykker videre.',
   },
   {
-    question: 'Fungerer GameNight offline?',
+    question: 'Fungerer GameNight på iPhone og Android?',
     answer:
-      'Delvis. Etter at appen er besøkt med nett, caches mye lokalt via PWA. Enkelte deler kan fortsatt kreve nett, så vi anbefaler å åpne appen før dere mister dekning.',
+      'Ja. GameNight er laget for mobil og fungerer i vanlige nettlesere på både iPhone og Android. Dere kan også bruke det på nettbrett eller laptop hvis det passer bedre for kvelden.',
   },
   {
-    question: 'Koster det noe?',
+    question: 'Må man drikke alkohol for å bruke GameNight?',
     answer:
-      'Nei, tjenesten er gratis å bruke. Frivillige donasjoner brukes til å holde drift og videreutvikling i gang.',
+      'Nei. Mange bruker GameNight som rene festspill eller isbrytere uten alkohol. Dere kan bruke vann, brus, poeng eller egne husregler i stedet for drikking.',
   },
   {
-    question: 'Er alt innhold for 18+?',
+    question: 'Er GameNight gratis?',
     answer:
-      'Nei. GameNight har både allment innhold og egne 18+-spill. Innhold med voksen-tema merkes tydelig med advarsel og aldersmarkering.',
+      'Ja. GameNight er gratis å bruke. Ingen login, ingen abonnement og ingen kjøp av game packs eller låste spillpakker.',
+  },
+  {
+    question: 'Trenger man login eller konto?',
+    answer:
+      'Nei. Dere kan åpne GameNight og starte med én gang. Hvis dere vil, kan dere legge inn navn på spillerne, men dere trenger ikke brukerprofil eller innlogging.',
+  },
+  {
+    question: 'Hvem passer GameNight for?',
+    answer:
+      'GameNight passer for voksne som vil ha drikkespill, festspill, vorspiel-spill, flørtete spill eller sosiale isbrytere. Det fungerer både for små vennegjenger og større grupper.',
+  },
+  {
+    question: 'Er GameNight 18+?',
+    answer:
+      'Ja, GameNight er laget for voksne 18+. Flere spill er tydelig fest- og voksenrettede, og noen har advarsel når innholdet er mer direkte eller flørtete.',
+  },
+  {
+    question: 'Kan man bruke GameNight på vors, studentfest, hyttetur eller julebord?',
+    answer:
+      'Ja. GameNight er laget nettopp for slike settinger. Mange bruker det på vors, fadderuke, studentfest, hyttetur, afterski, bursdag og julebord der én mobil kan styre hele kvelden.',
   },
   {
     question: 'Hvordan fungerer donasjoner?',
     answer:
-      'Donasjon er helt frivillig. Hvis donasjon er aktivert, sendes du til en trygg ekstern betalingsflyt. Uten aktivert oppsett vises en tydelig melding i appen.',
+      'Donasjon er helt frivillig. Hvis donasjon er aktivert, sendes du videre til en ekstern betalingsflyt. Bidrag brukes til å holde GameNight gratis og til å lage nytt innhold og forbedringer.',
   },
 ];
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'FAQ | GameNight',
   description:
-    'Ofte stilte spørsmål om hvordan GameNight fungerer på mobil/TV, offline-støtte, kostnad, 18+-innhold og donasjoner.',
+    'Ofte stilte spørsmål om GameNight: gratis drikkespill og festspill på én mobil, TV-casting, 18+, donasjoner og hvordan tjenesten brukes på vors og fest.',
   path: '/faq',
 });
 
@@ -85,11 +105,12 @@ export default function FaqPage() {
 
       <header className="mb-10 text-center">
         <h1 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter">
-          FAQ
+          Ofte stilte spørsmål
         </h1>
         <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-          Svar på de vanligste spørsmålene om bruk, innhold, personvern og
-          donasjon.
+          Her finner du korte svar om hvordan GameNight fungerer på mobil og TV,
+          hvem det passer for, og hvorfor tjenesten er gratis uten login eller
+          abonnement.
         </p>
       </header>
 
@@ -107,11 +128,15 @@ export default function FaqPage() {
 
       <div className="mt-10 text-sm text-muted-foreground">
         <p>
-          Fant du ikke svaret du trengte? Ta kontakt via{' '}
+          Fant du ikke svaret du trengte? Les mer på{' '}
+          <Link href="/info/om-oss" className="text-primary hover:underline">
+            Om GameNight
+          </Link>{' '}
+          eller ta kontakt via{' '}
           <Link href="/info/kontakt-oss" className="text-primary hover:underline">
             kontaktsiden
           </Link>{' '}
-          eller les mer på{' '}
+          og les mer om personvern på{' '}
           <Link href="/info/personvern" className="text-primary hover:underline">
             personvern
           </Link>

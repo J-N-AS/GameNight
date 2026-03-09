@@ -109,10 +109,10 @@ export function PwaInstallPrompt() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-sm font-semibold text-foreground">
-                Ha GameNight klar på mobilen
+                Valgfritt: legg GameNight på hjemskjermen
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Installer for raskere åpning før vorspiel, nach eller skjermdeling til TV.
+                Åpne raskere før vors, hyttetur eller når du skal dele til TV.
               </p>
             </div>
 
@@ -141,7 +141,7 @@ export function PwaInstallPrompt() {
               className="h-11 flex-1"
             >
               <Download className="mr-2 h-4 w-4" />
-              Installer
+              Legg til
             </Button>
           </div>
         </div>

@@ -135,6 +135,8 @@ export function getOrganizationJsonLd() {
     name: SITE_NAME,
     url: getCanonicalUrl('/'),
     logo: getDefaultOgImageUrl(),
+    description:
+      'Norsk nettside med gratis drikkespill, festspill, isbrytere og sosiale spill for voksne 18+.',
     email: 'hei@gamenight.no',
     contactPoint: [
       {
@@ -153,6 +155,8 @@ export function getWebsiteJsonLd() {
     '@type': 'WebSite',
     name: SITE_NAME,
     url: getCanonicalUrl('/'),
+    description:
+      'Gratis norsk nettside med drikkespill, festspill og isbrytere for voksne 18+.',
     inLanguage: 'nb-NO',
   };
 }

@@ -5,16 +5,26 @@ import { CHANGELOG_ENTRIES } from '@/lib/changelog';
 import { buildBreadcrumbJsonLd, buildPageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'Changelog | GameNight',
+  title: 'Oppdateringer | GameNight',
   description:
-    'Løpende oppdateringer av GameNight, inkludert tekniske forbedringer, SEO-arbeid og driftsendringer.',
+    'Siste oppdateringer i GameNight med nye hjelpesider, bedre mobilopplevelse og andre forbedringer som brukere faktisk merker.',
   path: '/changelog',
 });
+
+function formatDate(date: string) {
+  const [year, month, day] = date.split('-').map(Number);
+
+  return new Intl.DateTimeFormat('nb-NO', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(Date.UTC(year, month - 1, day, 12)));
+}
 
 export default function ChangelogPage() {
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: 'Forside', path: '/' },
-    { name: 'Changelog', path: '/changelog' },
+    { name: 'Oppdateringer', path: '/changelog' },
   ]);
 
   return (
@@ -23,10 +33,11 @@ export default function ChangelogPage() {
 
       <header className="mb-10 text-center">
         <h1 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter">
-          Changelog
+          Oppdateringer
         </h1>
         <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-          Oversikt over større endringer i app, innhold og teknisk oppsett.
+          Her legger vi inn større endringer som påvirker opplevelsen i
+          GameNight. Små interne justeringer havner ikke alltid her.
         </p>
       </header>
 
@@ -37,7 +48,7 @@ export default function ChangelogPage() {
             className="rounded-lg border border-border/70 bg-card/50 p-5"
           >
             <div className="text-sm text-muted-foreground">
-              <time dateTime={entry.date}>{entry.date}</time>
+              <time dateTime={entry.date}>{formatDate(entry.date)}</time>
             </div>
             <h2 className="text-2xl font-semibold mt-1">{entry.title}</h2>
             <p className="text-muted-foreground mt-2">{entry.summary}</p>
@@ -55,7 +66,7 @@ export default function ChangelogPage() {
         <Link href="/info/kontakt-oss" className="text-primary hover:underline">
           kontakt
         </Link>
-        .
+        . Vi oppdaterer siden når større forbedringer er ute.
       </p>
     </div>
   );

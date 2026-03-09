@@ -22,9 +22,9 @@ const websiteJsonLd = getWebsiteJsonLd();
 
 export const metadata: Metadata = {
   ...buildPageMetadata({
-    title: 'GameNight - Gratis Selskapsleker, Partyspill & Drikkeleker',
+    title: 'GameNight - Gratis drikkespill, festspill og isbrytere',
     description:
-      'Start festen med de beste gratis selskapslekene, partyspillene og drikkelekene, rett i nettleseren. Perfekt for vorspiel, fadderuke og russetid.',
+      'Gratis norsk nettside med drikkespill, festspill og isbrytere for voksne 18+. Spill på én mobil eller del til TV, helt uten login, abonnement eller låste spillpakker.',
     path: '/',
   }),
   metadataBase: getMetadataBase(),

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Star, HardHat, Loader2 } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from './PlayerSetup';
 import Link from 'next/link';
@@ -174,7 +174,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
       >
         <h1 className="sr-only">
-          GameNight - Gratis selskapsleker, partyspill og drikkeleker
+          GameNight - Gratis drikkespill, festspill og isbrytere på én mobil
         </h1>
         <Image
           src={withBasePath('/GameNight-logo-small.webp')}
@@ -185,12 +185,27 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           className="h-auto mx-auto max-w-[300px] md:max-w-[400px] drop-shadow-[0_5px_15px_rgba(0,0,0,0.2)]"
         />
         <p className="text-muted-foreground mt-4 text-lg md:text-xl">
-          Start festen med de beste gratis partyspillene!
+          Gratis drikkespill, festspill og isbrytere for vors, hyttetur og
+          fest.
         </p>
         <p className="mt-3 text-sm text-muted-foreground/90">
-          Laget for én skjerm: bruk samme mobil, eller cast til TV når hele
-          gjengen skal se.
+          Én mobil styrer spillet. Del gjerne skjermen til TV når hele gjengen
+          skal se.
         </p>
+        <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground/80">
+          <span className="rounded-full border border-border/70 bg-card/50 px-3 py-1">
+            Gratis
+          </span>
+          <span className="rounded-full border border-border/70 bg-card/50 px-3 py-1">
+            Ingen login
+          </span>
+          <span className="rounded-full border border-border/70 bg-card/50 px-3 py-1">
+            Ingen abonnement
+          </span>
+          <span className="rounded-full border border-border/70 bg-card/50 px-3 py-1">
+            18+
+          </span>
+        </div>
       </motion.header>
       
       <motion.div 
@@ -357,7 +372,10 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
              <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <Beer className="h-6 w-6 text-accent" /> Klassiske Drikkeleker
               </h2>
-              <p className="text-muted-foreground mb-4">Reglene til tidløse fest-klassikere som Beer Pong & Ring of Fire.</p>
+              <p className="text-muted-foreground mb-4">
+                Regler til klassiske drikkeleker og vorspiel-spill som Beer Pong
+                og Ring of Fire.
+              </p>
               <Button asChild>
                 <Link href="/drikkeleker">Se alle klassikerne</Link>
               </Button>
@@ -371,11 +389,14 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                 <Link href="/musikkleker">Finn en sang</Link>
               </Button>
           </section>
-          <section className="text-center">
+         <section className="text-center">
              <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
                   <Clapperboard className="h-6 w-6 text-purple-400" /> Skjermleker
               </h2>
-              <p className="text-muted-foreground mb-4">Spill til filmkvelden, reality-showet eller fotballkampen. Perfekt for sofaen.</p>
+              <p className="text-muted-foreground mb-4">
+                Spill til filmkvelden, reality-showet eller fotballkampen når
+                dere vil ha noe sosialt på skjermen.
+              </p>
               <Button asChild>
                 <Link href="/skjermleker">Finn et skjermspill</Link>
               </Button>
@@ -392,7 +413,9 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
       >
-          <p className="text-sm text-muted-foreground">Liker du GameNight? Støtt oss med en kaffe (25 kr)! ☕</p>
+          <p className="text-sm text-muted-foreground">
+            Vil du hjelpe oss å holde GameNight gratis? Spander gjerne en kaffe.
+          </p>
           <div className="mt-4 flex justify-center items-center min-h-[48px]">
               <div className="w-full max-w-[280px]">
                   <Button
