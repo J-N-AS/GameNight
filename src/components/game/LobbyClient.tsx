@@ -30,6 +30,7 @@ import type { Game, Theme } from '@/lib/types';
 import { AdBanner } from '@/components/ads/AdBanner';
 import { PartyTools } from './PartyTools';
 import { useToast } from '@/hooks/use-toast';
+import { requestDonation } from '@/lib/donations';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -82,13 +83,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   const handleDonate = async () => {
     setIsDonating(true);
     try {
-        const response = await fetch('/api/vipps/donate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: 25 })
-        });
-
-        const data = await response.json();
+        const data = await requestDonation(25);
 
         if (data.status === 'not_configured') {
             toast({

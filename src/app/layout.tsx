@@ -6,11 +6,15 @@ import { CookieConsent } from '@/components/common/CookieConsent';
 import { AppProviders } from './providers';
 import { poppins } from './fonts';
 import { PwaInstallPrompt } from '@/components/common/PwaInstallPrompt';
+import { withBasePath } from '@/lib/base-path';
+
+const manifestPath = withBasePath('/manifest.json');
+const appleTouchIconPath = withBasePath('/icon-192x192.png');
 
 export const metadata: Metadata = {
   title: 'GameNight - Gratis Selskapsleker, Partyspill & Drikkeleker',
   description: 'Start festen med de beste gratis selskapslekene, partyspillene og drikkelekene, rett i nettleseren. Perfekt for vorspiel, fadderuke og russetid.',
-  manifest: '/manifest.json',
+  manifest: manifestPath,
 };
 
 export const viewport: Viewport = {
@@ -25,8 +29,8 @@ export default function RootLayout({
   return (
     <html lang="no" className={`${poppins.variable} dark`} suppressHydrationWarning>
       <head>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png"></link>
+        <link rel="manifest" href={manifestPath} />
+        <link rel="apple-touch-icon" href={appleTouchIconPath}></link>
       </head>
       <body className="font-body antialiased bg-background text-foreground animated-background">
         <AppProviders>

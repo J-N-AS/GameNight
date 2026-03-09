@@ -1,11 +1,14 @@
-import type { Game, GameTask } from '@/lib/games';
+import type { Game, GameTask } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Beer, Hand, MessageSquareQuote, Flame, HelpCircle, Swords } from 'lucide-react';
 import React from 'react';
 import { Button } from '../ui/button';
 
-const taskTypeDetails = {
+const taskTypeDetails: Record<
+  GameTask['type'],
+  { title: string; icon: typeof Flame; color: string; emoji: string }
+> = {
   challenge: {
     title: 'Utfordring',
     icon: Flame,

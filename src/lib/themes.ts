@@ -1,5 +1,3 @@
-'use server';
-
 import type { Theme } from './types';
 import type { Game } from './types';
 import themesData from '@/data/themes.json';

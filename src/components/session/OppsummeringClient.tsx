@@ -12,10 +12,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import Confetti from 'react-confetti';
-import type { PlayerStats } from '@/lib/types';
+import type { Player, PlayerStats } from '@/lib/types';
+import { requestDonation } from '@/lib/donations';
 
 
 type SummaryTheme = 'dark' | 'light' | 'festive' | 'sunset' | 'ocean' | 'forest' | 'aurora';
+type Award = {
+  emoji: string;
+  title: string;
+  subtitle: string;
+  player: Player | null;
+};
+type ResolvedAward = Omit<Award, 'player'> & {
+  player: Player;
+};
 
 const themes: {id: SummaryTheme, name: string, className: string, textColor: string}[] = [
     { id: 'dark', name: 'Mørk', className: 'bg-background text-foreground', textColor: 'text-accent' },
@@ -63,9 +73,9 @@ export function OppsummeringClient() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-        if (navigator.share && navigator.canShare) {
-            setIsShareSupported(true);
-        }
+      if ('share' in navigator && 'canShare' in navigator) {
+        setIsShareSupported(true);
+      }
     }
   }, []);
 
@@ -95,13 +105,15 @@ export function OppsummeringClient() {
         ? teflonCandidates[0] 
         : null;
 
-    const allAwards = [
+    const allAwards: Award[] = [
       { emoji: '🏆', title: 'Kveldens MVP', subtitle: 'Fullførte flest oppgaver', player: mvp },
       { emoji: '🎯', title: 'Kveldens Skyteskive', subtitle: 'Mest utsatt for valg', player: skyteskive },
       { emoji: '🛡️', title: 'Den Unnvikende', subtitle: 'Ble valgt ut færrest ganger', player: teflon },
     ];
 
-    return allAwards.filter(a => a.player); // Only show awards that have a valid winner.
+    return allAwards.filter(
+      (award): award is ResolvedAward => award.player !== null
+    );
   }, [players]);
 
   const generateImageAnd = useCallback(async (action: 'share' | 'download') => {
@@ -124,7 +136,7 @@ export function OppsummeringClient() {
         const blob = await (await fetch(dataUrl)).blob();
         const file = new File([blob], "gamenight-oppsummering.png", { type: "image/png" });
 
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        if ('canShare' in navigator && navigator.canShare({ files: [file] })) {
           await navigator.share({
             title: 'Kveldens oppsummering fra GameNight!',
             text: 'Sjekk ut kveldens kåringer!',
@@ -170,13 +182,7 @@ export function OppsummeringClient() {
   const handleDonate = async () => {
     setIsDonating(true);
     try {
-        const response = await fetch('/api/vipps/donate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: 25 })
-        });
-
-        const data = await response.json();
+        const data = await requestDonation(25);
 
         if (data.status === 'not_configured') {
             toast({

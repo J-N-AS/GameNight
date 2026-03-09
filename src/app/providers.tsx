@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Player, PlayerStats } from '@/lib/types';
+import { withBasePath } from '@/lib/base-path';
 
 export interface SessionContextType {
   players: Player[];
@@ -113,7 +114,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(registrationError => {
+        navigator.serviceWorker.register(withBasePath('/sw.js')).catch(() => {
           // In a real app, you might want to log this to an error reporting service
         });
       });

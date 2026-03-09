@@ -1,152 +1,139 @@
-# GameNight: Den Komplette Guiden til Prosjektet
+# GameNight
 
-Velkommen til GameNight-prosjektet! Dette dokumentet gir en grundig oversikt over prosjektets mål, tekniske arkitektur, forretningsstrategi og fremtidsvisjoner. Målet er å fungere som en sentral informasjonskilde for utvikling og strategiske diskusjoner.
+GameNight er en norsk Next.js App Router webapp/PWA for fest- og drikkespill.
+Prosjektet er nå satt opp som **statisk-first**, med JSON-basert innhold og uten hard avhengighet til server-runtime.
 
-## Innholdsfortegnelse
+## Status (per 9. mars 2026)
 
-1.  [Prosjektets Mål og Visjon](#1-prosjektets-mål-og-visjon)
-2.  [Nøkkelfunksjoner](#2-nøkkelfunksjoner)
-3.  [Teknisk Arkitektur (Tech Stack)](#3-teknisk-arkitektur-tech-stack)
-4.  [Prosjektstruktur & Innholdsstrategi](#4-prosjektstruktur--innholdsstrategi)
-5.  [Forretningsmodell: Hosting og Inntekter](#5-forretningsmodell-hosting-og-inntekter)
-6.  [Markedsføring: Organisk Vekst](#6-markedsføring-organisk-vekst)
-7.  [SEO og "Thick Content"](#7-seo-og-thick-content)
-8.  [PWA og Offline-først](#8-pwa-og-offline-først)
-9.  [Spillmekanikk og Innhold](#9-spillmekanikk-og-innhold)
-10. [Filosofi og Fremtidsvisjoner](#10-filosofi-og-fremtidsvisjoner)
+Implementert:
+- Next.js App Router + TypeScript
+- Spillinnhold og temainnhold fra lokale JSON-filer (`src/data/*`)
+- Global spillerøkt i klient (localStorage)
+- PWA-manifest + service worker (offline cache av app shell + runtime assets)
+- Statisk generering av dynamiske ruter via `generateStaticParams`
+- Valgfri donasjonsintegrasjon mot ekstern endpoint (ingen innebygd backend)
 
----
+Ikke implementert:
+- Login/auth
+- Adminside
+- Database
+- Ekte betalingsbackend i repo
 
-### 1. Prosjektets Mål og Visjon
+## Teknologi
 
-**Mål:** Å skape den ultimate, nettleserbaserte destinasjonen for sosiale spill i Norge. GameNight skal være en "digital verktøykasse" for enhver festlig anledning, enten det er vorspiel, en rolig kveld med venner, eller en større sammenkomst.
+- Next.js 15 (App Router)
+- React 19 + TypeScript
+- Tailwind + shadcn/ui + Radix
+- Framer Motion
+- JSON-filer som primær datakilde
 
-**Visjon:** Vi ønsker å samle de beste digitale partyspillene, reglene til klassiske drikkeleker, og morsomme musikalske utfordringer på ett og samme sted. Tjenesten skal være intuitiv, rask, og tilgjengelig på alle enheter uten behov for installasjon. På sikt skal prosjektet være selvbærende økonomisk gjennom organisk vekst og inntekter.
+## Krav
 
-### 2. Nøkkelfunksjoner
+- Node.js 20 (se `.nvmrc`)
+- npm 10+
 
--   **Bredt Spillbibliotek:** En voksende samling av spill, fra "Pekefest" og "Jeg har aldri" til unike modus som "Spinn flasken" og "Snusboksen".
--   **Artikkeldatabase:** Enkel tilgang til reglene for klassiske leker som "Beer Pong" og "Ring of Fire", optimalisert for SEO.
--   **Full Offline-støtte:** Takket være PWA-teknologi kan hele appen brukes uten internettforbindelse etter første besøk.
--   **Installerbar App:** Brukere kan legge til GameNight på hjemskjermen på mobilen for en app-lignende opplevelse.
--   **Globalt Spiller-system:** Et avansert system som holder styr på spillere og statistikk (`timesTargeted`, `tasksCompleted`, `penalties`) gjennom en hel kveld, på tvers av flere spill.
--   **"Kveldens Oppsummering":** En delbar, visuell oppsummering som genereres på klientsiden etter endt kveld. Den viser morsomme kåringer basert på statistikk og har flere valgbare fargetemaer (inkludert gradients) for å skape et personlig og delbart bilde.
--   **Vipps-donasjoner:** En fullt integrert, men valgfri, løsning for å motta donasjoner via Vipps for å støtte prosjektet.
--   **Dedikerte Hub-sider:** Spesialbygde landingssider for store anledninger som `/fadderuka` og `/russetiden` for å tiltrekke målrettet trafikk.
--   **Custom Spill for Russegrupper:** Mulighet for russegrupper til å bestille sitt eget, skreddersydde spill med interne vitser og eget design.
+## Kom i gang lokalt
 
-### 3. Teknisk Arkitektur (Tech Stack)
+```bash
+npm install
+npm run dev
+```
 
-GameNight er bygget på en moderne og skalerbar stack, valgt for sin ytelse, utvikleropplevelse og lave driftskostnader.
+Åpne: `http://localhost:3000`
 
--   **Framework:** **Next.js (App Router)** - For server-side rendering (SSR), rask sideinnlasting og god SEO.
--   **Språk:** **TypeScript** - For robust og type-sikker kode.
--   **UI-komponenter:** **ShadCN UI** - Et sett med stilige og tilgjengelige komponenter bygget på Radix UI og Tailwind CSS.
--   **Styling:** **Tailwind CSS** - For rask og konsistent styling direkte i koden.
--   **Animasjoner:** **Framer Motion** - For å skape flytende og engasjerende animasjoner.
--   **State Management:** **React Context** + `localStorage` - For å håndtere den globale spill-økta (spillere og statistikk).
--   **Bildegenerering (Klientside):** **html-to-image** - For å konvertere "Kveldens Oppsummering"-komponenten til et delbart bilde uten serverkostnader.
--   **Betaling:** Egen backend API-rute som bruker **Vipps ePayment API** for sikker håndtering av donasjoner.
--   **PWA:** Egendefinert **Service Worker** for caching og offline-funksjonalitet.
--   **QR-koder:** **react-qr-code** for å generere QR-koder i promo-generatoren.
--   **Konfetti:** **react-confetti** for en feirende effekt på oppsummeringssiden.
+## Scripts
 
-### 4. Prosjektstruktur & Innholdsstrategi
+- `npm run dev`: start dev-server (Turbopack)
+- `npm run dev:classic`: start dev-server uten Turbopack
+- `npm run typecheck`: TypeScript-sjekk
+- `npm run build`: produksjonsbuild (Next)
+- `npm run build:export`: statisk eksport (`output: 'export'`)
+- `npm run start`: start produksjonsserver for vanlig Next-build
+- `npm run lint`: placeholder (ESLint er ikke konfigurert i repoet ennå)
+- `npm run check`: typecheck + build
 
-Prosjektet er organisert for å være lett å vedlikeholde og utvide.
+## Miljøvariabler
 
--   `src/app/`: Hovedstrukturen for Next.js-appen, inkludert sider (`/`, `/spill/[gameId]`), API-ruter (`/api/vipps/donate`) og layouts. Inneholder også dedikerte hub-sider som `/fadderuka` og `/russetiden`.
--   `src/components/`: Gjenbrukbare React-komponenter, inkludert spillkomponenter (`GameFlow`, `TaskCard`), UI-elementer og den globale oppsummeringsskjermen.
--   **`src/data/` - Hjertet av innholdet:** Alt innhold administreres via enkle JSON-filer, noe som gjør det ekstremt lett å legge til nye spill og artikler.
-    -   **Spill (`[spill-id].json`):** Hvert spill har sin egen fil. Strukturen er som følger:
-        -   `id`: Unik identifikator (må matche filnavn).
-        -   `title`, `description`, `emoji`: Visuell informasjon.
-        -   `intensity`, `audience`, `category`, `tags`: For filtrering og kategorisering.
-        -   `requiresPlayers`: `true` hvis spillere må legges til.
-        -   `items`: En liste med oppgave-objekter (`{ "type": "...", "text": "..." }`).
-        -   `gameType`: Definerer spillmekanikken (`default`, `versus`, `spin-the-bottle`, `physical-item`).
-        -   `warning`: Viser en advarselsskjerm for 18+ innhold.
-        -   `custom`, `isHiddenFromMain`, `region`, `kommune`: For skreddersydde spill (f.eks. for russegrupper).
-    -   `drikkeleker.json`: Artikler om klassiske drikkeleker for SEO.
-    -   `musikkleker.json`, `screen-games.json`: Lister over spill for spesifikke anledninger.
-    -   `themes.json`: Definerer tema-sidene som kuraterer lister med spill.
--   `src/lib/`: Kjernefunksjonalitet for lasting og behandling av data fra `src/data/`.
--   `src/hooks/`: Egendefinerte React-hooks (`useSession` for spillerdata).
--   `public/`: Statiske filer, inkludert bilder, logoer, `manifest.json`, `sw.js` og `vipps-button.svg`.
--   `.env`: Fil for miljøvariabler, inkludert hemmelige nøkler for Vipps.
+Kopier fra `.env.example` ved behov.
 
-### 5. Forretningsmodell: Hosting og Inntekter
+- `NEXT_PUBLIC_SITE_URL`
+  - Valgfri absolutt URL for delingslenker/QR-koder.
+  - Eksempel: `https://gamenight.no`
+- `NEXT_PUBLIC_BASE_PATH`
+  - Valgfri base path for repo-hosting (GitHub Pages).
+  - Eksempel: `/GameNight`
+- `NEXT_PUBLIC_DONATION_API_URL`
+  - Valgfri donasjons-endpoint.
+  - Hvis tom: UI viser «ikke konfigurert»-melding.
 
-**Hosting:**
-Prosjektet er designet for å kjøre på **Firebase Hosting** på grunn av den generøse gratis-kvoten og enkle skalerbarheten.
+## Render-modell (statisk-first)
 
-**Inntektsmodell:**
-Modellen er todelt: annonser for å dekke løpende kostnader og valgfrie donasjoner for å støtte videreutvikling.
+### Fullt statiske sider
+- `/`
+- `/alle-spill`
+- `/drikkeleker`
+- `/fadderuka`
+- `/russetiden`
+- `/musikkleker`
+- `/skjermleker`
+- `/oppsummering`
+- `/takk`
+- `/print/mingle-bingo`
 
-**Annonser (Google AdSense):**
-For å minimere risikoen knyttet til AdSense's retningslinjer for innhold om drikking, har vi utført en "AdSense-vask" der direkte oppfordringer er byttet ut med tryggere formuleringer. Vi har også en tydelig ansvarsfraskrivelse i bunnteksten.
+### SSG-ruter (prerenderes fra datafiler)
+- `/spill/[gameId]`
+- `/drikkeleker/[slug]`
+- `/tema/[slug]`
+- `/info/[slug]`
 
-**Strategiske Annonseplasseringer:**
-Annonsebannere (`AdBanner`-komponenten) er strategisk plassert for å generere inntekter uten å forstyrre kjerneopplevelsen. Alle annonser er tydelig merket som "Annonse".
+Alle over bygges statisk via `generateStaticParams`.
 
-**Annonser vises på følgende steder:**
-*   **Forsiden (`/`):** Nederst på siden.
-*   **Under Spilling (`/spill/[gameId]`):** En banner vises nederst på skjermen under spillets gang, samt på "spillet er ferdig"-skjermen. Dette sikrer synlighet uten å avbryte selve oppgavekortet.
-*   **Artikkel- og Listesider:** Bannere er plassert nederst på alle innholdssider, inkludert:
-    *   `/alle-spill`
-    *   `/drikkeleker` og individuelle artikler (`/drikkeleker/[slug]`)
-    *   `/musikkleker`
-    *   `/skjermleker`
-    *   Alle tematiske sider (`/tema/[slug]`)
-*   **Informasjonssider (`/info/...`):** Nederst på sider som "Om oss" og "Personvern".
+### Metadata-rute
+- `/sitemap.xml` genereres statisk i build.
 
-**Annonsefrie Soner:**
-For å prioritere en god brukeropplevelse i kritiske øyeblikk, er følgende områder bevisst holdt frie for annonser:
-*   **"Kveldens Oppsummering" (`/oppsummering`):** Denne siden fokuserer utelukkende på den delbare oppsummeringen og en donasjons-CTA for å maksimere viral spredning og brukerglede.
-*   **Advarsel- og Instruksjonsskjermer:** Før spill med 18+ innhold eller spesielle instruksjoner starter, vises ingen annonser for å unngå distraksjon.
-*   **Lobby for Custom Spill:** Landingssiden for et skreddersydd russebuss-spill er reklamefri for å gi en premium og personlig opplevelse.
+## Donasjoner (isolert, hostinguavhengig)
 
-**Donasjoner (Vipps ePayment API):**
-Vi har implementert en komplett og sikker løsning for å motta donasjoner via Vipps.
+Donasjonsknapper bruker en klient-side adapter i `src/lib/donations.ts`:
+- Leser `NEXT_PUBLIC_DONATION_API_URL`
+- Sender `POST { amount }` til ekstern endpoint
+- Forventer JSON med felt som `status` og ev. `checkoutFrontendUrl`
 
--   **Arkitektur:**
-    -   **Frontend:** En enkel `Button`-komponent med en SVG-illustrasjon (`vipps-button.svg`) sender en sikker `POST`-forespørsel til vårt eget backend-endepunkt med ønsket beløp.
-    -   **Backend (Next.js API Route):** En dedikert API-rute på `/api/vipps/donate` fungerer som en sikker mellomstasjon.
-        1.  **Validering:** Ruten sjekker først om Vipps-miljøvariablene (`VIPPS_CLIENT_ID`, `VIPPS_CLIENT_SECRET` etc.) er satt.
-        2.  **Autentisering:** Ruten henter et `access_token` fra Vipps ved å bruke de hemmelige nøklene som er lagret trygt på serveren.
-        3.  **Betalingsopprettelse:** Med tokenet oppretter ruten en ny betaling via Vipps ePayment API og returnerer en unik `redirectUrl` til frontend.
-    -   **Sikkerhet:** Alle hemmelige nøkler og API-kall til Vipps skjer utelukkende på server-siden. Ingen sensitiv informasjon eksponeres noensinne i klientkoden.
-    -   **Konfigurasjon:** Alt styres via `.env`-filen. Ved å fylle ut `VIPPS_CLIENT_ID`, `VIPPS_CLIENT_SECRET`, `VIPPS_SUB_KEY`, `VIPPS_MSN` og `VIPPS_ENVIRONMENT`, aktiveres donasjonsflyten automatisk.
+Dette gjør at repoet kan kjøre statisk uten innebygd betalingsbackend.
 
-### 6. Markedsføring: Organisk Vekst
+## Prosjektstruktur (kort)
 
-I stedet for betalt markedsføring, fokuserer prosjektet på innebygde, organiske vekstmekanismer.
+- `src/app/`: ruter, layouts, metadata-ruter
+- `src/components/`: UI + spillflyt + innholdskomponenter
+- `src/data/`: spill/artikler/tema i JSON/TS
+- `src/lib/`: datalasting, typer, hjelpefunksjoner
+- `public/`: manifest, service worker, bilder, statiske assets
+- `docs/`: tekniske notater om arkitektur/hosting
 
--   **"Kveldens Oppsummering":** Dette er prosjektets viktigste markedsføringsverktøy. Etter endt kveld genereres et stilig, delbart bilde med "Spotify Wrapped"-estetikk, komplett med et utvalg av flere valgbare fargetemaer (fra enkle farger til dynamiske gradients).
-    -   **Viralt Potensial:** Brukere kan enkelt dele et personlig og morsomt sammendrag til Snapchat- eller Instagram-stories. Hver deling fungerer som en personlig anbefaling.
-    -   **Kostnadseffektivt:** Siden bildegenereringen skjer 100 % i brukerens nettleser med `html-to-image`, påløper det ingen serverkostnader.
--   **Viral-loop for Russegrupper:** Den innebygde promo-generatoren lar russegrupper lage og laste ned egne bilder med QR-koder som peker direkte til deres spill. Dette oppfordrer til deling i sosiale medier og på trykksaker (russedress/russekort).
+## Hosting
 
-### 7. SEO og "Thick Content"
+Se:
+- [`docs/hosting.md`](docs/hosting.md)
+- [`docs/architecture.md`](docs/architecture.md)
 
--   **Dynamisk Sitemap (`sitemap.ts`):** Genererer automatisk en `sitemap.xml` som inkluderer alle sider, spill, artikler og temaer for optimal indeksering.
--   **"Thick Content":** Artikkeldatabasen med komplette guider til klassiske leker (`/drikkeleker`), samt spesialbygde hub-sider som `/fadderuka` og `/russetiden`, skaper innholdsrike sider som rangerer godt på relevante søkeord.
--   **Server-Side Rendering (SSR):** Sikrer at alt innhold er optimalt for indeksering av søkemotorer.
+Kort oppsummert:
+- **GitHub Pages beta**: realistisk via `npm run build:export`
+- **Cloudflare langsiktig**: appen er nå i praksis klar for billig statisk hosting
 
-### 8. PWA og Offline-først
+## Kvalitetssikring
 
-GameNight er bygget som en **Progressive Web App (PWA)**, med et sterkt fokus på offline-funksjonalitet. Etter første besøk fungerer hele nettstedet sømløst **uten internettforbindelse**, takket være en custom service worker som cacher alle nødvendige ressurser.
+Kjør før deploy:
 
-### 9. Spillmekanikk og Innhold
+```bash
+npm run typecheck
+npm run build
+npm run build:export
+```
 
--   **Global Økt-statistikk:** Systemet sporer spillerstatistikk (`timesTargeted`, `tasksCompleted`, `penalties`) på tvers av alle spill som spilles i løpet av en kveld, takket være en global React Context-provider.
--   **Fleksible Spilltyper:** Systemet støtter ulike `gameType` for variert mekanikk:
-    -   `default`: Standard kort-spill.
-    -   `versus`: Lag-mot-lag med poengsystem.
-    -   `spin-the-bottle`: Bruker en virtuell eller ekte flaske.
-    -   `physical-item`: Krever at en fysisk gjenstand sendes rundt.
--   **Enkel Innholdsadministrasjon:** Alt innhold administreres via enkle JSON-filer, noe som gjør det ekstremt lett å legge til nye spill, oppgaver og artikler.
+## Innholdsflyt
 
-### 10. Filosofi og Fremtidsvisjoner
+Nye spill legges primært inn i `src/data/<spill-id>.json`.
+Husk å legge `id` i `allGameIds` i `src/lib/games.ts`.
 
-GameNight er et **lidenskapsprosjekt**. Kvalitet og brukeropplevelse trumfer alt. Forretningsmodellen er designet for å støtte prosjektet, ikke for å maksimere profitt. Ved å kombinere en solid teknisk plattform med en klar visjon, har GameNight som mål å bli en varig og verdsatt ressurs for sosiale lag i Norge.
+## Lisens
+
+Ingen lisensfil er definert i repoet per nå.

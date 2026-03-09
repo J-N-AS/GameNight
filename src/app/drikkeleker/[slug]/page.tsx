@@ -1,14 +1,28 @@
 import { getArticle } from '@/lib/articles';
+import { getArticles } from '@/lib/articles';
 import { DrikkelekArticleClient } from '@/components/drikkeleker/DrikkelekArticleClient';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { slug } = params;
+type DrikkelekArticlePageProps = {
+  params: Promise<{
+    slug: string;
+  }>;
+};
+
+export async function generateStaticParams() {
+  const articles = await getArticles();
+  return articles.map((article) => ({ slug: article.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: DrikkelekArticlePageProps): Promise<Metadata> {
+  const { slug } = await params;
   const article = await getArticle(slug);
   if (!article) {
     return {
-      title: 'Artikkel ikke funnet | GameNight'
+      title: 'Artikkel ikke funnet | GameNight',
     };
   }
   return {
@@ -17,8 +31,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function DrikkelekArticlePage({ params }: { params: { slug: string } }) {
-  const article = await getArticle(params.slug);
+export default async function DrikkelekArticlePage({
+  params,
+}: DrikkelekArticlePageProps) {
+  const { slug } = await params;
+  const article = await getArticle(slug);
 
   if (!article) {
     notFound();

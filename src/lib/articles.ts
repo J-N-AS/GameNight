@@ -1,5 +1,3 @@
-'use server';
-
 import type { GameArticle } from './types';
 import drikkeleker from '@/data/drikkeleker.json';
 import { PlaceHolderImages } from './placeholder-images';

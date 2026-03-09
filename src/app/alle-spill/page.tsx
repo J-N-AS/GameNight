@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Alle Spill | GameNight',
@@ -36,7 +37,9 @@ export default async function AllGamesPage() {
         </p>
       </header>
 
-      <AllGamesClient games={games} />
+      <Suspense fallback={<p className="text-center text-muted-foreground">Laster spill...</p>}>
+        <AllGamesClient games={games} />
+      </Suspense>
     </div>
   );
 }

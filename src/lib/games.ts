@@ -1,5 +1,3 @@
-'use server';
-
 import { notFound } from 'next/navigation';
 import type { Game } from './types';
 import { cache } from 'react';

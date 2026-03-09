@@ -5,9 +5,9 @@ import type { Metadata } from 'next';
 import { getThemes } from '@/lib/themes';
 
 type ThemePageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export async function generateStaticParams() {
@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ThemePageProps): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const theme = await getTheme(slug);
 
   if (!theme) {
@@ -34,7 +34,8 @@ export async function generateMetadata({ params }: ThemePageProps): Promise<Meta
 }
 
 export default async function ThemePage({ params }: ThemePageProps) {
-  const theme = await getTheme(params.slug);
+  const { slug } = await params;
+  const theme = await getTheme(slug);
 
   if (!theme) {
     notFound();

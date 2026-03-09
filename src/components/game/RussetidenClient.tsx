@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { Game } from '@/lib/types';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -17,6 +17,7 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Separator } from '../ui/separator';
 import { AdBanner } from '../ads/AdBanner';
+import { withBasePath } from '@/lib/base-path';
 
 
 type ListedGame = Omit<Game, 'items' | 'language' | 'shuffle'>;
@@ -31,11 +32,20 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
     const qrOnlyRef = useRef<HTMLDivElement>(null);
     const [isLoading, setIsLoading] = useState<'story' | 'qr' | null>(null);
     const [isCopied, setIsCopied] = useState(false);
+    const [origin, setOrigin] = useState('');
     const { toast } = useToast();
+
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        setOrigin(window.location.origin);
+      }
+    }, []);
 
     if (!game) return null;
 
-    const gameUrl = `https://gamenight.no/spill/${game.id}`;
+    const gamePath = withBasePath(`/spill/${game.id}`);
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, '');
+    const gameUrl = siteUrl ? `${siteUrl}${gamePath}` : `${origin}${gamePath}`;
     
     const storyPromoStyle = {
       background: `linear-gradient(to bottom right, ${game.color?.replace('hsl', 'hsla').replace(')', '/ 0.35)') || 'hsl(var(--primary))'}, #111010)`
