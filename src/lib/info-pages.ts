@@ -2,7 +2,7 @@ export const INFO_PAGE_META = {
   'om-oss': {
     title: 'Vårt Mål: Mer Moro, Mindre Styr',
     description:
-      'Om GameNight, hvordan appen fungerer i dag, og hvordan prosjektet finansieres.',
+      'Om GameNight, én-enhets-opplevelsen (mobil/TV), og hvordan prosjektet finansieres.',
   },
   personvern: {
     title: 'Personvernerklæring',

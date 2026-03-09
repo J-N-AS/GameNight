@@ -8,8 +8,17 @@ Denne filen beskriver hvordan GameNight faktisk fungerer etter oppryddingen.
 - Spill: `src/data/*.json`
 - Tema: `src/data/themes.json`
 - Artikler: `src/data/drikkeleker.json`
+- Spillmodell for spin-varianter:
+  - `gameType: "spin-the-bottle"`
+  - `spinMode: "choose" | "virtual" | "physical"` for konsistent oppstartsflyt
 
 Det finnes ingen database eller backend-datalag i repoet.
+
+## 1.1 Én-enhets-opplevelse
+
+- Appen er designet for én skjerm per session (mobil eller delt skjerm/TV-casting).
+- Ingen multiplayer/sanntids-sync mellom flere klienter.
+- Spillerliste og enkel spillstatistikk lagres lokalt i nettleseren.
 
 ## 2. Render-strategi
 

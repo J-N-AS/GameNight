@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: GamePageProps) {
 }
 
 export async function generateStaticParams() {
-  const games = await getGames({ includeHidden: true });
+  const games = await getGames({ includeHidden: true, includeHiddenFromMain: true });
   return games.map((game) => ({ gameId: game.id }));
 }
 

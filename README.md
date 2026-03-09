@@ -19,6 +19,15 @@ Ikke implementert:
 - Database
 - Ekte betalingsbackend i repo
 
+## Produktprinsipp: én enhet
+
+GameNight er designet for én skjerm per spilløkt:
+- én mobil/nettleser styrer kortene
+- lokal session/state i klient (`localStorage`)
+- evt. skjermdeling/casting til TV for større gruppe
+
+Appen bygger bevisst ikke multiplayer eller sanntids-synk mellom flere enheter.
+
 ## Teknologi
 
 - Next.js 15 (App Router)
@@ -155,6 +164,12 @@ npm run build:export
 
 Nye spill legges primært inn i `src/data/<spill-id>.json`.
 Husk å legge `id` i `allGameIds` i `src/lib/games.ts`.
+
+For spin-flasken-spill støttes:
+- `gameType: "spin-the-bottle"`
+- `spinMode: "choose" | "virtual" | "physical"`
+  - `choose`: brukeren velger modus i oppstart
+  - `virtual`/`physical`: oppstart hopper direkte til riktig flyt
 
 ## Lisens
 

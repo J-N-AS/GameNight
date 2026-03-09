@@ -16,6 +16,8 @@ import {
   Lightbulb,
   DatabaseZap,
   Code,
+  Smartphone,
+  Cast,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AdBanner } from '@/components/ads/AdBanner';
@@ -127,21 +129,63 @@ function OmOssContent() {
         </p>
       </div>
 
-      <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
-        <Download className="mx-auto h-8 w-8 text-accent mb-2" />
-        <h3 className="font-semibold text-foreground text-xl">
-          Installer som App for Offline Bruk
-        </h3>
-        <p>
-          GameNight er bygget som en Progressive Web App (PWA). Det betyr at du
-          kan installere den på mobilen din og bruke den som en vanlig app – helt
-          gratis. Da vil alle spillene fungere selv om du mister
-          internettforbindelsen på hytta eller i parken!
-        </p>
-        <p className="text-xs text-muted-foreground/80 pt-2">
-          Se etter en "Installer"-knapp på siden, eller bruk "Legg til på
-          Hjem-skjerm"-funksjonen i nettleseren din.
-        </p>
+      <div
+        id="mobil-tv-guide"
+        className="space-y-4 rounded-lg border border-border bg-card/50 p-6"
+      >
+        <div className="text-center">
+          <Smartphone className="mx-auto h-8 w-8 text-accent mb-2" />
+          <h3 className="font-semibold text-foreground text-xl">
+            Bruk GameNight på én mobil eller på TV
+          </h3>
+          <p>
+            GameNight er laget for én skjerm og én felles session. Én person
+            styrer kortene på mobil, og resten spiller sammen rundt samme skjerm
+            eller via casting til TV.
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-border/60 bg-background/40 p-4 space-y-2">
+          <p className="font-semibold text-foreground flex items-center gap-2">
+            <Download className="h-4 w-4" />
+            Installer / legg til på hjemskjerm
+          </p>
+          <ul className="list-disc pl-5 space-y-1 text-sm">
+            <li>
+              <strong>iPhone (Safari):</strong> Trykk Del-knappen og velg{' '}
+              <em>Legg til på Hjem-skjerm</em>.
+            </li>
+            <li>
+              <strong>Android (Chrome):</strong> Trykk menyen (tre prikker) og
+              velg <em>Installer app</em> eller <em>Legg til på startskjerm</em>.
+            </li>
+          </ul>
+          <p className="text-xs text-muted-foreground/80">
+            Etter første besøk med nett blir appen raskere å åpne, og mye av
+            innholdet er tilgjengelig selv ved ustabil dekning.
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-border/60 bg-background/40 p-4 space-y-2">
+          <p className="font-semibold text-foreground flex items-center gap-2">
+            <Cast className="h-4 w-4" />
+            Cast / skjermdeling til TV
+          </p>
+          <ul className="list-disc pl-5 space-y-1 text-sm">
+            <li>
+              <strong>iPhone:</strong> Åpne Kontrollsenter og bruk{' '}
+              <em>Skjermspeiling (AirPlay)</em> til Apple TV eller kompatibel TV.
+            </li>
+            <li>
+              <strong>Android:</strong> Bruk <em>Cast</em> /{' '}
+              <em>Skjermdeling</em> fra hurtiginnstillinger.
+            </li>
+            <li>
+              Når skjermen er delt, lar dere én person trykke “Neste kort”, så
+              følger hele gruppa samme flyt.
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6 text-center">
@@ -182,8 +226,8 @@ function OmOssContent() {
           <strong>Next.js (App Router)</strong> for optimal ytelse og SEO. Vi
           bruker <strong>ShadCN UI</strong> og <strong>Tailwind CSS</strong> for
           et rent og responsivt design. Hele appen er en{' '}
-          <strong>PWA (Progressive Web App)</strong>, som sikrer full
-          offline-funksjonalitet.
+          <strong>PWA (Progressive Web App)</strong>, som gjør den enkel å
+          installere og robust nok til bruk med varierende nett.
         </p>
       </div>
 

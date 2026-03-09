@@ -21,7 +21,7 @@ const allGameIds = [
 ];
 
 
-export const getGames = cache(async (options: { includeHidden?: boolean } = {}): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> => {
+export const getGames = cache(async (options: { includeHidden?: boolean; includeHiddenFromMain?: boolean } = {}): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> => {
   const games = await Promise.all(
     allGameIds.map(async (id) => {
       const gameData = await loadGameData(id);
@@ -34,6 +34,10 @@ export const getGames = cache(async (options: { includeHidden?: boolean } = {}):
       // Special handling for hidden games, mainly for theme pages.
       if (gameData.hidden && !options.includeHidden) {
           return null;
+      }
+
+      if (gameData.isHiddenFromMain && !options.includeHiddenFromMain) {
+        return null;
       }
       
       // Return a stripped-down version of the game data for lobby/listing pages

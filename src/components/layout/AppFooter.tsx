@@ -39,6 +39,9 @@ export function AppFooter() {
           <Link href="/info/personvern" className="hover:text-foreground transition-colors">
             Personvern
           </Link>
+          <Link href="/info/om-oss#mobil-tv-guide" className="hover:text-foreground transition-colors">
+            Mobil + TV-guide
+          </Link>
           <Link href="/info/kontakt-oss" className="hover:text-foreground transition-colors">
             Kontakt
           </Link>

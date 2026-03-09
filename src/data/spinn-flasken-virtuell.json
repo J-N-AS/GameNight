@@ -10,6 +10,7 @@
   "audience": "18+",
   "category": ["Party", "18+"],
   "gameType": "spin-the-bottle",
+  "spinMode": "virtual",
   "warning": {
     "title": "Advarsel: Utfordrende Innhold",
     "description": [

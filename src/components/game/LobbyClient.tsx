@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Star, HardHat, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from './PlayerSetup';
@@ -40,6 +40,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   const [isSurpriseMeOpen, setIsSurpriseMeOpen] = useState(false);
   const [surpriseGame, setSurpriseGame] = useState<GameFromGetGames | null>(null);
   const [isDonating, setIsDonating] = useState(false);
+  const [pendingReturnPath, setPendingReturnPath] = useState<string | null>(null);
   
   const { players, isLoaded } = useSession();
   const router = useRouter();
@@ -47,7 +48,36 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
 
   const handleSetupComplete = () => {
     setIsPlayerSetupOpen(false);
+
+    if (pendingReturnPath && players.length > 0) {
+      router.push(pendingReturnPath);
+    }
   };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const shouldOpenSetup = params.get('setupPlayers') === '1';
+    const returnTo = params.get('returnTo');
+
+    if (shouldOpenSetup) {
+      setIsPlayerSetupOpen(true);
+    }
+
+    if (
+      returnTo &&
+      returnTo.startsWith('/spill/') &&
+      !returnTo.includes('://')
+    ) {
+      setPendingReturnPath(returnTo);
+      return;
+    }
+
+    setPendingReturnPath(null);
+  }, []);
   
   const selectRandomGame = () => {
     if (allGames.length > 0) {
@@ -157,7 +187,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           <PlayerSetup open={isPlayerSetupOpen} onOpenChange={setIsPlayerSetupOpen} onSetupComplete={handleSetupComplete}>
              {isLoaded && players.length === 0 && (
                 <Button variant="outline" className="w-full h-12" onClick={() => setIsPlayerSetupOpen(true)}>
-                    <Users className="mr-2 h-5 w-5" /> Legg til spillere
+                    <Users className="mr-2 h-5 w-5" /> {pendingReturnPath ? 'Legg til spillere for å fortsette' : 'Legg til spillere'}
                 </Button>
             )}
           </PlayerSetup>
@@ -185,6 +215,16 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                           Oppsummering
                       </Link>
                     </Button>
+                    {pendingReturnPath && (
+                      <Button
+                        className="col-span-2"
+                        variant="secondary"
+                        onClick={() => router.push(pendingReturnPath)}
+                      >
+                        <Rocket className="mr-2 h-5 w-5" />
+                        Tilbake til spillet
+                      </Button>
+                    )}
                   </CardFooter>
                   </Card>
               </motion.div>

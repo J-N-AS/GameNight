@@ -9,6 +9,8 @@
   "intensity": "medium",
   "audience": "18+",
   "category": ["Party", "18+"],
+  "gameType": "spin-the-bottle",
+  "spinMode": "physical",
   "warning": {
     "title": "Advarsel: Utfordrende Innhold",
     "description": [

@@ -10,7 +10,6 @@ import { useSession } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameMenu } from './GameMenu';
-import { useToast } from '@/hooks/use-toast';
 import { AdBanner } from '../ads/AdBanner';
 import { Progress } from '@/components/ui/progress';
 
@@ -23,6 +22,9 @@ function shuffleArray<T>(array: T[]): T[] {
   return newArray;
 }
 
+const isNameHiddenType = (type: GameTask['type']) =>
+  type === 'never_have_i_ever' || type === 'pointing';
+
 interface GameClientProps {
   game: Game;
   gameMode?: 'virtual' | 'physical' | null;
@@ -31,7 +33,6 @@ interface GameClientProps {
 export function GameClient({ game, gameMode }: GameClientProps) {
   const { players, isLoaded, updatePlayerStat } = useSession();
   const router = useRouter();
-  const { toast } = useToast();
 
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -62,23 +63,15 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     setTeam2Score(0);
     setShowSpinResult(false);
     setIsSpinning(false);
+    setTaskPlayers(null);
     processedIndexRef.current = null;
   }, [game]);
 
   useEffect(() => {
     if (isLoaded) {
-      if (game.requiresPlayers && players.length === 0) {
-        toast({
-          title: 'Spillere mangler',
-          description: `Dette spillet krever spillere. Legg til noen for å starte.`,
-          variant: 'destructive',
-        });
-        router.push('/');
-        return;
-      }
       setupGame();
     }
-  }, [game, isLoaded, players.length, game.requiresPlayers, router, toast, setupGame]);
+  }, [isLoaded, setupGame]);
 
   const currentTask = useMemo(
     () => (tasks.length > 0 ? tasks[currentIndex] : null),
@@ -86,35 +79,104 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   );
   
   useEffect(() => {
-    // Only select new players if the task index is new and players are loaded
-    if (processedIndexRef.current !== currentIndex && isLoaded && players.length > 0) {
-      let availablePlayers = [...players];
-      
-      const player1Index = Math.floor(Math.random() * availablePlayers.length);
-      const player1 = availablePlayers[player1Index];
-      availablePlayers.splice(player1Index, 1);
-
-      const player2Index = availablePlayers.length > 0 ? Math.floor(Math.random() * availablePlayers.length) : -1;
-      const player2 = player2Index !== -1 ? availablePlayers[player2Index] : null;
-      
-      // Set the players for the current task
-      setTaskPlayers({ player1, player2 });
-      
-      // Update stats for the selected player
-      if (player1) {
-        updatePlayerStat(player1.id, 'timesTargeted');
-        if (currentTask?.type === 'challenge') {
-            updatePlayerStat(player1.id, 'tasksCompleted');
-        }
-      }
-      
-      // Mark this index as processed to prevent re-running the selection logic
-      processedIndexRef.current = currentIndex;
+    if (processedIndexRef.current === currentIndex) {
+      return;
     }
-  }, [currentIndex, isLoaded, players, currentTask, updatePlayerStat]);
+
+    if (!isLoaded || !currentTask || players.length === 0) {
+      setTaskPlayers(null);
+      processedIndexRef.current = currentIndex;
+      return;
+    }
+
+    if (isSpinTheBottleMode || isPhysicalItemGame) {
+      setTaskPlayers(null);
+      processedIndexRef.current = currentIndex;
+      return;
+    }
+
+    const hasNamedPlaceholders =
+      (currentTask.text.includes('{player}') ||
+        currentTask.text.includes('{player2}')) &&
+      !isNameHiddenType(currentTask.type);
+
+    if (!hasNamedPlaceholders) {
+      setTaskPlayers(null);
+      processedIndexRef.current = currentIndex;
+      return;
+    }
+
+    const availablePlayers = [...players];
+    const player1Index = Math.floor(Math.random() * availablePlayers.length);
+    const player1 = availablePlayers[player1Index];
+    availablePlayers.splice(player1Index, 1);
+
+    const player2Index =
+      availablePlayers.length > 0
+        ? Math.floor(Math.random() * availablePlayers.length)
+        : -1;
+    const player2 = player2Index !== -1 ? availablePlayers[player2Index] : null;
+
+    setTaskPlayers({ player1, player2 });
+    processedIndexRef.current = currentIndex;
+  }, [
+    currentIndex,
+    isLoaded,
+    players,
+    currentTask,
+    isSpinTheBottleMode,
+    isPhysicalItemGame,
+  ]);
+
+  const commitStatsForCurrentTask = useCallback(() => {
+    if (!currentTask || !isLoaded || players.length === 0) {
+      return;
+    }
+
+    if (isSpinTheBottleMode || isPhysicalItemGame || currentTask.type === 'versus') {
+      return;
+    }
+
+    if (isNameHiddenType(currentTask.type)) {
+      return;
+    }
+
+    const targetedIds = new Set<string>();
+
+    if (currentTask.text.includes('{player}') && taskPlayers?.player1) {
+      targetedIds.add(taskPlayers.player1.id);
+    }
+
+    if (currentTask.text.includes('{player2}') && taskPlayers?.player2) {
+      targetedIds.add(taskPlayers.player2.id);
+    }
+
+    if (targetedIds.size === 0) {
+      return;
+    }
+
+    targetedIds.forEach((playerId) => {
+      updatePlayerStat(playerId, 'timesTargeted');
+    });
+
+    if (currentTask.type === 'challenge' || currentTask.type === 'prompt') {
+      targetedIds.forEach((playerId) => {
+        updatePlayerStat(playerId, 'tasksCompleted');
+      });
+    }
+  }, [
+    currentTask,
+    isLoaded,
+    players.length,
+    isSpinTheBottleMode,
+    isPhysicalItemGame,
+    taskPlayers,
+    updatePlayerStat,
+  ]);
 
 
   const handleNextTask = () => {
+    commitStatsForCurrentTask();
     if (isSpinTheBottleMode) {
       setShowSpinResult(false);
     }
@@ -162,13 +224,13 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     }
 
     const { type } = currentTask;
-    const isNameForbidden = type === 'never_have_i_ever' || type === 'pointing';
+    const isNameForbidden = isNameHiddenType(type);
     let content: React.ReactNode = text;
     const placeholderRegex = /(\{team1\}|\{team2\}|\{player\}|\{player2\}|\{all\})/g;
 
-    if (placeholderRegex.test(text) && taskPlayers) {
-      const player1Name = taskPlayers.player1?.name || 'Noen';
-      const player2Name = taskPlayers.player2?.name || 'En annen';
+    if (placeholderRegex.test(text)) {
+      const player1Name = taskPlayers?.player1?.name || 'Noen';
+      const player2Name = taskPlayers?.player2?.name || 'En annen';
 
       const parts = text.split(placeholderRegex);
       content = (
@@ -197,9 +259,9 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
 
   const cardVariants = {
-    enter: { opacity: 0 },
-    center: { opacity: 1 },
-    exit: { opacity: 0 },
+    enter: { opacity: 0, y: 24, scale: 0.96, filter: 'blur(6px)' },
+    center: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' },
+    exit: { opacity: 0, y: -20, scale: 0.98, filter: 'blur(3px)' },
   };
 
   const showLoading = !isLoaded || tasks.length === 0;
@@ -275,6 +337,17 @@ export function GameClient({ game, gameMode }: GameClientProps) {
             <Home className="mr-2 h-5 w-5" />
             Velg nytt spill
           </Button>
+          {players.length > 0 && (
+            <Button
+              variant="secondary"
+              size="lg"
+              className="transform transition-transform duration-200 hover:scale-105"
+              onClick={() => router.push('/oppsummering')}
+            >
+              <Trophy className="mr-2 h-5 w-5" />
+              Se oppsummering
+            </Button>
+          )}
         </div>
         <motion.div
           className="mt-12 w-full flex justify-center"
@@ -403,7 +476,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
                       initial="enter"
                       animate="center"
                       exit="exit"
-                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      transition={{ type: 'spring', stiffness: 230, damping: 25 }}
                       className="w-full"
                     >
                     {showLoading ? (
@@ -491,7 +564,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{ type: 'spring', stiffness: 230, damping: 25 }}
               className="w-full"
             >
               {showLoading ? (
@@ -522,7 +595,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
               size="lg"
               className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-primary/30"
             >
-              Neste
+              Neste kort
             </Button>
           </motion.div>
         )}

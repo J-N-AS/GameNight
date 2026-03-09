@@ -10,6 +10,7 @@
   "audience": "18+",
   "category": ["Party", "18+", "Fysiske Leker", "Kaos"],
   "gameType": "spin-the-bottle",
+  "spinMode": "choose",
   "warning": {
     "title": "Advarsel: Fysiske Utfordringer",
     "description": [

@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useState, useMemo, useEffect } from 'react';
 import { useSession } from '@/hooks/usePlayers';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -30,6 +30,7 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
   const searchParams = useSearchParams();
   const { players } = useSession();
   const { toast } = useToast();
+  const router = useRouter();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [allTags, setAllTags] = useState<string[]>([]);
@@ -55,9 +56,12 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
       e.preventDefault();
       toast({
         title: 'Spillere mangler',
-        description: `"${game.title}" krever at du legger til spillere først. Gå til forsiden for å legge til spillere.`,
+        description: `"${game.title}" krever spillere. Vi sender deg til oppsett, så kan du fortsette rett tilbake.`,
         variant: 'destructive',
       });
+      router.push(
+        `/?setupPlayers=1&returnTo=${encodeURIComponent(`/spill/${game.id}`)}`
+      );
     }
   };
 
@@ -110,7 +114,7 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
             layout
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
-        {filteredGames.map((game, index) => (
+        {filteredGames.map((game) => (
           <motion.div
             key={game.id}
             layout
@@ -138,7 +142,10 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
                   </div>
                 </CardHeader>
                 <div className="p-6 pt-0 mt-auto flex justify-between items-center">
-                    <div className="flex gap-1">
+                    <div className="flex flex-wrap gap-1">
+                        {game.requiresPlayers && (
+                            <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">Krever spillere</span>
+                        )}
                         {game.tags?.map(tag => (
                             <span key={tag} className="text-xs font-semibold text-muted-foreground/70 bg-muted/50 px-2 py-0.5 rounded-full">{tag}</span>
                         ))}

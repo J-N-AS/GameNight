@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RussetidenPage() {
-    const allGames = await getGames({ includeHidden: true });
+    const allGames = await getGames({ includeHidden: true, includeHiddenFromMain: true });
   
     const standardGameIds = ['gutta', 'girl-power', 'kaosrunden', 'hemmeligheter'];
     const standardGames = standardGameIds.map(id => allGames.find(g => g.id === id)).filter(Boolean) as Omit<Game, 'items' | 'language' | 'shuffle'>[];

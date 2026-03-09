@@ -8,38 +8,128 @@
   "emoji": "🥫",
   "intensity": "medium",
   "audience": "all",
-  "category": ["Party", "Fysiske Leker", "Kaos"],
+  "category": [
+    "Party",
+    "Fysiske Leker",
+    "Kaos"
+  ],
   "gameType": "physical-item",
   "items": [
-    { "type": "challenge", "text": "Kast til den med best stil i kveld." },
-    { "type": "challenge", "text": "Kast til den du tror har flest hemmeligheter." },
-    { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å le på feil tidspunkt." },
-    { "type": "challenge", "text": "Kast til den med det fineste smilet." },
-    { "type": "challenge", "text": "Kast til den du ville ringt hvis du trengte hjelp med å flytte en sofa." },
-    { "type": "challenge", "text": "Kast til den som har de mykeste leppene." },
-    { "type": "challenge", "text": "Kast til den med kulest hårsveis." },
-    { "type": "challenge", "text": "Kast til den som er mest 'main character'." },
-    { "type": "challenge", "text": "Kast til den du tror gir best klemmer." },
-    { "type": "challenge", "text": "Kast til den du stoler mest på." },
-    { "type": "challenge", "text": "Kast til den med mest smittende latter." },
-    { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å overleve en zombie-apokalypse." },
-    { "type": "challenge", "text": "Kast til den som er den dårligste taperen." },
-    { "type": "challenge", "text": "Kast til den som hadde holdt den beste festen." },
-    { "type": "challenge", "text": "Kast til den du ville tatt med på en øde øy." },
-    { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å snakke med et dyr." },
-    { "type": "challenge", "text": "Kast til den med de snilleste øynene." },
-    { "type": "challenge", "text": "Kast til den som hadde vunnet i en stirrekonkurranse." },
-    { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å glemme denne kvelden." },
-    { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å le av sine egne vitser." },
-    { "type": "challenge", "text": "Kast til den som har den beste musikksmaken." },
-    { "type": "challenge", "text": "Kast til den som er mest klumsete." },
-    { "type": "challenge", "text": "Kast til den du ville delt en hemmelighet med." },
-    { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å starte en unødvendig diskusjon." },
-    { "type": "challenge", "text": "Kast til den som er den mest optimistiske." },
-    { "type": "challenge", "text": "Kast til den som har den rareste matvanen." },
-    { "type": "challenge", "text": "Kast til den du ville ringt for å få et ærlig råd." },
-    { "type": "challenge", "text": "Kast til den som er mest sannsynlig til å glemme denne kvelden i morgen." },
-    { "type": "challenge", "text": "Kast til den som har den mest smittende energien." },
-    { "type": "challenge", "text": "Kast til den som er den dårligste taperen." }
+    {
+      "type": "challenge",
+      "text": "Kast til den med best stil i kveld."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den du tror har flest hemmeligheter."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er mest sannsynlig til å le på feil tidspunkt."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den med det fineste smilet."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den du ville ringt hvis du trengte hjelp med å flytte en sofa."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som har de mykeste leppene."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den med kulest hårsveis."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er mest 'main character'."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den du tror gir best klemmer."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den du stoler mest på."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den med mest smittende latter."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er mest sannsynlig til å overleve en zombie-apokalypse."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er den dårligste taperen."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som hadde holdt den beste festen."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den du ville tatt med på en øde øy."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er mest sannsynlig til å snakke med et dyr."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den med de snilleste øynene."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som hadde vunnet i en stirrekonkurranse."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er mest sannsynlig til å glemme denne kvelden."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er mest sannsynlig til å le av sine egne vitser."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som har den beste musikksmaken."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er mest klumsete."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den du ville delt en hemmelighet med."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er mest sannsynlig til å starte en unødvendig diskusjon."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er den mest optimistiske."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som har den rareste matvanen."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den du ville ringt for å få et ærlig råd."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som er mest sannsynlig til å glemme denne kvelden i morgen."
+    },
+    {
+      "type": "challenge",
+      "text": "Kast til den som har den mest smittende energien."
+    }
   ]
 }

@@ -39,6 +39,7 @@ export interface Game {
   category: string[];
   warning?: GameWarning;
   gameType?: 'default' | 'versus' | 'spin-the-bottle' | 'physical-item';
+  spinMode?: 'choose' | 'virtual' | 'physical';
   teams?: {
     team1: string;
     team2: string;
