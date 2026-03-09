@@ -3,11 +3,15 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-    title: 'Kveldens Oppsummering | GameNight',
-    description: 'Se kveldens kåringer, del med venner og gjør dere klare for neste runde.',
-};
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Kveldens Oppsummering | GameNight',
+  description:
+    'Se kveldens kåringer, del med venner og gjør dere klare for neste runde.',
+  path: '/oppsummering',
+  noindex: true,
+});
 
 
 export default function OppsummeringPage() {

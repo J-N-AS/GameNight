@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useState, useMemo, useEffect } from 'react';
 import { useSession } from '@/hooks/usePlayers';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -27,7 +27,6 @@ const intensityMap = {
 };
 
 export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
-  const searchParams = useSearchParams();
   const { players } = useSession();
   const { toast } = useToast();
   const router = useRouter();
@@ -44,12 +43,16 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
     });
     setAllTags(['Alle', ...Array.from(uniqueTags).sort()]);
 
-    const initialCategory = searchParams.get('kategori');
+    const initialCategory =
+      typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search).get('kategori')
+        : null;
+
     if(initialCategory && uniqueTags.has(initialCategory)) {
         setActiveTag(initialCategory);
     }
 
-  }, [games, searchParams]);
+  }, [games]);
 
   const handleGameSelect = (e: React.MouseEvent, game: GameFromGetGames) => {
     if (game.requiresPlayers && players.length === 0) {

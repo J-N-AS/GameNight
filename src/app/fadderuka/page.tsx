@@ -2,15 +2,23 @@ import { getGames } from '@/lib/games';
 import type { Game } from '@/lib/types';
 import type { Metadata } from 'next';
 import { FadderukaClient } from '@/components/fadderuka/FadderukaClient';
+import { buildBreadcrumbJsonLd, buildPageMetadata } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: 'Fadderuka: Den ultimate verktøykassen for faddere | GameNight',
-  description: 'Gjør vorspielet episk, inkluderende og gøy. Bli-kjent-leker, lagkonkurranser og klassiske selskapsleker – alt samlet på ett sted, 100 % gratis.',
-};
+  description:
+    'Gjør vorspielet episk, inkluderende og gøy. Bli-kjent-leker, lagkonkurranser og klassiske selskapsleker – alt samlet på ett sted, 100 % gratis.',
+  path: '/fadderuka',
+});
 
 
 export default async function FadderukaHubPage() {
     const allGames = await getGames({ includeHidden: true });
+    const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+      { name: 'Forside', path: '/' },
+      { name: 'Fadderuka', path: '/fadderuka' },
+    ]);
   
     const gameIds = {
         day1: ['icebreakeren', 'rolig-sosial'],
@@ -25,10 +33,13 @@ export default async function FadderukaHubPage() {
     const day5Games = findGames(gameIds.day5);
     
     return (
-        <FadderukaClient 
-            day1Games={day1Games}
-            day3Games={day3Games}
-            day5Games={day5Games}
+      <>
+        <JsonLd id="fadderuka-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+        <FadderukaClient
+          day1Games={day1Games}
+          day3Games={day3Games}
+          day5Games={day5Games}
         />
+      </>
     );
 }

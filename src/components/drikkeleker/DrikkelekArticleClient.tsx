@@ -1,10 +1,18 @@
 'use client';
 
 import type { GameArticle } from '@/lib/types';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Dice5, Crown, HelpCircle, Layers } from 'lucide-react';
+import {
+  ArrowLeft,
+  Dice5,
+  Crown,
+  HelpCircle,
+  Layers,
+  Gamepad2,
+  Library,
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import {
@@ -16,7 +24,21 @@ import {
 import { AdBanner } from '../ads/AdBanner';
 import { withBasePathIfAbsolute } from '@/lib/base-path';
 
-export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
+type RelatedArticle = Pick<GameArticle, 'slug' | 'title'>;
+type RelatedGame = {
+  id: string;
+  title: string;
+};
+
+export function DrikkelekArticleClient({
+  article,
+  relatedArticles,
+  relatedGames,
+}: {
+  article: GameArticle;
+  relatedArticles: RelatedArticle[];
+  relatedGames: RelatedGame[];
+}) {
   return (
     <motion.div
       className="container mx-auto px-4 py-8 md:py-16 max-w-3xl"
@@ -51,16 +73,16 @@ export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
           </div>
         )}
         <CardHeader>
-          <CardTitle className="text-3xl font-bold">{article.title}</CardTitle>
+          <h1 className="text-3xl font-bold leading-tight">{article.title}</h1>
           <p className="text-muted-foreground pt-2">{article.description}</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-8 text-muted-foreground">
             <div>
-              <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-xl">
+              <h2 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-xl">
                 <Dice5 className="h-5 w-5" />
                 Dette trenger dere
-              </h3>
+              </h2>
               <ul className="list-disc list-inside space-y-1 text-base">
                 {article.whatYouNeed.map((item, i) => (
                   <li key={i}>{item}</li>
@@ -69,10 +91,10 @@ export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
             </div>
 
             <div>
-              <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-xl">
+              <h2 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-xl">
                 <HelpCircle className="h-5 w-5" />
                 Slik spiller dere
-              </h3>
+              </h2>
               <ol className="list-decimal list-inside space-y-3 text-base">
                 {article.rules.map((rule, i) => (
                   <li key={i}>{rule}</li>
@@ -82,10 +104,10 @@ export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
 
             {article.variants && article.variants.length > 0 && (
               <div>
-                <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-xl">
+                <h2 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-xl">
                   <Layers className="h-5 w-5" />
                   Varianter og Regler
-                </h3>
+                </h2>
                 <Accordion type="single" collapsible className="w-full">
                   {article.variants.map((variant, i) => (
                     <AccordionItem value={`item-${i}`} key={i}>
@@ -108,10 +130,10 @@ export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
 
             {article.cardRules && (
               <div>
-                <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2 text-xl">
+                <h2 className="font-semibold text-foreground mb-4 flex items-center gap-2 text-xl">
                   <Crown className="h-5 w-5" />
                   Kortregler for {article.title}
-                </h3>
+                </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   {Object.entries(article.cardRules).map(([card, rule]) => (
                     <div
@@ -128,6 +150,50 @@ export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
           </div>
         </CardContent>
       </Card>
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section className="rounded-lg border border-border/60 bg-card/50 p-5">
+          <h2 className="text-xl font-semibold text-foreground mb-3 flex items-center gap-2">
+            <Library className="h-5 w-5" />
+            Relaterte drikkeleker
+          </h2>
+          <ul className="space-y-2">
+            {relatedArticles.map((relatedArticle) => (
+              <li key={relatedArticle.slug}>
+                <Link
+                  href={`/drikkeleker/${relatedArticle.slug}`}
+                  className="text-primary hover:underline"
+                >
+                  {relatedArticle.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="rounded-lg border border-border/60 bg-card/50 p-5">
+          <h2 className="text-xl font-semibold text-foreground mb-3 flex items-center gap-2">
+            <Gamepad2 className="h-5 w-5" />
+            Digitale partyspill i appen
+          </h2>
+          <ul className="space-y-2">
+            {relatedGames.map((relatedGame) => (
+              <li key={relatedGame.id}>
+                <Link
+                  href={`/spill/${relatedGame.id}`}
+                  className="text-primary hover:underline"
+                >
+                  {relatedGame.title}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link href="/alle-spill" className="text-primary hover:underline">
+                Se alle digitale spill
+              </Link>
+            </li>
+          </ul>
+        </section>
+      </div>
       <motion.div
         className="mt-12 w-full flex justify-center"
         initial={{ opacity: 0, y: 20 }}

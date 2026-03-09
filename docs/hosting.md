@@ -62,7 +62,7 @@ NEXT_PUBLIC_BASE_PATH=/GameNight
 - Ingen server-side API-ruter i samme app
 - Donasjoner virker kun hvis `NEXT_PUBLIC_DONATION_API_URL` peker til ekstern backend
 - All dynamikk må være klient-side eller pre-generert
-- `robots.txt` peker fortsatt på produksjons-sitemap (`gamenight.no`), som er ok for prod men ikke perfekt for beta-domene
+- Sett `NEXT_PUBLIC_CANONICAL_ORIGIN` hvis canonical/sitemap/robots skal peke på annet domene enn `NEXT_PUBLIC_SITE_URL`
 
 Dette er akseptabelt for dagens beta-scope.
 

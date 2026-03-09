@@ -1,40 +1,15 @@
-'use client';
+import type { Metadata } from 'next';
+import { TakkPageClient } from '@/components/info/TakkPageClient';
+import { buildPageMetadata } from '@/lib/seo';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart } from 'lucide-react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Takk for støtten | GameNight',
+  description:
+    'Takkeside for frivillig støtte til GameNight. Tilbake til spillene når dere er klare for neste runde.',
+  path: '/takk',
+  noindex: true,
+});
 
 export default function TakkPage() {
-  return (
-    <motion.div
-      className="container mx-auto flex min-h-screen items-center justify-center p-4"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, type: 'spring' }}
-    >
-      <Card className="max-w-md text-center">
-        <CardHeader>
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring' }}
-            className="flex justify-center mb-4"
-          >
-            <Heart className="h-16 w-16 text-primary" />
-          </motion.div>
-          <CardTitle className="text-3xl font-bold">Tusen takk for støtten!</CardTitle>
-          <CardDescription className="text-lg text-muted-foreground pt-2">
-            Ditt bidrag hjelper oss med å holde serverne i gang og utvikle nye, morsomme spill for deg og vennene dine.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button size="lg" asChild>
-            <Link href="/">Tilbake til forsiden</Link>
-          </Button>
-        </CardContent>
-      </Card>
-    </motion.div>
-  );
+  return <TakkPageClient />;
 }

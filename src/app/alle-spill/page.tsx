@@ -5,17 +5,28 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
-import { Suspense } from 'react';
+import { buildBreadcrumbJsonLd, buildPageMetadata } from '@/lib/seo';
+import { getThemes } from '@/lib/themes';
+import { JsonLd } from '@/components/seo/JsonLd';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: 'Alle Spill | GameNight',
-  description: 'Utforsk alle partyspillene. Sorter etter stemning og intensitet for å finne det perfekte spillet for kvelden.',
-};
+  description:
+    'Utforsk alle partyspillene. Sorter etter stemning og intensitet for å finne det perfekte spillet for kvelden.',
+  path: '/alle-spill',
+});
 
 export default async function AllGamesPage() {
   const games = await getGames();
+  const themes = await getThemes();
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Forside', path: '/' },
+    { name: 'Alle spill', path: '/alle-spill' },
+  ]);
+
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
+      <JsonLd id="all-games-breadcrumb-jsonld" data={breadcrumbJsonLd} />
        <div className="absolute top-4 left-4 z-10">
         <Button variant="ghost" asChild>
           <Link href="/">
@@ -37,9 +48,26 @@ export default async function AllGamesPage() {
         </p>
       </header>
 
-      <Suspense fallback={<p className="text-center text-muted-foreground">Laster spill...</p>}>
-        <AllGamesClient games={games} />
-      </Suspense>
+      <section aria-labelledby="alle-spill-temaer" className="mb-10">
+        <h2
+          id="alle-spill-temaer"
+          className="text-xl md:text-2xl font-bold font-headline text-center mb-4"
+        >
+          Utforsk etter stemning
+        </h2>
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+          {themes.map((theme) => (
+            <Button key={theme.slug} asChild variant="outline" size="sm">
+              <Link href={`/tema/${theme.slug}`}>
+                <span className="mr-1.5">{theme.emoji}</span>
+                {theme.title}
+              </Link>
+            </Button>
+          ))}
+        </div>
+      </section>
+
+      <AllGamesClient games={games} />
     </div>
   );
 }

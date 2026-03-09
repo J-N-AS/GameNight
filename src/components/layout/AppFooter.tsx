@@ -30,6 +30,15 @@ export function AppFooter() {
           <Link href="/drikkeleker" className="hover:text-foreground transition-colors">
             Klassiske Drikkeleker
           </Link>
+          <Link href="/faq" className="hover:text-foreground transition-colors">
+            FAQ
+          </Link>
+          <Link href="/changelog" className="hover:text-foreground transition-colors">
+            Changelog
+          </Link>
+          <Link href="/vilkar" className="hover:text-foreground transition-colors">
+            Vilkår
+          </Link>
           <Link href="/musikkleker" className="hover:text-foreground transition-colors">
             Musikkeleker
           </Link>
@@ -49,6 +58,12 @@ export function AppFooter() {
         <div className="mt-4 pt-4 border-t border-border/50 text-center text-xs text-muted-foreground/90 w-full max-w-lg">
           <p>
             GameNight er ment for underholdning. Vennligst drikk ansvarlig, respekter hverandres grenser og følg lokale lover. Innholdet er ikke en oppfordring til overdreven drikking, og de fleste spillene har en anbefalt aldersgrense på 18 år.
+          </p>
+          <p className="mt-2">
+            Utgiver: GameNight · Kontakt:{' '}
+            <a href="mailto:hei@gamenight.no" className="hover:text-foreground underline">
+              hei@gamenight.no
+            </a>
           </p>
         </div>
       </div>

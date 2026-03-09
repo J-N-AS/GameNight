@@ -3,6 +3,8 @@ import { ThemePageClient } from '@/components/themes/ThemePageClient';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getThemes } from '@/lib/themes';
+import { buildBreadcrumbJsonLd, buildPageMetadata } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
 
 type ThemePageProps = {
   params: Promise<{
@@ -22,15 +24,19 @@ export async function generateMetadata({ params }: ThemePageProps): Promise<Meta
   const theme = await getTheme(slug);
 
   if (!theme) {
-    return {
-      title: 'Tema ikke funnet | GameNight'
-    };
+    return buildPageMetadata({
+      title: 'Tema ikke funnet | GameNight',
+      description: 'Temaet du leter etter finnes ikke.',
+      path: '/alle-spill',
+      noindex: true,
+    });
   }
 
-  return {
+  return buildPageMetadata({
     title: `${theme.title} | GameNight`,
     description: theme.metaDescription,
-  };
+    path: `/tema/${theme.slug}`,
+  });
 }
 
 export default async function ThemePage({ params }: ThemePageProps) {
@@ -41,5 +47,15 @@ export default async function ThemePage({ params }: ThemePageProps) {
     notFound();
   }
 
-  return <ThemePageClient theme={theme} />;
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Forside', path: '/' },
+    { name: theme.title, path: `/tema/${theme.slug}` },
+  ]);
+
+  return (
+    <>
+      <JsonLd id="theme-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+      <ThemePageClient theme={theme} />
+    </>
+  );
 }

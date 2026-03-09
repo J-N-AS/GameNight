@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -461,7 +461,7 @@ export function InfoPageClient({ slug }: { slug: InfoPageSlug }) {
       </div>
       <Card className="bg-card/80 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle className="text-3xl font-bold">{page.title}</CardTitle>
+          <h1 className="text-3xl font-bold leading-tight">{page.title}</h1>
         </CardHeader>
         <CardContent>{page.content}</CardContent>
       </Card>

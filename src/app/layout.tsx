@@ -7,13 +7,27 @@ import { AppProviders } from './providers';
 import { poppins } from './fonts';
 import { PwaInstallPrompt } from '@/components/common/PwaInstallPrompt';
 import { withBasePath } from '@/lib/base-path';
+import {
+  buildPageMetadata,
+  getMetadataBase,
+  getOrganizationJsonLd,
+  getWebsiteJsonLd,
+} from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
 
 const manifestPath = withBasePath('/manifest.json');
 const appleTouchIconPath = withBasePath('/icon-192x192.png');
+const organizationJsonLd = getOrganizationJsonLd();
+const websiteJsonLd = getWebsiteJsonLd();
 
 export const metadata: Metadata = {
-  title: 'GameNight - Gratis Selskapsleker, Partyspill & Drikkeleker',
-  description: 'Start festen med de beste gratis selskapslekene, partyspillene og drikkelekene, rett i nettleseren. Perfekt for vorspiel, fadderuke og russetid.',
+  ...buildPageMetadata({
+    title: 'GameNight - Gratis Selskapsleker, Partyspill & Drikkeleker',
+    description:
+      'Start festen med de beste gratis selskapslekene, partyspillene og drikkelekene, rett i nettleseren. Perfekt for vorspiel, fadderuke og russetid.',
+    path: '/',
+  }),
+  metadataBase: getMetadataBase(),
   manifest: manifestPath,
 };
 
@@ -31,6 +45,8 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href={manifestPath} />
         <link rel="apple-touch-icon" href={appleTouchIconPath}></link>
+        <JsonLd id="organization-jsonld" data={organizationJsonLd} />
+        <JsonLd id="website-jsonld" data={websiteJsonLd} />
       </head>
       <body className="font-body antialiased bg-background text-foreground animated-background">
         <AppProviders>

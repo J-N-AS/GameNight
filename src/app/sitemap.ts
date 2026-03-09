@@ -3,10 +3,9 @@ import { getArticles } from '@/lib/articles';
 import { getThemes } from '@/lib/themes';
 import type { MetadataRoute } from 'next';
 import { withBasePath } from '@/lib/base-path';
+import { getCanonicalOrigin } from '@/lib/seo';
 
-const DEFAULT_SITE_URL = 'https://gamenight.no';
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, '') || DEFAULT_SITE_URL;
+const SITE_URL = getCanonicalOrigin();
 export const dynamic = 'force-static';
 
 function toAbsoluteUrl(path: `/${string}`): string {
@@ -99,6 +98,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
+    },
+    {
+      url: toAbsoluteUrl('/faq'),
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: toAbsoluteUrl('/changelog'),
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
+    {
+      url: toAbsoluteUrl('/vilkar'),
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.4,
     },
   ];
 

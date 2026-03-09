@@ -6,14 +6,22 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
 import { RussetidenClient } from '@/components/game/RussetidenClient';
+import { buildBreadcrumbJsonLd, buildPageMetadata } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: 'Russetid 2026: Gjør rullingen legendarisk | GameNight',
-  description: 'GameNight er rigget for russekro, rulling og nachspiel. Finn spillene som holder liv i gjengen, eller få deres helt eget buss-spill.',
-};
+  description:
+    'GameNight er rigget for russekro, rulling og nachspiel. Finn spillene som holder liv i gjengen, eller få deres helt eget buss-spill.',
+  path: '/russetiden',
+});
 
 export default async function RussetidenPage() {
     const allGames = await getGames({ includeHidden: true, includeHiddenFromMain: true });
+    const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+      { name: 'Forside', path: '/' },
+      { name: 'Russetiden', path: '/russetiden' },
+    ]);
   
     const standardGameIds = ['gutta', 'girl-power', 'kaosrunden', 'hemmeligheter'];
     const standardGames = standardGameIds.map(id => allGames.find(g => g.id === id)).filter(Boolean) as Omit<Game, 'items' | 'language' | 'shuffle'>[];
@@ -22,6 +30,7 @@ export default async function RussetidenPage() {
     
     return (
         <div className="container mx-auto px-4 py-8 md:py-12">
+            <JsonLd id="russetiden-breadcrumb-jsonld" data={breadcrumbJsonLd} />
             <div className="absolute top-4 left-4 z-10">
                 <Button variant="ghost" asChild>
                     <Link href="/">

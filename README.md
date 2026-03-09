@@ -12,6 +12,9 @@ Implementert:
 - PWA-manifest + service worker (offline cache av app shell + runtime assets)
 - Statisk generering av dynamiske ruter via `generateStaticParams`
 - Valgfri donasjonsintegrasjon mot ekstern endpoint (ingen innebygd backend)
+- SEO-grunnmur med canonical/OG/Twitter metadata via Next metadata-systemet
+- Structured data (Organization/WebSite, breadcrumbs, FAQ/Article der relevant)
+- Trust-sider: `/faq`, `/changelog`, `/vilkar`
 
 Ikke implementert:
 - Login/auth
@@ -68,6 +71,10 @@ Kopier fra `.env.example` ved behov.
 - `NEXT_PUBLIC_SITE_URL`
   - Valgfri absolutt URL for delingslenker/QR-koder.
   - Eksempel: `https://gamenight.no`
+- `NEXT_PUBLIC_CANONICAL_ORIGIN`
+  - Valgfri foretrukket canonical-origin for SEO.
+  - Brukes i canonical tags, structured data, sitemap/robots metadata-ruter.
+  - Eksempel: `https://gamenight.no`
 - `NEXT_PUBLIC_BASE_PATH`
   - Valgfri base path for repo-hosting (GitHub Pages).
   - Eksempel: `/GameNight`
@@ -85,6 +92,9 @@ Kopier fra `.env.example` ved behov.
 - `/russetiden`
 - `/musikkleker`
 - `/skjermleker`
+- `/faq`
+- `/changelog`
+- `/vilkar`
 - `/oppsummering`
 - `/takk`
 - `/print/mingle-bingo`
@@ -99,6 +109,23 @@ Alle over bygges statisk via `generateStaticParams`.
 
 ### Metadata-rute
 - `/sitemap.xml` genereres statisk i build.
+- `/robots.txt` genereres som metadata-route.
+
+## SEO og publisher-readiness
+
+Implementert i denne runden:
+- Konsistente canonical/OG/Twitter tags på sentrale sider.
+- `metadataBase` + canonical-origin-strategi for multi-host scenarioer.
+- `noindex` på utility-sider (`/oppsummering`, `/takk`, `/print/mingle-bingo`) og skjulte spill.
+- FAQ-side med FAQ structured data.
+- Changelog-side for synlig vedlikehold.
+- Vilkårsside for tydeligere publisher-signaler.
+- `public/ads.txt` placeholder.
+
+Må fylles inn før faktisk AdSense-søknad:
+- Sett endelig `NEXT_PUBLIC_CANONICAL_ORIGIN`.
+- Erstatt placeholder i `public/ads.txt` med ekte publisher-linje.
+- Sikre at consent/CMP-oppsett møter krav for aktuell trafikk (særlig EØS/UK).
 
 ## Donasjoner (isolert, hostinguavhengig)
 
@@ -123,6 +150,7 @@ Dette gjør at repoet kan kjøre statisk uten innebygd betalingsbackend.
 Se:
 - [`docs/hosting.md`](docs/hosting.md)
 - [`docs/architecture.md`](docs/architecture.md)
+- [`docs/seo-publisher-readiness.md`](docs/seo-publisher-readiness.md)
 
 Kort oppsummert:
 - **GitHub Pages beta**: realistisk via `npm run build:export`

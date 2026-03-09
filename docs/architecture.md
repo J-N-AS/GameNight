@@ -24,7 +24,7 @@ Det finnes ingen database eller backend-datalag i repoet.
 
 ## Statiske sider
 
-- `/`, `/alle-spill`, `/drikkeleker`, `/fadderuka`, `/russetiden`, `/musikkleker`, `/skjermleker`, `/oppsummering`, `/takk`, `/print/mingle-bingo`
+- `/`, `/alle-spill`, `/drikkeleker`, `/fadderuka`, `/russetiden`, `/musikkleker`, `/skjermleker`, `/faq`, `/changelog`, `/vilkar`, `/oppsummering`, `/takk`, `/print/mingle-bingo`
 
 ## Dynamiske path-segmenter (men statisk generert)
 
@@ -36,6 +36,7 @@ Det finnes ingen database eller backend-datalag i repoet.
 ## Metadata-ruter
 
 - `/sitemap.xml` genereres statisk (`dynamic = 'force-static'`).
+- `/robots.txt` genereres via `src/app/robots.ts`.
 
 ## 3. Runtime-avhengigheter
 
@@ -71,5 +72,4 @@ Forenklet service worker:
 ## 6. Kjente begrensninger
 
 - Uten `NEXT_PUBLIC_DONATION_API_URL` er donasjon deaktivert (forventet).
-- `robots.txt` peker fortsatt på `https://gamenight.no/sitemap.xml`.
-  - Dette er riktig for produksjonsdomene, men ikke for midlertidig preview-domener.
+- Uten `NEXT_PUBLIC_CANONICAL_ORIGIN` brukes fallback-origin (`https://gamenight.no`) i canonical/sitemap/robots metadata.

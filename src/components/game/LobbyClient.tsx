@@ -153,6 +153,9 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         className="text-center mb-10 md:mb-12"
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
       >
+        <h1 className="sr-only">
+          GameNight - Gratis selskapsleker, partyspill og drikkeleker
+        </h1>
         <Image
           src={withBasePath('/GameNight-logo-small.webp')}
           alt="GameNight Logo"
