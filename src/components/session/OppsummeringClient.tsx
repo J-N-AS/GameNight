@@ -107,9 +107,9 @@ export function OppsummeringClient() {
         : null;
 
     const allAwards: Award[] = [
-      { emoji: '🏆', title: 'Kveldens Drivkraft', subtitle: 'Fikk flest oppgaver bekreftet', player: mvp },
-      { emoji: '🎯', title: 'Kveldens Skyteskive', subtitle: 'Ble trukket ut flest ganger i navngitte kort', player: skyteskive },
-      { emoji: '🛡️', title: 'Den Unnvikende', subtitle: 'Ble trukket ut færrest ganger i navngitte kort', player: teflon },
+      { emoji: '🏆', title: 'Kveldens Drivkraft', subtitle: 'Ble trukket flest ganger i spørsmål og utfordringer', player: mvp },
+      { emoji: '🎯', title: 'Kveldens Midtpunkt', subtitle: 'Ble pekt ut flest ganger i navngitte kort', player: skyteskive },
+      { emoji: '🛡️', title: 'Den Unnvikende', subtitle: 'Ble sjeldnest trukket ut i navngitte kort', player: teflon },
     ];
 
     return allAwards.filter(
@@ -236,11 +236,13 @@ export function OppsummeringClient() {
         <div className="text-center">
             <h1 className="text-3xl font-bold font-headline">Kveldens Oppsummering</h1>
             <p className="text-muted-foreground mt-2">
-                {showAwards ? "Her er kveldens kåringer. Del den med venner!" : "Bra spilt! Ser ut som det trengs flere runder for å kåre vinnere."}
+                {showAwards
+                  ? 'Her er kveldens kåringer. Del den med venner!'
+                  : 'Bra spilt! Det er ikke nok navngitte kort i denne økten til å lage en rettferdig kåring ennå.'}
             </p>
             {showAwards && (
               <p className="text-xs text-muted-foreground/80 mt-2">
-                Basert på kortflyten denne kvelden, ikke avansert tracking.
+                Basert på navngitte spørsmål og utfordringer i denne økten, ikke avansert tracking.
               </p>
             )}
         </div>

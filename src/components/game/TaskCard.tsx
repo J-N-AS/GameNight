@@ -99,7 +99,7 @@ export function TaskCard({ type, content, onVote, teams }: TaskCardProps) {
         details.surfaceClass
       )}
     >
-      <CardHeader className="space-y-3">
+      <CardHeader className="space-y-3 px-5 pt-5 md:px-6 md:pt-6">
         <div className="flex justify-center">
           <span
             className={cn(
@@ -127,9 +127,9 @@ export function TaskCard({ type, content, onVote, teams }: TaskCardProps) {
         <p className="text-sm text-muted-foreground">{details.hint}</p>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="px-5 pb-6 md:px-6 md:pb-7">
         <motion.p
-          className="text-3xl md:text-5xl font-bold leading-tight md:leading-tight px-4"
+          className="px-1 text-[1.85rem] font-bold leading-tight sm:px-4 sm:text-3xl md:text-5xl md:leading-tight"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}

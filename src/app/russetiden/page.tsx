@@ -26,7 +26,9 @@ export default async function RussetidenPage() {
     const standardGameIds = ['gutta', 'girl-power', 'kaosrunden', 'hemmeligheter'];
     const standardGames = standardGameIds.map(id => allGames.find(g => g.id === id)).filter(Boolean) as Omit<Game, 'items' | 'language' | 'shuffle'>[];
     
-    const customGames = allGames.filter(g => g.isHiddenFromMain);
+    const customGames = allGames.filter(
+      (game) => game.isHiddenFromMain && game.custom && !game.hidden
+    );
     
     return (
         <div className="container mx-auto px-4 py-8 md:py-12">

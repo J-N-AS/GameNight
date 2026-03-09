@@ -1,16 +1,15 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import type { ReactNode } from 'react';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
-import { Smartphone, GlassWater } from 'lucide-react';
 
 interface GameModeSelectionScreenProps {
   title: string;
   description: string;
   options: {
     id: string;
-    icon: React.ReactNode;
+    icon: ReactNode;
     title: string;
     description: string;
   }[];
@@ -20,14 +19,14 @@ interface GameModeSelectionScreenProps {
 export function GameModeSelectionScreen({ title, description, options, onModeSelect }: GameModeSelectionScreenProps) {
   return (
     <motion.div
-      className="flex min-h-screen flex-col items-center justify-center p-4 text-center"
+      className="flex min-h-screen flex-col items-center justify-center px-4 py-8 text-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <div className="max-w-2xl">
         <motion.h1
-          className="text-4xl font-bold mb-4"
+          className="mb-4 text-3xl font-bold md:text-4xl"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -35,7 +34,7 @@ export function GameModeSelectionScreen({ title, description, options, onModeSel
           {title}
         </motion.h1>
         <motion.p
-          className="text-muted-foreground text-lg mb-10"
+          className="mb-8 text-base text-muted-foreground md:mb-10 md:text-lg"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -43,7 +42,7 @@ export function GameModeSelectionScreen({ title, description, options, onModeSel
           {description}
         </motion.p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
           {options.map((option, index) => (
             <motion.div
               key={option.id}
@@ -52,10 +51,10 @@ export function GameModeSelectionScreen({ title, description, options, onModeSel
               transition={{ delay: 0.4 + index * 0.1 }}
             >
               <Card
-                className="text-left h-full transition-all hover:border-primary hover:scale-105 hover:shadow-lg cursor-pointer bg-card/50"
+                className="h-full cursor-pointer bg-card/60 text-left transition-all hover:border-primary hover:scale-[1.02] hover:shadow-lg"
                 onClick={() => onModeSelect(option.id)}
               >
-                <CardHeader className="flex-row items-start gap-4">
+                <CardHeader className="flex-row items-start gap-4 p-5">
                     {option.icon}
                   <div>
                     <CardTitle>{option.title}</CardTitle>

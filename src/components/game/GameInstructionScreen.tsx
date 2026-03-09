@@ -1,10 +1,11 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 
 interface GameInstructionScreenProps {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   description: string;
   buttonText: string;
@@ -14,12 +15,12 @@ interface GameInstructionScreenProps {
 export function GameInstructionScreen({ icon, title, description, buttonText, onConfirm }: GameInstructionScreenProps) {
   return (
     <motion.div
-      className="flex min-h-screen flex-col items-center justify-center p-4 text-center bg-background"
+      className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-8 text-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-md">
+      <div className="max-w-md rounded-2xl border border-border/70 bg-card/70 p-6 shadow-xl backdrop-blur-sm">
         <motion.div
           className="mb-6 flex justify-center"
           initial={{ scale: 0 }}
@@ -30,7 +31,7 @@ export function GameInstructionScreen({ icon, title, description, buttonText, on
         </motion.div>
         
         <motion.h1
-          className="text-4xl font-bold mb-4"
+          className="mb-4 text-3xl font-bold md:text-4xl"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -39,7 +40,7 @@ export function GameInstructionScreen({ icon, title, description, buttonText, on
         </motion.h1>
         
         <motion.p
-          className="text-muted-foreground text-lg mb-10"
+          className="mb-8 text-base text-muted-foreground md:mb-10 md:text-lg"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -55,7 +56,7 @@ export function GameInstructionScreen({ icon, title, description, buttonText, on
           <Button
             onClick={onConfirm}
             size="lg"
-            className="h-14 text-lg transform transition-transform duration-200 hover:scale-105"
+            className="h-14 w-full text-lg transform transition-transform duration-200 hover:scale-[1.02]"
           >
             {buttonText}
           </Button>

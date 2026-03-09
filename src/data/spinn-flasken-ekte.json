@@ -5,6 +5,7 @@
   "language": "no",
   "shuffle": true,
   "requiresPlayers": false,
+  "hidden": true,
   "emoji": "🍾",
   "intensity": "medium",
   "audience": "18+",

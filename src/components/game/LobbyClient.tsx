@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Star, HardHat, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from './PlayerSetup';
@@ -32,6 +32,13 @@ import { PartyTools } from './PartyTools';
 import { useToast } from '@/hooks/use-toast';
 import { requestDonation } from '@/lib/donations';
 import { withBasePath } from '@/lib/base-path';
+import {
+  formatPlayerCount,
+  getMinimumPlayers,
+  getMissingPlayers,
+  hasEnoughPlayers,
+} from '@/lib/player-requirements';
+import { useGameStart } from '@/hooks/useGameStart';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -45,11 +52,33 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   const { players, isLoaded } = useSession();
   const router = useRouter();
   const { toast } = useToast();
+  const { startGame } = useGameStart();
+  const visibleGames = useMemo(
+    () => allGames.filter((game) => !game.hidden && !game.isHiddenFromMain),
+    [allGames]
+  );
+
+  const pendingGame = useMemo(() => {
+    if (!pendingReturnPath) {
+      return null;
+    }
+
+    return allGames.find((game) => pendingReturnPath === `/spill/${game.id}`) ?? null;
+  }, [allGames, pendingReturnPath]);
+
+  const pendingGameRequirement = pendingGame ? getMinimumPlayers(pendingGame) : 0;
+  const missingPendingPlayers = pendingGame
+    ? getMissingPlayers(pendingGame, players.length)
+    : 0;
 
   const handleSetupComplete = () => {
     setIsPlayerSetupOpen(false);
 
-    if (pendingReturnPath && players.length > 0) {
+    if (
+      pendingReturnPath &&
+      pendingGame &&
+      hasEnoughPlayers(pendingGame, players.length)
+    ) {
       router.push(pendingReturnPath);
     }
   };
@@ -80,9 +109,9 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   }, []);
   
   const selectRandomGame = () => {
-    if (allGames.length > 0) {
-      const randomIndex = Math.floor(Math.random() * allGames.length);
-      setSurpriseGame(allGames[randomIndex]);
+    if (visibleGames.length > 0) {
+      const randomIndex = Math.floor(Math.random() * visibleGames.length);
+      setSurpriseGame(visibleGames[randomIndex]);
     }
   };
 
@@ -97,17 +126,8 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
 
   const handleStartSurpriseGame = () => {
     if (surpriseGame) {
-      if (surpriseGame.requiresPlayers && players.length === 0) {
-        toast({
-          title: 'Spillere mangler',
-          description: `"${surpriseGame.title}" krever at du legger til spillere først.`,
-          variant: 'destructive',
-        });
-        setIsSurpriseMeOpen(false);
-        setTimeout(() => setIsPlayerSetupOpen(true), 100);
-        return;
-      }
-      router.push(`/spill/${surpriseGame.id}`);
+      setIsSurpriseMeOpen(false);
+      startGame(surpriseGame);
     }
   };
 
@@ -140,7 +160,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
 
   return (
     <motion.div
-      className="container mx-auto px-4 py-8 md:py-12"
+      className="container mx-auto px-4 py-6 md:py-12"
       initial="hidden"
       animate="visible"
       variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
@@ -150,7 +170,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
       </div>
 
       <motion.header
-        className="text-center mb-10 md:mb-12"
+        className="text-center mb-8 md:mb-12"
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
       >
         <h1 className="sr-only">
@@ -167,10 +187,14 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         <p className="text-muted-foreground mt-4 text-lg md:text-xl">
           Start festen med de beste gratis partyspillene!
         </p>
+        <p className="mt-3 text-sm text-muted-foreground/90">
+          Laget for én skjerm: bruk samme mobil, eller cast til TV når hele
+          gjengen skal se.
+        </p>
       </motion.header>
       
       <motion.div 
-        className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+        className="flex flex-col sm:flex-row gap-3 justify-center mb-10 md:mb-14"
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.1 } } }}
       >
         <Button size="lg" onClick={handleSurpriseMeClick} className="h-14 text-lg transform transition-transform duration-200 hover:scale-105">
@@ -187,13 +211,31 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
       
        {/* Player Setup */}
       <motion.div className="mb-8 w-full max-w-md mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.2 } } }}>
-          <PlayerSetup open={isPlayerSetupOpen} onOpenChange={setIsPlayerSetupOpen} onSetupComplete={handleSetupComplete}>
+          <PlayerSetup
+            open={isPlayerSetupOpen}
+            onOpenChange={setIsPlayerSetupOpen}
+            onSetupComplete={handleSetupComplete}
+            requiredPlayers={pendingGameRequirement}
+            pendingGameTitle={pendingGame?.title}
+          >
              {isLoaded && players.length === 0 && (
                 <Button variant="outline" className="w-full h-12" onClick={() => setIsPlayerSetupOpen(true)}>
-                    <Users className="mr-2 h-5 w-5" /> {pendingReturnPath ? 'Legg til spillere for å fortsette' : 'Legg til spillere'}
+                    <Users className="mr-2 h-5 w-5" /> {pendingGame ? `Legg til ${formatPlayerCount(pendingGameRequirement)}` : 'Legg til spillere'}
                 </Button>
             )}
           </PlayerSetup>
+          {pendingGame && (
+              <Card className="mb-4 border-primary/20 bg-card/90 backdrop-blur-sm">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg">Klar til å starte {pendingGame.title}?</CardTitle>
+                  <CardDescription>
+                    {missingPendingPlayers > 0
+                      ? `Dette spillet trenger minst ${formatPlayerCount(pendingGameRequirement)}. Dere mangler ${formatPlayerCount(missingPendingPlayers)}.`
+                      : `Dere har nok spillere. Åpne oppsettet hvis du vil justere navn før start.`}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+          )}
           {isLoaded && players.length > 0 && (
               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
                   <Card className="bg-card/80 backdrop-blur-sm">
@@ -201,7 +243,11 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                       <CardTitle className="text-xl flex items-center gap-2">
                           <Users className="h-5 w-5" /> Hvem spiller?
                       </CardTitle>
-                      <CardDescription>{players.length} spillere er klare for fest.</CardDescription>
+                      <CardDescription>
+                        {pendingGame && missingPendingPlayers > 0
+                          ? `${players.length} klare. ${formatPlayerCount(missingPendingPlayers)} mangler for å starte ${pendingGame.title}.`
+                          : `${players.length} spillere er klare for fest.`}
+                      </CardDescription>
                   </CardHeader>
                   <CardContent className="flex flex-wrap gap-2">
                       {players.map(player => (
@@ -211,7 +257,9 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                       ))}
                   </CardContent>
                   <CardFooter className="grid grid-cols-2 gap-2 pt-4">
-                    <Button variant="outline" className="w-full" onClick={() => setIsPlayerSetupOpen(true)}>Endre spillere</Button>
+                    <Button variant="outline" className="w-full" onClick={() => setIsPlayerSetupOpen(true)}>
+                      {pendingGame && missingPendingPlayers > 0 ? 'Legg til flere' : 'Endre spillere'}
+                    </Button>
                     <Button asChild>
                       <Link href="/oppsummering">
                           <Trophy className="mr-2 h-5 w-5" />
@@ -222,10 +270,19 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                       <Button
                         className="col-span-2"
                         variant="secondary"
-                        onClick={() => router.push(pendingReturnPath)}
+                        onClick={() => {
+                          if (pendingGame) {
+                            startGame(pendingGame);
+                            return;
+                          }
+
+                          router.push(pendingReturnPath);
+                        }}
                       >
                         <Rocket className="mr-2 h-5 w-5" />
-                        Tilbake til spillet
+                        {pendingGame && missingPendingPlayers > 0
+                          ? 'Fortsett i spilleroppsett'
+                          : 'Tilbake til spillet'}
                       </Button>
                     )}
                   </CardFooter>
@@ -241,13 +298,18 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         <PartyTools />
       </motion.div>
 
-      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}>
+      <motion.div className="mb-14 md:mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}>
           <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
             ⭐ Anbefalt Nå
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {recommendedGames.map((game) => (
-                  <Link key={game.id} href={`/spill/${game.id}`} className="group block">
+                  <Link
+                    key={game.id}
+                    href={`/spill/${game.id}`}
+                    onClick={(event) => startGame(game, event)}
+                    className="group block"
+                  >
                       <Card className="h-full flex flex-col transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
                           <CardHeader className="flex-row items-start gap-4">
                               <div className="text-4xl mt-1">{game.emoji}</div>

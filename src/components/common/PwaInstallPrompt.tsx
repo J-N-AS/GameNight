@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Download } from 'lucide-react';
+import { Download, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 // This is a simplified type, the actual event is more complex
@@ -15,41 +15,81 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
+const INSTALL_PROMPT_DISMISSED_KEY = 'gamenight_install_prompt_dismissed_at';
+const INSTALL_PROMPT_COOLDOWN_MS = 1000 * 60 * 60 * 24 * 7;
+
 export function PwaInstallPrompt() {
   const [installPromptEvent, setInstallPromptEvent] = useState<BeforeInstallPromptEvent | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const hasDismissedRecently = () => {
+      const dismissedAt = window.localStorage.getItem(
+        INSTALL_PROMPT_DISMISSED_KEY
+      );
+
+      if (!dismissedAt) {
+        return false;
+      }
+
+      return Date.now() - Number(dismissedAt) < INSTALL_PROMPT_COOLDOWN_MS;
+    };
+
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as Navigator & { standalone?: boolean }).standalone === true;
+
+    const isMobileSized = window.matchMedia('(max-width: 767px)').matches;
+    const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
     const handleBeforeInstallPrompt = (e: Event) => {
-      // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
-      // Stash the event so it can be triggered later.
+
+      if (isStandalone || hasDismissedRecently() || (!isMobileSized && !hasCoarsePointer)) {
+        return;
+      }
+
       setInstallPromptEvent(e as BeforeInstallPromptEvent);
-      // Show the install button
       setIsVisible(true);
     };
 
+    const handleAppInstalled = () => {
+      setInstallPromptEvent(null);
+      setIsVisible(false);
+      window.localStorage.removeItem(INSTALL_PROMPT_DISMISSED_KEY);
+    };
+
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
+
+  const handleDismiss = () => {
+    window.localStorage.setItem(
+      INSTALL_PROMPT_DISMISSED_KEY,
+      String(Date.now())
+    );
+    setIsVisible(false);
+  };
 
   const handleInstallClick = async () => {
     if (!installPromptEvent) {
       return;
     }
 
-    // Show the install prompt
     await installPromptEvent.prompt();
-    
-    // Wait for the user to respond to the prompt
-    await installPromptEvent.userChoice;
+    const choice = await installPromptEvent.userChoice;
 
-    // We've used the prompt, and can't use it again, so clear it
     setInstallPromptEvent(null);
     setIsVisible(false);
+
+    if (choice.outcome === 'dismissed') {
+      handleDismiss();
+    }
   };
   
   if (!isVisible) {
@@ -59,16 +99,52 @@ export function PwaInstallPrompt() {
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ y: '100%' }}
-        animate={{ y: '0%' }}
-        exit={{ y: '100%' }}
-        transition={{ type: 'tween', ease: 'easeInOut', delay: 2 }} // Delay to not be too aggressive
-        className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 sm:bottom-6"
+        initial={{ y: '100%', opacity: 0 }}
+        animate={{ y: '0%', opacity: 1 }}
+        exit={{ y: '100%', opacity: 0 }}
+        transition={{ type: 'tween', ease: 'easeInOut', delay: 1.5 }}
+        className="fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50 md:hidden"
       >
-        <Button onClick={handleInstallClick} size="lg" className="h-12 shadow-2xl shadow-primary/30 transform transition-transform duration-200 hover:scale-105">
-          <Download className="mr-2 h-5 w-5" />
-          Installer GameNight
-        </Button>
+        <div className="mx-auto max-w-md rounded-2xl border border-border/70 bg-card/95 p-4 shadow-2xl backdrop-blur">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-foreground">
+                Ha GameNight klar på mobilen
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Installer for raskere åpning før vorspiel, nach eller skjermdeling til TV.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleDismiss}
+              className="rounded-full p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              aria-label="Skjul installprompt"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="mt-4 flex gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="h-11 flex-1"
+              onClick={handleDismiss}
+            >
+              Ikke nå
+            </Button>
+            <Button
+              type="button"
+              onClick={handleInstallClick}
+              className="h-11 flex-1"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Installer
+            </Button>
+          </div>
+        </div>
       </motion.div>
     </AnimatePresence>
   );

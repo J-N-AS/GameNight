@@ -10,13 +10,12 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useState, useMemo, useEffect } from 'react';
-import { useSession } from '@/hooks/usePlayers';
-import { useRouter } from 'next/navigation';
-import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Input } from '../ui/input';
 import { Search } from 'lucide-react';
+import { getPlayerRequirementLabel } from '@/lib/player-requirements';
+import { useGameStart } from '@/hooks/useGameStart';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -27,9 +26,7 @@ const intensityMap = {
 };
 
 export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
-  const { players } = useSession();
-  const { toast } = useToast();
-  const router = useRouter();
+  const { startGame } = useGameStart();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [allTags, setAllTags] = useState<string[]>([]);
@@ -53,20 +50,6 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
     }
 
   }, [games]);
-
-  const handleGameSelect = (e: React.MouseEvent, game: GameFromGetGames) => {
-    if (game.requiresPlayers && players.length === 0) {
-      e.preventDefault();
-      toast({
-        title: 'Spillere mangler',
-        description: `"${game.title}" krever spillere. Vi sender deg til oppsett, så kan du fortsette rett tilbake.`,
-        variant: 'destructive',
-      });
-      router.push(
-        `/?setupPlayers=1&returnTo=${encodeURIComponent(`/spill/${game.id}`)}`
-      );
-    }
-  };
 
   const filteredGames = useMemo(() => {
     const lowercasedSearch = searchTerm.toLowerCase();
@@ -128,7 +111,7 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
           >
             <Link
               href={`/spill/${game.id}`}
-              onClick={e => handleGameSelect(e, game)}
+              onClick={e => startGame(game, e)}
               className="group block h-full"
             >
               <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/10">
@@ -146,8 +129,10 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
                 </CardHeader>
                 <div className="p-6 pt-0 mt-auto flex justify-between items-center">
                     <div className="flex flex-wrap gap-1">
-                        {game.requiresPlayers && (
-                            <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">Krever spillere</span>
+                        {getPlayerRequirementLabel(game) && (
+                            <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">
+                              {getPlayerRequirementLabel(game)}
+                            </span>
                         )}
                         {game.tags?.map(tag => (
                             <span key={tag} className="text-xs font-semibold text-muted-foreground/70 bg-muted/50 px-2 py-0.5 rounded-full">{tag}</span>

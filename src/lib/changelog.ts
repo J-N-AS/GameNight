@@ -8,6 +8,17 @@ export type ChangelogEntry = {
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     date: '2026-03-09',
+    title: 'Stabilisering av spillstart, mobilflyt og installprompt',
+    summary:
+      'Spillstarten ble strammet inn med tydeligere spillerkrav, mer konsistent spilleroppsett og mindre pågående PWA-promotering.',
+    items: [
+      'Innførte enkel minPlayers-støtte med guard i spillsiden og felles startlogikk på tvers av lister og huber.',
+      'Oppdaterte spilleroppsettet slik at det forklarer hva som mangler og sender brukeren tilbake til riktig spill når kravet er oppfylt.',
+      'Skjulte svake/dummy-varianter fra offentlig produktflate og tonet ned installprompten til en mobil-først, tilgjengelighetsstyrt prompt.',
+    ],
+  },
+  {
+    date: '2026-03-09',
     title: 'Statisk-first drift og hosting-opprydding',
     summary:
       'Prosjektet ble konsolidert for stabil statisk drift på GitHub Pages og Cloudflare.',

@@ -11,6 +11,12 @@ Denne filen beskriver hvordan GameNight faktisk fungerer etter oppryddingen.
 - Spillmodell for spin-varianter:
   - `gameType: "spin-the-bottle"`
   - `spinMode: "choose" | "virtual" | "physical"` for konsistent oppstartsflyt
+- Spill kan i tillegg ha `minPlayers` ved behov.
+  - Hvis `minPlayers` mangler, bruker appen en enkel standard:
+    - `2` for spill som krever spillerliste
+    - `2` for `spin-the-bottle` og `physical-item`
+    - `0` ellers
+- Offentlige lister skjuler spill med `hidden` eller `isHiddenFromMain`, men rutene kan fortsatt statisk genereres ved behov.
 
 Det finnes ingen database eller backend-datalag i repoet.
 
@@ -19,6 +25,7 @@ Det finnes ingen database eller backend-datalag i repoet.
 - Appen er designet for én skjerm per session (mobil eller delt skjerm/TV-casting).
 - Ingen multiplayer/sanntids-sync mellom flere klienter.
 - Spillerliste og enkel spillstatistikk lagres lokalt i nettleseren.
+- FAQ/Om oss forklarer også anbefalt bruk med AirPlay, Android-casting og skjermdeling.
 
 ## 2. Render-strategi
 
@@ -68,6 +75,11 @@ Forenklet service worker:
 - Runtime-caching av same-origin assets
 - Navigasjon fallback til cache ved offline
 - Bruker relative paths (`./...`) for bedre basePath-kompatibilitet
+
+Installflyt:
+- Install-prompt vises bare når `beforeinstallprompt` faktisk er tilgjengelig.
+- Prompten er tonet ned til en mobil-først bottom sheet og skjules på desktop.
+- Hvis brukeren avviser prompten, holdes den borte en stund via lokal cooldown i `localStorage`.
 
 ## 6. Kjente begrensninger
 

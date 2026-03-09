@@ -5,6 +5,7 @@
   "language": "no",
   "shuffle": true,
   "requiresPlayers": true,
+  "hidden": true,
   "emoji": "🚌",
   "color": "hsl(280 75% 55%)",
   "intensity": "high",

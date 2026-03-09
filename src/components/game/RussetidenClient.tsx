@@ -7,17 +7,16 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
 import { Mail, QrCode, Download, Share2, Loader2, Instagram, Copy, Check, Gamepad2 } from 'lucide-react';
 import QRCode from 'react-qr-code';
 import * as htmlToImage from 'html-to-image';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
-import { Separator } from '../ui/separator';
 import { AdBanner } from '../ads/AdBanner';
 import { withBasePath } from '@/lib/base-path';
+import { getPlayerRequirementLabel } from '@/lib/player-requirements';
+import { useGameStart } from '@/hooks/useGameStart';
 
 
 type ListedGame = Omit<Game, 'items' | 'language' | 'shuffle'>;
@@ -82,7 +81,7 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
             });
             setIsCopied(true);
             setTimeout(() => setIsCopied(false), 2500);
-        }).catch(err => {
+        }).catch(() => {
             toast({
                 title: "Kunne ikke kopiere",
                 description: "En feil oppstod. Prøv å kopiere manuelt.",
@@ -157,21 +156,10 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
 
 
 const CustomGameCard = ({ game, onPromoClick }: { game: ListedGame, onPromoClick: () => void }) => {
-    const { players } = useSession();
-    const { toast } = useToast();
-    const router = useRouter();
+    const { startGame } = useGameStart();
 
     const handleGameSelect = (e: React.MouseEvent) => {
-        if (game.requiresPlayers && players.length === 0) {
-            e.preventDefault();
-            toast({
-                title: 'Spillere mangler',
-                description: `"${game.title}" krever at du legger til spillere først. Gå til forsiden for å legge til spillere.`,
-                variant: 'destructive',
-            });
-        } else {
-            router.push(`/spill/${game.id}`);
-        }
+        startGame(game, e);
     };
     
     return (
@@ -190,6 +178,11 @@ const CustomGameCard = ({ game, onPromoClick }: { game: ListedGame, onPromoClick
                         <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">{game.title}</CardTitle>
                         <CardDescription className="mt-1 text-muted-foreground/80">{game.description}</CardDescription>
                         <div className="text-xs mt-2 text-muted-foreground font-semibold">{game.region} / {game.kommune}</div>
+                        {getPlayerRequirementLabel(game) && (
+                            <p className="mt-2 text-xs font-semibold text-foreground/80">
+                                {getPlayerRequirementLabel(game)}
+                            </p>
+                        )}
                     </div>
                 </CardHeader>
             </div>
@@ -212,20 +205,8 @@ const CustomGameCard = ({ game, onPromoClick }: { game: ListedGame, onPromoClick
 }
 
 export function RussetidenClient({ standardGames, customGames }: RussetidenClientProps) {
-    const { players } = useSession();
-    const { toast } = useToast();
     const [promoGame, setPromoGame] = useState<ListedGame | null>(null);
-
-    const handleGameSelect = (e: React.MouseEvent, game: ListedGame) => {
-        if (game.requiresPlayers && players.length === 0) {
-            e.preventDefault();
-            toast({
-                title: 'Spillere mangler',
-                description: `"${game.title}" krever at du legger til spillere først. Gå til forsiden for å legge til spillere.`,
-                variant: 'destructive',
-            });
-        }
-    };
+    const { startGame } = useGameStart();
     
     return (
         <>
@@ -235,13 +216,18 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                         {standardGames.map((game) => (
                             <motion.div key={game.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                                <Link href={`/spill/${game.id}`} onClick={(e) => handleGameSelect(e, game)} className="group block h-full">
+                                <Link href={`/spill/${game.id}`} onClick={(e) => startGame(game, e)} className="group block h-full">
                                     <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
                                         <CardHeader className="flex-row items-start gap-4">
                                             <div className="text-4xl mt-1">{game.emoji}</div>
                                             <div>
                                                 <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">{game.title}</CardTitle>
                                                 <CardDescription className="mt-1 text-muted-foreground/80">{game.description}</CardDescription>
+                                                {getPlayerRequirementLabel(game) && (
+                                                    <p className="mt-3 text-xs font-semibold text-foreground/80">
+                                                        {getPlayerRequirementLabel(game)}
+                                                    </p>
+                                                )}
                                             </div>
                                         </CardHeader>
                                     </Card>

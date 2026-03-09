@@ -11,25 +11,13 @@ import { ArrowLeft, Gamepad2 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { AdBanner } from '../ads/AdBanner';
-import { useSession } from '@/hooks/usePlayers';
-import { useToast } from '@/hooks/use-toast';
 import { GameMenu } from '@/components/game/GameMenu';
+import { AdBanner } from '../ads/AdBanner';
+import { getPlayerRequirementLabel } from '@/lib/player-requirements';
+import { useGameStart } from '@/hooks/useGameStart';
 
 export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
-  const { players } = useSession();
-  const { toast } = useToast();
-
-  const handleGameSelect = (e: React.MouseEvent, game: ThemeWithGames['games'][0]) => {
-    if (game.requiresPlayers && players.length === 0) {
-      e.preventDefault();
-      toast({
-        title: 'Spillere mangler',
-        description: `"${game.title}" krever at du legger til spillere først. Gå til forsiden for å legge til spillere.`,
-        variant: 'destructive',
-      });
-    }
-  };
+  const { startGame } = useGameStart();
   
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -67,7 +55,7 @@ export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
           >
             <Link
               href={`/spill/${game.id}`}
-              onClick={(e) => handleGameSelect(e, game)}
+              onClick={(e) => startGame(game, e)}
               className="group block h-full"
             >
               <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
@@ -81,6 +69,11 @@ export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
                     <CardDescription className="mt-1 text-muted-foreground/80">
                       {game.description}
                     </CardDescription>
+                    {getPlayerRequirementLabel(game) && (
+                      <p className="mt-3 text-xs font-semibold text-foreground/80">
+                        {getPlayerRequirementLabel(game)}
+                      </p>
+                    )}
                   </div>
                 </CardHeader>
               </Card>

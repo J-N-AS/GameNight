@@ -280,6 +280,19 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     '--team2-color-hsl': extractHslValues(game.teams?.team2Color),
   } as React.CSSProperties;
 
+  const topBar = (
+    <div className="sticky top-0 z-20 -mx-1 mb-4 flex items-center justify-between rounded-full bg-background/85 px-1 py-1 backdrop-blur-sm md:mx-0 md:rounded-none md:bg-transparent md:px-0 md:py-0 md:backdrop-blur-0">
+      <Button variant="ghost" size="sm" asChild>
+        <Link href="/">
+          <Home className="mr-2 h-4 w-4" />
+          Lobby
+        </Link>
+      </Button>
+
+      <GameMenu context="in-game" onRestart={setupGame} />
+    </div>
+  );
+
   if (isFinished) {
     const winner = team1Score > team2Score ? game.teams!.team1 : (team2Score > team1Score ? game.teams!.team2 : null);
 
@@ -363,18 +376,8 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
   if (isSpinTheBottleMode && gameMode === 'virtual') {
     return (
-      <div className="flex flex-col min-h-screen p-4 md:p-8 overflow-hidden">
-        <div className="absolute top-4 left-4 z-10">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/">
-              <Home className="mr-2 h-4 w-4" />
-              Lobby
-            </Link>
-          </Button>
-        </div>
-        <div className="absolute top-4 right-4 z-10">
-          <GameMenu context="in-game" onRestart={setupGame} />
-        </div>
+      <div className="flex min-h-screen flex-col overflow-hidden px-4 pb-4 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:p-8">
+        {topBar}
   
         <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
           <div className="relative flex-grow flex items-center justify-center overflow-hidden flex-col">
@@ -389,7 +392,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   
             {isSpinning && <p className="text-lg text-muted-foreground absolute bottom-1/4">Spinner...</p>}
   
-            <div className="absolute bottom-0 w-full mb-8">
+            <div className="absolute bottom-0 w-full">
             <AnimatePresence>
               {showSpinResult && currentTask && (
                 <motion.div
@@ -402,9 +405,11 @@ export function GameClient({ game, gameMode }: GameClientProps) {
                     type={currentTask.type}
                     content={processedContent}
                   />
-                  <Button onClick={handleNextTask} size="lg" className="mt-8">
-                    Neste Spinn
-                  </Button>
+                  <div className="mt-6 bg-gradient-to-t from-background via-background/95 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4">
+                    <Button onClick={handleNextTask} size="lg" className="h-14 w-full max-w-sm">
+                      Neste spinn
+                    </Button>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -414,7 +419,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   
           {!isSpinning && !showSpinResult && (
             <motion.div
-              className="mb-4"
+              className="bg-gradient-to-t from-background via-background/95 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
@@ -422,7 +427,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
               <Button
                 onClick={handleSpinBottle}
                 size="lg"
-                className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-primary/30"
+                className="mx-auto h-14 w-full max-w-sm text-lg transform shadow-lg transition-transform duration-200 hover:scale-[1.02] hover:shadow-primary/30 active:scale-95"
               >
                 Spinn flasken
               </Button>
@@ -445,24 +450,13 @@ export function GameClient({ game, gameMode }: GameClientProps) {
       : 'Spinn den ekte flasken. Den flasken peker på må gjøre oppgaven som vises.';
 
     return (
-      <div className="flex flex-col min-h-screen p-4 md:p-8">
-        <div className="absolute top-4 left-4 z-10">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/">
-              <Home className="mr-2 h-4 w-4" />
-              Lobby
-            </Link>
-          </Button>
-        </div>
-
-        <div className="absolute top-4 right-4 z-10">
-          <GameMenu context="in-game" onRestart={setupGame} />
-        </div>
+      <div className="flex min-h-screen flex-col px-4 pb-4 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:p-8">
+        {topBar}
         
         <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
-            <div className="h-20 mb-4 flex items-center justify-center">
+            <div className="mb-3 flex min-h-16 items-center justify-center md:mb-4">
                 {!showLoading && (
-                    <p className="text-muted-foreground text-center px-4">
+                    <p className="px-4 text-center text-sm text-muted-foreground md:text-base">
                         {instructionText}
                     </p>
                 )}
@@ -495,7 +489,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
             {!showLoading && (
             <motion.div
-                className="mt-8 mb-4"
+                className="sticky bottom-0 mt-6 bg-gradient-to-t from-background via-background/95 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.3 }}
@@ -503,7 +497,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
                 <Button
                   onClick={handleNextTask}
                   size="lg"
-                  className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-primary/30"
+                  className="mx-auto h-14 w-full max-w-sm text-lg transform shadow-lg transition-transform duration-200 hover:scale-[1.02] hover:shadow-primary/30 active:scale-95"
                 >
                   Neste Oppgave
                 </Button>
@@ -523,23 +517,15 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 }
 
   return (
-    <div className="flex flex-col min-h-screen p-4 md:p-8" style={cssVars}>
-      <div className="absolute top-4 left-4 z-10">
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/">
-            <Home className="mr-2 h-4 w-4" />
-            Lobby
-          </Link>
-        </Button>
-      </div>
-
-      <div className="absolute top-4 right-4 z-10">
-        <GameMenu context="in-game" onRestart={setupGame} />
-      </div>
+    <div
+      className="flex min-h-screen flex-col px-4 pb-4 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:p-8"
+      style={cssVars}
+    >
+      {topBar}
 
       {/* Game Stage */}
       <div className="w-full max-w-[800px] mx-auto flex-grow flex flex-col justify-center text-center">
-        <div className="h-20 mb-4 flex items-center justify-center">
+        <div className="mb-3 flex min-h-16 items-center justify-center md:mb-4">
           {!showLoading && tasks.length > 0 && (
             <div className="w-full max-w-sm mx-auto">
                {isVersusMode && game.teams && (
@@ -585,7 +571,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
         {!showLoading && currentTask?.type !== 'versus' && (
           <motion.div
-            className="mt-8 mb-4"
+            className="sticky bottom-0 mt-6 bg-gradient-to-t from-background via-background/95 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.3 }}
@@ -593,7 +579,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
             <Button
               onClick={handleNextTask}
               size="lg"
-              className="w-full max-w-xs mx-auto h-14 text-lg transform transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-primary/30"
+              className="mx-auto h-14 w-full max-w-sm text-lg transform shadow-lg transition-transform duration-200 hover:scale-[1.02] hover:shadow-primary/30 active:scale-95"
             >
               Neste kort
             </Button>

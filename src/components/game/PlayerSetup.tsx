@@ -15,12 +15,15 @@ import { Input } from '@/components/ui/input';
 import { useSession, type Player } from '@/hooks/usePlayers';
 import { UserPlus, X, Trash2, Edit, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { formatPlayerCount } from '@/lib/player-requirements';
 
 interface PlayerSetupProps {
   children?: React.ReactNode;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSetupComplete: () => void;
+  requiredPlayers?: number;
+  pendingGameTitle?: string | null;
 }
 
 export function PlayerSetup({
@@ -28,6 +31,8 @@ export function PlayerSetup({
   open,
   onOpenChange,
   onSetupComplete,
+  requiredPlayers = 0,
+  pendingGameTitle = null,
 }: PlayerSetupProps) {
   const { players, addPlayer, removePlayer, updatePlayerName, isLoaded } =
     useSession();
@@ -36,6 +41,8 @@ export function PlayerSetup({
   const [editingPlayerName, setEditingPlayerName] = useState('');
   const addPlayerInputRef = useRef<HTMLInputElement>(null);
   const editPlayerInputRef = useRef<HTMLInputElement>(null);
+  const missingPlayers = Math.max(0, requiredPlayers - players.length);
+  const canContinue = requiredPlayers === 0 || players.length >= requiredPlayers;
 
   useEffect(() => {
     if (!open) {
@@ -97,6 +104,10 @@ export function PlayerSetup({
   };
 
   const handleSetupAndClose = () => {
+    if (!canContinue) {
+      return;
+    }
+
     if (editingPlayerId) {
       handleSaveEdit();
     }
@@ -107,15 +118,41 @@ export function PlayerSetup({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {children && <DialogTrigger asChild>{children}</DialogTrigger>}
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] max-h-[85svh] overflow-hidden p-0">
         <DialogHeader>
-          <DialogTitle>Hvem spiller?</DialogTitle>
-          <DialogDescription>
-            Legg til opptil 20 spillere. Trykk på et navn for å endre det.
-          </DialogDescription>
+          <div className="border-b border-border/60 px-6 pt-6 pb-4">
+            <DialogTitle>Hvem spiller?</DialogTitle>
+            <DialogDescription className="mt-2">
+              {requiredPlayers > 0 && pendingGameTitle ? (
+                <>
+                  <span className="font-medium text-foreground">
+                    {pendingGameTitle}
+                  </span>{' '}
+                  starter når minst {formatPlayerCount(requiredPlayers)} er lagt
+                  til.
+                </>
+              ) : (
+                'Legg til opptil 20 spillere. Trykk på et navn for å endre det.'
+              )}
+            </DialogDescription>
+          </div>
         </DialogHeader>
 
-        <div className="flex gap-2 py-4">
+        <div className="px-6 pb-4">
+          {requiredPlayers > 0 && (
+            <div className="mb-4 rounded-lg border border-primary/20 bg-primary/10 px-4 py-3 text-sm">
+              <p className="font-medium text-foreground">
+                {players.length} / {requiredPlayers} klare
+              </p>
+              <p className="mt-1 text-muted-foreground">
+                {canContinue
+                  ? 'Dere har nok spillere til å starte.'
+                  : `Legg til ${formatPlayerCount(missingPlayers)} til for å fortsette.`}
+              </p>
+            </div>
+          )}
+
+          <div className="flex gap-2 py-1">
           <Input
             ref={addPlayerInputRef}
             value={newPlayerName}
@@ -133,7 +170,7 @@ export function PlayerSetup({
           </Button>
         </div>
 
-        <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
+        <div className="space-y-2 max-h-[40svh] overflow-y-auto pr-2 pb-2">
           <AnimatePresence>
             {players.map(player => (
               <motion.div
@@ -210,15 +247,25 @@ export function PlayerSetup({
             </p>
           )}
         </div>
+        </div>
 
-        <DialogFooter>
+        <DialogFooter className="border-t border-border/60 bg-card/70 px-6 py-4">
           <Button
             type="button"
             onClick={handleSetupAndClose}
             className="w-full"
             size="lg"
+            disabled={!canContinue}
           >
-            {players.length > 0 ? `Fortsett med ${players.length} spillere` : 'Lukk'}
+            {requiredPlayers > 0
+              ? canContinue
+                ? pendingGameTitle
+                  ? `Fortsett til ${pendingGameTitle}`
+                  : 'Fortsett'
+                : `Legg til ${formatPlayerCount(missingPlayers)} til`
+              : players.length > 0
+                ? `Fortsett med ${players.length} spillere`
+                : 'Lukk'}
           </Button>
         </DialogFooter>
       </DialogContent>

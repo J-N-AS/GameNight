@@ -181,7 +181,7 @@ Svakheter:
 
 ### PWA, installasjon og cookies
 Hva den gjør:
-- Viser install-knapp når `beforeinstallprompt` trigges.
+- Viser install-prompt bare når `beforeinstallprompt` faktisk trigges og brukeren er på en mobil-lignende enhet.
 - Service worker med app shell + runtime cache.
 - Cookie-banner med lokal «jeg forstår»-lagring.
 
@@ -234,7 +234,7 @@ Totalt antall tasks: 1456.
 
 Top-level felt brukt i spillfilene:
 - Alltid: `id`, `title`, `description`, `language`, `items`, `shuffle`, `requiresPlayers`, `emoji`, `intensity`, `audience`, `category`.
-- Valgfritt: `color`, `warning`, `gameType`, `teams`, `tags`, `custom`, `isHiddenFromMain`, `region`, `kommune`, `instagram`.
+- Valgfritt: `minPlayers`, `color`, `warning`, `gameType`, `teams`, `tags`, `custom`, `hidden`, `isHiddenFromMain`, `region`, `kommune`, `instagram`.
 
 Task-format:
 - `type`: `challenge | never_have_i_ever | prompt | pointing | versus`

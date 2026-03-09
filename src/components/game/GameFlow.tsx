@@ -10,6 +10,7 @@ import { CustomGameLobby } from './CustomGameLobby';
 import { Smartphone, GlassWater, Package } from 'lucide-react';
 import { useSession } from '@/hooks/usePlayers';
 import { GameRequiresPlayersScreen } from './GameRequiresPlayersScreen';
+import { hasEnoughPlayers } from '@/lib/player-requirements';
 
 type GameStep = 'consent' | 'mode_select' | 'instruction' | 'lobby' | 'playing';
 
@@ -75,7 +76,7 @@ export function GameFlow({ game }: { game: Game }) {
     }
   };
 
-  if (isLoaded && game.requiresPlayers && players.length === 0) {
+  if (isLoaded && !hasEnoughPlayers(game, players.length)) {
     return <GameRequiresPlayersScreen game={game} />;
   }
 

@@ -31,6 +31,7 @@ export interface Game {
   items: GameTask[];
   shuffle?: boolean;
   requiresPlayers?: boolean;
+  minPlayers?: number;
   emoji?: string;
   color?: string;
   hidden?: boolean;
