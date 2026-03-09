@@ -23,3 +23,11 @@ export function withBasePath(path: `/${string}`): string {
 
   return `${normalizedBasePath}${path}`;
 }
+
+export function withBasePathIfAbsolute(path: string): string {
+  if (!path.startsWith('/')) {
+    return path;
+  }
+
+  return withBasePath(path as `/${string}`);
+}

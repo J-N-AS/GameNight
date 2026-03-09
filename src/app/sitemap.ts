@@ -2,11 +2,16 @@ import { getGames } from '@/lib/games';
 import { getArticles } from '@/lib/articles';
 import { getThemes } from '@/lib/themes';
 import type { MetadataRoute } from 'next';
+import { withBasePath } from '@/lib/base-path';
 
-const URL = 'https://gamenight.no';
+const DEFAULT_SITE_URL = 'https://gamenight.no';
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, '') || URL;
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, '') || DEFAULT_SITE_URL;
 export const dynamic = 'force-static';
+
+function toAbsoluteUrl(path: `/${string}`): string {
+  return `${SITE_URL}${withBasePath(path)}`;
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const games = await getGames();
@@ -14,21 +19,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const themes = await getThemes();
 
   const gameUrls = games.map(game => ({
-    url: `${SITE_URL}/spill/${game.id}`,
+    url: toAbsoluteUrl(`/spill/${game.id}`),
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
 
   const articleUrls = articles.map(article => ({
-    url: `${SITE_URL}/drikkeleker/${article.slug}`,
+    url: toAbsoluteUrl(`/drikkeleker/${article.slug}`),
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
 
   const themeUrls = themes.map(theme => ({
-    url: `${SITE_URL}/tema/${theme.slug}`,
+    url: toAbsoluteUrl(`/tema/${theme.slug}`),
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.9,
@@ -36,61 +41,61 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticUrls: MetadataRoute.Sitemap = [
     {
-      url: SITE_URL,
+      url: toAbsoluteUrl('/'),
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: `${SITE_URL}/alle-spill`,
+      url: toAbsoluteUrl('/alle-spill'),
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/fadderuka`,
+      url: toAbsoluteUrl('/fadderuka'),
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/russetiden`,
+      url: toAbsoluteUrl('/russetiden'),
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/drikkeleker`,
+      url: toAbsoluteUrl('/drikkeleker'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/musikkleker`,
+      url: toAbsoluteUrl('/musikkleker'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
      {
-      url: `${SITE_URL}/skjermleker`,
+      url: toAbsoluteUrl('/skjermleker'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/info/om-oss`,
+      url: toAbsoluteUrl('/info/om-oss'),
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.5,
     },
     {
-      url: `${SITE_URL}/info/personvern`,
+      url: toAbsoluteUrl('/info/personvern'),
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
-      url: `${SITE_URL}/info/kontakt-oss`,
+      url: toAbsoluteUrl('/info/kontakt-oss'),
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,

@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import Confetti from 'react-confetti';
 import type { Player, PlayerStats } from '@/lib/types';
 import { requestDonation } from '@/lib/donations';
+import { withBasePath } from '@/lib/base-path';
 
 
 type SummaryTheme = 'dark' | 'light' | 'festive' | 'sunset' | 'ocean' | 'forest' | 'aurora';
@@ -325,7 +326,7 @@ export function OppsummeringClient() {
                           </div>
                       ) : (
                           <Image
-                              src="/vipps-button.svg"
+                              src={withBasePath('/vipps-button.svg')}
                               alt="Doner 25 kr med Vipps"
                               width={280}
                               height={48}

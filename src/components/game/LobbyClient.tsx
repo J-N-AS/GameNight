@@ -31,6 +31,7 @@ import { AdBanner } from '@/components/ads/AdBanner';
 import { PartyTools } from './PartyTools';
 import { useToast } from '@/hooks/use-toast';
 import { requestDonation } from '@/lib/donations';
+import { withBasePath } from '@/lib/base-path';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -123,7 +124,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
       >
         <Image
-          src="/GameNight-logo-small.webp"
+          src={withBasePath('/GameNight-logo-small.webp')}
           alt="GameNight Logo"
           width={400}
           height={100}
@@ -301,7 +302,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                           </div>
                       ) : (
                           <Image
-                              src="/vipps-button.svg"
+                              src={withBasePath('/vipps-button.svg')}
                               alt="Doner 25 kr med Vipps"
                               width={280}
                               height={48}

@@ -24,6 +24,7 @@ import type { ReactNode } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { requestDonation } from '@/lib/donations';
 import type { InfoPageSlug } from '@/lib/info-pages';
+import { withBasePath } from '@/lib/base-path';
 
 function OmOssContent() {
   const [donationAmount, setDonationAmount] = useState(50);
@@ -221,7 +222,7 @@ function OmOssContent() {
                 </div>
               ) : (
                 <Image
-                  src="/vipps-button.svg"
+                  src={withBasePath('/vipps-button.svg')}
                   alt={`Doner ${donationAmount} kr med Vipps`}
                   width={280}
                   height={48}

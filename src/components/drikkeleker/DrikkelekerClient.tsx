@@ -13,6 +13,7 @@ import { motion } from 'framer-motion';
 import type { GameArticle } from '@/lib/types';
 import Image from 'next/image';
 import { AdBanner } from '../ads/AdBanner';
+import { withBasePathIfAbsolute } from '@/lib/base-path';
 
 type Articles = Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules' | 'variants' | 'attributionHtml'>[];
 
@@ -53,7 +54,7 @@ export function DrikkelekerClient({ games }: { games: Articles }) {
                 {game.imageUrl && (
                   <div className="relative aspect-video w-full">
                     <Image
-                      src={game.imageUrl}
+                      src={withBasePathIfAbsolute(game.imageUrl)}
                       alt={game.title}
                       fill
                       className="object-cover rounded-t-lg"

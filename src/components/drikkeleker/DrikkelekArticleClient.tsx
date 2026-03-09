@@ -14,6 +14,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { AdBanner } from '../ads/AdBanner';
+import { withBasePathIfAbsolute } from '@/lib/base-path';
 
 export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
   return (
@@ -35,7 +36,7 @@ export function DrikkelekArticleClient({ article }: { article: GameArticle }) {
         {article.imageUrl && (
           <div className="relative aspect-video w-full">
             <Image
-              src={article.imageUrl}
+              src={withBasePathIfAbsolute(article.imageUrl)}
               alt={article.title}
               fill
               className="object-cover rounded-t-lg"

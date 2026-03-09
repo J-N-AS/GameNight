@@ -119,6 +119,28 @@ Kort oppsummert:
 - **GitHub Pages beta**: realistisk via `npm run build:export`
 - **Cloudflare langsiktig**: appen er nå i praksis klar for billig statisk hosting
 
+## GitHub Pages deploy (automatisk)
+
+Repoet er satt opp med workflow:
+- `.github/workflows/deploy-pages.yml`
+
+Den gjør følgende ved push til `main` (og ved manuell kjøring):
+- installerer dependencies
+- kjører typecheck
+- bygger statisk eksport (`npm run build:export`)
+- publiserer `out/` til GitHub Pages via artifact/deploy-flyt
+
+Workflowen setter:
+- `NEXT_PUBLIC_BASE_PATH=/GameNight`
+- `NEXT_PUBLIC_SITE_URL=https://<github-bruker>.github.io`
+
+Forventet beta-URL:
+- `https://<github-bruker>.github.io/GameNight/`
+
+Manuell GitHub-oppsett (én gang):
+1. Gå til **Settings → Pages** i repoet.
+2. Sett **Source** til **GitHub Actions**.
+
 ## Kvalitetssikring
 
 Kjør før deploy:

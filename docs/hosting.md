@@ -18,6 +18,35 @@ npm run build:export
 
 Output legges i `out/`.
 
+## Automatisk deploy via GitHub Actions
+
+Workflow:
+- `.github/workflows/deploy-pages.yml`
+
+Trigger:
+- `push` til `main`
+- `workflow_dispatch` (manuell kjøring)
+
+Workflowen bruker moderne Pages-flyt:
+- `actions/configure-pages`
+- `actions/upload-pages-artifact`
+- `actions/deploy-pages`
+
+Build-env i workflow:
+- `NEXT_PUBLIC_BASE_PATH=/GameNight`
+- `NEXT_PUBLIC_SITE_URL=https://<github-bruker>.github.io`
+
+Den publiserer `out/` og legger til `.nojekyll` for trygg håndtering av statiske `_next`-assets.
+
+## Manuelt oppsett i GitHub (én gang)
+
+1. Åpne repoet på GitHub.
+2. Gå til **Settings → Pages**.
+3. Sett **Source** til **GitHub Actions**.
+
+Forventet URL:
+- `https://<github-bruker>.github.io/GameNight/`
+
 ## Base path for repo-hosting
 
 Hvis repoet publiseres under sti (typisk `https://<user>.github.io/<repo>`), sett:
@@ -33,6 +62,7 @@ NEXT_PUBLIC_BASE_PATH=/GameNight
 - Ingen server-side API-ruter i samme app
 - Donasjoner virker kun hvis `NEXT_PUBLIC_DONATION_API_URL` peker til ekstern backend
 - All dynamikk må være klient-side eller pre-generert
+- `robots.txt` peker fortsatt på produksjons-sitemap (`gamenight.no`), som er ok for prod men ikke perfekt for beta-domene
 
 Dette er akseptabelt for dagens beta-scope.
 
