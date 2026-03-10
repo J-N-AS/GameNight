@@ -148,6 +148,7 @@ Dette gjør at repoet kan kjøre statisk uten innebygd betalingsbackend.
 ## Hosting
 
 Se:
+- [`docs/README.md`](docs/README.md)
 - [`docs/hosting.md`](docs/hosting.md)
 - [`docs/architecture.md`](docs/architecture.md)
 - [`docs/seo-publisher-readiness.md`](docs/seo-publisher-readiness.md)

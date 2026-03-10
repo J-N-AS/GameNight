@@ -1,22 +1,25 @@
-# GameNight - Norges ultimate plattform for selskapsleker
-Om Prosjektet
-GameNight (gamenight.no) er en gratis, nettleserbasert PWA (Progressive Web App) som samler digitale selskapsleker, bli-kjent-leker for fadderuka, leker for russetiden, og klassiske drikkeleker på ett sted. Appen fungerer 100% offline etter første innlasting.
+# GameNight
+Om prosjektet
+GameNight er en gratis, norsk Next.js-webapp/PWA for drikkespill, festspill, isbrytere og temabaserte selskapsleker. Løsningen er statisk-first og henter spill- og innholdstekster fra lokale JSON-filer i repoet.
 
 Nøkkelfunksjoner
-Spillerstyring: Holder styr på statistikk og straffer globalt gjennom kvelden.
+- Én enhet styrer spilløkten. Spillerliste og enkel statistikk lagres lokalt i nettleseren.
+- Spillkatalog med spillsider, temahuber, drikkelek-artikler, musikkleker og skjermleker.
+- Kveldens oppsummering kan deles eller lastes ned som bilde fra klienten.
+- PWA-manifest og service worker cacher app shell og tidligere besøkte same-origin assets for begrenset offline-støtte.
+- Russetiden-siden kan promotere kuraterte custom-spill, men appen har ingen selvbetjent spillbygger.
 
-Kveldens Oppsummering: Genererer et delbart bilde (Spotify Wrapped-stil) på klientsiden.
+Begrensninger
+- Ingen login, adminside, database eller innebygd betalingsbackend.
+- Ingen garanti for 100 % offline etter første innlasting.
+- Donasjon er en valgfri ekstern integrasjon via `NEXT_PUBLIC_DONATION_API_URL`.
+- Annonser er kun plassholdere i dagens repo; ingen aktiv ad-tech er integrert.
 
-Selvbetjente Custom Spill: Brukere kan bygge sine egne spill (f.eks. for russegrupper) via en statisk GitHub Pages-bygger.
+Målgruppe og ansvarlighet
+Appen er laget for voksne og studenter (fadderuke, russetid, vorspiel og vennekvelder). Produktet er bygget rundt sosial bruk på én skjerm og kommuniserer ansvarlig spilling og respekt for grenser.
 
-Ingen nedlasting: Alt skjer i nettleseren.
+Teknisk stack
+Next.js App Router, React, TypeScript, Tailwind CSS, shadcn/ui, Radix og Framer Motion.
 
-Målgruppe og Ansvarlighet
-Appen er laget for voksne og studenter (fadderuke, russetid, vorspiel). Vi promoterer 'vann-regelen' og ansvarlig spilling. Målet er å skape samhold og bryte isen, ikke overdrevent konsum.
-
-Teknisk Stack
-Next.js (App Router), React, Tailwind CSS, ShadCN UI.
-
-Ingen server-side rendering for bildegenerering (bruker html-to-image).
-
-Driftskostnad: Nær 0,- (Firebase Hosting, statiske JSON-filer for innhold).
+Hosting
+Repoet kan bygges som vanlig Next-app eller som statisk eksport. GitHub Pages-workflow finnes i repoet, og løsningen er i praksis hostinguavhengig så lenge eventuelle integrasjoner holdes eksterne.

@@ -4,6 +4,8 @@ Dato: 9. mars 2026
 Prosjekt: `/Users/naleyjanhelge/DEV/GameNight`  
 Scope: Kode- og build-basert analyse (ingen refaktorering/redesign)
 
+Statusnote (10. mars 2026): Denne auditen beskriver i stor grad situasjonen før SEO-/publisher-oppryddingen som nå er dokumentert i `docs/seo-publisher-readiness.md`. Canonical/OG/Twitter-metadata, `metadataBase`, JSON-LD, `noindex`-regler, `ads.txt`, trust-sider og crawlbarheten på `/alle-spill` er ikke lenger åpne hull i dagens kodebase.
+
 ## Executive summary
 GameNight har et godt fundament for organisk trafikk: statisk eksport, bred innholdsflate, unike titler/beskrivelser og tydelige temasider. Samtidig er det flere strukturelle hull som holder både SEO og AdSense-readiness tilbake.
 
@@ -230,4 +232,3 @@ Prioritet C:
 8. Definer AdSense-strategi for 18+ innhold (segmentering, blokkering eller separat domene/område) før søknad.
 9. Implementer EØS-kompatibel CMP/consent-løsning og consent mode for annonsering/analyse.
 10. Legg til `ads.txt`, vilkårsside og tydeligere publisher-identitet for bedre tillitssignaler.
-

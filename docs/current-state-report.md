@@ -3,6 +3,8 @@
 Dato: 9. mars 2026  
 Basert på: faktisk kode i repo (`/Users/naleyjanhelge/DEV/GameNight`), ikke bare README
 
+Statusnote (10. mars 2026): Dette dokumentet er fortsatt nyttig som dypdykk, men enkelte punkter under ble skrevet før de siste rollback-/cleanup-endringene. Ved konflikt mellom denne filen og dagens kode er `../README.md`, `docs/README.md` og `docs/architecture.md` gjeldende.
+
 ## Executive summary
 GameNight er i dag en innholdstung, statisk-first Next.js-app med mye faktisk verdi i form av spillinnhold, temahuber og tydelig mobilfokus. Kjernen fungerer: man kan starte spill, kjøre runder, håndtere spillere, få oppsummering, bruke PWA-funksjoner og kjøre statisk deploy.
 
@@ -95,14 +97,14 @@ Hva den gjør:
 - Søk + tag-filter + spillkort.
 
 Teknisk:
-- `AllGamesClient` bruker `useSearchParams`, søk/filter i klient.
+- `AllGamesClient` kjører søk/filter i klient og leser valgfri `kategori` fra `window.location.search` ved første last.
 
 Modenhet:
 - Funksjonelt bra.
 
 Svakheter/inkonsistens:
-- Siden rendrer fallback («Laster spill...») i statisk HTML og bouncer til klientrender.
-- Spillet `rt-2025-dummy` (markert `isHiddenFromMain`) vises her, fordi filterlogikken ikke bruker dette feltet i `getGames()`.
+- Filterstate skrives ikke tilbake til URL etter interaksjon, så delbare filterlenker er begrenset.
+- Taggene bygges i klient etter hydrering, så første render har mindre filterkontekst enn den interaktive visningen.
 
 ### Spillside og gameplay (`/spill/[gameId]`)
 Hva den gjør:
@@ -116,8 +118,7 @@ Modenhet:
 - God bredde i støtte for ulike opplevelser.
 
 Svakheter/bugs/inkonsistens:
-- `spinn-flasken-ekte` mangler `gameType`, og får derfor ikke spin-UI/modusflyt, men vanlig kortflyt.
-- `spinn-flasken-virtuell` har `gameType: spin-the-bottle`, men tvinger fortsatt brukeren gjennom modusvalg (virtuell vs fysisk), selv om varianten allerede er «virtuell».
+- `spinn-flasken-ekte` og `spinn-flasken-virtuell` bruker preset `spinMode` og hopper over modusvalg, men variantene skaper fortsatt katalogduplisering mot hovedspillet.
 - Spillerstatistikk oppdateres ved kortvisning (random spiller), ikke ved faktisk utført handling.
 
 ### Tema-sider (`/tema/[slug]`), Fadderuka og Russetiden
@@ -230,7 +231,7 @@ Dette er den viktigste delen, basert på faktisk implementasjon.
 
 ### Datamodell for spill
 Antall spillfiler: 37 (`src/data/*.json`, ekskl. artikler/tema/musikk/skjerm).  
-Totalt antall tasks: 1456.
+Totalt antall tasks: 1438.
 
 Top-level felt brukt i spillfilene:
 - Alltid: `id`, `title`, `description`, `language`, `items`, `shuffle`, `requiresPlayers`, `emoji`, `intensity`, `audience`, `category`.
@@ -247,9 +248,9 @@ Task-format:
 - `physical-item`: instruksjonsskjerm + fysisk-objekt-flow.
 
 Faktisk fordeling:
-- default: 29 spill
+- default: 28 spill
 - physical-item: 3 spill
-- spin-the-bottle: 4 spill
+- spin-the-bottle: 5 spill
 - versus: 1 spill
 
 ### Placeholders og spillerbruk i oppgaver
@@ -390,9 +391,9 @@ Styrker:
 - `docs/hosting.md` og `docs/architecture.md` stemmer i hovedsak med retningen.
 
 Mangler/uklarhet:
-- Deler av dokumentasjon og innholdstekster overlover funksjoner som ikke er implementert (f.eks. full offline/analytics/ads i praksis).
-- `SPILL_OVERSIKT.md` har avvik mot faktisk antall oppgaver i flere spill.
-- `public/llms.txt` beskriver delvis gammel virkelighet.
+- Flere analyse-/auditfiler i `docs/` er snapshot-dokumenter og kan komme ut av sync etter senere kodeendringer.
+- Historiske produkttekster må holdes synket med faktisk offline-, ads- og integrasjonsnivå i repoet.
+- `public/llms.txt` bør behandles som maskinlesbar prosjektoppsummering og oppdateres samtidig med README.
 
 ### Kodekvalitet og teknisk hygiene
 - Ingen reell linting satt opp (`npm run lint` er placeholder).

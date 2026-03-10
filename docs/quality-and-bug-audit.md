@@ -3,6 +3,8 @@
 Dato: 9. mars 2026  
 Repo: `/Users/naleyjanhelge/DEV/GameNight`
 
+Statusnote (10. mars 2026): Dette er en historisk audit. Flere konkrete funn her er allerede løst i dagens kode, blant annet `minPlayers`/spillerkrav, preset `spinMode` for `spinn-flasken-ekte` og `spinn-flasken-virtuell`, og skjuling av `rt-2025-dummy` fra offentlige lister. Bruk `docs/README.md`, `../README.md` og faktisk kode som fasit når denne filen avviker.
+
 ## Executive summary
 GameNight har et bedre fundament enn innholdskatalogen tilsier ved første blikk. Selve appen bygger og spiller flyter i hovedsak greit, men kvaliteten er ujevn fordi spillmotoren er enklere enn flere av spillene later som, og fordi katalogen inneholder for mange varianter som overlapper eller ikke er kuratert hardt nok.
 

@@ -6,10 +6,11 @@ Dette dokumentet gir en komplett oversikt over alle spillene som er tilgjengelig
 | Spilltittel                      | Beskrivelse                                                                                                         | Antall Oppgaver |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------- |
 | **After Dark – One Last Game**   | Siste runde før natten tar over. Rolig tempo, høy intensitet.                                                       | 40              |
-| **Afterparty**                   | Når tempoet roer seg og samtalene blir ekte. Rolige spørsmål, refleksjon og ærlighet.                                 | 50              |
+| **Afterparty**                   | Når tempoet roer seg og samtalene blir ekte. Rolige spørsmål, refleksjon og ærlighet.                                 | 59              |
 | **Bursdags-Roast**               | Et spill der bursdagsbarnet står i sentrum! Del morsomme minner og gi en vennskapelig 'roast'.                        | 25              |
-| **Dating Fails**                 | Pinlige øyeblikk, røde flagg og dater som aldri burde skjedd.                                                         | 50              |
-| **Dårlige Avgjørelser**          | Klassiske 'det virket som en god idé'-øyeblikk og tvilsomme valg.                                                     | 50              |
+| **Dating Fails**                 | Pinlige øyeblikk, røde flagg og dater som aldri burde skjedd.                                                         | 52              |
+| **Fadderkampen**                 | Den ultimate isbryteren for fadderuka! En blanding av kleine introduksjoner, utfordringer og starten på nye vennskap. | 12              |
+| **Dårlige Avgjørelser**          | Klassiske 'det virket som en god idé'-øyeblikk og tvilsomme valg.                                                     | 52              |
 | **Girl Power – Jenta Stemning**  | For jentegjengen. Selvtillit, støtte, flørt og ekte girl energy.                                                     | 50              |
 | **Girls vs Boys ⚔️**             | Lekent rivaleri mellom jenter og gutter. Konkurranse, flørt, utfordringer og latter.                                 | 25              |
 | **Gutta Stemning – Bros & Banter** | For gutta. Konkurranse, selvironi, intern humor og klassisk bro-stemning.                                           | 55              |
@@ -32,12 +33,12 @@ Dette dokumentet gir en komplett oversikt over alle spillene som er tilgjengelig
 | **Sexy Vibes**                   | Flørtende spørsmål, varme blikk og lekne utfordringer. Bygger spenning.                                              | 55              |
 | **Singles: Body Language**       | Fokus på blikk, nærhet, berøring og fysisk kjemi. Inneholder kyss og tett kontakt.                                  | 50              |
 | **Singles Night – Flørt & Kjemi** | For single og svært åpne grupper. Inneholder flørt, kyss og fysisk nærhet.                                           | 60              |
-| **Snusboksen**                   | Kast gjenstanden til den som passer beskrivelsen. Den som fanger, er nestemann.                                      | 30              |
+| **Snusboksen**                   | Kast gjenstanden til den som passer beskrivelsen. Den som fanger, er nestemann.                                      | 29              |
 | **Snusboksen: Hvem er...?**      | Hvem er den ærligste, den mest hemmelighetsfulle, eller den største løgneren?                                        | 25              |
 | **Snusboksen: Hvem tør?**        | Hvem i rommet er den tøffeste, den raskeste, eller den mest impulsive?                                               | 25              |
 | **Spinn Flasken**                | En udødelig klassiker. La flasken bestemme hvem som må utføre neste oppgave.                                         | 30              |
 | **Spinn Flasken: Kun Action**    | Ingen spørsmål, bare action. En mer fysisk og utfordrende versjon av klassikeren.                                     | 25              |
 | **Spinn Flasken (Ekte Flaske)**  | Finn frem en ekte flaske! Den som flasken peker på må utføre oppgaven.                                               | 30              |
-| **Spinn Flasken: Kun Sannhet**   | Ingen utfordringer, bare spørsmål. En ærligere versjon av klassikeren.                                              | 29              |
+| **Spinn Flasken: Kun Sannhet**   | Ingen utfordringer, bare spørsmål. En ærligere versjon av klassikeren.                                              | 19              |
 | **Spinn Flasken (Virtuell)**     | Ingen ekte flaske? Ikke noe problem. La den digitale flasken bestemme.                                               | 30              |
-| **Vorspiel Mix**                 | Den perfekte blandingen for å kickstarte kvelden og få alle i godt humør.                                             | 90              |
+| **Vorspiel Mix**                 | Den perfekte blandingen for å kickstarte kvelden og få alle i godt humør.                                             | 95              |
