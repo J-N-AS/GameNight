@@ -1,25 +1,24 @@
 # GameNight
-Om prosjektet
-GameNight er en gratis, norsk Next.js-webapp/PWA for drikkespill, festspill, isbrytere og temabaserte selskapsleker. Løsningen er statisk-first og henter spill- og innholdstekster fra lokale JSON-filer i repoet.
 
-Nøkkelfunksjoner
-- Én enhet styrer spilløkten. Spillerliste og enkel statistikk lagres lokalt i nettleseren.
-- Spillkatalog med spillsider, temahuber, drikkelek-artikler, musikkleker og skjermleker.
-- Kveldens oppsummering kan deles eller lastes ned som bilde fra klienten.
-- PWA-manifest og service worker cacher app shell og tidligere besøkte same-origin assets for begrenset offline-støtte.
-- Russetiden-siden kan promotere kuraterte custom-spill, men appen har ingen selvbetjent spillbygger.
+GameNight er en norsk, statisk-first Next.js-app for festspill, drikkeleker, isbrytere og temabaserte selskapsleker. Produktet er bygget for én felles skjerm: én mobil eller nettleser styrer spilløkten, mens resten av gruppen spiller sammen i samme rom.
 
-Begrensninger
-- Ingen login, adminside, database eller innebygd betalingsbackend.
-- Ingen garanti for 100 % offline etter første innlasting.
-- Donasjon er en valgfri ekstern integrasjon via `NEXT_PUBLIC_DONATION_API_URL`.
-- Annonser er kun plassholdere i dagens repo; ingen aktiv ad-tech er integrert.
+Kjernesannhet i repoet:
+- Spill ligger i `src/data/*.json`
+- Spillbiblioteket lastes via `src/lib/games.ts`
+- Tiering og anbefalinger styres i `src/lib/game-library.ts`
+- Gameplay kjøres i `src/components/game/GameFlow.tsx` og `src/components/game/GameClient.tsx`
+- Temaer ligger i `src/data/themes.json`
+- Drikkelek-artikler ligger i `src/data/drikkeleker.json`
 
-Målgruppe og ansvarlighet
-Appen er laget for voksne og studenter (fadderuke, russetid, vorspiel og vennekvelder). Produktet er bygget rundt sosial bruk på én skjerm og kommuniserer ansvarlig spilling og respekt for grenser.
+Viktige begrensninger:
+- Ingen database, auth eller innebygd backend i repoet
+- Donasjon er en valgfri ekstern integrasjon
+- Running rules finnes, men er lette og klientlokale
+- Oppsummering bygger på enkel lokal statistikk, ikke full event-tracking
 
-Teknisk stack
-Next.js App Router, React, TypeScript, Tailwind CSS, shadcn/ui, Radix og Framer Motion.
-
-Hosting
-Repoet kan bygges som vanlig Next-app eller som statisk eksport. GitHub Pages-workflow finnes i repoet, og løsningen er i praksis hostinguavhengig så lenge eventuelle integrasjoner holdes eksterne.
+Les videre i repoet:
+- `docs/ai-context.md`
+- `docs/02-architecture.md`
+- `docs/03-game-system.md`
+- `docs/04-game-library.md`
+- `docs/07-seo-strategy.md`
