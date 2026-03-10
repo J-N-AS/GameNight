@@ -8,9 +8,13 @@ Denne filen beskriver hvordan GameNight faktisk fungerer etter oppryddingen.
 - Spill: `src/data/*.json`
 - Tema: `src/data/themes.json`
 - Artikler: `src/data/drikkeleker.json`
+- Spillbiblioteket er nå kuratert i kode med et tydelig Tier 1-kjernebibliotek og skjulte Tier 3-spill.
 - Spillmodell for spin-varianter:
   - `gameType: "spin-the-bottle"`
   - `spinMode: "choose" | "virtual" | "physical"` for konsistent oppstartsflyt
+- Task-modellen støtter nå også:
+  - `type: "truth_or_shot"` for `Sannhet eller Shot`
+  - valgfri `rule`-metadata for running rules i utvalgte deck
 - Spill kan i tillegg ha `minPlayers` ved behov.
   - Hvis `minPlayers` mangler, bruker appen en enkel standard:
     - `2` for spill som krever spillerliste
@@ -25,6 +29,7 @@ Det finnes ingen database eller backend-datalag i repoet.
 - Appen er designet for én skjerm per session (mobil eller delt skjerm/TV-casting).
 - Ingen multiplayer/sanntids-sync mellom flere klienter.
 - Spillerliste og enkel spillstatistikk lagres lokalt i nettleseren.
+- Aktive running rules lever lokalt i spillsessionen og persisteres ikke globalt.
 - FAQ/Om oss forklarer også anbefalt bruk med AirPlay, Android-casting og skjermdeling.
 
 ## 2. Render-strategi
@@ -52,6 +57,7 @@ Klient-runtime (nettleser):
 - Service worker (`public/sw.js`) for PWA/offline
 - Deling/download (`navigator.share`, `html-to-image`)
 - Donasjon via valgfri ekstern endpoint (`NEXT_PUBLIC_DONATION_API_URL`)
+- Lettvekts `activeRules` i `GameClient` for regler som varer over flere kort/runder
 
 Server-runtime i repo:
 - Ingen API-ruter (`src/app/api/*` er fjernet)
@@ -85,3 +91,4 @@ Installflyt:
 
 - Uten `NEXT_PUBLIC_DONATION_API_URL` er donasjon deaktivert (forventet).
 - Uten `NEXT_PUBLIC_CANONICAL_ORIGIN` brukes fallback-origin (`https://gamenight.no`) i canonical/sitemap/robots metadata.
+- Running rules teller per neste kort/runde i decket, ikke per faktisk spillerunde eller per reload.

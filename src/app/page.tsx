@@ -1,8 +1,10 @@
 import { getGames } from '@/lib/games';
 import { getThemes } from '@/lib/themes';
 import { LobbyClient } from '@/components/game/LobbyClient';
-
-const RECOMMENDED_GAME_IDS = ['vorspiel-mix', 'party-klassikere', 'pekefest'];
+import {
+  getHomeRecommendedOrder,
+  isHomeRecommendedGame,
+} from '@/lib/game-library';
 
 export default async function Home() {
   const allGames = await getGames({
@@ -14,7 +16,9 @@ export default async function Home() {
     (game) => !game.hidden && !game.isHiddenFromMain
   );
 
-  const recommendedGames = publicGames.filter(g => RECOMMENDED_GAME_IDS.includes(g.id));
+  const recommendedGames = publicGames
+    .filter((game) => isHomeRecommendedGame(game.id))
+    .sort((a, b) => getHomeRecommendedOrder(a.id) - getHomeRecommendedOrder(b.id));
   
   return <LobbyClient allGames={allGames} recommendedGames={recommendedGames} themes={themes} />;
 }

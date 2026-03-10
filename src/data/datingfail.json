@@ -7,6 +7,7 @@
   "requiresPlayers": true,
   "emoji": "💔",
   "color": "hsl(345 75% 60%)",
+  "isHiddenFromMain": true,
   "intensity": "medium",
   "audience": "all",
   "category": [

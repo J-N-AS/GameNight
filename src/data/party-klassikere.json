@@ -1,7 +1,7 @@
 {
   "id": "party-klassikere",
   "title": "Party Klassikere",
-  "description": "En samling av de beste selskapslekene som aldri slår feil. Garantert stemning!",
+  "description": "De mest spillbare partyklassikerne samlet i ett deck. Lett å starte, lett å lese høyt og fullt av regler som faktisk holder kvelden i gang.",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": true,
@@ -14,10 +14,30 @@
   "items": [
     { "type": "challenge", "text": "Waterfall! {player} starter, og rekkefølgen går mot klokka." },
     { "type": "challenge", "text": "Kategorier! Tema: Frukt. {player} starter. Førstemann som ikke kommer på en frukt, drikker." },
-    { "type": "challenge", "text": "Navneforbud! I 4 runder er navn forbudt. Sier du navnet til noen, drikker du 1. En ny navneregel erstatter den gamle." },
+    {
+      "type": "challenge",
+      "text": "Navneforbud! I 4 runder er navn forbudt. Sier du navnet til noen, drikker du 1. En ny navneregel erstatter den gamle.",
+      "rule": {
+        "action": "activate",
+        "title": "Navneforbud",
+        "description": "Ingen får bruke navn i 4 runder.",
+        "duration": 4,
+        "category": "name"
+      }
+    },
     { "type": "challenge", "text": "{all} må ta en slurk fra drikken til personen til venstre." },
     { "type": "pointing", "text": "Hvem i rommet er mest sannsynlig til å vinne i Lotto, men miste kupongen?" },
-    { "type": "challenge", "text": "Regelmester! {player} lager én enkel husregel for de neste 5 rundene. Når en ny Regelmester trekkes, oppheves den gamle husregelen." },
+    {
+      "type": "challenge",
+      "text": "Regelmester! {player} lager én enkel husregel for de neste 5 rundene. Når en ny Regelmester trekkes, oppheves den gamle husregelen.",
+      "rule": {
+        "action": "activate",
+        "title": "Husregel",
+        "description": "{player} styrer én husregel i 5 runder.",
+        "duration": 5,
+        "category": "house"
+      }
+    },
     { "type": "challenge", "text": "{player}, nevn 3 land i Asia på 5 sekunder. Hvis ikke, drikk." },
     { "type": "pointing", "text": "Hvem er mest sannsynlig til å sovne på festen i kveld?" },
     { "type": "challenge", "text": "{player} må etterligne en annen person i rommet. De andre gjetter. Førstemann som gjetter riktig, får dele ut 3 slurker." },
@@ -27,7 +47,16 @@
     { "type": "challenge", "text": "{player} og personen til høyre må bytte plasser." },
     { "type": "pointing", "text": "Hvem har den mest smittende latteren?" },
     { "type": "challenge", "text": "{all} må ta en slurk for hver person i rommet som har på seg noe blått." },
-    { "type": "challenge", "text": "Tommel-mester! {player} styrer tommelen til neste Tommel-mester-kort trekkes. Når {player} legger tommelen på bordet, må alle følge. Sistemann drikker." },
+    {
+      "type": "challenge",
+      "text": "Tommel-mester! {player} styrer tommelen til neste Tommel-mester-kort trekkes. Når {player} legger tommelen på bordet, må alle følge. Sistemann drikker.",
+      "rule": {
+        "action": "activate",
+        "title": "Tommel-mester",
+        "description": "{player} eier tommelen til en ny tommelregel tar over eller dere opphever den.",
+        "category": "thumb"
+      }
+    },
     { "type": "challenge", "text": "{player}, du kan kun snakke i spørsmål frem til din neste tur. Hvis du feiler, drikk." },
     { "type": "pointing", "text": "Hvem i rommet hadde overlevd lengst på en øde øy?" },
     { "type": "never_have_i_ever", "text": "sneket meg ut av huset som tenåring." },
@@ -39,15 +68,42 @@
     { "type": "challenge", "text": "Alle som har bursdag i samme sesong (vinter, vår, sommer, høst) som deg, {player}, må skåle med deg." },
     { "type": "never_have_i_ever", "text": "spist en hel pizza alene." },
     { "type": "challenge", "text": "Alle spiller 'stein, saks, papir' mot {player}. Alle som taper, drikker." },
-    { "type": "challenge", "text": "Albue-regel! I 3 runder er det ikke lov å peke med fingrene. Bruk albuen. Bryter du regelen, drikker du 1." },
+    {
+      "type": "challenge",
+      "text": "Albue-regel! I 3 runder er det ikke lov å peke med fingrene. Bruk albuen. Bryter du regelen, drikker du 1.",
+      "rule": {
+        "action": "activate",
+        "title": "Albue-regel",
+        "description": "I 3 runder må alle bruke albuen i stedet for å peke med fingrene.",
+        "duration": 3,
+        "category": "gesture"
+      }
+    },
     { "type": "pointing", "text": "Hvem i rommet er den største livsnyteren?" },
-    { "type": "challenge", "text": "Regelpause! Alle vedvarende regler som er aktive akkurat nå oppheves. Skål for en liten reset." },
+    {
+      "type": "challenge",
+      "text": "Regelpause! Alle vedvarende regler som er aktive akkurat nå oppheves. Skål for en liten reset.",
+      "rule": {
+        "action": "clear",
+        "title": "Regelpause",
+        "description": "Alle aktive regler oppheves nå."
+      }
+    },
     { "type": "challenge", "text": "Rim! {player} sier et ord. Personen til venstre må si et ord som rimer. Fortsett til noen feiler." },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å prøve stand-up?" },
     { "type": "never_have_i_ever", "text": "blitt avslørt i en løgn." },
     { "type": "challenge", "text": "{player}, velg en person som må snakke med en teit aksent de neste 3 rundene." },
     { "type": "pointing", "text": "Hvem her hadde vært den dårligste spionen?" },
-    { "type": "challenge", "text": "Drikkevenner! {player} velger en buddy. Når en av dere drikker, drikker den andre også. Dette varer til et nytt drikkevenn-kort trekkes eller en regelpause opphever det." },
+    {
+      "type": "challenge",
+      "text": "Drikkevenner! {player} velger en buddy. Når en av dere drikker, drikker den andre også. Dette varer til et nytt drikkevenn-kort trekkes eller en regelpause opphever det.",
+      "rule": {
+        "action": "activate",
+        "title": "Drikkevenner",
+        "description": "{player} har valgt en drikkevenn. Dere drikker sammen til et nytt buddy-kort tar over eller reglene nullstilles.",
+        "category": "buddy"
+      }
+    },
     { "type": "prompt", "text": "Hva er den mest ubrukelige tingen du kan?" },
     { "type": "challenge", "text": "Alle som har sett ferdig en hel sesong av en serie på én dag, drikker." },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å glemme hvor de parkerte?" },
@@ -57,7 +113,17 @@
     { "type": "pointing", "text": "Hvem her er mest fotogen?" },
     { "type": "challenge", "text": "{player}, du er nå 'Question Master'. Hvis noen svarer på et spørsmål fra deg, må de drikke. Gjelder til din neste tur." },
     { "type": "never_have_i_ever", "text": "prøvd å fikse noe teknisk og bare gjort det verre." },
-    { "type": "challenge", "text": "Forbudt ord! I 3 runder er ordet 'drikke' forbudt. Sier du det, tar du 1 slurk. Dette erstatter eventuelle eldre forbudte ord." },
+    {
+      "type": "challenge",
+      "text": "Forbudt ord! I 3 runder er ordet 'drikke' forbudt. Sier du det, tar du 1 slurk. Dette erstatter eventuelle eldre forbudte ord.",
+      "rule": {
+        "action": "activate",
+        "title": "Forbudt ord",
+        "description": "Ordet «drikke» er forbudt i 3 runder.",
+        "duration": 3,
+        "category": "word"
+      }
+    },
     { "type": "pointing", "text": "Hvem her gir best råd?" },
     { "type": "challenge", "text": "{player}, del ut 5 slurker, men maks 2 per person." },
     { "type": "prompt", "text": "Hva er det rareste du har spist?" },

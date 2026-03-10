@@ -1,4 +1,4 @@
-import type { Game, GameTask } from '@/lib/types';
+import type { Game, GameRule, GameTask } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import {
@@ -7,6 +7,7 @@ import {
   Flame,
   HelpCircle,
   Swords,
+  ShieldAlert,
 } from 'lucide-react';
 import React from 'react';
 import { Button } from '../ui/button';
@@ -79,6 +80,17 @@ const taskTypeDetails: Record<GameTask['type'], TaskVisualDetails> = {
     badgeClass: 'border-indigo-300/40 bg-indigo-500/20 text-indigo-100',
     titleClass: 'text-indigo-100',
   },
+  truth_or_shot: {
+    title: 'Sannhet eller shot',
+    label: 'Svar eller drikk',
+    hint: 'Kort svar. Hvis du ikke vil svare, tar du straffen.',
+    icon: ShieldAlert,
+    emoji: '🥃',
+    surfaceClass:
+      'border-amber-400/40 bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-card shadow-[0_20px_50px_-25px_rgba(251,146,60,0.55)]',
+    badgeClass: 'border-amber-300/40 bg-amber-500/20 text-amber-100',
+    titleClass: 'text-amber-100',
+  },
 };
 
 type TaskCardProps = {
@@ -86,9 +98,16 @@ type TaskCardProps = {
   content: React.ReactNode;
   onVote?: (winner: 'team1' | 'team2') => void;
   teams?: Game['teams'];
+  rule?: GameRule | null;
 };
 
-export function TaskCard({ type, content, onVote, teams }: TaskCardProps) {
+export function TaskCard({
+  type,
+  content,
+  onVote,
+  teams,
+  rule,
+}: TaskCardProps) {
   const details = taskTypeDetails[type] || taskTypeDetails.prompt;
   const Icon = details.icon;
 
@@ -136,6 +155,20 @@ export function TaskCard({ type, content, onVote, teams }: TaskCardProps) {
         >
           {content}
         </motion.p>
+
+        {rule && (
+          <div className="mt-6 rounded-2xl border border-primary/20 bg-background/40 p-4 text-left">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/85">
+              {rule.action === 'clear' ? 'Opphever regler' : 'Vedvarende regel'}
+            </p>
+            <p className="mt-2 text-base font-semibold text-foreground">
+              {rule.title}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {rule.description}
+            </p>
+          </div>
+        )}
 
         {type === 'versus' && onVote && teams && (
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">

@@ -7,6 +7,7 @@
   "requiresPlayers": true,
   "emoji": "🍑",
   "color": "hsl(350 85% 55%)",
+  "isHiddenFromMain": true,
   "intensity": "high",
   "audience": "18+",
   "category": ["Kaos", "18+"],

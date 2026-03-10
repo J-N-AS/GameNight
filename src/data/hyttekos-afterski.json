@@ -1,7 +1,7 @@
 {
   "id": "hyttekos-afterski",
   "title": "Hyttekos & Afterski",
-  "description": "Klassiske hyttespørsmål. Perfekt for peiskos, afterski og lange kvelder med brettspill. Hvem taper alltid i Monopol?",
+  "description": "Hyttekort med peiskos, afterski og intern hyttestemning. Best når dere vil ha fjellvibbe uten å miste tempoet.",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": true,
@@ -11,7 +11,7 @@
   "audience": "all",
   "category": ["Party", "Sosialt"],
   "items": [
-    { "type": "challenge", "text": "Alle skåler for en god hyttetur! Ta en slurk." },
+    { "type": "challenge", "text": "Alle som hadde sagt ja til én ekstra natt på hytta: skål." },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å foreslå et morgenbad i et iskaldt fjellvann?" },
     { "type": "prompt", "text": "{player}, hva er din ultimate hyttefrokost?" },
     { "type": "never_have_i_ever", "text": "gått deg vill på skitur." },
@@ -22,14 +22,24 @@
     { "type": "prompt", "text": "{player}, hva er det rareste du har spist fra en boks på hyttetur?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å sovne foran peisen?" },
     { "type": "never_have_i_ever", "text": "jukset i et brettspill på hytta." },
-    { "type": "challenge", "text": "Regelmester! {player} lager en hytteregel for de neste 3 rundene (f.eks. 'ingen mobil ved bordet')." },
+    {
+      "type": "challenge",
+      "text": "Hytteregel! {player} lager én enkel hytteregel for de neste 3 rundene (for eksempel «ingen mobil ved bordet»).",
+      "rule": {
+        "action": "activate",
+        "title": "Hytteregel",
+        "description": "{player} styrer en hytteregel i 3 runder.",
+        "duration": 3,
+        "category": "house"
+      }
+    },
     { "type": "prompt", "text": "Pest eller kolera: Aldri mer Kvikk Lunsj, eller aldri mer appelsin?" },
     { "type": "pointing", "text": "Hvem her er den fødte hyttekokken?" },
     { "type": "challenge", "text": "{player}, du er nå værmelder. Gi en dramatisk værmelding for morgendagen." },
     { "type": "never_have_i_ever", "text": "tatt en 'selfie' på en fjelltopp." },
     { "type": "prompt", "text": "{player}, hva er ditt beste afterski-minne?" },
     { "type": "pointing", "text": "Hvem her hadde klart seg lengst alene i villmarka?" },
-    { "type": "challenge", "text": "Alle skåler for god stemning og fyr i peisen!" },
+    { "type": "challenge", "text": "Alle skåler for god stemning, tørr ved og at ingen må sove på sovesofaen." },
     { "type": "pointing", "text": "Hvem her er mest 'hytte-pappa' eller 'hytte-mamma'?" },
     { "type": "prompt", "text": "{player}, hva er det beste brettspillet for hyttetur?" },
     { "type": "never_have_i_ever", "text": "falt i skiheisen." },
@@ -39,6 +49,6 @@
     { "type": "challenge", "text": "{player}, fortell en historie som starter med 'Den gangen på fjellet...'" },
     { "type": "never_have_i_ever", "text": "drukket kakao med 'noe ekstra' i." },
     { "type": "pointing", "text": "Hvem her er den største optimisten når det gjelder været?" },
-    { "type": "challenge", "text": "Alle skåler for de som lager maten på hytteturen!" }
+    { "type": "challenge", "text": "Alle skåler for den som tok ansvar for mat, oppvask eller bålopptenning." }
   ]
 }

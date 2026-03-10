@@ -16,6 +16,8 @@ import { Input } from '../ui/input';
 import { Search } from 'lucide-react';
 import { getPlayerRequirementLabel } from '@/lib/player-requirements';
 import { useGameStart } from '@/hooks/useGameStart';
+import { Badge } from '@/components/ui/badge';
+import { getGameTier, isCoreGame } from '@/lib/game-library';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -69,6 +71,90 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
     });
   }, [games, searchTerm, activeTag]);
 
+  const coreGames = useMemo(
+    () => filteredGames.filter((game) => getGameTier(game.id) === 1),
+    [filteredGames]
+  );
+
+  const supportingGames = useMemo(
+    () => filteredGames.filter((game) => getGameTier(game.id) !== 1),
+    [filteredGames]
+  );
+
+  const isDefaultBrowse = searchTerm.trim() === '' && activeTag === 'Alle';
+
+  const renderGameCard = (game: GameFromGetGames) => (
+    <motion.div
+      key={game.id}
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Link
+        href={`/spill/${game.id}`}
+        onClick={(e) => startGame(game, e)}
+        className="group block h-full"
+      >
+        <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/10">
+          <CardHeader className="flex-row items-start gap-4">
+            <div className="text-4xl mt-1">{game.emoji}</div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
+                  {game.title}
+                  {game.audience === '18+' && (
+                    <span className="ml-2 text-xs font-medium bg-destructive/80 text-destructive-foreground px-2 py-0.5 rounded-full">
+                      18+
+                    </span>
+                  )}
+                </CardTitle>
+                {isCoreGame(game.id) && (
+                  <Badge
+                    variant="secondary"
+                    className="border-primary/25 bg-primary/15 text-primary"
+                  >
+                    Kjernevalg
+                  </Badge>
+                )}
+              </div>
+              <CardDescription className="mt-1 text-muted-foreground/80">
+                {game.description}
+              </CardDescription>
+            </div>
+          </CardHeader>
+          <div className="p-6 pt-0 mt-auto flex justify-between items-center">
+            <div className="flex flex-wrap gap-1">
+              {getPlayerRequirementLabel(game) && (
+                <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">
+                  {getPlayerRequirementLabel(game)}
+                </span>
+              )}
+              {game.tags?.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs font-semibold text-muted-foreground/70 bg-muted/50 px-2 py-0.5 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+              <span
+                className={cn(
+                  'h-2.5 w-2.5 rounded-full',
+                  intensityMap[game.intensity].color
+                )}
+              ></span>
+              {intensityMap[game.intensity].label}
+            </div>
+          </div>
+        </Card>
+      </Link>
+    </motion.div>
+  );
+
   return (
     <div className="w-full max-w-5xl mx-auto">
         <div className="mb-8 w-full max-w-lg mx-auto">
@@ -96,58 +182,58 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
             ))}
         </div>
 
-        <motion.div 
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-        >
-        {filteredGames.map((game) => (
-          <motion.div
-            key={game.id}
-            layout
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Link
-              href={`/spill/${game.id}`}
-              onClick={e => startGame(game, e)}
-              className="group block h-full"
-            >
-              <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/10">
-                <CardHeader className="flex-row items-start gap-4">
-                  <div className="text-4xl mt-1">{game.emoji}</div>
-                  <div>
-                    <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
-                      {game.title}
-                       {game.audience === '18+' && <span className="ml-2 text-xs font-medium bg-destructive/80 text-destructive-foreground px-2 py-0.5 rounded-full">18+</span>}
-                    </CardTitle>
-                    <CardDescription className="mt-1 text-muted-foreground/80">
-                      {game.description}
-                    </CardDescription>
-                  </div>
-                </CardHeader>
-                <div className="p-6 pt-0 mt-auto flex justify-between items-center">
-                    <div className="flex flex-wrap gap-1">
-                        {getPlayerRequirementLabel(game) && (
-                            <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">
-                              {getPlayerRequirementLabel(game)}
-                            </span>
-                        )}
-                        {game.tags?.map(tag => (
-                            <span key={tag} className="text-xs font-semibold text-muted-foreground/70 bg-muted/50 px-2 py-0.5 rounded-full">{tag}</span>
-                        ))}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                        <span className={cn("h-2.5 w-2.5 rounded-full", intensityMap[game.intensity].color)}></span>
-                        {intensityMap[game.intensity].label}
-                    </div>
+        {isDefaultBrowse ? (
+          <div className="space-y-12">
+            {coreGames.length > 0 && (
+              <section aria-labelledby="kjernebibliotek">
+                <div className="mb-5 text-center">
+                  <h2 id="kjernebibliotek" className="text-2xl font-bold font-headline">
+                    Kjernebibliotek
+                  </h2>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Dette er de tryggeste førstevalgene i GameNight: raske å starte,
+                    tydelige å lese høyt og sterke i én-skjerm-formatet.
+                  </p>
                 </div>
-              </Card>
-            </Link>
+
+                <motion.div
+                  layout
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+                >
+                  {coreGames.map(renderGameCard)}
+                </motion.div>
+              </section>
+            )}
+
+            {supportingGames.length > 0 && (
+              <section aria-labelledby="temaspill">
+                <div className="mb-5 text-center">
+                  <h2 id="temaspill" className="text-2xl font-bold font-headline">
+                    Temaspill og nisjer
+                  </h2>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Her ligger de mer situasjonsbestemte spillene: sesong, flørt,
+                    fysikk og mer spesifikke stemninger.
+                  </p>
+                </div>
+
+                <motion.div
+                  layout
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+                >
+                  {supportingGames.map(renderGameCard)}
+                </motion.div>
+              </section>
+            )}
+          </div>
+        ) : (
+          <motion.div 
+              layout
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          >
+            {filteredGames.map(renderGameCard)}
           </motion.div>
-        ))}
-        </motion.div>
+        )}
 
         {filteredGames.length === 0 && (
             <motion.div layout initial={{opacity: 0}} animate={{opacity: 1}} className="text-center py-16 text-muted-foreground">

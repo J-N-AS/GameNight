@@ -12,9 +12,27 @@ export type Player = {
   stats: PlayerStats;
 };
 
+export type GameTaskType =
+  | 'challenge'
+  | 'never_have_i_ever'
+  | 'prompt'
+  | 'pointing'
+  | 'versus'
+  | 'truth_or_shot';
+
+export interface GameRule {
+  action: 'activate' | 'clear';
+  title: string;
+  description: string;
+  duration?: number | null;
+  category?: string;
+  replacesCategories?: string[];
+}
+
 export interface GameTask {
-  type: 'challenge' | 'never_have_i_ever' | 'prompt' | 'pointing' | 'versus';
+  type: GameTaskType;
   text: string;
+  rule?: GameRule;
 }
 
 export interface GameWarning {

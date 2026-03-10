@@ -8,7 +8,9 @@ Prosjektet er nå satt opp som **statisk-first**, med JSON-basert innhold og ute
 Implementert:
 - Next.js App Router + TypeScript
 - Spillinnhold og temainnhold fra lokale JSON-filer (`src/data/*`)
+- Kuratert spillbibliotek med tydelig Tier 1-kjerne og skjulte svakere overlapper
 - Global spillerøkt i klient (localStorage)
+- Lettvekts støtte for aktive running rules i utvalgte spill
 - PWA-manifest + service worker (offline cache av app shell + runtime assets)
 - Statisk generering av dynamiske ruter via `generateStaticParams`
 - Valgfri donasjonsintegrasjon mot ekstern endpoint (ingen innebygd backend)

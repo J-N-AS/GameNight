@@ -12,6 +12,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameMenu } from './GameMenu';
 import { AdBanner } from '../ads/AdBanner';
 import { Progress } from '@/components/ui/progress';
+import { ActiveRulesPanel } from './ActiveRulesPanel';
+import {
+  removeActiveRule,
+  resolveNextActiveRules,
+  setAllActiveRulesPaused,
+  toggleActiveRulePause,
+  type ActiveGameRule,
+  type ResolvedGameRule,
+} from '@/lib/game-rules';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -40,6 +49,9 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   
   const [taskPlayers, setTaskPlayers] = useState<{player1: Player | null; player2: Player | null} | null>(null);
   const processedIndexRef = useRef<number | null>(null);
+  const [activeRules, setActiveRules] = useState<ActiveGameRule[]>([]);
+  const [areRulesExpanded, setAreRulesExpanded] = useState(false);
+  const previousActiveRuleCountRef = useRef(0);
 
   // Versus mode state
   const [team1Score, setTeam1Score] = useState(0);
@@ -64,6 +76,8 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     setShowSpinResult(false);
     setIsSpinning(false);
     setTaskPlayers(null);
+    setActiveRules([]);
+    setAreRulesExpanded(false);
     processedIndexRef.current = null;
   }, [game]);
 
@@ -128,6 +142,67 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     isPhysicalItemGame,
   ]);
 
+  useEffect(() => {
+    const previousRuleCount = previousActiveRuleCountRef.current;
+
+    if (previousRuleCount === 0 && activeRules.length > 0) {
+      setAreRulesExpanded(true);
+    }
+
+    if (activeRules.length === 0) {
+      setAreRulesExpanded(false);
+    }
+
+    previousActiveRuleCountRef.current = activeRules.length;
+  }, [activeRules.length]);
+
+  const getTaskTextValues = useCallback(
+    (taskType: GameTask['type']) => {
+      const hideNames = isNameHiddenType(taskType);
+
+      return {
+        '{team1}': game.teams?.team1 || 'Lag 1',
+        '{team2}': game.teams?.team2 || 'Lag 2',
+        '{player}': hideNames
+          ? 'Noen'
+          : taskPlayers?.player1?.name || 'Noen',
+        '{player2}': hideNames
+          ? 'En annen'
+          : taskPlayers?.player2?.name || 'En annen',
+        '{all}': 'Alle',
+      };
+    },
+    [game.teams, taskPlayers]
+  );
+
+  const resolveTaskTextToPlain = useCallback(
+    (text: string, taskType: GameTask['type']) => {
+      const values = getTaskTextValues(taskType);
+
+      return text.replace(
+        /(\{team1\}|\{team2\}|\{player\}|\{player2\}|\{all\})/g,
+        (match) => values[match as keyof typeof values] ?? match
+      );
+    },
+    [getTaskTextValues]
+  );
+
+  const currentTaskRule = useMemo<ResolvedGameRule | null>(() => {
+    if (!currentTask?.rule) {
+      return null;
+    }
+
+    return {
+      ...currentTask.rule,
+      title: resolveTaskTextToPlain(currentTask.rule.title, currentTask.type),
+      description: resolveTaskTextToPlain(
+        currentTask.rule.description,
+        currentTask.type
+      ),
+      source: resolveTaskTextToPlain(currentTask.text, currentTask.type),
+    };
+  }, [currentTask, resolveTaskTextToPlain]);
+
   const commitStatsForCurrentTask = useCallback(() => {
     if (!currentTask || !isLoaded || players.length === 0) {
       return;
@@ -159,7 +234,11 @@ export function GameClient({ game, gameMode }: GameClientProps) {
       updatePlayerStat(playerId, 'timesTargeted');
     });
 
-    if (currentTask.type === 'challenge' || currentTask.type === 'prompt') {
+    if (
+      currentTask.type === 'challenge' ||
+      currentTask.type === 'prompt' ||
+      currentTask.type === 'truth_or_shot'
+    ) {
       targetedIds.forEach((playerId) => {
         updatePlayerStat(playerId, 'tasksCompleted');
       });
@@ -177,6 +256,9 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
   const handleNextTask = () => {
     commitStatsForCurrentTask();
+    setActiveRules((previousRules) =>
+      resolveNextActiveRules(previousRules, currentTaskRule)
+    );
     if (isSpinTheBottleMode) {
       setShowSpinResult(false);
     }
@@ -229,8 +311,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     const placeholderRegex = /(\{team1\}|\{team2\}|\{player\}|\{player2\}|\{all\})/g;
 
     if (placeholderRegex.test(text)) {
-      const player1Name = taskPlayers?.player1?.name || 'Noen';
-      const player2Name = taskPlayers?.player2?.name || 'En annen';
+      const values = getTaskTextValues(type);
 
       const parts = text.split(placeholderRegex);
       content = (
@@ -238,13 +319,13 @@ export function GameClient({ game, gameMode }: GameClientProps) {
           {parts.map((part, index) => {
             switch (part) {
               case '{team1}':
-                return <span key={index} className="player-highlight">{game.teams?.team1 || 'Lag 1'}</span>;
+                return <span key={index} className="player-highlight">{values['{team1}']}</span>;
               case '{team2}':
-                return <span key={index} className="player-highlight-2">{game.teams?.team2 || 'Lag 2'}</span>;
+                return <span key={index} className="player-highlight-2">{values['{team2}']}</span>;
               case '{player}':
-                return isNameForbidden ? 'Noen' : <span key={index} className="player-highlight">{player1Name}</span>;
+                return isNameForbidden ? 'Noen' : <span key={index} className="player-highlight">{values['{player}']}</span>;
               case '{player2}':
-                return isNameForbidden ? 'En annen' : <span key={index} className="player-highlight-2">{player2Name}</span>;
+                return isNameForbidden ? 'En annen' : <span key={index} className="player-highlight-2">{values['{player2}']}</span>;
               case '{all}':
                 return <strong key={index} className="text-prompt font-semibold">Alle</strong>;
               default:
@@ -255,7 +336,13 @@ export function GameClient({ game, gameMode }: GameClientProps) {
       );
     }
     return content;
-  }, [currentTask, isLoaded, game.teams, isSpinTheBottleMode, isPhysicalItemGame, taskPlayers]);
+  }, [
+    currentTask,
+    isLoaded,
+    isSpinTheBottleMode,
+    isPhysicalItemGame,
+    getTaskTextValues,
+  ]);
 
 
   const cardVariants = {
@@ -404,6 +491,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
                   <TaskCard
                     type={currentTask.type}
                     content={processedContent}
+                    rule={currentTaskRule}
                   />
                   <div className="mt-6 bg-gradient-to-t from-background via-background/95 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4">
                     <Button onClick={handleNextTask} size="lg" className="h-14 w-full max-w-sm">
@@ -480,6 +568,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
                         <TaskCard
                             type={currentTask.type}
                             content={processedContent}
+                            rule={currentTaskRule}
                         />
                         )
                     )}
@@ -542,6 +631,28 @@ export function GameClient({ game, gameMode }: GameClientProps) {
           )}
         </div>
 
+        <ActiveRulesPanel
+          activeRules={activeRules}
+          isExpanded={areRulesExpanded}
+          onExpandedChange={setAreRulesExpanded}
+          onToggleAllPaused={() => {
+            const nextPausedState = !activeRules.every((rule) => rule.paused);
+            setActiveRules((previousRules) =>
+              setAllActiveRulesPaused(previousRules, nextPausedState)
+            );
+          }}
+          onToggleRulePaused={(ruleId) => {
+            setActiveRules((previousRules) =>
+              toggleActiveRulePause(previousRules, ruleId)
+            );
+          }}
+          onRemoveRule={(ruleId) => {
+            setActiveRules((previousRules) =>
+              removeActiveRule(previousRules, ruleId)
+            );
+          }}
+        />
+
         <div className="relative flex-grow flex items-center justify-center overflow-hidden">
           <AnimatePresence initial={false} mode="wait">
             <motion.div
@@ -560,6 +671,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
                   <TaskCard
                     type={currentTask.type}
                     content={processedContent}
+                    rule={currentTaskRule}
                     onVote={isVersusMode ? handleVote : undefined}
                     teams={isVersusMode ? game.teams : undefined}
                   />

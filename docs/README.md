@@ -8,8 +8,10 @@ Denne mappen inneholder en blanding av levende dokumentasjon, strategidokumenter
 
 - `../README.md`: overordnet repooversikt, stack, scripts og deploy.
 - `architecture.md`: hvordan appen faktisk er bygget nå.
+- `game-library-optimization.md`: gjeldende kuratering av spillbiblioteket, tiering og skjulingsvalg.
 - `hosting.md`: anbefalt hosting og deployflyt.
 - `product.md`: produktprinsipper, målgruppe og struktur.
+- `running-rules-engine-review.md`: hvordan aktive regler nå er modellert i spillsessionen.
 - `seo-publisher-readiness.md`: nåværende SEO- og publisher-status.
 - `../SPILL_OVERSIKT.md`: oppdatert spillkatalog og korttall.
 - `../public/llms.txt`: kort maskinlesbar prosjektbeskrivelse.

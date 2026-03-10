@@ -1,7 +1,7 @@
 {
   "id": "kaosrunden",
   "title": "Kaosrunden",
-  "description": "Når alle er varme og kontrollen begynner å glippe. Regler, kaos, latter og null struktur.",
+  "description": "Høyt tempo, korte slag og vedvarende regler som får bordet til å skli kontrollert ut.",
   "language": "no",
   "shuffle": true,
   "requiresPlayers": true,
@@ -23,7 +23,17 @@
     { "type": "prompt", "text": "{player}, hva er ditt største fylle-instinkt?" },
     { "type": "challenge", "text": "Alle tar én slurk uten å se på glasset." },
 
-    { "type": "challenge", "text": "{player}, velg én enkel kaosregel for de neste 4 rundene. Hold den kort. Når en ny kaosregel trekkes, dør den gamle umiddelbart." },
+    {
+      "type": "challenge",
+      "text": "{player}, velg én enkel kaosregel for de neste 4 rundene. Hold den kort. Når en ny kaosregel trekkes, dør den gamle umiddelbart.",
+      "rule": {
+        "action": "activate",
+        "title": "Kaosregel",
+        "description": "{player} styrer en kaosregel i 4 runder.",
+        "duration": 4,
+        "category": "custom"
+      }
+    },
     { "type": "pointing", "text": "Hvem her er mest uforutsigbar på fylla?" },
     { "type": "challenge", "text": "Alle som sitter komfortabelt: drikk." },
     { "type": "prompt", "text": "{player}, hva er den dummeste avgjørelsen du har tatt sent på kvelden?" },
@@ -47,7 +57,17 @@
     { "type": "prompt", "text": "{player}, hva er det mest impulsive du har gjort i fylla?" },
     { "type": "challenge", "text": "Alle som har angret på en melding sendt sent: drikk." },
 
-    { "type": "challenge", "text": "Navnekaos! {player} og {player2} bytter navn i 3 runder. Den som bruker feil navn drikker 1. Et nytt navnekaos-kort opphever det gamle." },
+    {
+      "type": "challenge",
+      "text": "Navnekaos! {player} og {player2} bytter navn i 3 runder. Den som bruker feil navn drikker 1. Et nytt navnekaos-kort opphever det gamle.",
+      "rule": {
+        "action": "activate",
+        "title": "Navnekaos",
+        "description": "{player} og {player2} bytter navn i 3 runder.",
+        "duration": 3,
+        "category": "name"
+      }
+    },
     { "type": "pointing", "text": "Hvem her kommer til å være fyllesyk lengst?" },
     { "type": "challenge", "text": "Alle tar en slurk og peker på seg selv." },
     { "type": "prompt", "text": "{player}, hva er det verste rådet du har fulgt?" },
@@ -55,23 +75,61 @@
 
     { "type": "challenge", "text": "Alle lukker øynene og drikker. Stol på prosessen." },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å foreslå noe dumt – og mene det?" },
-    { "type": "challenge", "text": "Tommelpanikk! {player} eier tommelen i 4 runder. Når {player} legger tommelen på bordet, må alle følge. Sistemann drikker 2." },
+    {
+      "type": "challenge",
+      "text": "Tommelpanikk! {player} eier tommelen i 4 runder. Når {player} legger tommelen på bordet, må alle følge. Sistemann drikker 2.",
+      "rule": {
+        "action": "activate",
+        "title": "Tommelpanikk",
+        "description": "{player} eier tommelen i 4 runder.",
+        "duration": 4,
+        "category": "thumb"
+      }
+    },
     { "type": "prompt", "text": "{player}, hva er det mest irriterende trekket du har på fylla?" },
-    { "type": "challenge", "text": "Forbudt ord! I 3 runder er ordet 'skål' forbudt. Sier du det, drikker du 1. Et nytt forbudt ord-kort erstatter det gamle." },
+    {
+      "type": "challenge",
+      "text": "Forbudt ord! I 3 runder er ordet 'skål' forbudt. Sier du det, drikker du 1. Et nytt forbudt ord-kort erstatter det gamle.",
+      "rule": {
+        "action": "activate",
+        "title": "Forbudt ord",
+        "description": "Ordet «skål» er forbudt i 3 runder.",
+        "duration": 3,
+        "category": "word"
+      }
+    },
 
     { "type": "challenge", "text": "{player}, nevn 5 dyr på 5 sekunder. Feiler du: drikk." },
     { "type": "pointing", "text": "Hvem her er dårligst på å vite når nok er nok?" },
     { "type": "challenge", "text": "Alle tar én slurk hvis de har på seg svart." },
     { "type": "prompt", "text": "{player}, hva er den største myten om deg?" },
-    { "type": "challenge", "text": "Kaosvenner! {player} og {player2} drikker sammen i 3 runder. Hver gang én av dere drikker, må den andre også ta en slurk. Et nytt kaosvenn-kort erstatter det gamle paret." },
+    {
+      "type": "challenge",
+      "text": "Kaosvenner! {player} og {player2} drikker sammen i 3 runder. Hver gang én av dere drikker, må den andre også ta en slurk. Et nytt kaosvenn-kort erstatter det gamle paret.",
+      "rule": {
+        "action": "activate",
+        "title": "Kaosvenner",
+        "description": "{player} og {player2} drikker sammen i 3 runder.",
+        "duration": 3,
+        "category": "buddy"
+      }
+    },
 
     { "type": "challenge", "text": "Alle som har vært i en «det var en dårlig idé»-situasjon: drikk." },
     { "type": "pointing", "text": "Hvem her hadde blitt arrestert først i en film?" },
     { "type": "challenge", "text": "{player}, snakk kun i spørsmål i 30 sekunder. Bryter du: drikk." },
     { "type": "prompt", "text": "{player}, hva er det mest tilfeldige du kan mye om?" },
-    { "type": "challenge", "text": "Regel-reset! Alle vedvarende regler som er aktive nå oppheves. Bordet er midlertidig lovløst." },
+    {
+      "type": "challenge",
+      "text": "Regel-reset! Alle vedvarende regler som er aktive nå oppheves. Bordet er midlertidig lovløst.",
+      "rule": {
+        "action": "clear",
+        "title": "Regel-reset",
+        "description": "Alle aktive regler oppheves. Bordet starter på nytt."
+      }
+    },
 
-    { "type": "challenge", "text": "{player}, velg to personer ({player} og {player2}). De spiller stein–saks–papir. Taperen drikker 2." },
+    { "type": "challenge", "text": "{player}, velg to andre spillere. De spiller stein–saks–papir. Taperen drikker 2." },
     { "type": "pointing", "text": "Hvem her hadde vært verst å havne i fyllekrangel med?" },
     { "type": "challenge", "text": "Alle bytter glass med personen til venstre (hvis mulig)." },
     { "type": "prompt", "text": "{player}, hva er ditt mest kaotiske øyeblikk denne måneden?" },

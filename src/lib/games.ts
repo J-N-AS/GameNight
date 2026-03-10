@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Game } from './types';
 import { cache } from 'react';
+import { getGameTier } from './game-library';
 
 // Helper function to dynamically import game data
 async function loadGameData(id: string): Promise<Game | null> {
@@ -73,6 +74,9 @@ export const getGames = cache(async (options: { includeHidden?: boolean; include
   const audienceOrder = { all: 1, '18+': 2 };
 
   validGames.sort((a, b) => {
+    const tierComparison = getGameTier(a.id) - getGameTier(b.id);
+    if (tierComparison !== 0) return tierComparison;
+
     const audienceComparison = audienceOrder[a.audience] - audienceOrder[b.audience];
     if (audienceComparison !== 0) return audienceComparison;
 
