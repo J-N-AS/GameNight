@@ -137,7 +137,7 @@ export function TaskCard({
         <div className="mt-auto flex flex-1 flex-col items-center justify-center py-6 md:py-10">
           <motion.div
             className={cn(
-              'max-w-[12ch] text-balance px-1 text-[clamp(2.9rem,11vw,5rem)] font-black leading-[0.92] tracking-[-0.08em] sm:max-w-[13ch] md:max-w-[14ch]',
+              'max-w-[13ch] text-balance px-1 text-[clamp(2.35rem,9vw,4.4rem)] font-bold leading-[0.96] tracking-[-0.04em] sm:max-w-[14ch]',
               details.contentClass
             )}
             initial={{ opacity: 0, y: 12, scale: 0.99 }}
@@ -149,7 +149,7 @@ export function TaskCard({
           {subtitle && (
             <p
               className={cn(
-                'mt-6 max-w-[18ch] text-balance text-[clamp(1.15rem,4.8vw,2rem)] font-medium leading-snug',
+                'mt-6 max-w-[20ch] text-balance text-[clamp(1rem,3.8vw,1.5rem)] font-medium leading-snug',
                 details.subtitleClass
               )}
             >

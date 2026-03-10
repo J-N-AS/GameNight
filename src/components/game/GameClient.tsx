@@ -5,11 +5,8 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { TaskCard } from './TaskCard';
 import { Button } from '@/components/ui/button';
 import {
-  ArrowRight,
   Home,
   PartyPopper,
-  Repeat,
-  Sparkles,
   Trophy,
   X,
 } from 'lucide-react';
@@ -435,34 +432,23 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
   const renderActionButton = (
     label: string,
-    onClick: () => void,
-    icon: React.ComponentType<{ className?: string }> = ArrowRight
+    onClick: () => void
   ) => {
-    const Icon = icon;
-    const showIcon = icon !== ArrowRight;
-
     return (
       <Button
         onClick={onClick}
         size="lg"
         className="mx-auto h-[5rem] w-full max-w-[26rem] rounded-[1.8rem] border-2 border-[#1f6ed4] bg-[#f1f1f1] px-5 text-base font-black uppercase tracking-[-0.03em] text-black shadow-[0_14px_0_0_rgba(255,255,255,0.12)] transition-transform duration-150 hover:bg-white active:translate-y-[3px] active:shadow-[0_9px_0_0_rgba(255,255,255,0.1)]"
       >
-        <span className="relative block w-full">
-          <span className="block w-full text-center text-[1.55rem] font-black leading-none sm:text-[2rem]">
-            {label}
-          </span>
-          {showIcon && (
-            <span className="absolute right-0 top-1/2 -translate-y-1/2">
-              <Icon className="h-5 w-5" />
-            </span>
-          )}
+        <span className="block w-full text-center text-[1.55rem] font-black leading-none sm:text-[2rem]">
+          {label}
         </span>
       </Button>
     );
   };
 
   const shellBackground = (
-    <div className="pointer-events-none absolute inset-0 bg-black" />
+    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_32%)]" />
   );
 
   if (isFinished) {
@@ -525,7 +511,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
           )}
 
           <div className="mt-8 flex flex-col gap-3">
-            {renderActionButton('Spill igjen', setupGame, Repeat)}
+            {renderActionButton('Spill igjen', setupGame)}
             <Button
               variant="ghost"
               size="lg"
@@ -599,18 +585,18 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
             {!isSpinning && !showSpinResult && (
               <motion.div
-                className="sticky bottom-0 mt-6 bg-gradient-to-t from-background via-background/94 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
+                className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.24 }}
               >
-                {renderActionButton('Spinn flasken', handleSpinBottle, Sparkles)}
+                {renderActionButton('Spinn flasken', handleSpinBottle)}
               </motion.div>
             )}
 
             {showSpinResult && (
               <motion.div
-                className="sticky bottom-0 mt-6 bg-gradient-to-t from-background via-background/94 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
+                className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.24 }}
@@ -663,7 +649,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
             {!showLoading && currentTask?.type !== 'versus' && (
               <motion.div
-                className="sticky bottom-0 mt-6 bg-gradient-to-t from-background via-background/94 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
+                className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.24 }}
@@ -705,7 +691,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
           {!showLoading && currentTask?.type !== 'versus' && (
             <motion.div
-              className="sticky bottom-0 mt-6 bg-gradient-to-t from-background via-background/94 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
+              className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.24 }}
