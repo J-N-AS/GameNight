@@ -97,7 +97,7 @@ Disse flatene støtter oppdagelse, tillit og langsiktig distribusjon:
 Produktstrategien i repoet akkurat nå er:
 
 1. gjøre spillbiblioteket tydeligere og bedre kuratert
-2. forbedre gameplay og running rules uten å bygge tung motor
+2. forbedre gameplay og mobil-lesbarhet uten å bygge tung motor
 3. bruke temaer, artikler og huber til å skape distribusjon
 4. holde monetisering lett og sekundær til selve spillopplevelsen
 

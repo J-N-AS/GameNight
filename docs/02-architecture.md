@@ -81,19 +81,18 @@ Det finnes to viktige former for klientstate:
 Dette betyr:
 
 - spillere kan overleve en sideoppfriskning
-- running rules gjør det ikke
 - oppsummeringen bygger på lokal spillerstate
+- gameplay-state utover selve kortet persisteres i liten grad med vilje
 
 ## Spillmotorens plass i systemet
 
 Gameplay-systemet ligger primært i:
 
+- `src/app/spill/[gameId]/page.tsx`
 - `src/components/game/GameFlow.tsx`
 - `src/components/game/GameClient.tsx`
 - `src/components/game/TaskCard.tsx`
-- `src/components/game/ActiveRulesPanel.tsx`
 - `src/lib/gameplay.ts`
-- `src/lib/game-rules.ts`
 
 Se `03-game-system.md` for detaljer.
 

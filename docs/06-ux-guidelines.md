@@ -33,7 +33,8 @@ Typografi, kontrast, spacing og knappestørrelse skal først og fremst gjøre ko
 ### Spillsider
 
 - hold fokus på kortet og neste handling
-- bruk reveal og running rules for å støtte gameplay, ikke bare dekor
+- la gameplay normalt få plass på én mobilskjerm uten scroll
+- skjul footer og related-innhold mens aktiv spilling pågår
 - unngå å plassere perifert innhold for tett på aktiv spilling
 
 ### Temaer og artikler
@@ -58,11 +59,13 @@ Gode steder:
 - artikler
 - infosider
 - etter ferdig spilløkt
+- under gameplay-flaten, ikke inne i kort + CTA-stacken
 
 Svake steder:
 
 - midt i aktiv kortflyt
 - tett på primære gameplay-knapper
+- i samme synlige viewport som spillkortet hvis det skaper scroll på mobil
 - før brukeren har forstått hva produktet er
 
 ## Endringer som bør unngås uten eksplisitt bestilling

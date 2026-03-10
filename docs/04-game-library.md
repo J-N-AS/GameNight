@@ -75,8 +75,8 @@ Et typisk spill ser slik ut:
 ### På kortnivå
 
 - `type` og `text` er alltid obligatoriske
-- `rule` brukes bare når kortet skal leve videre som running rule
-- `moment` brukes bare når kortet fortjener reveal som impact moment
+- `rule` brukes bare når kortet innfører eller rydder en regel gruppa kan huske selv
+- `moment` brukes bare når kortet fortjener tydeligere tone eller redaksjonell markering
 
 ## Hvordan legge til et nytt spill
 

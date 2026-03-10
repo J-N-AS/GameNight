@@ -129,9 +129,7 @@ Reglene er:
 
 `useGameStart` og `GameFlow` sender brukeren til spilleroppsett når det mangler nok spillere.
 
-## Running rules
-
-Running rules er en liten klientbasert modell for regler som varer utover ett kort.
+## Regelkort
 
 `rule` støtter:
 
@@ -142,18 +140,18 @@ Running rules er en liten klientbasert modell for regler som varer utover ett ko
 - `category`
 - `replacesCategories`
 
-Hvordan det virker i praksis:
+Hvordan det virker i praksis nå:
 
-- aktive regler vises i `ActiveRulesPanel`
-- regler teller ned per neste kort, ikke per faktisk spillerunde
-- regler kan pauses, fortsettes eller fjernes manuelt
-- regler persisteres ikke ved refresh
+- regeltekst vises i selve kortet
+- gruppa forventes å huske regelen sosialt
+- gameplay har ikke et aktivt regelpanel i standardflyten
+- regler spores ikke utover kortet og persisteres ikke ved refresh
 
-Dette er hjelp til sosial håndheving, ikke en full regelmotor.
+Dette er bevisst. GameNight prioriterer tempo og lav administrasjon foran regel-UI.
 
-## Impact moments
+## Moment metadata
 
-`moment` brukes for korte reveal-steg før noen kort vises.
+`moment` brukes fortsatt i data, men ikke lenger som eget reveal-steg i standard gameplay.
 
 Støttede verdier:
 
@@ -162,12 +160,22 @@ Støttede verdier:
 - `secret`
 - `group`
 
-I tillegg lager systemet reveal for:
+I praksis brukes `moment` nå til:
 
-- `rule`-kort
-- `versus`-kort
+- tone og badge i `TaskCard`
+- redaksjonell markering av kort som skal føles større
+- eventuell senere differensiering hvis det faktisk trengs
 
-Formålet er å gi enkelte kort mer tyngde uten å bremse spillet for mye.
+## Gameplay shell
+
+Når `GameFlow` går til `playing`, legges body-klassen `gameplay-active` på.
+
+Det brukes for å skjule elementer merket med `data-hide-during-gameplay`, som:
+
+- global footer
+- related-seksjonen på spillsiden
+
+SEO-innholdet blir fortsatt rendret i HTML, men forsvinner visuelt mens man spiller.
 
 ## Oppsummering og statistikk
 
@@ -183,11 +191,9 @@ Oppsummeringen er derfor en sosial bonus, ikke en full sannhetsmotor.
 
 ## Viktige kodefiler
 
+- `src/app/spill/[gameId]/page.tsx`
 - `src/components/game/GameFlow.tsx`
 - `src/components/game/GameClient.tsx`
 - `src/components/game/TaskCard.tsx`
-- `src/components/game/ActiveRulesPanel.tsx`
-- `src/components/game/ImpactMomentReveal.tsx`
 - `src/lib/gameplay.ts`
-- `src/lib/game-rules.ts`
 - `src/lib/player-requirements.ts`

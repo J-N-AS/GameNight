@@ -23,6 +23,10 @@ GameNight fungerer best når kortene skaper:
 
 Kortene må være forståelige når én person leser og resten følger med på avstand. Det betyr tydelig språk og begrenset kompleksitet.
 
+### Ett skjermbilde er idealet
+
+På mobil bør kort, undertittel og primærknapp normalt få plass uten scroll. Hvis et deck ofte krever mer høyde enn dette, er kortene som regel for lange eller typografien for aggressiv.
+
 ## Kortfamilier
 
 Dagens system har seks viktige kortfamilier:
@@ -32,7 +36,7 @@ Dagens system har seks viktige kortfamilier:
 - `pointing` for raske sosiale dommer
 - `never_have_i_ever` for kollektiv bekjennelse
 - `truth_or_shot` for press med tydelig valg
-- `rule` som vedvarende spillkort gjennom metadata
+- `rule` som regelkort gruppa husker sosialt
 
 Hver familie bør ha en egen rytme og rolle i decket.
 
@@ -47,9 +51,9 @@ Et godt GameNight-deck veksler normalt mellom:
 
 Deck som bare gjentar samme type kort blir fort flate, selv om enkeltkortene er gode.
 
-## Impact moments
+## Impact moments og tone
 
-`moment` skal brukes sparsomt. Det er til for kort som skal føles større enn resten av decket.
+`moment` skal brukes sparsomt. Det er til for kort som skal føles større enn resten av decket, men i dagens gameplay skjer dette først og fremst gjennom innhold, farge og tone, ikke egne intro-skjermer.
 
 Bruk `impact` når kortet er et tydelig høydepunkt.
 
@@ -59,11 +63,11 @@ Bruk `chaos` når kortet skal oppleves som brått, høyere og mer uforutsigbart.
 
 Bruk `secret` når kortet skal ha hemmelig eller mer langvarig effekt.
 
-Hvis for mange kort får `moment`, mister reveal-effekten verdi.
+Hvis for mange kort får `moment`, mister markeringen verdi.
 
-## Running rules
+## Regler som varer utover ett kort
 
-Running rules fungerer best når de er:
+Disse fungerer best når de er:
 
 - korte
 - lette å huske
@@ -80,8 +84,10 @@ Gode eksempler:
 Dårlige kandidater:
 
 - regler som krever nøyaktig tracking av mange spillere
-- regler som trenger komplisert UI for å forstås
+- regler som trenger eget UI for å fungere
 - regler som skaper for mye administrasjon
+
+GameNight antar nå at gruppa selv husker disse reglene. Hvis et spill bare fungerer med et vedvarende regelpanel, passer det dårligere i den aktive gameplay-flaten.
 
 ## Retningslinjer for kortskriving
 
@@ -120,6 +126,6 @@ Forenkle heller enn å overmodellere når du ser dette:
 - kortene trenger forklaring hver gang
 - kortene føles like, selv om teksten er ulik
 - spillet krever logikk som ikke finnes i motoren
-- running rules krever mer oppfølging enn gruppa realistisk orker
+- regler som varer krever mer oppfølging enn gruppa realistisk orker
 
 Et enklere deck med sterkere rytme er som regel bedre enn et smart deck som ingen orker å drifte.

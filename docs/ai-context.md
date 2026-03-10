@@ -12,15 +12,15 @@ GameNight er en statisk-first Next.js-app for festspill og relaterte innholdssid
 - bibliotekslasting: `src/lib/games.ts`
 - tiering/anbefalinger: `src/lib/game-library.ts`
 - gameplay-logikk: `src/components/game/GameFlow.tsx`, `src/components/game/GameClient.tsx`
-- gameplay-presentasjon: `src/components/game/TaskCard.tsx`, `src/components/game/ActiveRulesPanel.tsx`
+- gameplay-presentasjon: `src/components/game/TaskCard.tsx`
 - SEO: `src/lib/seo.ts`, `src/app/sitemap.ts`, `src/app/robots.ts`
 
 ## Hvordan gameplay fungerer
 
-- `GameFlow` bestemmer oppstartssteget
+- `GameFlow` bestemmer oppstartssteget og skjuler footer/related når `step === "playing"`
 - `GameClient` kjører kortstokken og holder session-lokal state
 - kort støtter `type`, `text`, valgfri `rule` og valgfri `moment`
-- running rules er lette og klientlokale
+- `rule` og `moment` brukes nå hovedsakelig som redaksjonell metadata og kortpresentasjon
 - spillerliste og enkel statistikk ligger i `localStorage`
 
 Støttede korttyper:
@@ -58,7 +58,7 @@ Støttede placeholders:
 - ikke anta database, auth eller backend
 - behold én-enhets-modellen med mindre noe annet er bestilt
 - foretrekk data-drevne endringer fremfor nye spesialsystemer
-- bruk running rules bare når kortene faktisk trenger vedvarende UI-støtte
+- ikke legg inn ekstra paneler eller støtte-UI i aktiv spilling uten eksplisitt behov
 - ikke gjør `versus` til standardmønster; dagens støtte er smal
 - vær tydelig på at oppsummeringen bygger på enkel lokal statistikk, ikke full tracking
 

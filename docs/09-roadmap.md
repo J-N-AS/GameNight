@@ -17,20 +17,22 @@ Typiske oppgaver:
 - små og målrettede forbedringer i korttekster og deck-struktur
 - bedre konsistens mellom bibliotek, temaer og `SPILL_OVERSIKT.md`
 
-## Fase 2: Running rules og bedre gameplay
+## Fase 2: Bedre mobil gameplay og deckstyrke
 
 Mål:
 
-- gjøre running rules mer nyttige i faktisk spill
-- forbedre gameplay-rytme og tydelige toppunkter
-- videreutvikle impact moments bare der det gir mening
+- forbedre gameplay-rytme og lesbarhet videre
+- holde gameplay på én skjerm så ofte som mulig på mobil
+- videreutvikle deck med tydelige toppunkter bare der det gir mening
 
 Typiske oppgaver:
 
-- finjustere regelkategorier og varighet
-- løfte flere deck som faktisk passer running rules
+- korte ned eller stramme inn lange kort som bryter mobilformatet
 - forbedre pre-game og overgangene inn i spilling
+- finjustere annonseplassering rundt spillsider uten å forstyrre gameplay
+- løfte flere deck som faktisk trenger tydeligere redaksjonell rytme
 - eventuelt styrke shared-screen-lesbarhet i gameplay-shell
+- ikke gjeninnføre regelpanel eller reveal-steg uten tydelig produktbehov
 
 ## Fase 3: SEO og distribusjon
 
