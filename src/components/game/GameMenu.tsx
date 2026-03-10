@@ -64,7 +64,7 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
             className={cn(
               'active:scale-95 transition-transform',
               context === 'in-game'
-                ? 'h-11 w-11 rounded-full border border-white/12 bg-black/25 text-white backdrop-blur-xl hover:bg-white/10 hover:text-white'
+                ? 'h-12 w-12 rounded-full border-0 bg-white/10 text-white shadow-none backdrop-blur-sm hover:bg-white/14 hover:text-white'
                 : 'h-9 w-9'
             )}
           >

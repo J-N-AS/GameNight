@@ -99,7 +99,7 @@ export function getTaskPresentation(
         tone: 'challenge',
         badge: 'Utfordring',
         title: 'Action',
-        hint: 'Les høyt og kjør rett på.',
+        hint: 'Gjør kortet med en gang.',
         emoji: '🔥',
       };
     case 'never_have_i_ever':
@@ -115,7 +115,7 @@ export function getTaskPresentation(
         tone: 'question',
         badge: 'Spørsmål',
         title: 'Spørsmål',
-        hint: 'Svar høyt, kort og ærlig.',
+        hint: 'Svar høyt før dere går videre.',
         emoji: '❄️',
       };
     case 'pointing':
@@ -123,7 +123,7 @@ export function getTaskPresentation(
         tone: 'pointing',
         badge: 'Pekelek',
         title: 'Pek ut',
-        hint: 'Ingen overtenking. Bare pek.',
+        hint: 'Pek samtidig og stol på magefølelsen.',
         emoji: '👉',
       };
     case 'versus':
@@ -131,7 +131,7 @@ export function getTaskPresentation(
         tone: 'versus',
         badge: 'Duell',
         title: 'Versus',
-        hint: 'Avgjør runden før dere går videre.',
+        hint: 'Finn en vinner før neste kort.',
         emoji: '⚔️',
       };
     case 'truth_or_shot':
@@ -147,7 +147,7 @@ export function getTaskPresentation(
         tone: 'challenge',
         badge: 'Utfordring',
         title: 'Action',
-        hint: 'Les høyt og kjør rett på.',
+        hint: 'Gjør kortet med en gang.',
         emoji: '🔥',
       };
   }

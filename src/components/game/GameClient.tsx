@@ -1,6 +1,6 @@
 'use client';
 
-import type { Game, GameTask, Player } from '@/lib/types';
+import type { Game, GameRule, GameTask, Player } from '@/lib/types';
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { TaskCard } from './TaskCard';
 import { Button } from '@/components/ui/button';
@@ -11,28 +11,13 @@ import {
   Repeat,
   Sparkles,
   Trophy,
+  X,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useSession } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameMenu } from './GameMenu';
-import { ActiveRulesPanel } from './ActiveRulesPanel';
-import { ImpactMomentReveal } from './ImpactMomentReveal';
-import {
-  removeActiveRule,
-  resolveNextActiveRules,
-  setAllActiveRulesPaused,
-  toggleActiveRulePause,
-  type ActiveGameRule,
-  type ResolvedGameRule,
-} from '@/lib/game-rules';
-import {
-  getGameplayMoment,
-  getTaskPresentation,
-  type GameplayTone,
-} from '@/lib/gameplay';
-import { cn } from '@/lib/utils';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -46,90 +31,6 @@ function shuffleArray<T>(array: T[]): T[] {
 const isNameHiddenType = (type: GameTask['type']) =>
   type === 'never_have_i_ever' || type === 'pointing';
 
-const toneShellStyles: Record<
-  GameplayTone,
-  {
-    pillClass: string;
-    progressClass: string;
-    buttonClass: string;
-    auraPrimaryClass: string;
-    auraSecondaryClass: string;
-  }
-> = {
-  challenge: {
-    pillClass: 'border-fuchsia-200/18 bg-fuchsia-400/10 text-fuchsia-50',
-    progressClass: 'from-fuchsia-300 via-pink-300 to-violet-300',
-    buttonClass:
-      'from-fuchsia-500 via-violet-500 to-fuchsia-400 shadow-[0_30px_90px_-38px_rgba(192,38,211,0.95)]',
-    auraPrimaryClass: 'bg-fuchsia-500/18',
-    auraSecondaryClass: 'bg-violet-500/16',
-  },
-  never: {
-    pillClass: 'border-orange-200/18 bg-orange-400/10 text-orange-50',
-    progressClass: 'from-orange-300 via-rose-300 to-red-300',
-    buttonClass:
-      'from-orange-500 via-rose-500 to-red-400 shadow-[0_30px_90px_-38px_rgba(249,115,22,0.95)]',
-    auraPrimaryClass: 'bg-orange-500/18',
-    auraSecondaryClass: 'bg-rose-500/16',
-  },
-  question: {
-    pillClass: 'border-sky-200/18 bg-sky-400/10 text-sky-50',
-    progressClass: 'from-sky-300 via-cyan-300 to-teal-300',
-    buttonClass:
-      'from-sky-500 via-cyan-500 to-teal-400 shadow-[0_30px_90px_-38px_rgba(14,165,233,0.95)]',
-    auraPrimaryClass: 'bg-sky-500/16',
-    auraSecondaryClass: 'bg-cyan-500/14',
-  },
-  pointing: {
-    pillClass: 'border-cyan-200/18 bg-cyan-400/10 text-cyan-50',
-    progressClass: 'from-cyan-300 via-sky-300 to-lime-300',
-    buttonClass:
-      'from-cyan-500 via-sky-500 to-lime-400 shadow-[0_30px_90px_-38px_rgba(34,211,238,0.95)]',
-    auraPrimaryClass: 'bg-cyan-500/16',
-    auraSecondaryClass: 'bg-lime-400/12',
-  },
-  versus: {
-    pillClass: 'border-indigo-200/18 bg-indigo-400/10 text-indigo-50',
-    progressClass: 'from-indigo-300 via-blue-300 to-sky-300',
-    buttonClass:
-      'from-indigo-500 via-blue-500 to-sky-400 shadow-[0_30px_90px_-38px_rgba(99,102,241,0.95)]',
-    auraPrimaryClass: 'bg-indigo-500/16',
-    auraSecondaryClass: 'bg-blue-500/14',
-  },
-  truth: {
-    pillClass: 'border-amber-200/18 bg-amber-400/10 text-amber-50',
-    progressClass: 'from-amber-300 via-orange-300 to-rose-300',
-    buttonClass:
-      'from-amber-500 via-orange-500 to-rose-400 shadow-[0_30px_90px_-38px_rgba(245,158,11,0.95)]',
-    auraPrimaryClass: 'bg-amber-500/16',
-    auraSecondaryClass: 'bg-rose-500/12',
-  },
-  rule: {
-    pillClass: 'border-blue-200/18 bg-blue-400/10 text-blue-50',
-    progressClass: 'from-blue-300 via-indigo-300 to-sky-300',
-    buttonClass:
-      'from-blue-500 via-indigo-500 to-sky-400 shadow-[0_30px_90px_-38px_rgba(59,130,246,0.95)]',
-    auraPrimaryClass: 'bg-blue-500/16',
-    auraSecondaryClass: 'bg-indigo-500/14',
-  },
-  chaos: {
-    pillClass: 'border-red-200/18 bg-red-400/10 text-red-50',
-    progressClass: 'from-red-300 via-orange-300 to-amber-300',
-    buttonClass:
-      'from-red-500 via-orange-500 to-amber-400 shadow-[0_30px_90px_-38px_rgba(239,68,68,0.95)]',
-    auraPrimaryClass: 'bg-red-500/18',
-    auraSecondaryClass: 'bg-amber-500/14',
-  },
-  secret: {
-    pillClass: 'border-emerald-200/18 bg-emerald-400/10 text-emerald-50',
-    progressClass: 'from-emerald-300 via-cyan-300 to-sky-300',
-    buttonClass:
-      'from-emerald-500 via-cyan-500 to-sky-400 shadow-[0_30px_90px_-38px_rgba(16,185,129,0.95)]',
-    auraPrimaryClass: 'bg-emerald-500/16',
-    auraSecondaryClass: 'bg-sky-500/12',
-  },
-};
-
 interface GameClientProps {
   game: Game;
   gameMode?: 'virtual' | 'physical' | null;
@@ -142,16 +43,11 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
-  const [displayPhase, setDisplayPhase] = useState<'intro' | 'card'>('card');
   const [taskPlayers, setTaskPlayers] = useState<{
     player1: Player | null;
     player2: Player | null;
   } | null>(null);
   const processedIndexRef = useRef<number | null>(null);
-  const revealedMomentKeyRef = useRef<string | null>(null);
-  const [activeRules, setActiveRules] = useState<ActiveGameRule[]>([]);
-  const [areRulesExpanded, setAreRulesExpanded] = useState(false);
-  const previousActiveRuleCountRef = useRef(0);
 
   const [team1Score, setTeam1Score] = useState(0);
   const [team2Score, setTeam2Score] = useState(0);
@@ -170,17 +66,13 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     setTasks(gameTasks);
     setCurrentIndex(0);
     setIsFinished(false);
-    setDisplayPhase('card');
     setTeam1Score(0);
     setTeam2Score(0);
     setShowSpinResult(false);
     setIsSpinning(false);
     setBottleRotation(0);
     setTaskPlayers(null);
-    setActiveRules([]);
-    setAreRulesExpanded(false);
     processedIndexRef.current = null;
-    revealedMomentKeyRef.current = null;
   }, [game]);
 
   useEffect(() => {
@@ -244,20 +136,6 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     isPhysicalItemGame,
   ]);
 
-  useEffect(() => {
-    const previousRuleCount = previousActiveRuleCountRef.current;
-
-    if (previousRuleCount === 0 && activeRules.length > 0) {
-      setAreRulesExpanded(true);
-    }
-
-    if (activeRules.length === 0) {
-      setAreRulesExpanded(false);
-    }
-
-    previousActiveRuleCountRef.current = activeRules.length;
-  }, [activeRules.length]);
-
   const getTaskTextValues = useCallback(
     (taskType: GameTask['type']) => {
       const hideNames = isNameHiddenType(taskType);
@@ -287,7 +165,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     [getTaskTextValues]
   );
 
-  const currentTaskRule = useMemo<ResolvedGameRule | null>(() => {
+  const currentTaskRule = useMemo<GameRule | null>(() => {
     if (!currentTask?.rule) {
       return null;
     }
@@ -299,55 +177,8 @@ export function GameClient({ game, gameMode }: GameClientProps) {
         currentTask.rule.description,
         currentTask.type
       ),
-      source: resolveTaskTextToPlain(currentTask.text, currentTask.type),
     };
   }, [currentTask, resolveTaskTextToPlain]);
-
-  const currentPresentation = useMemo(
-    () =>
-      currentTask
-        ? getTaskPresentation(currentTask, game)
-        : getTaskPresentation({ type: 'challenge', text: '...' }, game),
-    [currentTask, game]
-  );
-
-  const currentMoment = useMemo(() => {
-    return currentTask ? getGameplayMoment(currentTask, game) : null;
-  }, [currentTask, game]);
-
-  const currentTone = currentMoment?.tone ?? currentPresentation.tone;
-  const toneStyle = toneShellStyles[currentTone];
-
-  const isCardVisible =
-    !showLoading && (!isSpinTheBottleMode || gameMode !== 'virtual' || showSpinResult);
-
-  useEffect(() => {
-    if (!currentTask || !isCardVisible) {
-      setDisplayPhase('card');
-      return;
-    }
-
-    if (!currentMoment) {
-      setDisplayPhase('card');
-      return;
-    }
-
-    const momentKey = `${currentIndex}:${currentMoment.label}`;
-
-    if (revealedMomentKeyRef.current === momentKey) {
-      setDisplayPhase('card');
-      return;
-    }
-
-    setDisplayPhase('intro');
-
-    const timeout = window.setTimeout(() => {
-      revealedMomentKeyRef.current = momentKey;
-      setDisplayPhase('card');
-    }, currentMoment.durationMs);
-
-    return () => window.clearTimeout(timeout);
-  }, [currentIndex, currentMoment, currentTask, isCardVisible]);
 
   const commitStatsForCurrentTask = useCallback(() => {
     if (!currentTask || !isLoaded || players.length === 0) {
@@ -405,9 +236,6 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     }
 
     commitStatsForCurrentTask();
-    setActiveRules((previousRules) =>
-      resolveNextActiveRules(previousRules, currentTaskRule)
-    );
 
     if (isSpinTheBottleMode) {
       setShowSpinResult(false);
@@ -422,7 +250,6 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     commitStatsForCurrentTask,
     currentIndex,
     currentTask,
-    currentTaskRule,
     isSpinTheBottleMode,
     tasks.length,
   ]);
@@ -533,13 +360,10 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   ]);
 
   const cardVariants = {
-    enter: { opacity: 0, x: 84, scale: 0.98, rotate: 2, filter: 'blur(7px)' },
-    center: { opacity: 1, x: 0, scale: 1, rotate: 0, filter: 'blur(0px)' },
-    exit: { opacity: 0, x: -84, scale: 0.96, rotate: -2, filter: 'blur(4px)' },
+    enter: { opacity: 0, x: 40, scale: 0.985 },
+    center: { opacity: 1, x: 0, scale: 1 },
+    exit: { opacity: 0, x: -40, scale: 0.985 },
   };
-
-  const progressValue =
-    tasks.length > 0 ? ((currentIndex + 1) / tasks.length) * 100 : 0;
 
   const extractHslValues = (hslString?: string) => {
     if (!hslString) {
@@ -558,7 +382,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   const renderStageCard = () => {
     if (showLoading) {
       return (
-        <div className="flex min-h-[25rem] items-center justify-center rounded-[2.5rem] border border-white/10 bg-black/20 text-sm text-white/70 backdrop-blur-xl md:min-h-[32rem]">
+        <div className="flex min-h-[22rem] items-center justify-center rounded-[1.9rem] border border-border/70 bg-card/90 px-6 text-sm text-muted-foreground shadow-sm md:min-h-[28rem]">
           Laster spill...
         </div>
       );
@@ -566,10 +390,6 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
     if (!currentTask) {
       return null;
-    }
-
-    if (displayPhase === 'intro' && currentMoment) {
-      return <ImpactMomentReveal moment={currentMoment} />;
     }
 
     return (
@@ -585,92 +405,32 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   };
 
   const topBar = (
-    <div className="sticky top-[calc(env(safe-area-inset-top)+0.15rem)] z-30 mb-4 flex items-center justify-between gap-3">
+    <div className="sticky top-[calc(env(safe-area-inset-top)+0.15rem)] z-30 mb-5 flex items-start justify-between gap-3">
       <Button
         variant="ghost"
-        size="sm"
+        size="icon"
         asChild
-        className="h-11 rounded-full border border-white/12 bg-black/25 px-4 text-white backdrop-blur-xl hover:bg-white/10 hover:text-white"
+        className="h-12 w-12 rounded-full border-0 bg-white/10 text-white shadow-none backdrop-blur-sm hover:bg-white/14 hover:text-white"
       >
         <Link href="/">
-          <Home className="h-4 w-4" />
-          <span className="hidden sm:inline">Lobby</span>
+          <X className="h-6 w-6" />
+          <span className="sr-only">Avslutt spill</span>
         </Link>
       </Button>
 
-      <div
-        className={cn(
-          'flex min-w-0 items-center justify-center gap-2 rounded-full border px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] backdrop-blur-xl',
-          toneStyle.pillClass
+      <div className="min-w-0 flex-1 px-2 pt-1 text-center">
+        <p className="truncate text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-white/72">
+          {game.title}
+        </p>
+        {!showLoading && (
+          <p className="mt-1 text-lg font-medium tracking-[0.06em] text-white/50">
+            {currentIndex + 1} / {tasks.length}
+          </p>
         )}
-      >
-        <span aria-hidden>{game.emoji ?? '🎮'}</span>
-        <span className="max-w-[10rem] truncate sm:max-w-[14rem]">{game.title}</span>
       </div>
 
       <GameMenu context="in-game" onRestart={setupGame} />
     </div>
-  );
-
-  const stageStatus = !showLoading && tasks.length > 0 && (
-    <div className="mx-auto mb-4 w-full max-w-xl">
-      <div className="flex items-center justify-between gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-white/62">
-        <span>Kort {currentIndex + 1} / {tasks.length}</span>
-        <span>{currentMoment?.label ?? currentPresentation.badge}</span>
-      </div>
-      <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
-        <motion.div
-          className={cn('h-full rounded-full bg-gradient-to-r', toneStyle.progressClass)}
-          animate={{ width: `${progressValue}%` }}
-          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </div>
-      <div className="mt-3 flex items-center justify-between gap-3">
-        {isVersusMode && game.teams ? (
-          <div className="flex items-center gap-2 text-sm font-semibold">
-            <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1.5">
-              <span className="player-highlight">{game.teams.team1}: {team1Score}</span>
-            </span>
-            <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1.5">
-              <span className="player-highlight-2">{game.teams.team2}: {team2Score}</span>
-            </span>
-          </div>
-        ) : (
-          <span className="text-xs text-white/48">
-            {activeRules.length > 0
-              ? `${activeRules.length} aktive regler`
-              : 'Focus mode er på'}
-          </span>
-        )}
-        <span className="text-xs text-white/48">
-          {displayPhase === 'intro' ? 'Reveal...' : 'Klar for neste trekk'}
-        </span>
-      </div>
-    </div>
-  );
-
-  const rulesPanel = (
-    <ActiveRulesPanel
-      activeRules={activeRules}
-      isExpanded={areRulesExpanded}
-      onExpandedChange={setAreRulesExpanded}
-      onToggleAllPaused={() => {
-        const nextPausedState = !activeRules.every((rule) => rule.paused);
-        setActiveRules((previousRules) =>
-          setAllActiveRulesPaused(previousRules, nextPausedState)
-        );
-      }}
-      onToggleRulePaused={(ruleId) => {
-        setActiveRules((previousRules) =>
-          toggleActiveRulePause(previousRules, ruleId)
-        );
-      }}
-      onRemoveRule={(ruleId) => {
-        setActiveRules((previousRules) =>
-          removeActiveRule(previousRules, ruleId)
-        );
-      }}
-    />
   );
 
   const renderActionButton = (
@@ -684,45 +444,20 @@ export function GameClient({ game, gameMode }: GameClientProps) {
       <Button
         onClick={onClick}
         size="lg"
-        className={cn(
-          'group relative mx-auto h-[4.5rem] w-full max-w-[26rem] overflow-hidden rounded-[1.9rem] border border-white/16 bg-gradient-to-b px-6 text-white backdrop-blur-xl transition-all duration-150 hover:brightness-105 active:translate-y-[2px] active:scale-[0.985]',
-          toneStyle.buttonClass
-        )}
+        className="mx-auto h-[5rem] w-full max-w-[26rem] rounded-[1.8rem] border-2 border-[#1f6ed4] bg-[#f1f1f1] px-5 text-base font-black uppercase tracking-[-0.03em] text-black shadow-[0_14px_0_0_rgba(255,255,255,0.12)] transition-transform duration-150 hover:bg-white active:translate-y-[3px] active:shadow-[0_9px_0_0_rgba(255,255,255,0.1)]"
       >
-        <span className="absolute inset-x-4 top-0 h-px bg-white/45" />
-        <span className="relative flex w-full items-center justify-between gap-3 text-left">
-          <span className="flex flex-col">
-            <span className="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-white/70">
-              Fortsett spillet
-            </span>
-            <span className="mt-1 text-lg font-black tracking-[-0.03em]">
-              {label}
-            </span>
+        <span className="flex w-full items-center justify-center gap-3 text-center">
+          <span className="text-[1.55rem] font-black leading-none sm:text-[2rem]">
+            {label}
           </span>
-          <span className="rounded-full border border-white/18 bg-white/12 p-2.5">
-            <Icon className="h-5 w-5" />
-          </span>
+          {icon !== ArrowRight && <Icon className="h-5 w-5" />}
         </span>
       </Button>
     );
   };
 
   const shellBackground = (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div
-        className={cn(
-          'absolute left-[-10%] top-[-10%] h-[34rem] w-[34rem] rounded-full blur-3xl transition-colors duration-500',
-          toneStyle.auraPrimaryClass
-        )}
-      />
-      <div
-        className={cn(
-          'absolute bottom-[-12rem] right-[-8%] h-[28rem] w-[28rem] rounded-full blur-3xl transition-colors duration-500',
-          toneStyle.auraSecondaryClass
-        )}
-      />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_40%,rgba(0,0,0,0.26))]" />
-    </div>
+    <div className="pointer-events-none absolute inset-0 bg-black" />
   );
 
   if (isFinished) {
@@ -742,14 +477,9 @@ export function GameClient({ game, gameMode }: GameClientProps) {
         style={cssVars}
       >
         {shellBackground}
-        <div className="relative z-10 w-full max-w-2xl rounded-[2.5rem] border border-white/10 bg-black/24 px-6 py-8 shadow-[0_40px_120px_-48px_rgba(0,0,0,0.9)] backdrop-blur-xl md:px-10 md:py-10">
+        <div className="relative z-10 w-full max-w-2xl rounded-[1.9rem] border border-border/70 bg-card/92 px-6 py-8 shadow-xl backdrop-blur-sm md:px-10 md:py-10">
           <div className="mb-6 flex justify-center">
-            <div
-              className={cn(
-                'flex h-20 w-20 items-center justify-center rounded-full border border-white/12 bg-white/10 text-white',
-                toneStyle.pillClass
-              )}
-            >
+            <div className="flex h-20 w-20 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary">
               {isVersusMode ? (
                 <Trophy className="h-10 w-10" />
               ) : (
@@ -758,32 +488,32 @@ export function GameClient({ game, gameMode }: GameClientProps) {
             </div>
           </div>
 
-          <h2 className="text-4xl font-black tracking-[-0.05em] text-white md:text-5xl">
+          <h2 className="text-4xl font-black tracking-[-0.05em] text-foreground md:text-5xl">
             Spillet er ferdig
           </h2>
-          <p className="mt-4 text-white/70">
+          <p className="mt-4 text-muted-foreground">
             Kortene er brukt opp. Velg om dere vil ta samme runde igjen eller hoppe
             rett til neste spill.
           </p>
 
           {isVersusMode && game.teams && (
-            <div className="mt-8 rounded-[1.9rem] border border-white/10 bg-white/6 p-5">
-              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-white/62">
+            <div className="mt-8 rounded-[1.5rem] border border-border/70 bg-background/35 p-5">
+              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                 Resultat
               </p>
               <div className="mt-4 flex flex-col gap-3 text-lg font-semibold sm:flex-row sm:justify-center">
-                <span className="rounded-full border border-white/10 bg-white/6 px-4 py-2">
+                <span className="rounded-full border border-border/70 bg-card/70 px-4 py-2">
                   <span className="player-highlight">
                     {game.teams.team1}: {team1Score}
                   </span>
                 </span>
-                <span className="rounded-full border border-white/10 bg-white/6 px-4 py-2">
+                <span className="rounded-full border border-border/70 bg-card/70 px-4 py-2">
                   <span className="player-highlight-2">
                     {game.teams.team2}: {team2Score}
                   </span>
                 </span>
               </div>
-              <p className="mt-5 text-2xl font-black tracking-[-0.04em] text-white">
+              <p className="mt-5 text-2xl font-black tracking-[-0.04em] text-foreground">
                 {winner ? `Vinner: ${winner}` : 'Det ble uavgjort'}
               </p>
             </div>
@@ -794,7 +524,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
             <Button
               variant="ghost"
               size="lg"
-              className="h-14 rounded-[1.4rem] border border-white/12 bg-white/6 text-white hover:bg-white/10 hover:text-white"
+              className="h-14 rounded-[1.3rem] border border-border/70 bg-card/75 text-foreground hover:bg-card hover:text-foreground"
               onClick={() => router.push('/')}
             >
               <Home className="mr-2 h-4 w-4" />
@@ -804,7 +534,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
               <Button
                 variant="ghost"
                 size="lg"
-                className="h-14 rounded-[1.4rem] border border-white/12 bg-white/6 text-white hover:bg-white/10 hover:text-white"
+                className="h-14 rounded-[1.3rem] border border-border/70 bg-card/75 text-foreground hover:bg-card hover:text-foreground"
                 onClick={() => router.push('/oppsummering')}
               >
                 <Trophy className="mr-2 h-4 w-4" />
@@ -826,8 +556,6 @@ export function GameClient({ game, gameMode }: GameClientProps) {
         {shellBackground}
         <div className="relative z-10 flex flex-1 flex-col">
           {topBar}
-          {stageStatus}
-          {rulesPanel}
 
           <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col justify-center">
             <div className="relative flex flex-1 items-center justify-center overflow-hidden">
@@ -850,7 +578,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
               {showSpinResult && (
                 <AnimatePresence initial={false} mode="wait">
                   <motion.div
-                    key={`${currentIndex}-${displayPhase}`}
+                    key={currentIndex}
                     variants={cardVariants}
                     initial="enter"
                     animate="center"
@@ -875,7 +603,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
               </motion.div>
             )}
 
-            {showSpinResult && displayPhase === 'card' && (
+            {showSpinResult && (
               <motion.div
                 className="sticky bottom-0 mt-6 bg-gradient-to-t from-background via-background/94 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
                 initial={{ opacity: 0, y: 8 }}
@@ -904,12 +632,10 @@ export function GameClient({ game, gameMode }: GameClientProps) {
         {shellBackground}
         <div className="relative z-10 flex flex-1 flex-col">
           {topBar}
-          {stageStatus}
-          {rulesPanel}
 
           <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col justify-center">
             <div className="mb-4 flex justify-center">
-              <p className="rounded-full border border-white/10 bg-white/6 px-4 py-2 text-center text-xs font-medium text-white/62 md:text-sm">
+              <p className="rounded-full border border-border/70 bg-card/80 px-4 py-2 text-center text-xs font-medium text-muted-foreground md:text-sm">
                 {instructionText}
               </p>
             </div>
@@ -917,7 +643,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
             <div className="relative flex flex-1 items-center justify-center overflow-hidden">
               <AnimatePresence initial={false} mode="wait">
                 <motion.div
-                  key={`${currentIndex}-${displayPhase}`}
+                  key={currentIndex}
                   variants={cardVariants}
                   initial="enter"
                   animate="center"
@@ -930,7 +656,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
               </AnimatePresence>
             </div>
 
-            {!showLoading && displayPhase === 'card' && currentTask?.type !== 'versus' && (
+            {!showLoading && currentTask?.type !== 'versus' && (
               <motion.div
                 className="sticky bottom-0 mt-6 bg-gradient-to-t from-background via-background/94 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
                 initial={{ opacity: 0, y: 8 }}
@@ -954,14 +680,12 @@ export function GameClient({ game, gameMode }: GameClientProps) {
       {shellBackground}
       <div className="relative z-10 flex flex-1 flex-col">
         {topBar}
-        {stageStatus}
-        {rulesPanel}
 
         <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col justify-center">
           <div className="relative flex flex-1 items-center justify-center overflow-hidden">
             <AnimatePresence initial={false} mode="wait">
               <motion.div
-                key={`${currentIndex}-${displayPhase}`}
+                key={currentIndex}
                 variants={cardVariants}
                 initial="enter"
                 animate="center"
@@ -974,7 +698,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
             </AnimatePresence>
           </div>
 
-          {!showLoading && displayPhase === 'card' && currentTask?.type !== 'versus' && (
+          {!showLoading && currentTask?.type !== 'versus' && (
             <motion.div
               className="sticky bottom-0 mt-6 bg-gradient-to-t from-background via-background/94 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
               initial={{ opacity: 0, y: 8 }}
