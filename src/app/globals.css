@@ -70,6 +70,9 @@
 }
 
 @layer components {
+  .gameplay-active [data-hide-during-gameplay='true'] {
+    display: none !important;
+  }
   /* Team 1 = uses --team1-color-hsl, falls back to accent */
   .player-highlight {
     @apply font-semibold;

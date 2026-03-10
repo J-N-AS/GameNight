@@ -40,7 +40,10 @@ export function AppFooter() {
   }, []);
 
   return (
-    <footer className="w-full flex-shrink-0 py-6 px-4 md:px-6 z-10 print:hidden">
+    <footer
+      className="w-full flex-shrink-0 py-6 px-4 md:px-6 z-10 print:hidden"
+      data-hide-during-gameplay="true"
+    >
       <div className="container mx-auto max-w-5xl text-sm text-muted-foreground">
         <div className="text-center">
           {year && <p>&copy; {year} GameNight</p>}

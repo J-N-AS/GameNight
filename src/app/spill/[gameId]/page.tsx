@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { AdBanner } from '@/components/ads/AdBanner';
 import { GameFlow } from '@/components/game/GameFlow';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getGame, getGames } from '@/lib/games';
@@ -94,7 +95,14 @@ export default async function GamePage({ params }: GamePageProps) {
       <h1 className="sr-only">{game.title}</h1>
       <GameFlow game={game} />
 
-      <section className="container mx-auto px-4 py-10 max-w-5xl">
+      <section className="container mx-auto max-w-5xl px-4 pb-6 pt-4">
+        <AdBanner className="mx-auto max-w-md" />
+      </section>
+
+      <section
+        className="container mx-auto max-w-5xl px-4 py-10"
+        data-hide-during-gameplay="true"
+      >
         <h2 className="text-2xl md:text-3xl font-bold font-headline text-center">
           Flere spill i samme stemning
         </h2>

@@ -439,6 +439,7 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     icon: React.ComponentType<{ className?: string }> = ArrowRight
   ) => {
     const Icon = icon;
+    const showIcon = icon !== ArrowRight;
 
     return (
       <Button
@@ -446,11 +447,15 @@ export function GameClient({ game, gameMode }: GameClientProps) {
         size="lg"
         className="mx-auto h-[5rem] w-full max-w-[26rem] rounded-[1.8rem] border-2 border-[#1f6ed4] bg-[#f1f1f1] px-5 text-base font-black uppercase tracking-[-0.03em] text-black shadow-[0_14px_0_0_rgba(255,255,255,0.12)] transition-transform duration-150 hover:bg-white active:translate-y-[3px] active:shadow-[0_9px_0_0_rgba(255,255,255,0.1)]"
       >
-        <span className="flex w-full items-center justify-center gap-3 text-center">
-          <span className="text-[1.55rem] font-black leading-none sm:text-[2rem]">
+        <span className="relative block w-full">
+          <span className="block w-full text-center text-[1.55rem] font-black leading-none sm:text-[2rem]">
             {label}
           </span>
-          {icon !== ArrowRight && <Icon className="h-5 w-5" />}
+          {showIcon && (
+            <span className="absolute right-0 top-1/2 -translate-y-1/2">
+              <Icon className="h-5 w-5" />
+            </span>
+          )}
         </span>
       </Button>
     );

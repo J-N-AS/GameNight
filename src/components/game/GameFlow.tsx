@@ -1,7 +1,7 @@
 'use client';
 
 import type { Game } from '@/lib/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GameClient } from './GameClient';
 import { GameConsentScreen } from './GameConsentScreen';
 import { GameModeSelectionScreen } from './GameModeSelectionScreen';
@@ -60,6 +60,14 @@ export function GameFlow({ game }: { game: Game }) {
   });
 
   const [gameMode, setGameMode] = useState<SpinMode>(presetSpinMode);
+
+  useEffect(() => {
+    document.body.classList.toggle('gameplay-active', step === 'playing');
+
+    return () => {
+      document.body.classList.remove('gameplay-active');
+    };
+  }, [step]);
 
   const advanceStep = () => {
     switch (step) {
