@@ -11,7 +11,7 @@
   "audience": "all",
   "category": ["Kaos", "Party"],
   "items": [
-    { "type": "challenge", "text": "Alle drikker. Ingen spørsmål." },
+    { "type": "challenge", "text": "Alle drikker. Ingen spørsmål.", "moment": "group" },
     { "type": "pointing", "text": "Hvem her har minst kontroll akkurat nå?" },
     { "type": "challenge", "text": "{player}, del ut 3 slurker umiddelbart." },
     { "type": "prompt", "text": "{player}, hva er det mest kaotiske du har opplevd på fest?" },
@@ -19,7 +19,7 @@
 
     { "type": "challenge", "text": "{player}, snakk ekstremt sakte i 30 sekunder. Første som ler: drikk." },
     { "type": "pointing", "text": "Hvem her burde egentlig tatt en pause?" },
-    { "type": "challenge", "text": "Alle bytter plass med personen lengst unna." },
+    { "type": "challenge", "text": "Alle bytter plass med personen lengst unna.", "moment": "chaos" },
     { "type": "prompt", "text": "{player}, hva er ditt største fylle-instinkt?" },
     { "type": "challenge", "text": "Alle tar én slurk uten å se på glasset." },
 
@@ -47,7 +47,7 @@
 
     { "type": "challenge", "text": "{player}, si alfabetet baklengs så langt du klarer. Feil = slurk per bokstav igjen." },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å miste telefonen i kveld?" },
-    { "type": "challenge", "text": "Alle reiser seg. Siste som setter seg: 3 slurker." },
+    { "type": "challenge", "text": "Alle reiser seg. Siste som setter seg: 3 slurker.", "moment": "chaos" },
     { "type": "prompt", "text": "{player}, hva er ditt mest kaotiske vennskap?" },
     { "type": "challenge", "text": "{player}, del ut 2 slurker til {player2}." },
 
@@ -73,7 +73,7 @@
     { "type": "prompt", "text": "{player}, hva er det verste rådet du har fulgt?" },
     { "type": "challenge", "text": "{player}, ta én slurk for hver ring/armbånd du har på deg." },
 
-    { "type": "challenge", "text": "Alle lukker øynene og drikker. Stol på prosessen." },
+    { "type": "challenge", "text": "Alle lukker øynene og drikker. Stol på prosessen.", "moment": "chaos" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å foreslå noe dumt – og mene det?" },
     {
       "type": "challenge",
@@ -129,7 +129,7 @@
       }
     },
 
-    { "type": "challenge", "text": "{player}, velg to andre spillere. De spiller stein–saks–papir. Taperen drikker 2." },
+    { "type": "challenge", "text": "{player}, velg to andre spillere. De spiller stein–saks–papir. Taperen drikker 2.", "moment": "impact" },
     { "type": "pointing", "text": "Hvem her hadde vært verst å havne i fyllekrangel med?" },
     { "type": "challenge", "text": "Alle bytter glass med personen til venstre (hvis mulig)." },
     { "type": "prompt", "text": "{player}, hva er ditt mest kaotiske øyeblikk denne måneden?" },
@@ -139,6 +139,6 @@
     { "type": "pointing", "text": "Hvem her kommer til å være den siste våkne?" },
     { "type": "challenge", "text": "{player}, si noe positivt om kaos. Hvis det er overbevisende: del ut 2 slurker." },
     { "type": "prompt", "text": "{player}, hva er det beste som kan skje når alt blir kaos?" },
-    { "type": "challenge", "text": "Alle roper «KAOS!» og tar en siste slurk." }
+    { "type": "challenge", "text": "Alle roper «KAOS!» og tar en siste slurk.", "moment": "chaos" }
   ]
 }

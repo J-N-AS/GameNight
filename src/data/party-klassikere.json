@@ -12,7 +12,7 @@
   "category": ["Vorspiel", "Party"],
   "tags": ["Anbefalt"],
   "items": [
-    { "type": "challenge", "text": "Waterfall! {player} starter, og rekkefølgen går mot klokka." },
+    { "type": "challenge", "text": "Waterfall! {player} starter, og rekkefølgen går mot klokka.", "moment": "group" },
     { "type": "challenge", "text": "Kategorier! Tema: Frukt. {player} starter. Førstemann som ikke kommer på en frukt, drikker." },
     {
       "type": "challenge",
@@ -25,7 +25,7 @@
         "category": "name"
       }
     },
-    { "type": "challenge", "text": "{all} må ta en slurk fra drikken til personen til venstre." },
+    { "type": "challenge", "text": "{all} må ta en slurk fra drikken til personen til venstre.", "moment": "group" },
     { "type": "pointing", "text": "Hvem i rommet er mest sannsynlig til å vinne i Lotto, men miste kupongen?" },
     {
       "type": "challenge",

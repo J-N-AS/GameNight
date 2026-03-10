@@ -13,7 +13,17 @@
   "audience": "18+",
   "category": ["Kaos", "18+"],
   "items": [
-    { "type": "challenge", "text": "{player}, du må snakke med en teit aksent resten av spillet." },
+    {
+      "type": "challenge",
+      "text": "{player}, du må snakke med en teit aksent resten av spillet.",
+      "moment": "secret",
+      "rule": {
+        "action": "activate",
+        "title": "Teit aksent",
+        "description": "{player} snakker med teit aksent til dere opphever regelen.",
+        "category": "voice"
+      }
+    },
     { "type": "prompt", "text": "{player}, hva er det rareste du har spist?" },
     { "type": "pointing", "text": "Hvem her ville overlevd lengst i en zombie-apokalypse?" },
     { "type": "challenge", "text": "{player} og {player2} må bytte et klesplagg (f.eks. en sokk, en genser)." },
@@ -21,7 +31,18 @@
     { "type": "challenge", "text": "Alle må imitere et dyr. {player} bestemmer hvem som var dårligst, den personen drikker." },
     { "type": "prompt", "text": "Hvis du var en superhelt, hva ville din totalt ubrukelige superkraft vært?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å bli med i en kult?" },
-    { "type": "challenge", "text": "{player}, du er nå Konge/Dronning. Du kan lage én regel som varer i 3 runder." },
+    {
+      "type": "challenge",
+      "text": "{player}, du er nå Konge/Dronning. Du kan lage én regel som varer i 3 runder.",
+      "moment": "secret",
+      "rule": {
+        "action": "activate",
+        "title": "Konge/Dronning",
+        "description": "{player} styrer én hemmelig husregel i 3 runder.",
+        "duration": 3,
+        "category": "house"
+      }
+    },
     { "type": "never_have_i_ever", "text": "løyet i dette spillet." },
     { "type": "challenge", "text": "Alle tar en slurk for hver app de har på første side på mobilen." },
     { "type": "prompt", "text": "{player}, hva er det mest absurde du har drømt?" },
@@ -33,6 +54,16 @@
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å lede en revolusjon ved en feiltakelse?" },
     { "type": "challenge", "text": "{player} og {player2} spiller stein, saks, papir. Taperen drikker 2 slurker." },
     { "type": "never_have_i_ever", "text": "glemt navnet på daten sin midt i daten." },
-    { "type": "challenge", "text": "{player}, finn på et nytt kallenavn til {player2} som skal brukes resten av spillet." }
+    {
+      "type": "challenge",
+      "text": "{player}, finn på et nytt kallenavn til {player2} som skal brukes resten av spillet.",
+      "moment": "secret",
+      "rule": {
+        "action": "activate",
+        "title": "Nytt kallenavn",
+        "description": "{player2} får et nytt kallenavn til dere opphever det.",
+        "category": "nickname"
+      }
+    }
   ]
 }

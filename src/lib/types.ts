@@ -20,6 +20,8 @@ export type GameTaskType =
   | 'versus'
   | 'truth_or_shot';
 
+export type GameTaskMoment = 'impact' | 'chaos' | 'secret' | 'group';
+
 export interface GameRule {
   action: 'activate' | 'clear';
   title: string;
@@ -33,6 +35,7 @@ export interface GameTask {
   type: GameTaskType;
   text: string;
   rule?: GameRule;
+  moment?: GameTaskMoment;
 }
 
 export interface GameWarning {

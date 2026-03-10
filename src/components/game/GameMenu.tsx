@@ -14,6 +14,7 @@ import { PlayerSetup } from './PlayerSetup';
 import { useRouter } from 'next/navigation';
 import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 interface GameMenuProps {
   context: 'lobby' | 'in-game';
@@ -60,7 +61,12 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9 active:scale-95 transition-transform"
+            className={cn(
+              'active:scale-95 transition-transform',
+              context === 'in-game'
+                ? 'h-11 w-11 rounded-full border border-white/12 bg-black/25 text-white backdrop-blur-xl hover:bg-white/10 hover:text-white'
+                : 'h-9 w-9'
+            )}
           >
             <MoreVertical className="h-5 w-5" />
             <span className="sr-only">Spillmeny</span>

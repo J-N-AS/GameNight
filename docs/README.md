@@ -8,6 +8,7 @@ Denne mappen inneholder en blanding av levende dokumentasjon, strategidokumenter
 
 - `../README.md`: overordnet repooversikt, stack, scripts og deploy.
 - `architecture.md`: hvordan appen faktisk er bygget nå.
+- `gameplay-polish-round.md`: dokumentasjon for siste målrettede gameplay-polish av kort, reveal, impact og running rules.
 - `game-library-optimization.md`: gjeldende kuratering av spillbiblioteket, tiering og skjulingsvalg.
 - `hosting.md`: anbefalt hosting og deployflyt.
 - `product.md`: produktprinsipper, målgruppe og struktur.
