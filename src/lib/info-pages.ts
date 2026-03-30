@@ -7,7 +7,7 @@ export const INFO_PAGE_META = {
   personvern: {
     title: 'Personvern',
     description:
-      'Hva GameNight lagrer lokalt i nettleseren din, hvordan samtykke håndteres, og hva som skjer hvis du bruker donasjon.',
+      'Hvordan GameNight bruker lokal lagring, Google Analytics, Google AdSense og samtykke i nettleseren din.',
   },
   'kontakt-oss': {
     title: 'Kontakt GameNight',

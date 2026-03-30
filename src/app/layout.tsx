@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from 'next';
-import Script from 'next/script';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AppFooter } from '@/components/layout/AppFooter';
 import { CookieConsent } from '@/components/common/CookieConsent';
+import { AdAccessGate } from '@/components/common/AdAccessGate';
+import { ConsentManagedGoogleScripts } from '@/components/common/ConsentManagedGoogleScripts';
 import { AppProviders } from './providers';
 import { poppins } from './fonts';
 import { PwaInstallPrompt } from '@/components/common/PwaInstallPrompt';
@@ -46,17 +47,13 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href={manifestPath} />
         <link rel="apple-touch-icon" href={appleTouchIconPath}></link>
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8193336706637140"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
         <JsonLd id="organization-jsonld" data={organizationJsonLd} />
         <JsonLd id="website-jsonld" data={websiteJsonLd} />
       </head>
       <body className="font-body antialiased bg-background text-foreground animated-background">
         <AppProviders>
+          <ConsentManagedGoogleScripts />
+          <AdAccessGate />
           <div className="relative flex min-h-screen flex-col">
             <main className="flex-1">{children}</main>
             <AppFooter />

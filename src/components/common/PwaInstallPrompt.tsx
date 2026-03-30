@@ -5,6 +5,10 @@ import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Download, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import {
+  COOKIE_CONSENT_UPDATED_EVENT,
+  hasCookieConsent,
+} from '@/lib/consent';
 
 // This is a simplified type, the actual event is more complex
 interface BeforeInstallPromptEvent extends Event {
@@ -18,18 +22,16 @@ interface BeforeInstallPromptEvent extends Event {
 
 const INSTALL_PROMPT_DISMISSED_KEY = 'gamenight_install_prompt_dismissed_at';
 const INSTALL_PROMPT_COOLDOWN_MS = 1000 * 60 * 60 * 24 * 7;
-const COOKIE_CONSENT_KEY = 'gamenight_cookie_consent';
-
 export function PwaInstallPrompt() {
   const [installPromptEvent, setInstallPromptEvent] = useState<BeforeInstallPromptEvent | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [hasCookieConsent, setHasCookieConsent] = useState(false);
+  const [hasConsent, setHasConsent] = useState(false);
   const pathname = usePathname();
   const isGameRoute = pathname?.startsWith('/spill/');
 
   useEffect(() => {
     const syncCookieConsent = () => {
-      setHasCookieConsent(window.localStorage.getItem(COOKIE_CONSENT_KEY) === 'true');
+      setHasConsent(hasCookieConsent());
     };
 
     syncCookieConsent();
@@ -71,21 +73,21 @@ export function PwaInstallPrompt() {
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
-    window.addEventListener('gamenight-cookie-consent-updated', syncCookieConsent);
+    window.addEventListener(COOKIE_CONSENT_UPDATED_EVENT, syncCookieConsent);
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
       window.removeEventListener(
-        'gamenight-cookie-consent-updated',
+        COOKIE_CONSENT_UPDATED_EVENT,
         syncCookieConsent
       );
     };
   }, []);
 
   useEffect(() => {
-    setIsVisible(Boolean(installPromptEvent) && hasCookieConsent && !isGameRoute);
-  }, [hasCookieConsent, installPromptEvent, isGameRoute]);
+    setIsVisible(Boolean(installPromptEvent) && hasConsent && !isGameRoute);
+  }, [hasConsent, installPromptEvent, isGameRoute]);
 
   const handleDismiss = () => {
     window.localStorage.setItem(

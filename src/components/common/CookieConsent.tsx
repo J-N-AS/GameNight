@@ -6,8 +6,10 @@ import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Cookie } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const COOKIE_CONSENT_KEY = 'gamenight_cookie_consent';
+import {
+  grantCookieConsent,
+  hasCookieConsent,
+} from '@/lib/consent';
 
 export function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,8 +20,7 @@ export function CookieConsent() {
     // We only want this to run on the client
     if (typeof window !== 'undefined') {
       try {
-        const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
-        if (consent !== 'true') {
+        if (!hasCookieConsent()) {
           setIsVisible(true);
         }
       } catch (error) {
@@ -34,12 +35,7 @@ export function CookieConsent() {
   }
 
   const handleAccept = () => {
-    try {
-      localStorage.setItem(COOKIE_CONSENT_KEY, 'true');
-      window.dispatchEvent(new Event('gamenight-cookie-consent-updated'));
-    } catch (error) {
-      console.error("Could not save cookie consent to localStorage.", error);
-    }
+    grantCookieConsent();
     setIsVisible(false);
   };
 
@@ -57,14 +53,14 @@ export function CookieConsent() {
             <div className="flex items-start gap-3 text-sm text-muted-foreground">
               <Cookie className="h-5 w-5 flex-shrink-0 mt-0.5" />
               <p>
-                Vi bruker lokal lagring i nettleseren din for å huske
-                spillerliste, samtykke og enkle innstillinger. Les mer om
-                hvordan GameNight håndterer personvern på infosiden vår.
+                Vi bruker lokal lagring for å huske spillerliste, samtykke og
+                enkle innstillinger. Når du godkjenner dette, kan vi også laste
+                Google Analytics og Google AdSense for statistikk og annonser.
               </p>
             </div>
             <div className="flex flex-shrink-0 gap-2">
               <Button onClick={handleAccept} size="sm">
-                Jeg forstår
+                Godta
               </Button>
               <Button variant="ghost" size="sm" asChild>
                 <Link href="/info/personvern">Les mer</Link>

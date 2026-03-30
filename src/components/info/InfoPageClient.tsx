@@ -329,7 +329,8 @@ const pages: Record<InfoPageSlug, { title: string; content: ReactNode }> =
           <p className="text-lg">
             GameNight er laget for å være enkelt å bruke uten konto eller login.
             Her forklarer vi hva som faktisk lagres, hva som ikke gjør det, og
-            hva som skjer hvis du velger å støtte tjenesten med donasjon.
+            hvordan Google Analytics, Google AdSense og eventuelle donasjoner
+            brukes når du besøker tjenesten.
           </p>
 
           <div>
@@ -361,6 +362,41 @@ const pages: Record<InfoPageSlug, { title: string; content: ReactNode }> =
 
           <div>
             <h3 className="font-semibold text-foreground text-xl mb-2">
+              Google Analytics
+            </h3>
+            <p>
+              Hvis du har gitt samtykke, kan GameNight laste Google Analytics
+              for å måle generell bruk av nettsiden, som sidevisninger,
+              trafikkilder og hvilke sider som brukes mest. Dette hjelper oss å
+              forstå hva som fungerer og hva som bør forbedres.
+            </p>
+            <p>
+              Vi bruker ikke Google Analytics til innlogging eller til å bygge
+              en egen medlemsprofil hos GameNight, men data kan behandles av
+              Google som analyseleverandør i tråd med deres egne vilkår og
+              personvernrutiner.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground text-xl mb-2">
+              Google AdSense
+            </h3>
+            <p>
+              GameNight kan vise annonser via Google AdSense. Hvis du har gitt
+              samtykke, kan Google laste inn og bruke teknologi som cookies
+              eller tilsvarende mekanismer for å levere, begrense og måle
+              annonser.
+            </p>
+            <p>
+              Vi styrer ikke alle data Google samler inn gjennom annonsevisning.
+              Behandlingen kan derfor også være underlagt Googles egne
+              retningslinjer og eventuelle innstillinger du har hos Google.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground text-xl mb-2">
               Lokal lagring og raskere åpning
             </h3>
             <p>
@@ -372,17 +408,17 @@ const pages: Record<InfoPageSlug, { title: string; content: ReactNode }> =
 
           <div className="rounded-lg border border-border bg-card/50 p-6 space-y-3">
             <h3 className="font-semibold text-foreground text-xl mb-2">
-              Samtykke, cookies og fremtidige endringer
+              Samtykke, cookies og tredjepartstjenester
             </h3>
             <p>
               GameNight bruker lokal lagring for å huske samtykke og enkle
-              innstillinger i nettleseren. Per i dag kjører vi ikke aktive
-              annonse- eller analyseverktøy i selve appen som bygger egne
-              brukerprofiler.
+              innstillinger i nettleseren. Når du godkjenner samtykkebanneret,
+              kan vi laste Google Analytics og Google AdSense i nettleseren din.
             </p>
             <p>
-              Hvis vi aktiverer annonser, analyse eller andre tredjepartstjenester
-              senere, oppdaterer vi denne siden før de tas i bruk.
+              Hvis du ikke ønsker dette, kan du la være å godta banneret eller
+              slette lagrede nettleserdata senere. Vi kan oppdatere denne siden
+              når vi endrer hvilke verktøy eller leverandører som brukes.
             </p>
           </div>
 
