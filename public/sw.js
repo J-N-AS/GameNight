@@ -1,8 +1,9 @@
-const CACHE_NAME = 'gamenight-v2';
+const CACHE_NAME = 'gamenight-v3';
 const APP_SHELL_ASSETS = [
   './',
   './manifest.json',
   './GameNight-logo-small.webp',
+  './apple-touch-icon.png',
   './icon-192x192.png',
   './icon-512x512.png',
 ];

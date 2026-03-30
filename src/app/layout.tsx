@@ -16,7 +16,7 @@ import {
 import { JsonLd } from '@/components/seo/JsonLd';
 
 const manifestPath = withBasePath('/manifest.json');
-const appleTouchIconPath = withBasePath('/icon-192x192.png');
+const appleTouchIconPath = withBasePath('/apple-touch-icon.png');
 const organizationJsonLd = getOrganizationJsonLd();
 const websiteJsonLd = getWebsiteJsonLd();
 
