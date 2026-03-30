@@ -101,7 +101,10 @@ export default async function GamePage({ params }: GamePageProps) {
       <h1 className="sr-only">{game.title}</h1>
       <GameFlow game={game} />
 
-      <section className="container mx-auto max-w-5xl px-4 pb-6 pt-4">
+      <section
+        className="container mx-auto max-w-5xl px-4 pb-6 pt-4"
+        data-hide-during-gameplay="true"
+      >
         <AdBanner className="mx-auto max-w-md" />
       </section>
 

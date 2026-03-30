@@ -15,9 +15,18 @@ import { GameMenu } from '@/components/game/GameMenu';
 import { AdBanner } from '../ads/AdBanner';
 import { getPlayerRequirementLabel } from '@/lib/player-requirements';
 import { useGameStart } from '@/hooks/useGameStart';
+import { intensityStyles } from '@/lib/game-ui';
+import { cn } from '@/lib/utils';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
   const { startGame } = useGameStart();
+  const [introParagraph, ...extraParagraphs] = theme.content;
   
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -38,11 +47,11 @@ export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
         <h1 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter">
           {theme.title}
         </h1>
-        <div className="text-muted-foreground mt-6 text-lg max-w-3xl mx-auto space-y-4">
-          {theme.content.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
-        </div>
+        {introParagraph && (
+          <p className="mx-auto mt-6 max-w-3xl text-lg text-muted-foreground">
+            {introParagraph}
+          </p>
+        )}
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -59,7 +68,7 @@ export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
               className="group block h-full"
             >
               <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
-                <CardHeader className="flex-row items-start gap-4">
+                <CardHeader className="flex-row items-start gap-4 pb-4">
                   <div className="text-4xl mt-1">{game.emoji}</div>
                   <div>
                     <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
@@ -69,13 +78,26 @@ export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
                     <CardDescription className="mt-1 text-muted-foreground/80">
                       {game.description}
                     </CardDescription>
-                    {getPlayerRequirementLabel(game) && (
-                      <p className="mt-3 text-xs font-semibold text-foreground/80">
-                        {getPlayerRequirementLabel(game)}
-                      </p>
-                    )}
                   </div>
                 </CardHeader>
+                <div className="mt-auto flex items-center justify-between gap-4 px-6 pb-6">
+                  <div className="min-w-0">
+                    {getPlayerRequirementLabel(game) && (
+                      <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">
+                        {getPlayerRequirementLabel(game)}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground">
+                    <span
+                      className={cn(
+                        'h-2.5 w-2.5 rounded-full',
+                        intensityStyles[game.intensity].dotClass
+                      )}
+                    ></span>
+                    {intensityStyles[game.intensity].label}
+                  </div>
+                </div>
               </Card>
             </Link>
           </motion.div>
@@ -104,6 +126,28 @@ export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
       >
         <AdBanner />
       </motion.div>
+
+      {extraParagraphs.length > 0 && (
+        <motion.div
+          className="mx-auto mt-12 max-w-4xl rounded-[1.75rem] border border-border/70 bg-card/40 px-5"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55 }}
+        >
+          <Accordion type="single" collapsible>
+            <AccordionItem value="theme-guide" className="border-none">
+              <AccordionTrigger className="py-4 text-left text-base font-semibold text-foreground hover:no-underline">
+                Les mer om denne stemningen
+              </AccordionTrigger>
+              <AccordionContent className="space-y-4 pb-5 text-base text-muted-foreground">
+                {extraParagraphs.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </motion.div>
+      )}
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Cookie } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,6 +11,8 @@ const COOKIE_CONSENT_KEY = 'gamenight_cookie_consent';
 
 export function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
+  const pathname = usePathname();
+  const isGameRoute = pathname?.startsWith('/spill/');
 
   useEffect(() => {
     // We only want this to run on the client
@@ -26,9 +29,14 @@ export function CookieConsent() {
     }
   }, []);
 
+  if (isGameRoute) {
+    return null;
+  }
+
   const handleAccept = () => {
     try {
       localStorage.setItem(COOKIE_CONSENT_KEY, 'true');
+      window.dispatchEvent(new Event('gamenight-cookie-consent-updated'));
     } catch (error) {
       console.error("Could not save cookie consent to localStorage.", error);
     }

@@ -13,6 +13,7 @@ import { GameRequiresPlayersScreen } from './GameRequiresPlayersScreen';
 import { hasEnoughPlayers } from '@/lib/player-requirements';
 
 type GameStep = 'consent' | 'mode_select' | 'instruction' | 'lobby' | 'playing';
+type GamePhase = 'preplay' | 'playing' | 'postplay';
 
 type SpinMode = 'virtual' | 'physical' | null;
 
@@ -60,13 +61,30 @@ export function GameFlow({ game }: { game: Game }) {
   });
 
   const [gameMode, setGameMode] = useState<SpinMode>(presetSpinMode);
+  const [isRoundFinished, setIsRoundFinished] = useState(false);
+  const isBlockedByPlayerCount = isLoaded && !hasEnoughPlayers(game, players.length);
+  const phase: GamePhase = isBlockedByPlayerCount
+    ? 'preplay'
+    : step !== 'playing'
+      ? 'preplay'
+      : isRoundFinished
+        ? 'postplay'
+        : 'playing';
 
   useEffect(() => {
-    document.body.classList.toggle('gameplay-active', step === 'playing');
+    document.body.dataset.gamePhase = phase;
+    document.body.classList.toggle('gameplay-active', phase === 'playing');
 
     return () => {
+      delete document.body.dataset.gamePhase;
       document.body.classList.remove('gameplay-active');
     };
+  }, [phase]);
+
+  useEffect(() => {
+    if (step !== 'playing') {
+      setIsRoundFinished(false);
+    }
   }, [step]);
 
   const advanceStep = () => {
@@ -84,7 +102,7 @@ export function GameFlow({ game }: { game: Game }) {
     }
   };
 
-  if (isLoaded && !hasEnoughPlayers(game, players.length)) {
+  if (isBlockedByPlayerCount) {
     return <GameRequiresPlayersScreen game={game} />;
   }
 
@@ -135,7 +153,13 @@ export function GameFlow({ game }: { game: Game }) {
       return <CustomGameLobby game={game} onStart={advanceStep} />;
 
     case 'playing':
-      return <GameClient game={game} gameMode={gameMode} />;
+      return (
+        <GameClient
+          game={game}
+          gameMode={gameMode}
+          onFinishedChange={setIsRoundFinished}
+        />
+      );
 
     default:
       return <p>Laster spill...</p>;

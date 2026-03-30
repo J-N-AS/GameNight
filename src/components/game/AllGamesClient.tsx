@@ -18,40 +18,75 @@ import { getPlayerRequirementLabel } from '@/lib/player-requirements';
 import { useGameStart } from '@/hooks/useGameStart';
 import { Badge } from '@/components/ui/badge';
 import { getGameTier, isCoreGame } from '@/lib/game-library';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { intensityStyles } from '@/lib/game-ui';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
-
-const intensityMap = {
-  low: { label: 'Rolig', color: 'bg-green-500' },
-  medium: { label: 'Medium', color: 'bg-yellow-500' },
-  high: { label: 'Høy', color: 'bg-red-500' },
-};
 
 export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
   const { startGame } = useGameStart();
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [allTags, setAllTags] = useState<string[]>([]);
   const [activeTag, setActiveTag] = useState('Alle');
-  
-  useEffect(() => {
-    const uniqueTags = new Set<string>();
-    games.forEach(game => {
-      game.category?.forEach(cat => uniqueTags.add(cat));
-      game.tags?.forEach(tag => uniqueTags.add(tag));
-    });
-    setAllTags(['Alle', ...Array.from(uniqueTags).sort()]);
+  const tagCounts = useMemo(() => {
+    const counts = new Map<string, number>();
 
+    games.forEach((game) => {
+      [...(game.category ?? []), ...(game.tags ?? [])].forEach((tag) => {
+        counts.set(tag, (counts.get(tag) ?? 0) + 1);
+      });
+    });
+
+    return Array.from(counts.entries()).sort(
+      (a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'nb')
+    );
+  }, [games]);
+
+  const allTags = useMemo(
+    () => ['Alle', ...tagCounts.map(([tag]) => tag)],
+    [tagCounts]
+  );
+
+  useEffect(() => {
     const initialCategory =
       typeof window !== 'undefined'
         ? new URLSearchParams(window.location.search).get('kategori')
         : null;
 
-    if(initialCategory && uniqueTags.has(initialCategory)) {
-        setActiveTag(initialCategory);
+    if (
+      initialCategory &&
+      tagCounts.some(([tag]) => tag === initialCategory)
+    ) {
+      setActiveTag(initialCategory);
+    }
+  }, [tagCounts]);
+
+  const mobileQuickTags = useMemo(() => {
+    const quickTags = ['Alle', ...tagCounts.slice(0, 5).map(([tag]) => tag)];
+
+    if (
+      activeTag !== 'Alle' &&
+      allTags.includes(activeTag) &&
+      !quickTags.includes(activeTag)
+    ) {
+      quickTags.push(activeTag);
     }
 
-  }, [games]);
+    return quickTags;
+  }, [activeTag, allTags, tagCounts]);
+
+  const additionalMobileTags = useMemo(
+    () =>
+      allTags.filter(
+        (tag) => tag !== 'Alle' && !mobileQuickTags.includes(tag)
+      ),
+    [allTags, mobileQuickTags]
+  );
 
   const filteredGames = useMemo(() => {
     const lowercasedSearch = searchTerm.toLowerCase();
@@ -124,30 +159,34 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
               </CardDescription>
             </div>
           </CardHeader>
-          <div className="p-6 pt-0 mt-auto flex justify-between items-center">
-            <div className="flex flex-wrap gap-1">
+          <div className="mt-auto flex items-end justify-between gap-4 p-6 pt-0">
+            <div className="min-w-0">
               {getPlayerRequirementLabel(game) && (
                 <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">
                   {getPlayerRequirementLabel(game)}
                 </span>
               )}
-              {game.tags?.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs font-semibold text-muted-foreground/70 bg-muted/50 px-2 py-0.5 rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
+              {game.tags && game.tags.length > 0 && (
+                <div className="hidden md:flex flex-wrap gap-1 pt-2">
+                  {game.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs font-semibold text-muted-foreground/70 bg-muted/50 px-2 py-0.5 rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
-            <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+            <div className="flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground">
               <span
                 className={cn(
                   'h-2.5 w-2.5 rounded-full',
-                  intensityMap[game.intensity].color
+                  intensityStyles[game.intensity].dotClass
                 )}
               ></span>
-              {intensityMap[game.intensity].label}
+              {intensityStyles[game.intensity].label}
             </div>
           </div>
         </Card>
@@ -169,7 +208,54 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
             </div>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10">
+        <div className="mb-10 md:hidden">
+          <div className="flex gap-2 overflow-x-auto px-1 pb-2">
+            {mobileQuickTags.map((tag) => (
+              <Button
+                key={tag}
+                size="sm"
+                variant={activeTag === tag ? 'default' : 'outline'}
+                onClick={() => setActiveTag(tag)}
+                className={cn(
+                  'shrink-0 whitespace-nowrap transition-all duration-200',
+                  activeTag === tag && 'shadow-lg shadow-primary/20'
+                )}
+              >
+                {tag}
+              </Button>
+            ))}
+          </div>
+
+          {additionalMobileTags.length > 0 && (
+            <Accordion type="single" collapsible className="mt-3 rounded-2xl border border-border/70 bg-card/40 px-4">
+              <AccordionItem value="more-filters" className="border-none">
+                <AccordionTrigger className="py-3 text-sm font-medium text-muted-foreground hover:no-underline">
+                  Flere filtre
+                </AccordionTrigger>
+                <AccordionContent className="pb-1">
+                  <div className="flex flex-wrap gap-2">
+                    {additionalMobileTags.map((tag) => (
+                      <Button
+                        key={tag}
+                        size="sm"
+                        variant={activeTag === tag ? 'default' : 'outline'}
+                        onClick={() => setActiveTag(tag)}
+                        className={cn(
+                          'transition-all duration-200',
+                          activeTag === tag && 'shadow-lg shadow-primary/20'
+                        )}
+                      >
+                        {tag}
+                      </Button>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
+        </div>
+
+        <div className="hidden md:flex flex-wrap justify-center gap-2 md:gap-3 mb-10">
             {allTags.map(tag => (
                 <Button
                     key={tag}

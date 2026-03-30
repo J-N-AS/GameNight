@@ -10,6 +10,14 @@ import { ArrowLeft, PartyPopper } from 'lucide-react';
 import { GameMenu } from '@/components/game/GameMenu';
 import { getPlayerRequirementLabel } from '@/lib/player-requirements';
 import { useGameStart } from '@/hooks/useGameStart';
+import { intensityStyles } from '@/lib/game-ui';
+import { cn } from '@/lib/utils';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 type ListedGame = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -20,7 +28,7 @@ interface FadderukaClientProps {
 }
 
 const SeoArticle = () => (
-    <article className="prose prose-invert lg:prose-lg max-w-4xl mx-auto mt-24 mb-16 px-4">
+    <article className="prose prose-invert lg:prose-lg max-w-none">
         <h2>Den ultimate guiden til fysiske bli-kjent-leker i Fadderuka</h2>
         <p>Fadderuka er en virvelvind av nye fjes, og som fadder er din viktigste jobb å knuse den kleine stillheten. Å stole utelukkende på at praten går av seg selv fungerer sjelden. Her er fem skuddsikre isbrytere som ikke krever verken apper eller dyrt utstyr, og som garantert får stemningen i taket.</p>
 
@@ -59,18 +67,38 @@ export function FadderukaClient({ day1Games, day3Games, day5Games }: FadderukaCl
                     <motion.div key={game.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                         <Link href={`/spill/${game.id}`} onClick={(e) => startGame(game, e)} className="group block h-full">
                             <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
-                                <CardHeader className="flex-row items-start gap-4">
+                                <CardHeader className="flex-row items-start gap-4 pb-4">
                                     <div className="text-4xl mt-1">{game.emoji}</div>
                                     <div>
-                                        <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">{game.title}</CardTitle>
+                                        <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
+                                          {game.title}
+                                          {game.audience === '18+' && (
+                                            <span className="ml-2 text-xs font-medium bg-destructive/80 text-destructive-foreground px-2 py-0.5 rounded-full">
+                                              18+
+                                            </span>
+                                          )}
+                                        </CardTitle>
                                         <CardDescription className="mt-1 text-muted-foreground/80">{game.description}</CardDescription>
-                                        {getPlayerRequirementLabel(game) && (
-                                            <p className="mt-3 text-xs font-semibold text-foreground/80">
-                                                {getPlayerRequirementLabel(game)}
-                                            </p>
-                                        )}
                                     </div>
                                 </CardHeader>
+                                <div className="mt-auto flex items-center justify-between gap-4 px-6 pb-6">
+                                  <div className="min-w-0">
+                                    {getPlayerRequirementLabel(game) && (
+                                      <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">
+                                        {getPlayerRequirementLabel(game)}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <div className="flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground">
+                                    <span
+                                      className={cn(
+                                        'h-2.5 w-2.5 rounded-full',
+                                        intensityStyles[game.intensity].dotClass
+                                      )}
+                                    ></span>
+                                    {intensityStyles[game.intensity].label}
+                                  </div>
+                                </div>
                             </Card>
                         </Link>
                     </motion.div>
@@ -108,16 +136,31 @@ export function FadderukaClient({ day1Games, day3Games, day5Games }: FadderukaCl
                 {renderGameSection("Dag 5: Faddergruppenes Kamp", day5Games)}
             </div>
 
-            <SeoArticle />
-
             <motion.div
-                className="w-full flex justify-center"
+                className="mt-16 w-full flex justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
             >
                 <AdBanner />
             </motion.div>
+
+            <section className="mx-auto mt-12 max-w-4xl rounded-[1.75rem] border border-border/70 bg-card/40 px-5">
+              <p className="pt-5 text-sm text-muted-foreground">
+                Vil du ha flere tips og fysiske bli-kjent-leker for fadderuka,
+                ligger den lengre guiden her uten å stjele plass fra spillvalgene.
+              </p>
+              <Accordion type="single" collapsible>
+                <AccordionItem value="fadder-guide" className="border-none">
+                  <AccordionTrigger className="py-4 text-left text-base font-semibold text-foreground hover:no-underline">
+                    Les guide for fadderuka
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-5">
+                    <SeoArticle />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </section>
         </div>
     );
 }

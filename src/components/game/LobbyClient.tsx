@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy, Loader2 } from 'lucide-react';
+import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PlayerSetup } from './PlayerSetup';
 import Link from 'next/link';
@@ -29,16 +29,23 @@ import { useRouter } from 'next/navigation';
 import type { Game, Theme } from '@/lib/types';
 import { AdBanner } from '@/components/ads/AdBanner';
 import { PartyTools } from './PartyTools';
-import { useToast } from '@/hooks/use-toast';
-import { requestDonation } from '@/lib/donations';
 import { withBasePath } from '@/lib/base-path';
 import {
   formatPlayerCount,
   getMinimumPlayers,
   getMissingPlayers,
+  getPlayerRequirementLabel,
   hasEnoughPlayers,
 } from '@/lib/player-requirements';
 import { useGameStart } from '@/hooks/useGameStart';
+import { intensityStyles } from '@/lib/game-ui';
+import { cn } from '@/lib/utils';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
@@ -46,12 +53,10 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
   const [isSurpriseMeOpen, setIsSurpriseMeOpen] = useState(false);
   const [surpriseGame, setSurpriseGame] = useState<GameFromGetGames | null>(null);
-  const [isDonating, setIsDonating] = useState(false);
   const [pendingReturnPath, setPendingReturnPath] = useState<string | null>(null);
   
   const { players, isLoaded } = useSession();
   const router = useRouter();
-  const { toast } = useToast();
   const { startGame } = useGameStart();
   const visibleGames = useMemo(
     () => allGames.filter((game) => !game.hidden && !game.isHiddenFromMain),
@@ -131,33 +136,6 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
     }
   };
 
-  const handleDonate = async () => {
-    setIsDonating(true);
-    try {
-        const data = await requestDonation(25);
-
-        if (data.status === 'not_configured') {
-            toast({
-                title: 'Tusen takk for tanken! ❤️',
-                description: 'Donasjoner er ikke aktivert helt enda, men vi setter utrolig stor pris på at du ville støtte oss!',
-            });
-        } else if (data.status === 'success' && data.checkoutFrontendUrl) {
-            window.location.href = data.checkoutFrontendUrl;
-        } else {
-            throw new Error(data.message || 'En ukjent feil oppstod');
-        }
-    } catch (error) {
-        console.error("Donation failed:", error);
-        toast({
-            title: 'Noe gikk galt',
-            description: 'Kunne ikke starte donasjonen. Vennligst prøv igjen senere.',
-            variant: 'destructive',
-        });
-    } finally {
-        setIsDonating(false);
-    }
-  };
-
   return (
     <motion.div
       className="container mx-auto px-4 py-6 md:py-12"
@@ -184,13 +162,12 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           priority
           className="h-auto mx-auto max-w-[300px] md:max-w-[400px] drop-shadow-[0_5px_15px_rgba(0,0,0,0.2)]"
         />
-        <p className="text-muted-foreground mt-4 text-lg md:text-xl">
-          Gratis drikkespill, festspill og isbrytere for vors, hyttetur og
-          fest.
+        <p className="mt-4 text-lg font-semibold text-foreground md:text-xl">
+          Start et partyspill på sekunder.
         </p>
         <p className="mt-3 text-sm text-muted-foreground/90">
-          Én mobil styrer spillet. Del gjerne skjermen til TV når hele gjengen
-          skal se.
+          Én mobil styrer hele runden. Del gjerne skjermen til TV når hele
+          gjengen skal se.
         </p>
         <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground/80">
           <span className="rounded-full border border-border/70 bg-card/50 px-3 py-1">
@@ -306,13 +283,6 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           )}
       </motion.div>
 
-      <motion.div
-        className="mb-16 w-full max-w-md mx-auto"
-        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.4 } } }}
-      >
-        <PartyTools />
-      </motion.div>
-
       <motion.div className="mb-14 md:mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}>
           <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
             ⭐ Anbefalt Nå
@@ -326,13 +296,40 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                     className="group block"
                   >
                       <Card className="h-full flex flex-col transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
-                          <CardHeader className="flex-row items-start gap-4">
+                          <CardHeader className="flex-row items-start gap-4 pb-4">
                               <div className="text-4xl mt-1">{game.emoji}</div>
                               <div>
-                                  <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">{game.title}</CardTitle>
+                                  <div className="flex flex-wrap items-center gap-2">
+                                    <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
+                                      {game.title}
+                                      {game.audience === '18+' && (
+                                        <span className="ml-2 text-xs font-medium bg-destructive/80 text-destructive-foreground px-2 py-0.5 rounded-full">
+                                          18+
+                                        </span>
+                                      )}
+                                    </CardTitle>
+                                  </div>
                                   <CardDescription className="mt-1 text-muted-foreground/80">{game.description}</CardDescription>
                               </div>
                           </CardHeader>
+                          <div className="mt-auto flex items-center justify-between gap-4 px-6 pb-6">
+                            <div className="min-w-0">
+                              {getPlayerRequirementLabel(game) && (
+                                <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">
+                                  {getPlayerRequirementLabel(game)}
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground">
+                              <span
+                                className={cn(
+                                  'h-2.5 w-2.5 rounded-full',
+                                  intensityStyles[game.intensity].dotClass
+                                )}
+                              ></span>
+                              {intensityStyles[game.intensity].label}
+                            </div>
+                          </div>
                       </Card>
                   </Link>
               ))}
@@ -365,6 +362,10 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
                 </Link>
             ))}
         </div>
+      </motion.div>
+
+      <motion.div className="mb-14 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.5 }}>
+        <AdBanner />
       </motion.div>
 
       <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
@@ -403,44 +404,22 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           </section>
       </motion.div>
 
-      <motion.div className="mt-16 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.5 }}>
-        <AdBanner />
-      </motion.div>
-
       <motion.div 
-        className="mt-8 text-center"
+        className="mt-12 w-full max-w-md mx-auto"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
       >
-          <p className="text-sm text-muted-foreground">
-            Vil du hjelpe oss å holde GameNight gratis? Spander gjerne en kaffe.
-          </p>
-          <div className="mt-4 flex justify-center items-center min-h-[48px]">
-              <div className="w-full max-w-[280px]">
-                  <Button
-                      onClick={handleDonate}
-                      disabled={isDonating}
-                      className="w-full h-auto p-0 bg-transparent hover:bg-transparent disabled:opacity-50"
-                      aria-label="Doner 25 kr med Vipps"
-                  >
-                      {isDonating ? (
-                          <div className="flex items-center justify-center w-full h-[48px] bg-muted/50 rounded-lg">
-                              <Loader2 className="h-6 w-6 animate-spin" />
-                          </div>
-                      ) : (
-                          <Image
-                              src={withBasePath('/vipps-button.svg')}
-                              alt="Doner 25 kr med Vipps"
-                              width={280}
-                              height={48}
-                              className="w-full h-auto rounded-lg"
-                              priority
-                          />
-                      )}
-                  </Button>
-              </div>
-          </div>
+        <Accordion type="single" collapsible className="rounded-[1.75rem] border border-border/70 bg-card/40 px-5">
+          <AccordionItem value="party-tools" className="border-none">
+            <AccordionTrigger className="py-4 text-left text-base font-semibold text-foreground hover:no-underline">
+              Verktøykasse for raske avgjørelser
+            </AccordionTrigger>
+            <AccordionContent className="pb-5 pt-1">
+              <PartyTools />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </motion.div>
       
       <Dialog open={isSurpriseMeOpen} onOpenChange={setIsSurpriseMeOpen}>

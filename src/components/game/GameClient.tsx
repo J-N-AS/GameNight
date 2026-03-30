@@ -94,9 +94,14 @@ function pickFairPlayer(
 interface GameClientProps {
   game: Game;
   gameMode?: 'virtual' | 'physical' | null;
+  onFinishedChange?: (isFinished: boolean) => void;
 }
 
-export function GameClient({ game, gameMode }: GameClientProps) {
+export function GameClient({
+  game,
+  gameMode,
+  onFinishedChange,
+}: GameClientProps) {
   const { players, isLoaded, updatePlayerStat } = useSession();
   const router = useRouter();
 
@@ -186,6 +191,10 @@ export function GameClient({ game, gameMode }: GameClientProps) {
       }
     };
   }, []);
+
+  useEffect(() => {
+    onFinishedChange?.(isFinished);
+  }, [isFinished, onFinishedChange]);
 
   const currentTask = useMemo(
     () => (tasks.length > 0 ? tasks[currentIndex] : null),
