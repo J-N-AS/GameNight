@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AppFooter } from '@/components/layout/AppFooter';
@@ -45,6 +46,12 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href={manifestPath} />
         <link rel="apple-touch-icon" href={appleTouchIconPath}></link>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8193336706637140"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <JsonLd id="organization-jsonld" data={organizationJsonLd} />
         <JsonLd id="website-jsonld" data={websiteJsonLd} />
       </head>
