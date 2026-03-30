@@ -4,14 +4,13 @@ import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react'
 import { useSession } from '@/hooks/usePlayers';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { Share2, Download, Loader2, PartyPopper, Palette } from 'lucide-react';
-import * as htmlToImage from 'html-to-image';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import Confetti from 'react-confetti';
 import type { Player, PlayerStats } from '@/lib/types';
 import { requestDonation } from '@/lib/donations';
 import { withBasePath } from '@/lib/base-path';
@@ -37,6 +36,8 @@ const themes: {id: SummaryTheme, name: string, className: string, textColor: str
     { id: 'forest', name: 'Skog', className: 'bg-gradient-to-br from-green-500 to-teal-700 text-white', textColor: 'text-white' },
     { id: 'aurora', name: 'Nordlys', className: 'bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 text-white', textColor: 'text-white' },
 ];
+
+const Confetti = dynamic(() => import('react-confetti'), { ssr: false });
 
 function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
@@ -125,8 +126,9 @@ export function OppsummeringClient() {
       const currentTheme = themes.find(t => t.id === activeTheme);
       const isGradient = currentTheme?.className.includes('bg-gradient');
       const backgroundColor = currentTheme?.id === 'light' ? '#ffffff' : '#1c1717';
+      const { toPng } = await import('html-to-image');
 
-      const dataUrl = await htmlToImage.toPng(summaryRef.current, { 
+      const dataUrl = await toPng(summaryRef.current, { 
           pixelRatio: 2.5,
           cacheBust: true,
           skipAutoScale: true,

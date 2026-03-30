@@ -4,6 +4,7 @@ import {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   createContext,
   type ReactNode,
 } from 'react';
@@ -27,6 +28,59 @@ export const SessionContext = createContext<SessionContextType | undefined>(
 
 const STORAGE_KEY = 'gamenight_players';
 
+function createDefaultPlayerStats(): PlayerStats {
+  return {
+    timesTargeted: 0,
+    tasksCompleted: 0,
+    penalties: 0,
+  };
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function normalizeStoredPlayers(raw: string): Player[] | null {
+  const parsed = JSON.parse(raw) as unknown;
+
+  if (!Array.isArray(parsed)) {
+    return null;
+  }
+
+  return parsed.flatMap((entry) => {
+    if (!isRecord(entry)) {
+      return [];
+    }
+
+    const id = typeof entry.id === 'string' ? entry.id : '';
+    const name = typeof entry.name === 'string' ? entry.name.trim() : '';
+    const rawStats = isRecord(entry.stats) ? entry.stats : {};
+
+    if (!id || !name) {
+      return [];
+    }
+
+    return [
+      {
+        id,
+        name,
+        stats: {
+          timesTargeted:
+            typeof rawStats.timesTargeted === 'number'
+              ? rawStats.timesTargeted
+              : 0,
+          tasksCompleted:
+            typeof rawStats.tasksCompleted === 'number'
+              ? rawStats.tasksCompleted
+              : 0,
+          penalties:
+            typeof rawStats.penalties === 'number' ? rawStats.penalties : 0,
+        },
+      },
+    ];
+  });
+}
+
 function SessionProvider({ children }: { children: ReactNode }) {
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -35,15 +89,17 @@ function SessionProvider({ children }: { children: ReactNode }) {
     try {
       const storedPlayers = localStorage.getItem(STORAGE_KEY);
       if (storedPlayers) {
-        // Hydrate stats if they don't exist from older versions
-        const parsedPlayers = JSON.parse(storedPlayers).map((p: any) => ({
-          ...p,
-          stats: p.stats || { timesTargeted: 0, tasksCompleted: 0, penalties: 0 },
-        }));
-        setPlayers(parsedPlayers);
+        const parsedPlayers = normalizeStoredPlayers(storedPlayers);
+
+        if (parsedPlayers) {
+          setPlayers(parsedPlayers);
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+        }
       }
     } catch (error) {
       console.error('Failed to load players from localStorage', error);
+      localStorage.removeItem(STORAGE_KEY);
     } finally {
       setIsLoaded(true);
     }
@@ -60,11 +116,13 @@ function SessionProvider({ children }: { children: ReactNode }) {
   }, [players, isLoaded]);
 
   const addPlayer = useCallback((name: string) => {
-    if (name.trim()) {
+    const trimmedName = name.trim();
+
+    if (trimmedName) {
       const newPlayer: Player = { 
         id: uuidv4(), 
-        name: name.trim(),
-        stats: { timesTargeted: 0, tasksCompleted: 0, penalties: 0 },
+        name: trimmedName,
+        stats: createDefaultPlayerStats(),
       };
       setPlayers(prevPlayers => [...prevPlayers, newPlayer]);
     }
@@ -75,9 +133,21 @@ function SessionProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const updatePlayerName = useCallback((id: string, newName: string) => {
+    const trimmedName = newName.trim();
+
+    if (!trimmedName) {
+      return;
+    }
+
     setPlayers(prevPlayers =>
       prevPlayers.map(p =>
-        p.id === id ? { ...p, name: newName.trim(), stats: p.stats || { timesTargeted: 0, tasksCompleted: 0, penalties: 0 } } : p
+        p.id === id
+          ? {
+              ...p,
+              name: trimmedName,
+              stats: p.stats ?? createDefaultPlayerStats(),
+            }
+          : p
       )
     );
   }, []);
@@ -89,21 +159,41 @@ function SessionProvider({ children }: { children: ReactNode }) {
   const updatePlayerStat = useCallback((playerId: string, stat: keyof PlayerStats, amount = 1) => {
     setPlayers(prevPlayers =>
       prevPlayers.map(p =>
-        p.id === playerId ? { ...p, stats: { ...p.stats, [stat]: p.stats[stat] + amount } } : p
+        p.id === playerId
+          ? {
+              ...p,
+              stats: {
+                ...createDefaultPlayerStats(),
+                ...p.stats,
+                [stat]: (p.stats?.[stat] ?? 0) + amount,
+              },
+            }
+          : p
       )
     );
   }, []);
 
 
-  const value: SessionContextType = {
-    players,
-    addPlayer,
-    removePlayer,
-    updatePlayerName,
-    removeAllPlayers,
-    updatePlayerStat,
-    isLoaded,
-  };
+  const value: SessionContextType = useMemo(
+    () => ({
+      players,
+      addPlayer,
+      removePlayer,
+      updatePlayerName,
+      removeAllPlayers,
+      updatePlayerStat,
+      isLoaded,
+    }),
+    [
+      players,
+      addPlayer,
+      removePlayer,
+      updatePlayerName,
+      removeAllPlayers,
+      updatePlayerStat,
+      isLoaded,
+    ]
+  );
 
   return (
     <SessionContext.Provider value={value}>{children}</SessionContext.Provider>
@@ -112,13 +202,33 @@ function SessionProvider({ children }: { children: ReactNode }) {
 
 export function AppProviders({ children }: { children: ReactNode }) {
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register(withBasePath('/sw.js')).catch(() => {
-          // In a real app, you might want to log this to an error reporting service
-        });
-      });
+    if (!('serviceWorker' in navigator)) {
+      return;
     }
+
+    let isCancelled = false;
+
+    const registerServiceWorker = () => {
+      if (isCancelled) {
+        return;
+      }
+
+      navigator.serviceWorker.register(withBasePath('/sw.js')).catch(() => {
+        // In a real app, you might want to log this to an error reporting service
+      });
+    };
+
+    if (document.readyState !== 'loading') {
+      registerServiceWorker();
+      return;
+    }
+
+    window.addEventListener('load', registerServiceWorker, { once: true });
+
+    return () => {
+      isCancelled = true;
+      window.removeEventListener('load', registerServiceWorker);
+    };
   }, []);
   
   return <SessionProvider>{children}</SessionProvider>;

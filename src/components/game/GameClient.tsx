@@ -28,6 +28,69 @@ function shuffleArray<T>(array: T[]): T[] {
 const isNameHiddenType = (type: GameTask['type']) =>
   type === 'never_have_i_ever' || type === 'pointing';
 
+const RECENT_SELECTION_LIMIT = 4;
+
+function getFairSelectionWeight(
+  playerId: string,
+  candidates: Player[],
+  selectionCounts: Record<string, number>,
+  recentSelections: string[]
+): number {
+  const candidateCounts = candidates.map(
+    (candidate) => selectionCounts[candidate.id] ?? 0
+  );
+  const minimumSelectionCount = Math.min(...candidateCounts);
+  const playerSelectionCount = selectionCounts[playerId] ?? 0;
+  const selectionGap = playerSelectionCount - minimumSelectionCount;
+
+  let weight = 1 / (1 + selectionGap * 0.75);
+
+  const recentDistance =
+    recentSelections.length - 1 - recentSelections.lastIndexOf(playerId);
+
+  if (recentDistance === 0) {
+    weight *= 0.18;
+  } else if (recentDistance === 1) {
+    weight *= 0.34;
+  } else if (recentDistance === 2) {
+    weight *= 0.6;
+  }
+
+  return Math.max(weight, 0.05);
+}
+
+function pickFairPlayer(
+  candidates: Player[],
+  selectionCounts: Record<string, number>,
+  recentSelections: string[]
+): Player | null {
+  if (candidates.length === 0) {
+    return null;
+  }
+
+  const weights = candidates.map((candidate) =>
+    getFairSelectionWeight(
+      candidate.id,
+      candidates,
+      selectionCounts,
+      recentSelections
+    )
+  );
+  const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+
+  let threshold = Math.random() * totalWeight;
+
+  for (let index = 0; index < candidates.length; index += 1) {
+    threshold -= weights[index];
+
+    if (threshold <= 0) {
+      return candidates[index];
+    }
+  }
+
+  return candidates[candidates.length - 1];
+}
+
 interface GameClientProps {
   game: Game;
   gameMode?: 'virtual' | 'physical' | null;
@@ -52,13 +115,51 @@ export function GameClient({ game, gameMode }: GameClientProps) {
   const [bottleRotation, setBottleRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [showSpinResult, setShowSpinResult] = useState(false);
+  const spinTimeoutRef = useRef<number | null>(null);
+  const selectionCountsRef = useRef<Record<string, number>>({});
+  const recentSelectionsRef = useRef<string[]>([]);
 
   const isVersusMode = game.gameType === 'versus';
   const isSpinTheBottleMode = game.gameType === 'spin-the-bottle';
   const isPhysicalItemGame = game.gameType === 'physical-item';
   const showLoading = !isLoaded || tasks.length === 0;
 
+  const syncSelectionState = useCallback((nextPlayers: Player[]) => {
+    const nextPlayerIds = new Set(nextPlayers.map((player) => player.id));
+    const nextSelectionCounts: Record<string, number> = {};
+
+    nextPlayers.forEach((player) => {
+      nextSelectionCounts[player.id] = selectionCountsRef.current[player.id] ?? 0;
+    });
+
+    selectionCountsRef.current = nextSelectionCounts;
+    recentSelectionsRef.current = recentSelectionsRef.current
+      .filter((playerId) => nextPlayerIds.has(playerId))
+      .slice(-RECENT_SELECTION_LIMIT);
+  }, []);
+
+  const registerSelectedPlayer = useCallback((player: Player | null) => {
+    if (!player) {
+      return;
+    }
+
+    selectionCountsRef.current[player.id] =
+      (selectionCountsRef.current[player.id] ?? 0) + 1;
+    recentSelectionsRef.current = [
+      ...recentSelectionsRef.current,
+      player.id,
+    ].slice(-RECENT_SELECTION_LIMIT);
+  }, []);
+
   const setupGame = useCallback(() => {
+    if (spinTimeoutRef.current) {
+      clearTimeout(spinTimeoutRef.current);
+      spinTimeoutRef.current = null;
+    }
+
+    selectionCountsRef.current = {};
+    recentSelectionsRef.current = [];
+
     const gameTasks = game.shuffle === false ? game.items : shuffleArray(game.items);
     setTasks(gameTasks);
     setCurrentIndex(0);
@@ -78,10 +179,26 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     }
   }, [isLoaded, setupGame]);
 
+  useEffect(() => {
+    return () => {
+      if (spinTimeoutRef.current) {
+        clearTimeout(spinTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const currentTask = useMemo(
     () => (tasks.length > 0 ? tasks[currentIndex] : null),
     [currentIndex, tasks]
   );
+
+  useEffect(() => {
+    if (!isLoaded) {
+      return;
+    }
+
+    syncSelectionState(players);
+  }, [isLoaded, players, syncSelectionState]);
 
   useEffect(() => {
     if (processedIndexRef.current === currentIndex) {
@@ -111,16 +228,46 @@ export function GameClient({ game, gameMode }: GameClientProps) {
       return;
     }
 
-    const availablePlayers = [...players];
-    const player1Index = Math.floor(Math.random() * availablePlayers.length);
-    const player1 = availablePlayers[player1Index];
-    availablePlayers.splice(player1Index, 1);
+    syncSelectionState(players);
 
-    const player2Index =
-      availablePlayers.length > 0
-        ? Math.floor(Math.random() * availablePlayers.length)
-        : -1;
-    const player2 = player2Index !== -1 ? availablePlayers[player2Index] : null;
+    const availablePlayers = [...players];
+    const hasPlayer1Placeholder = currentTask.text.includes('{player}');
+    const hasPlayer2Placeholder = currentTask.text.includes('{player2}');
+
+    let player1: Player | null = null;
+    let player2: Player | null = null;
+
+    if (hasPlayer1Placeholder) {
+      player1 = pickFairPlayer(
+        availablePlayers,
+        selectionCountsRef.current,
+        recentSelectionsRef.current
+      );
+
+      if (player1) {
+        registerSelectedPlayer(player1);
+
+        const player1Index = availablePlayers.findIndex(
+          (player) => player.id === player1?.id
+        );
+
+        if (player1Index !== -1) {
+          availablePlayers.splice(player1Index, 1);
+        }
+      }
+    }
+
+    if (hasPlayer2Placeholder) {
+      player2 = pickFairPlayer(
+        availablePlayers,
+        selectionCountsRef.current,
+        recentSelectionsRef.current
+      );
+
+      if (player2) {
+        registerSelectedPlayer(player2);
+      }
+    }
 
     setTaskPlayers({ player1, player2 });
     processedIndexRef.current = currentIndex;
@@ -131,6 +278,8 @@ export function GameClient({ game, gameMode }: GameClientProps) {
     currentTask,
     isSpinTheBottleMode,
     isPhysicalItemGame,
+    syncSelectionState,
+    registerSelectedPlayer,
   ]);
 
   const getTaskTextValues = useCallback(
@@ -265,9 +414,14 @@ export function GameClient({ game, gameMode }: GameClientProps) {
 
     setBottleRotation(newRotation);
 
-    window.setTimeout(() => {
+    if (spinTimeoutRef.current) {
+      clearTimeout(spinTimeoutRef.current);
+    }
+
+    spinTimeoutRef.current = window.setTimeout(() => {
       setIsSpinning(false);
       setShowSpinResult(true);
+      spinTimeoutRef.current = null;
     }, 4000);
   }, [bottleRotation, isSpinning]);
 

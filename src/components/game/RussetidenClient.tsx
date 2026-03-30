@@ -10,7 +10,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { useToast } from '@/hooks/use-toast';
 import { Mail, QrCode, Download, Share2, Loader2, Instagram, Copy, Check, Gamepad2 } from 'lucide-react';
 import QRCode from 'react-qr-code';
-import * as htmlToImage from 'html-to-image';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { AdBanner } from '../ads/AdBanner';
@@ -32,12 +31,19 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
     const [isLoading, setIsLoading] = useState<'story' | 'qr' | null>(null);
     const [isCopied, setIsCopied] = useState(false);
     const [origin, setOrigin] = useState('');
+    const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const { toast } = useToast();
 
     useEffect(() => {
       if (typeof window !== 'undefined') {
         setOrigin(window.location.origin);
       }
+
+      return () => {
+        if (copyTimeoutRef.current) {
+          clearTimeout(copyTimeoutRef.current);
+        }
+      };
     }, []);
 
     if (!game) return null;
@@ -56,7 +62,8 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
         
         setIsLoading(type);
         try {
-            const dataUrl = await htmlToImage.toPng(element, { pixelRatio: 2 });
+            const { toPng } = await import('html-to-image');
+            const dataUrl = await toPng(element, { pixelRatio: 2 });
             const link = document.createElement('a');
             link.download = `gamenight-${game.id}-${type}.png`;
             link.href = dataUrl;
@@ -80,7 +87,13 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
                 description: "Du kan nå lime den inn hvor du vil.",
             });
             setIsCopied(true);
-            setTimeout(() => setIsCopied(false), 2500);
+            if (copyTimeoutRef.current) {
+              clearTimeout(copyTimeoutRef.current);
+            }
+            copyTimeoutRef.current = setTimeout(() => {
+              setIsCopied(false);
+              copyTimeoutRef.current = null;
+            }, 2500);
         }).catch(() => {
             toast({
                 title: "Kunne ikke kopiere",

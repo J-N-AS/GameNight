@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dices, Users, Coins, HardHat, UserCheck } from 'lucide-react';
@@ -13,9 +13,23 @@ function PlayerPicker() {
   const { players, isLoaded } = useSession();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const spinIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (spinIntervalRef.current) {
+        clearInterval(spinIntervalRef.current);
+      }
+    };
+  }, []);
 
   const handlePickPlayer = () => {
     if (players.length === 0) return;
+
+    if (spinIntervalRef.current) {
+      clearInterval(spinIntervalRef.current);
+    }
+
     setIsSpinning(true);
     setSelectedPlayer(null);
 
@@ -23,12 +37,15 @@ function PlayerPicker() {
     const totalSpins = 15;
     let spinCount = 0;
 
-    const spinInterval = setInterval(() => {
+    spinIntervalRef.current = setInterval(() => {
       spinCount++;
       const randomIndex = Math.floor(Math.random() * players.length);
       setSelectedPlayer(players[randomIndex].name);
       if (spinCount >= totalSpins) {
-        clearInterval(spinInterval);
+        if (spinIntervalRef.current) {
+          clearInterval(spinIntervalRef.current);
+          spinIntervalRef.current = null;
+        }
         setIsSpinning(false);
       }
     }, spinDuration);
@@ -76,14 +93,28 @@ function PlayerPicker() {
 function CoinFlip() {
   const [result, setResult] = useState<'Kron' | 'Mynt' | null>(null);
   const [isFlipping, setIsFlipping] = useState(false);
+  const flipTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (flipTimeoutRef.current) {
+        clearTimeout(flipTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleFlip = () => {
+    if (flipTimeoutRef.current) {
+      clearTimeout(flipTimeoutRef.current);
+    }
+
     setIsFlipping(true);
     setResult(null);
-    setTimeout(() => {
+    flipTimeoutRef.current = setTimeout(() => {
       const flipResult = Math.random() < 0.5 ? 'Kron' : 'Mynt';
       setResult(flipResult);
       setIsFlipping(false);
+      flipTimeoutRef.current = null;
     }, 1000);
   };
 
@@ -124,14 +155,28 @@ const diceFaces = [
 function DiceRoll() {
   const [result, setResult] = useState<number | null>(null);
   const [isRolling, setIsRolling] = useState(false);
+  const rollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (rollTimeoutRef.current) {
+        clearTimeout(rollTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleRoll = () => {
+    if (rollTimeoutRef.current) {
+      clearTimeout(rollTimeoutRef.current);
+    }
+
     setIsRolling(true);
     setResult(null);
-    setTimeout(() => {
+    rollTimeoutRef.current = setTimeout(() => {
       const rollResult = Math.floor(Math.random() * 6) + 1;
       setResult(rollResult);
       setIsRolling(false);
+      rollTimeoutRef.current = null;
     }, 1000);
   };
 

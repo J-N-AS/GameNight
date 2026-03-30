@@ -41,25 +41,51 @@ export function PlayerSetup({
   const [editingPlayerName, setEditingPlayerName] = useState('');
   const addPlayerInputRef = useRef<HTMLInputElement>(null);
   const editPlayerInputRef = useRef<HTMLInputElement>(null);
+  const addPlayerFocusTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const editPlayerFocusTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const missingPlayers = Math.max(0, requiredPlayers - players.length);
   const canContinue = requiredPlayers === 0 || players.length >= requiredPlayers;
 
   useEffect(() => {
+    if (addPlayerFocusTimeoutRef.current) {
+      clearTimeout(addPlayerFocusTimeoutRef.current);
+      addPlayerFocusTimeoutRef.current = null;
+    }
+
     if (!open) {
       setEditingPlayerId(null);
     } else {
-      setTimeout(() => {
+      addPlayerFocusTimeoutRef.current = setTimeout(() => {
         addPlayerInputRef.current?.focus();
       }, 100);
     }
+
+    return () => {
+      if (addPlayerFocusTimeoutRef.current) {
+        clearTimeout(addPlayerFocusTimeoutRef.current);
+        addPlayerFocusTimeoutRef.current = null;
+      }
+    };
   }, [open]);
 
   useEffect(() => {
-    if (editingPlayerId) {
-      setTimeout(() => {
-        editPlayerInputRef.current?.focus();
-      }, 100)
+    if (editPlayerFocusTimeoutRef.current) {
+      clearTimeout(editPlayerFocusTimeoutRef.current);
+      editPlayerFocusTimeoutRef.current = null;
     }
+
+    if (editingPlayerId) {
+      editPlayerFocusTimeoutRef.current = setTimeout(() => {
+        editPlayerInputRef.current?.focus();
+      }, 100);
+    }
+
+    return () => {
+      if (editPlayerFocusTimeoutRef.current) {
+        clearTimeout(editPlayerFocusTimeoutRef.current);
+        editPlayerFocusTimeoutRef.current = null;
+      }
+    };
   }, [editingPlayerId]);
 
   const handleAddPlayer = () => {
