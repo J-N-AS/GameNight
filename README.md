@@ -22,6 +22,8 @@ Nyttige scripts:
 - `npm run typecheck` kjører TypeScript-sjekk
 - `npm run build` bygger vanlig Next-app
 - `npm run build:export` bygger statisk eksport for GitHub Pages / enkel hosting
+- `npm run build:cloudflare` bygger statisk eksport for Cloudflare Pages
+- `npm run check:cloudflare` kjører typecheck + Cloudflare-bygg lokalt
 
 ## Kort arkitektur
 
@@ -50,6 +52,7 @@ Viktige mapper:
 - `docs/07-seo-strategy.md` SEO-struktur, temasider og innholdsproduksjon
 - `docs/08-monetization.md` dagens monetisering og prinsipper for videre arbeid
 - `docs/09-roadmap.md` prioritert roadmap
+- `docs/10-cloudflare-pages-setup.md` manuell sjekkliste for Cloudflare Pages og custom domain
 - `docs/ai-context.md` kort kontekst for AI-verktøy
 - `SPILL_OVERSIKT.md` oversikt over spillbiblioteket
 
@@ -64,4 +67,15 @@ Kopier fra `.env.example` ved behov.
 
 ## Deploy
 
-Repoet kan kjøres som vanlig Next-app eller som statisk eksport. GitHub Pages-workflow finnes i `.github/workflows/deploy-pages.yml`.
+Repoet kan kjøres som vanlig Next-app eller som statisk eksport.
+
+Cloudflare Pages:
+- Build command: `npm run build:cloudflare`
+- Build output directory: `out`
+- Node.js version: `20`
+- Bruk statisk eksport for denne appen. Ikke legg til OpenNext eller `@opennextjs/cloudflare` med mindre dere faktisk går over til SSR eller API-ruter.
+- Se `docs/10-cloudflare-pages-setup.md` for alt som må settes manuelt i Cloudflare
+
+GitHub Pages:
+- Build command: `npm run build:export`
+- Workflow finnes i `.github/workflows/deploy-pages.yml`

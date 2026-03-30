@@ -124,7 +124,9 @@ Appen kan kjøres på to måter:
 - vanlig Next-build med `npm run build`
 - statisk eksport med `npm run build:export`
 
-Statisk eksport er førstevalg for enkel hosting og GitHub Pages. `next.config.ts` håndterer `output: 'export'`, `basePath` og `assetPrefix` når miljøet krever det.
+Statisk eksport er førstevalg for enkel hosting, GitHub Pages og Cloudflare Pages. `next.config.ts` håndterer `output: 'export'`, `basePath` og `assetPrefix` når miljøet krever det.
+
+For Cloudflare Pages bør prosjektet deployes som ren statisk eksport med output-mappen `out`. OpenNext eller `@opennextjs/cloudflare` gir bare mening hvis repoet senere får SSR, API-ruter eller annen serverruntime som faktisk trenger adapter.
 
 ## Begrensninger som skal respekteres
 
