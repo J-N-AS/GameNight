@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { AdBanner } from '@/components/ads/AdBanner';
 import { GameFlow } from '@/components/game/GameFlow';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { getGame, getGames } from '@/lib/games';
+import { getAllGameRouteIds, getCanonicalGameId, getGame, getGames } from '@/lib/games';
 import { getThemes } from '@/lib/themes';
 import type { Game } from '@/lib/types';
 import { buildBreadcrumbJsonLd, buildPageMetadata } from '@/lib/seo';
@@ -18,11 +18,15 @@ type ListedGame = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
 const MAX_RELATED_GAMES = 4;
 
-function getRelatedGames(game: Game, allGames: ListedGame[]): ListedGame[] {
+function getRelatedGames(
+  game: Game,
+  allGames: ListedGame[],
+  sourceGameId: string
+): ListedGame[] {
   const sourceTopics = new Set([...(game.category ?? []), ...(game.tags ?? [])]);
 
   const primaryMatches = allGames.filter((candidate) => {
-    if (candidate.id === game.id) {
+    if (candidate.id === sourceGameId) {
       return false;
     }
 
@@ -36,7 +40,7 @@ function getRelatedGames(game: Game, allGames: ListedGame[]): ListedGame[] {
 
   const primaryIds = new Set(primaryMatches.map((candidate) => candidate.id));
   const fallbackMatches = allGames.filter((candidate) => {
-    return candidate.id !== game.id && !primaryIds.has(candidate.id);
+    return candidate.id !== sourceGameId && !primaryIds.has(candidate.id);
   });
 
   return [...primaryMatches, ...fallbackMatches].slice(0, MAX_RELATED_GAMES);
@@ -67,12 +71,12 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const games = await getGames({ includeHidden: true, includeHiddenFromMain: true });
-  return games.map((game) => ({ gameId: game.id }));
+  return getAllGameRouteIds().map((gameId) => ({ gameId }));
 }
 
 export default async function GamePage({ params }: GamePageProps) {
   const { gameId } = await params;
+  const canonicalGameId = getCanonicalGameId(gameId);
 
   const [game, allGames, themes] = await Promise.all([
     getGame(gameId),
@@ -80,8 +84,10 @@ export default async function GamePage({ params }: GamePageProps) {
     getThemes(),
   ]);
 
-  const relatedGames = getRelatedGames(game, allGames);
-  const relatedThemes = themes.filter((theme) => theme.gameIds.includes(game.id)).slice(0, 3);
+  const relatedGames = getRelatedGames(game, allGames, canonicalGameId);
+  const relatedThemes = themes
+    .filter((theme) => theme.gameIds.includes(canonicalGameId))
+    .slice(0, 3);
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: 'Forside', path: '/' },

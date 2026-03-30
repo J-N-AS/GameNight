@@ -13,14 +13,11 @@ const CORE_GAME_IDS = [
 const TIER_THREE_GAME_IDS = [
   'datingfail',
   'fyllevalg',
-  'girls-vs-boys',
   'hemmelig-bonus',
   'kjapp-party-runde',
-  'rt-2025-dummy',
+  'lagduell',
   'sexy-action',
   'singles-body',
-  'spinn-flasken-ekte',
-  'spinn-flasken-virtuell',
 ] as const;
 
 const HOME_RECOMMENDED_GAME_IDS = [

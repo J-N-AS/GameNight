@@ -15,16 +15,112 @@ async function loadGameData(id: string): Promise<Game | null> {
   }
 }
 
+type LegacyGameAlias = {
+  targetId: string;
+  overrides?: Partial<Game>;
+};
+
 // Hardcoded lists of game IDs.
 // This is more maintainable than reading the file system in a serverless environment.
-const allGameIds = [
-  'after-dark', 'afterparty', 'bursdags-roast', 'datingfail', 'fadderkampen', 'fyllevalg', 'girl-power', 'girls-vs-boys', 'gutta', 'hemmelig-bonus', 'hemmeligheter', 'hyttekos-afterski', 'icebreakeren', 'jeg-har-aldri', 'julebord', 'kaosrunden', 'kjapp-party-runde', 'party-klassikere', 'pekefest', 'pest-eller-kolera', 'rolig-sosial', 'rt-2025-dummy', 'sannhet-eller-shot', 'sexy-action', 'sexy-dares', 'sexy-vibes', 'singles-body', 'singles-night', 'spinn-flasken', 'spinn-flasken-action', 'spinn-flasken-sannhet', 'spinn-flasken-ekte', 'spinn-flasken-virtuell', 'snusboksen', 'snusboksen-utfordring', 'snusboksen-sannhet', 'vorspiel-mix'
-];
+const canonicalGameIds = [
+  'after-dark',
+  'afterparty',
+  'bursdags-roast',
+  'datingfail',
+  'fadderkampen',
+  'fyllevalg',
+  'girl-power',
+  'gutta',
+  'hemmelig-bonus',
+  'hemmeligheter',
+  'hyttekos-afterski',
+  'icebreakeren',
+  'jeg-har-aldri',
+  'julebord',
+  'kaosrunden',
+  'kjapp-party-runde',
+  'lagduell',
+  'party-klassikere',
+  'pekefest',
+  'pest-eller-kolera',
+  'rolig-sosial',
+  'sannhet-eller-shot',
+  'sexy-action',
+  'sexy-dares',
+  'sexy-vibes',
+  'singles-body',
+  'singles-night',
+  'spinn-flasken',
+  'spinn-flasken-action',
+  'spinn-flasken-sannhet',
+  'snusboksen',
+  'snusboksen-utfordring',
+  'snusboksen-sannhet',
+  'vorspiel-mix',
+] as const;
+
+const legacyGameAliases: Record<string, LegacyGameAlias> = {
+  'girls-vs-boys': {
+    targetId: 'lagduell',
+  },
+  'spinn-flasken-ekte': {
+    targetId: 'spinn-flasken',
+    overrides: {
+      title: 'Spinn Flasken (Ekte Flaske)',
+      description:
+        'Finn frem en ekte flaske! Spinn den på gulvet, og den personen flasken peker på må utføre oppgaven som vises på skjermen.',
+      hidden: true,
+      emoji: '🍾',
+      spinMode: 'physical',
+    },
+  },
+  'spinn-flasken-virtuell': {
+    targetId: 'spinn-flasken',
+    overrides: {
+      title: 'Spinn Flasken (Virtuell)',
+      description:
+        'Ingen ekte flaske? Ikke noe problem. La den digitale flasken bestemme skjebnen din. Personen flasken peker på utfører oppgaven.',
+      hidden: true,
+      emoji: '📲',
+      spinMode: 'virtual',
+    },
+  },
+};
+
+const canonicalGameIdSet = new Set<string>(canonicalGameIds);
+
+async function loadResolvedGameData(id: string): Promise<Game | null> {
+  const alias = legacyGameAliases[id];
+
+  if (!alias) {
+    return loadGameData(id);
+  }
+
+  const canonicalGame = await loadGameData(alias.targetId);
+  if (!canonicalGame) {
+    return null;
+  }
+
+  return {
+    ...canonicalGame,
+    ...alias.overrides,
+    id,
+  };
+}
+
+export function getAllGameRouteIds(): string[] {
+  return [...canonicalGameIds, ...Object.keys(legacyGameAliases)];
+}
+
+export function getCanonicalGameId(id: string): string {
+  const normalizedId = id.toLowerCase();
+  return legacyGameAliases[normalizedId]?.targetId ?? normalizedId;
+}
 
 
 export const getGames = cache(async (options: { includeHidden?: boolean; includeHiddenFromMain?: boolean } = {}): Promise<Omit<Game, 'items' | 'language' | 'shuffle'>[]> => {
   const games = await Promise.all(
-    allGameIds.map(async (id) => {
+    canonicalGameIds.map(async (id) => {
       const gameData = await loadGameData(id);
       
       // Filter out games that don't load or have no items.
@@ -93,8 +189,11 @@ export const getGame = cache(async (id: string): Promise<Game> => {
   const normalizedId = id.toLowerCase();
   
   // Check against the master list first for security and performance
-  if (allGameIds.includes(normalizedId)) {
-    const gameData = await loadGameData(normalizedId);
+  if (
+    canonicalGameIdSet.has(normalizedId) ||
+    Object.hasOwn(legacyGameAliases, normalizedId)
+  ) {
+    const gameData = await loadResolvedGameData(normalizedId);
     if (gameData) {
       return gameData;
     }

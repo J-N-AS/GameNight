@@ -37,7 +37,7 @@ Praktisk bruk i dagens repo:
 - de fleste spill bruker `default`
 - `Spinn Flasken`-familien bruker `spin-the-bottle`
 - `Snusboksen`-familien bruker `physical-item`
-- `Girls vs Boys` er eneste `versus`-spill, og er skjult
+- `Lagduell` er eneste `versus`-spill, og er skjult
 
 ## Spillmodell
 

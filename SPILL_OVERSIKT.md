@@ -62,22 +62,20 @@ Disse spillene finnes fortsatt i repoet, men er ikke ment som hovedinnganger i d
 | Sexy Action – No Limits | 55 | `isHiddenFromMain`; holdes ute fra hovedflaten |
 | Singles: Body Language | 50 | `isHiddenFromMain`; overlappende nisjespill |
 
-## Skjulte legacy- og preset-varianter
+## Skjulte legacy- og eksperimentvarianter
 
-Disse rutene eksisterer fortsatt, men de er skjult og fungerer mest som legacy-støtte eller preset-varianter.
+Disse spillene er skjult helt, men finnes fortsatt som eksperimenter eller systemstøtte i repoet.
 
 | Spill | Kort | Status i appen |
 | --- | ---: | --- |
-| Girls vs Boys ⚔️ | 25 | `hidden`; eneste `versus`-spill i repoet |
-| RT 2025: Dummy Bussen | 6 | `hidden` og `isHiddenFromMain`; legacy/custom testspill |
-| Spinn Flasken (Ekte Flaske) | 30 | `hidden`; preset `spinMode: "physical"` |
-| Spinn Flasken (Virtuell) | 30 | `hidden`; preset `spinMode: "virtual"` |
+| Lagduell ⚔️ | 25 | `hidden`; inkluderende refresh av det gamle `Girls vs Boys`-konseptet |
 
 ## Spillfamilier og systemstøtte
 
 - `Spinn Flasken`-familien bruker `gameType: "spin-the-bottle"`
 - `Snusboksen`-familien bruker `gameType: "physical-item"`
-- `Girls vs Boys` bruker `gameType: "versus"`
+- `Lagduell` bruker `gameType: "versus"`
+- gamle preset-ruter for `Spinn Flasken` lever videre som legacy-aliaser, ikke egne deck
 - `Sannhet eller Shot` bruker egen korttype: `truth_or_shot`
 - Running rules brukes bare i utvalgte deck, ikke i hele biblioteket
 
