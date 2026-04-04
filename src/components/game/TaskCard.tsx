@@ -244,6 +244,11 @@ export function TaskCard({
         )}
       >
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_center,rgba(255,255,255,0.06),transparent_44%)]" />
+        <div className="pointer-events-none absolute left-1/2 top-[calc(env(safe-area-inset-top)+1rem)] z-20 -translate-x-1/2">
+          <span className="inline-flex max-w-[min(60vw,18rem)] items-center justify-center rounded-full bg-black/20 px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.24em] text-white/80 backdrop-blur-sm">
+            {presentation.badge}
+          </span>
+        </div>
 
         <div className="relative z-10 flex h-full min-h-0 flex-col px-[clamp(1.35rem,5vw,2.4rem)] pb-[calc(env(safe-area-inset-bottom)+3.4rem)] pt-[calc(env(safe-area-inset-top)+4.5rem)]">
           <div className="flex min-h-0 flex-1 flex-col items-center justify-center">

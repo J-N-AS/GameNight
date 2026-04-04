@@ -133,11 +133,27 @@ export interface ScreenGameCategory {
   games: ScreenGame[];
 }
 
+export interface ThemeArticleSectionBlock {
+  type: 'section';
+  heading?: string;
+  paragraphs: string[];
+}
+
+export interface ThemeArticlePromoBlock {
+  type: 'promo';
+  deckId: string;
+  ctaLabel?: string;
+}
+
+export type ThemeArticleBlock =
+  | ThemeArticleSectionBlock
+  | ThemeArticlePromoBlock;
+
 export interface Theme {
   slug: string;
   title: string;
   metaDescription: string;
-  content: string[];
+  content: string[] | ThemeArticleBlock[];
   gameIds: string[];
   emoji: string;
 }

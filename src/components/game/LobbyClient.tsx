@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   Beer,
+  ChevronRight,
   Clapperboard,
   Dices,
   Gamepad2,
@@ -57,18 +58,21 @@ const FUTURE_ROWS = [
     description:
       'Plass for kuraterte klassikere, regler og raske innganger til kjente favoritter.',
     icon: Beer,
+    href: '/drikkeleker',
   },
   {
     title: 'Musikk drikkeleker',
     description:
       'Plass for sangbaserte runder, drikkeregler og miksede musikkleker.',
     icon: Music,
+    href: '/musikkleker',
   },
   {
     title: 'Skjerm drikkeleker',
     description:
       'Plass for TV-, sport- og realitybaserte spillkvelder med felles skjerm.',
     icon: Clapperboard,
+    href: '/skjermleker',
   },
 ] as const;
 
@@ -532,25 +536,26 @@ export function LobbyClient({
           const Icon = row.icon;
 
           return (
-            <Card
-              key={row.title}
-              className="border-border/70 bg-card/65 backdrop-blur-sm"
-            >
-              <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-start gap-4">
-                  <div className="rounded-2xl bg-primary/12 p-3 text-primary">
-                    <Icon className="h-5 w-5" />
+            <Link key={row.title} href={row.href} className="group block">
+              <Card className="border-border/70 bg-card/65 backdrop-blur-sm transition-colors duration-200 hover:bg-white/5">
+                <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-2xl bg-primary/12 p-3 text-primary">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
+                        {row.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-muted-foreground">{row.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground">{row.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{row.description}</p>
+                  <div className="flex items-center text-muted-foreground transition-transform duration-200 group-hover:translate-x-1 group-hover:text-foreground">
+                    <ChevronRight className="h-5 w-5" />
                   </div>
-                </div>
-                <span className="inline-flex w-fit rounded-full border border-border/70 bg-background/70 px-3 py-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                  Kommer snart
-                </span>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </Link>
           );
         })}
       </motion.section>

@@ -22,13 +22,6 @@ import { cn } from '@/lib/utils';
 import { InlineGamePromo } from '@/components/seo/InlineGamePromo';
 import { ArticleAdSlot } from '@/components/seo/ArticleAdSlot';
 
-const articleSectionHeadings = [
-  'Hvorfor denne stemningen fungerer',
-  'Slik holder dere flyten gjennom kvelden',
-  'Decks som passer perfekt videre',
-  'Slik gjør dere kvelden komplett',
-] as const;
-
 type ThemeGame = ThemeWithGames['games'][number];
 
 function ThemeDeckCard({
@@ -44,7 +37,7 @@ function ThemeDeckCard({
       onClick={(event) => onStart(game, event)}
       className="group block h-full"
     >
-      <Card className="flex h-full flex-col border-border/70 bg-card/80 transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-xl hover:shadow-primary/10">
+      <Card className="flex h-full flex-col border-border/70 bg-card transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lg">
         <CardHeader className="gap-4 pb-4">
           <div className="flex items-start gap-4">
             <div className="mt-1 text-4xl">{game.emoji}</div>
@@ -92,15 +85,15 @@ function ThemeDeckCard({
 
 export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
   const { startGame, gameStartDialogProps } = useGameStart();
-  const articleSections = theme.content.map((paragraph, index) => ({
-    heading:
-      articleSectionHeadings[index] ?? `Del ${index + 1}`,
-    paragraph,
-  }));
+  const gamesById = new Map(theme.games.map((game) => [game.id, game]));
+  const inlineAdAfterBlockIndex = theme.articleBlocks.findIndex(
+    (block) => block.type === 'promo'
+  );
+  const hasHeroGames = theme.games.length > 0;
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
-      <div className="mx-auto mb-8 flex max-w-5xl items-center justify-between gap-3">
+      <div className="mx-auto mb-10 flex max-w-5xl items-center justify-between gap-3">
         <nav aria-label="Tilbake til forsiden">
           <Button variant="ghost" asChild>
             <Link href="/">
@@ -113,96 +106,101 @@ export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
         <GameMenu context="lobby" />
       </div>
 
-      <article className="mx-auto max-w-3xl space-y-10 md:space-y-12">
-        <header className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-            Temaside fra GameNight
-          </p>
-          <div className="mb-4 mt-4 text-5xl md:text-6xl">{theme.emoji}</div>
-          <h1 className="text-4xl font-bold font-headline tracking-tighter md:text-5xl">
+      <article className="mx-auto max-w-2xl space-y-10 md:space-y-12">
+        <header className="space-y-8 border-b border-border/70 pb-10">
+          <div className="space-y-4">
+            <div className="text-4xl md:text-5xl" aria-hidden="true">
+              {theme.emoji}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+              <span>{theme.games.length} spill som passer anledningen</span>
+              <span className="hidden h-1 w-1 rounded-full bg-border sm:block" />
+              <span>Lett å lese, lett å starte på mobil</span>
+            </div>
+          </div>
+
+          <h1 className="text-4xl font-bold font-headline tracking-tight md:text-5xl">
             {theme.title}
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+
+          <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
             {theme.metaDescription}
           </p>
+
+          {hasHeroGames && (
+            <div className="flex flex-wrap gap-2">
+              {theme.games.map((game) => (
+                <span
+                  key={game.id}
+                  className="rounded-full border border-border/70 bg-background/80 px-3 py-1 text-xs font-semibold text-foreground/80"
+                >
+                  {game.emoji} {game.title}
+                </span>
+              ))}
+            </div>
+          )}
         </header>
 
-        <figure className="overflow-hidden rounded-[2rem] border border-border/70 bg-gradient-to-br from-card via-card to-primary/10 shadow-xl shadow-black/10">
-          <div className="relative p-6 md:p-8">
-            <div className="absolute -right-10 top-0 h-32 w-32 rounded-full bg-primary/20 blur-3xl" />
-            <div className="absolute bottom-0 left-0 h-28 w-28 rounded-full bg-accent/15 blur-3xl" />
-
-            <figcaption className="relative space-y-5">
-              <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] border border-primary/15 bg-background/70 text-4xl shadow-inner shadow-black/10">
-                  {theme.emoji}
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-foreground/70">
-                    Kurert leseguide
-                  </p>
-                  <p className="mt-2 text-base leading-7 text-muted-foreground">
-                    Les deg inn på stemningen først, og hopp rett inn i deckene
-                    som matcher anledningen når dere er klare.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {theme.games.map((game) => (
-                  <span
-                    key={game.id}
-                    className="rounded-full border border-primary/15 bg-background/70 px-3 py-1 text-xs font-semibold text-foreground/80"
-                  >
-                    {game.emoji} {game.title}
-                  </span>
-                ))}
-              </div>
-            </figcaption>
-          </div>
-        </figure>
-
-        {articleSections.map((section, index) => {
-          const promoGame = theme.games[index];
-          const isLastSection = index === articleSections.length - 1;
+        {theme.articleBlocks.map((block, index) => {
+          const promoGame =
+            block.type === 'promo' ? gamesById.get(block.deckId) : undefined;
 
           return (
-            <Fragment key={`${theme.slug}-section-${index}`}>
-              <motion.section
-                aria-labelledby={`${theme.slug}-section-heading-${index}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: 0.08 * index }}
-                className="space-y-4"
-              >
-                <h2
-                  id={`${theme.slug}-section-heading-${index}`}
-                  className="text-2xl font-bold font-headline tracking-tight md:text-3xl"
+            <Fragment key={`${theme.slug}-block-${index}`}>
+              {block.type === 'section' ? (
+                <motion.section
+                  aria-labelledby={`${theme.slug}-section-heading-${index}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: 0.08 * index }}
+                  className="space-y-4"
                 >
-                  {section.heading}
-                </h2>
-                <p className="text-[1.0625rem] leading-8 text-foreground/90 md:text-lg">
-                  {section.paragraph}
-                </p>
-              </motion.section>
+                  <h2
+                    id={`${theme.slug}-section-heading-${index}`}
+                    className="text-2xl font-bold font-headline tracking-tight md:text-3xl"
+                  >
+                    {block.heading}
+                  </h2>
 
-              {!isLastSection && promoGame && (
-                <InlineGamePromo
-                  deckId={promoGame.id}
-                  title={promoGame.title}
-                  description={promoGame.description}
-                  emoji={promoGame.emoji}
-                  audience={promoGame.audience}
-                  intensity={promoGame.intensity}
-                  requiresPlayers={promoGame.requiresPlayers}
-                  minPlayers={promoGame.minPlayers}
-                  gameType={promoGame.gameType}
-                  onStart={(event) => startGame(promoGame, event)}
+                  <div className="space-y-4">
+                    {block.paragraphs.map((paragraph, paragraphIndex) => (
+                      <p
+                        key={`${theme.slug}-section-${index}-paragraph-${paragraphIndex}`}
+                        className="text-[1.0625rem] leading-relaxed text-foreground/90 md:text-lg"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </motion.section>
+              ) : promoGame ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: 0.08 * index }}
+                >
+                  <InlineGamePromo
+                    deckId={promoGame.id}
+                    title={promoGame.title}
+                    description={promoGame.description}
+                    ctaLabel={block.ctaLabel}
+                    emoji={promoGame.emoji}
+                    audience={promoGame.audience}
+                    intensity={promoGame.intensity}
+                    requiresPlayers={promoGame.requiresPlayers}
+                    minPlayers={promoGame.minPlayers}
+                    gameType={promoGame.gameType}
+                    onStart={(event) => startGame(promoGame, event)}
+                  />
+                </motion.div>
+              ) : null}
+
+              {index === inlineAdAfterBlockIndex && (
+                <ArticleAdSlot
+                  slotId={`${theme.slug}-inline-ad`}
+                  className="my-12 md:my-14"
                 />
-              )}
-
-              {!isLastSection && (
-                <ArticleAdSlot slotId={`${theme.slug}-inline-ad-${index + 1}`} />
               )}
             </Fragment>
           );
@@ -211,18 +209,18 @@ export function ThemePageClient({ theme }: { theme: ThemeWithGames }) {
 
       <section
         aria-labelledby="theme-deck-grid-heading"
-        className="mx-auto mt-16 max-w-5xl"
+        className="mx-auto mt-20 max-w-5xl border-t border-border/70 pt-12"
       >
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-2xl">
           <h2
             id="theme-deck-grid-heading"
             className="text-3xl font-bold font-headline tracking-tight md:text-4xl"
           >
-            Spill deckene som matcher denne stemningen
+            Flere spill som passer til temaet
           </h2>
           <p className="mt-3 text-base leading-7 text-muted-foreground md:text-lg">
-            Her er GameNight-deckene som passer best til temaet. Hver runde tar
-            dere rett inn i appflyten med den aktuelle decken klar.
+            Vil dere holde samme stemning i gang litt lenger, finner dere flere
+            spill her. Velg det som passer gruppa best og trykk dere rett inn.
           </p>
         </div>
 

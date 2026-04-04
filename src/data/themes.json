@@ -134,9 +134,40 @@
       "metaDescription": "Perfekte isbrytere og bli-kjent-leker for fadderuke, nye vennegjenger eller teambuilding. Trygge spill med fokus på samtale og null press.",
       "emoji": "🤝",
       "content": [
-        "Å møte nye mennesker kan være både spennende og litt skummelt. Enten det er i en faddergruppe, på en ny arbeidsplass, eller i en ny vennegjeng, er den første tiden avgjørende for å bygge relasjoner. Den beste måten å bryte isen på er gjennom felles latter og avslappede aktiviteter.",
-        "Denne samlingen er designet med nettopp dette i tankene. Her finner du trygge, inkluderende og morsomme 'bli kjent'-spill som fjerner presset fra small-talk. Spillene fokuserer på åpne spørsmål, ufarlige påstander og samtale-startere som lar alle delta på sine egne premisser. Det er den perfekte verktøykassen for å skape en positiv og åpen atmosfære.",
-        "Bruk disse isbryterne for å forvandle en gruppe fremmede til en sammensveiset gjeng på rekordtid. La oss gjøre det første møtet til en positiv og minneverdig opplevelse."
+        {
+          "type": "section",
+          "heading": "Slik får dere den første praten til å løsne",
+          "paragraphs": [
+            "Når en faddergruppe, et nytt lag eller en vennegjeng møtes for første gang, er det sjelden de store aktivitetene som avgjør stemningen. Det som fungerer best, er korte runder der alle slipper til uten å måtte være morsomme på kommando. Start med en enkel lek der alle svarer raskt, peker, eller velger mellom to alternativer. Da får dere i gang tempoet uten at noen føler at de står på en scene.",
+            "En god icebreaker bør være lett å forklare, trygg å være med på og enkel å hoppe inn i selv om man kommer litt sent. Unngå spørsmål som blir for personlige i første runde, og spar de mer utfordrende kortene til senere på kvelden. Målet i starten er ikke å imponere, men å senke skuldrene så gruppa blir komfortabel med å snakke høyt og le sammen."
+          ]
+        },
+        {
+          "type": "promo",
+          "deckId": "icebreakeren",
+          "ctaLabel": "Spill nå"
+        },
+        {
+          "type": "section",
+          "heading": "Tips som faktisk fungerer i fadderuka",
+          "paragraphs": [
+            "Hvis dere arrangerer bli-kjent-leker i fadderuka, lønner det seg å holde hver runde kort og tydelig. Sett gjerne en enkel regel: ingen lange forklaringer, ingen intern humor som stenger folk ute, og ingen spørsmål man må forsvare svaret sitt på. To korte runder med energi fungerer bedre enn én lang økt som mister rommet halvveis.",
+            "Et smart grep er å veksle mellom små grupper og hele gjengen. La folk først snakke to og to eller i grupper på fire, og bruk deretter et spill som samler alle rundt samme rytme. Da rekker flere å bli sett, og overgangen fra høflig small-talk til ekte gruppestemning blir mye mindre klein."
+          ]
+        },
+        {
+          "type": "promo",
+          "deckId": "rolig-sosial",
+          "ctaLabel": "Spill nå"
+        },
+        {
+          "type": "section",
+          "heading": "Når dere er klare for mer latter enn presentasjonsrunde",
+          "paragraphs": [
+            "Når praten først flyter, kan dere skru opp energien med spill som gir litt mer reaksjon, peking og intern latter. Det viktigste er at spillene fortsatt føles inkluderende. Velg kort som lar folk være med uten forkunnskap, og som ikke gjør én person til kveldens hovedperson for lenge av gangen.",
+            "Den beste gruppedynamikken kommer ofte når dere blander trygghet med litt uforutsigbarhet. Etter noen rolige runder kan dere derfor gå over til et spill som skaper mer tempo og flere spontane øyeblikk. Da føles kvelden fortsatt avslappet, men langt mer levende."
+          ]
+        }
       ],
       "gameIds": [
         "icebreakeren",
