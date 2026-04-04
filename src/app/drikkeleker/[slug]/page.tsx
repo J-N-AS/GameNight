@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/lib/seo';
 import { getGames } from '@/lib/games';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { getRelatedArticles } from '@/lib/drikkelek-metadata';
 import {
   buildBreadcrumbJsonLd,
   getAbsoluteAssetUrl,
@@ -58,10 +59,7 @@ export default async function DrikkelekArticlePage({
 
   const [allArticles, allGames] = await Promise.all([getArticles(), getGames()]);
 
-  const relatedArticles = allArticles
-    .filter((candidate) => candidate.slug !== article.slug)
-    .slice(0, 4)
-    .map((candidate) => ({ slug: candidate.slug, title: candidate.title }));
+  const relatedArticles = getRelatedArticles(allArticles, article.slug);
 
   const relatedGames = RELATED_GAME_IDS.map((gameId) =>
     allGames.find((game) => game.id === gameId)

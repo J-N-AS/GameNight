@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type MouseEvent } from 'react';
 import type { Game } from '@/lib/types';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -18,6 +18,7 @@ import { getPlayerRequirementLabel } from '@/lib/player-requirements';
 import { useGameStart } from '@/hooks/useGameStart';
 import { intensityStyles } from '@/lib/game-ui';
 import { cn } from '@/lib/utils';
+import { GameStartDialog } from './GameStartDialog';
 import {
   Accordion,
   AccordionContent,
@@ -175,12 +176,17 @@ const PromoGenerator = ({ game, open, onOpenChange }: { game: ListedGame | null;
     );
 };
 
-
-const CustomGameCard = ({ game, onPromoClick }: { game: ListedGame, onPromoClick: () => void }) => {
-    const { startGame } = useGameStart();
-
-    const handleGameSelect = (e: React.MouseEvent) => {
-        startGame(game, e);
+const CustomGameCard = ({
+    game,
+    onPromoClick,
+    onStartGame,
+}: {
+    game: ListedGame;
+    onPromoClick: () => void;
+    onStartGame: (game: ListedGame, event?: MouseEvent<Element>) => boolean;
+}) => {
+    const handleGameSelect = (e: MouseEvent<HTMLDivElement>) => {
+        onStartGame(game, e);
     };
     
     return (
@@ -247,7 +253,7 @@ const CustomGameCard = ({ game, onPromoClick }: { game: ListedGame, onPromoClick
 
 export function RussetidenClient({ standardGames, customGames }: RussetidenClientProps) {
     const [promoGame, setPromoGame] = useState<ListedGame | null>(null);
-    const { startGame } = useGameStart();
+    const { startGame, gameStartDialogProps } = useGameStart();
     
     return (
         <>
@@ -312,7 +318,11 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                         {customGames.map((game) => (
                            <motion.div key={game.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                               <CustomGameCard game={game} onPromoClick={() => setPromoGame(game)} />
+                               <CustomGameCard
+                                 game={game}
+                                 onPromoClick={() => setPromoGame(game)}
+                                 onStartGame={startGame}
+                               />
                            </motion.div>
                         ))}
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -382,6 +392,7 @@ export function RussetidenClient({ standardGames, customGames }: RussetidenClien
             </section>
 
 	            <PromoGenerator game={promoGame} open={!!promoGame} onOpenChange={() => setPromoGame(null)} />
+              <GameStartDialog {...gameStartDialogProps} />
 	        </>
     );
 }

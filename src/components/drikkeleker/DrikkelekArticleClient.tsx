@@ -23,6 +23,12 @@ import {
 } from '@/components/ui/accordion';
 import { AdBanner } from '../ads/AdBanner';
 import { withBasePathIfAbsolute } from '@/lib/base-path';
+import { intensityStyles } from '@/lib/game-ui';
+import {
+  getArticlePenaltyLabel,
+  getArticlePlayerLabel,
+} from '@/lib/drikkelek-metadata';
+import { cn } from '@/lib/utils';
 
 type RelatedArticle = Pick<GameArticle, 'slug' | 'title'>;
 type RelatedGame = {
@@ -75,6 +81,60 @@ export function DrikkelekArticleClient({
         <CardHeader>
           <h1 className="text-3xl font-bold leading-tight">{article.title}</h1>
           <p className="text-muted-foreground pt-2">{article.description}</p>
+          {(article.intensity || article.players || article.tags?.length || article.sipAmount || article.penalty) && (
+            <div className="mt-5 space-y-4">
+              <div className="grid gap-3 sm:grid-cols-3">
+                {article.players && (
+                  <div className="rounded-xl border border-border/60 bg-card/50 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                      Passer for
+                    </p>
+                    <p className="mt-2 font-semibold text-foreground">
+                      {getArticlePlayerLabel(article.players)}
+                    </p>
+                  </div>
+                )}
+                {article.intensity && (
+                  <div className="rounded-xl border border-border/60 bg-card/50 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                      Intensitet
+                    </p>
+                    <p className="mt-2 inline-flex items-center font-semibold text-foreground">
+                      <span
+                        className={cn(
+                          'mr-2 h-2.5 w-2.5 rounded-full',
+                          intensityStyles[article.intensity].dotClass
+                        )}
+                      />
+                      {intensityStyles[article.intensity].label}
+                    </p>
+                  </div>
+                )}
+                {getArticlePenaltyLabel(article) && (
+                  <div className="rounded-xl border border-border/60 bg-card/50 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                      Standardstraff
+                    </p>
+                    <p className="mt-2 font-semibold text-foreground">
+                      {getArticlePenaltyLabel(article)}
+                    </p>
+                  </div>
+                )}
+              </div>
+              {article.tags && article.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {article.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </CardHeader>
         <CardContent>
           <div className="space-y-8 text-muted-foreground">

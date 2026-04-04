@@ -5,23 +5,48 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { MoreVertical, Users, Repeat, LogOut, Trash2, Trophy } from 'lucide-react';
+import {
+  MoreVertical,
+  Users,
+  Repeat,
+  LogOut,
+  Trash2,
+  Trophy,
+  Wine,
+} from 'lucide-react';
 import { PlayerSetup } from './PlayerSetup';
 import { useRouter } from 'next/navigation';
 import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
+import {
+  gameplayDrinkingIntensityOptions,
+  type GameplayDrinkingIntensity,
+} from '@/lib/gameplay-preferences';
 import { cn } from '@/lib/utils';
+
+interface GameplayMenuPreferences {
+  drinkingIntensity: GameplayDrinkingIntensity;
+  onDrinkingIntensityChange: (drinkingIntensity: GameplayDrinkingIntensity) => void;
+}
 
 interface GameMenuProps {
   context: 'lobby' | 'in-game';
   onRestart?: () => void;
+  gameplayPreferences?: GameplayMenuPreferences;
 }
 
-export function GameMenu({ context, onRestart }: GameMenuProps) {
+export function GameMenu({
+  context,
+  onRestart,
+  gameplayPreferences,
+}: GameMenuProps) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
   const router = useRouter();
   const { players, removeAllPlayers } = useSession();
@@ -48,6 +73,8 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
   }
 
   const showDestructiveSeparator = context === 'in-game' || players.length > 0;
+  const showGameplayPreferences =
+    context === 'in-game' && gameplayPreferences !== undefined;
 
   return (
     <>
@@ -73,6 +100,37 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          {showGameplayPreferences && gameplayPreferences && (
+            <>
+              <DropdownMenuLabel>Drikkenivå</DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={gameplayPreferences.drinkingIntensity}
+                onValueChange={(value) =>
+                  gameplayPreferences.onDrinkingIntensityChange(
+                    value as GameplayDrinkingIntensity
+                  )
+                }
+              >
+                {(
+                  Object.entries(
+                    gameplayDrinkingIntensityOptions
+                  ) as Array<
+                    [
+                      GameplayDrinkingIntensity,
+                      (typeof gameplayDrinkingIntensityOptions)[GameplayDrinkingIntensity],
+                    ]
+                  >
+                ).map(([level, option]) => (
+                  <DropdownMenuRadioItem key={level} value={level}>
+                    <Wine className="mr-2 h-4 w-4" />
+                    <span>{option.label}</span>
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+              <DropdownMenuSeparator />
+            </>
+          )}
+
           <DropdownMenuItem onSelect={() => setIsPlayerSetupOpen(true)}>
             <Users className="mr-2 h-4 w-4" />
             <span>Endre spillere</span>

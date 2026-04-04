@@ -37,6 +37,7 @@ export interface GameTask {
   rule?: GameRule;
   moment?: GameTaskMoment;
   timer?: number;
+  sipAmount?: number;
   penalty?: string;
 }
 
@@ -79,6 +80,12 @@ export interface Game {
   kommune?: string;
 }
 
+export interface PlayerCountRange {
+  min?: number;
+  max?: number;
+  label?: string;
+}
+
 export interface GameArticle {
   slug: string;
   title: string;
@@ -95,7 +102,7 @@ export interface GameArticle {
   imageHint?: string;
   attributionHtml?: string;
   intensity?: 'low' | 'medium' | 'high';
-  players?: string;
+  players?: PlayerCountRange;
   tags?: string[];
   sipAmount?: number;
   penalty?: string;

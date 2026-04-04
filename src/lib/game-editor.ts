@@ -74,6 +74,7 @@ const gameTaskSchema = z.object({
   rule: gameRuleSchema.optional(),
   moment: z.enum(GAME_TASK_MOMENTS).optional(),
   timer: z.number().int().positive().optional(),
+  sipAmount: z.number().int().positive().optional(),
   penalty: z.string().trim().min(1).optional(),
 });
 
@@ -240,6 +241,14 @@ function sanitizeTask(task: GameTask): GameTask {
 
   if (typeof task.timer === 'number' && Number.isFinite(task.timer) && task.timer > 0) {
     sanitized.timer = task.timer;
+  }
+
+  if (
+    typeof task.sipAmount === 'number' &&
+    Number.isFinite(task.sipAmount) &&
+    task.sipAmount > 0
+  ) {
+    sanitized.sipAmount = Math.round(task.sipAmount);
   }
 
   const penalty = compactString(task.penalty);

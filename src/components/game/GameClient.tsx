@@ -11,10 +11,16 @@ import {
   X,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useGameplayPreferences } from '@/hooks/useGameplayPreferences';
 import { useSession } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameMenu } from './GameMenu';
+import {
+  formatSipAmount,
+  gameplayDrinkingIntensityOptions,
+  scaleSipAmount,
+} from '@/lib/gameplay-preferences';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -106,6 +112,7 @@ export function GameClient({
 }: GameClientProps) {
   const { players, isLoaded, updatePlayerStat } = useSession();
   const router = useRouter();
+  const { preferences, setDrinkingIntensity } = useGameplayPreferences();
 
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -371,12 +378,31 @@ export function GameClient({
   }, [currentTask, resolveTaskTextToPlain]);
 
   const currentTaskPenalty = useMemo(() => {
-    if (!currentTask?.penalty) {
+    if (!currentTask) {
       return null;
     }
 
-    return resolveTaskTextToPlain(currentTask.penalty, currentTask.type);
-  }, [currentTask, resolveTaskTextToPlain]);
+    const resolvedPenalty = currentTask.penalty
+      ? resolveTaskTextToPlain(currentTask.penalty, currentTask.type)
+      : null;
+
+    if (typeof currentTask.sipAmount !== 'number' || currentTask.sipAmount <= 0) {
+      return resolvedPenalty;
+    }
+
+    const scaledSipAmount = scaleSipAmount(
+      currentTask.sipAmount,
+      preferences.drinkingIntensity
+    );
+    const scaledLabel = formatSipAmount(scaledSipAmount);
+    const intensityLabel =
+      gameplayDrinkingIntensityOptions[preferences.drinkingIntensity].label.toLowerCase();
+    const intensitySentence = `Anbefalt straff nå: ${scaledLabel} på ${intensityLabel} nivå.`;
+
+    return resolvedPenalty
+      ? `${resolvedPenalty} ${intensitySentence}`
+      : intensitySentence;
+  }, [currentTask, preferences.drinkingIntensity, resolveTaskTextToPlain]);
 
   const startCardTimer = useCallback(() => {
     const durationSeconds = currentTask?.timer;
@@ -689,7 +715,14 @@ export function GameClient({
         )}
       </div>
 
-      <GameMenu context="in-game" onRestart={setupGame} />
+      <GameMenu
+        context="in-game"
+        onRestart={setupGame}
+        gameplayPreferences={{
+          drinkingIntensity: preferences.drinkingIntensity,
+          onDrinkingIntensityChange: setDrinkingIntensity,
+        }}
+      />
     </div>
   );
 

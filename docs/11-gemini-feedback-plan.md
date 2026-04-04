@@ -167,8 +167,8 @@ Ferdig når:
 - intensitetsstyring er forståelig for brukeren på få sekunder
 - datamodellen åpner for dynamiske straffer uten at hele spillmotoren må bygges om
 
-## Fase 6: Privacy-friendly analytics og trust
-
+## 
+Fase 6: Privacy-friendly analytics og trust
 Mål:
 
 - styrke produktløftet om lav profilering

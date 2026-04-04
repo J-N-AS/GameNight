@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { GameMenu } from './GameMenu';
 import { motion } from 'framer-motion';
 import { useSession } from '@/hooks/usePlayers';
+import { GameStartDialog } from './GameStartDialog';
 import {
   Card,
   CardContent,
@@ -57,7 +58,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   
   const { players, isLoaded } = useSession();
   const router = useRouter();
-  const { startGame } = useGameStart();
+  const { startGame, gameStartDialogProps } = useGameStart();
   const visibleGames = useMemo(
     () => allGames.filter((game) => !game.hidden && !game.isHiddenFromMain),
     [allGames]
@@ -447,6 +448,7 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
             </DialogFooter>
         </DialogContent>
       </Dialog>
+      <GameStartDialog {...gameStartDialogProps} />
     </motion.div>
   );
 }

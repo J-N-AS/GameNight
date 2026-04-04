@@ -2,6 +2,7 @@ import type { GameArticle } from './types';
 import drikkeleker from '@/data/drikkeleker.json';
 import { PlaceHolderImages } from './placeholder-images';
 import { cache } from 'react';
+import type { DrikkelekListItem } from './drikkelek-metadata';
 
 const loadArticles = cache(async (): Promise<GameArticle[]> => {
   const articles = drikkeleker as Omit<GameArticle, 'imageUrl' | 'imageHint' | 'attributionHtml'>[];
@@ -17,17 +18,33 @@ const loadArticles = cache(async (): Promise<GameArticle[]> => {
   });
 });
 
-export const getArticles = cache(async (): Promise<
-  Omit<GameArticle, 'whatYouNeed' | 'rules' | 'cardRules' | 'attributionHtml'>[]
-> => {
+export const getArticles = cache(async (): Promise<DrikkelekListItem[]> => {
   const articles = await loadArticles();
-  return articles.map(({ slug, title, description, imageUrl, imageHint }) => ({
-    slug,
-    title,
-    description,
-    imageUrl,
-    imageHint,
-  }));
+  return articles.map(
+    ({
+      slug,
+      title,
+      description,
+      imageUrl,
+      imageHint,
+      intensity,
+      players,
+      tags,
+      sipAmount,
+      penalty,
+    }) => ({
+      slug,
+      title,
+      description,
+      imageUrl,
+      imageHint,
+      intensity,
+      players,
+      tags,
+      sipAmount,
+      penalty,
+    })
+  );
 });
 
 export const getArticle = cache(async (slug: string): Promise<GameArticle | undefined> => {

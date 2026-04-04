@@ -18,6 +18,7 @@ import { getPlayerRequirementLabel } from '@/lib/player-requirements';
 import { useGameStart } from '@/hooks/useGameStart';
 import { Badge } from '@/components/ui/badge';
 import { getGameTier, isCoreGame } from '@/lib/game-library';
+import { GameStartDialog } from './GameStartDialog';
 import {
   Accordion,
   AccordionContent,
@@ -29,7 +30,7 @@ import { intensityStyles } from '@/lib/game-ui';
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
 export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
-  const { startGame } = useGameStart();
+  const { startGame, gameStartDialogProps } = useGameStart();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTag, setActiveTag] = useState('Alle');
@@ -327,6 +328,7 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
                 <p>Prøv å endre søkeordet eller fjerne filteret.</p>
             </motion.div>
         )}
+      <GameStartDialog {...gameStartDialogProps} />
     </div>
   );
 }
