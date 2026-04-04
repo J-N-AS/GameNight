@@ -1217,6 +1217,10 @@ export function GameEditorClient() {
                               {GAME_TASK_MOMENT_LABELS[task.moment]}
                             </Badge>
                           )}
+                          {typeof task.timer === 'number' && task.timer > 0 && (
+                            <Badge variant="outline">{task.timer}s</Badge>
+                          )}
+                          {task.penalty && <Badge variant="outline">Straff</Badge>}
                           {task.rule && <Badge variant="outline">Regel</Badge>}
                         </div>
                         
@@ -1380,6 +1384,50 @@ export function GameEditorClient() {
                           }
                           {...bindTextField(`items.${index}.text`, index)}
                         />
+                      </div>
+
+                      <div className="grid gap-5 md:grid-cols-2">
+                        <div>
+                          <SectionLabel
+                            htmlFor={`task-timer-${index}`}
+                            title="Timer i sekunder"
+                            hint="Valgfritt. Vises som stor nedtelling i gameplay."
+                          />
+                          <Input
+                            id={`task-timer-${index}`}
+                            type="number"
+                            min={1}
+                            step={1}
+                            value={task.timer ?? ''}
+                            onChange={(event) =>
+                              updateField(
+                                `items.${index}.timer`,
+                                event.target.value === ''
+                                  ? undefined
+                                  : Number(event.target.value)
+                              )
+                            }
+                          />
+                        </div>
+
+                        <div>
+                          <SectionLabel
+                            htmlFor={`task-penalty-${index}`}
+                            title="Straffetekst"
+                            hint="Valgfritt. Passer fint til tidskort og senere spillregler."
+                          />
+                          <Input
+                            id={`task-penalty-${index}`}
+                            value={task.penalty ?? ''}
+                            onChange={(event) =>
+                              updateField(
+                                `items.${index}.penalty`,
+                                event.target.value
+                              )
+                            }
+                            {...bindTextField(`items.${index}.penalty`, index)}
+                          />
+                        </div>
                       </div>
 
                       <div className="rounded-2xl border border-border/70 bg-background/50 p-4">
@@ -1594,6 +1642,18 @@ export function GameEditorClient() {
                     game={{ id: game.id || 'preview', category: game.category }}
                     task={previewTask}
                     rule={previewTask.rule}
+                    penalty={previewTask.penalty}
+                    timerState={
+                      typeof previewTask.timer === 'number' && previewTask.timer > 0
+                        ? {
+                            durationSeconds: previewTask.timer,
+                            remainingSeconds: previewTask.timer,
+                            status: 'idle',
+                            onStart: () => undefined,
+                            onRestart: () => undefined,
+                          }
+                        : null
+                    }
                     teams={game.teams}
                     content={previewTask.text || 'Skriv tekst i kortet du vil teste'}
                   />

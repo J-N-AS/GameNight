@@ -2,7 +2,7 @@
 
 import type { Game, GameRule, GameTask, Player } from '@/lib/types';
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { TaskCard } from './TaskCard';
+import { TaskCard, type TaskCardTimerState } from './TaskCard';
 import { Button } from '@/components/ui/button';
 import {
   Home,
@@ -97,6 +97,8 @@ interface GameClientProps {
   onFinishedChange?: (isFinished: boolean) => void;
 }
 
+type CardTimerStatus = 'idle' | 'running' | 'finished';
+
 export function GameClient({
   game,
   gameMode,
@@ -123,11 +125,23 @@ export function GameClient({
   const spinTimeoutRef = useRef<number | null>(null);
   const selectionCountsRef = useRef<Record<string, number>>({});
   const recentSelectionsRef = useRef<string[]>([]);
+  const timerIntervalRef = useRef<number | null>(null);
+  const timerDeadlineRef = useRef<number | null>(null);
+
+  const [timerStatus, setTimerStatus] = useState<CardTimerStatus>('idle');
+  const [remainingTimerSeconds, setRemainingTimerSeconds] = useState<number | null>(null);
 
   const isVersusMode = game.gameType === 'versus';
   const isSpinTheBottleMode = game.gameType === 'spin-the-bottle';
   const isPhysicalItemGame = game.gameType === 'physical-item';
   const showLoading = !isLoaded || tasks.length === 0;
+
+  const clearCardTimer = useCallback(() => {
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+  }, []);
 
   const syncSelectionState = useCallback((nextPlayers: Player[]) => {
     const nextPlayerIds = new Set(nextPlayers.map((player) => player.id));
@@ -157,6 +171,11 @@ export function GameClient({
   }, []);
 
   const setupGame = useCallback(() => {
+    clearCardTimer();
+    timerDeadlineRef.current = null;
+    setTimerStatus('idle');
+    setRemainingTimerSeconds(null);
+
     if (spinTimeoutRef.current) {
       clearTimeout(spinTimeoutRef.current);
       spinTimeoutRef.current = null;
@@ -176,7 +195,7 @@ export function GameClient({
     setBottleRotation(0);
     setTaskPlayers(null);
     processedIndexRef.current = null;
-  }, [game]);
+  }, [clearCardTimer, game]);
 
   useEffect(() => {
     if (isLoaded) {
@@ -186,11 +205,13 @@ export function GameClient({
 
   useEffect(() => {
     return () => {
+      clearCardTimer();
+
       if (spinTimeoutRef.current) {
         clearTimeout(spinTimeoutRef.current);
       }
     };
-  }, []);
+  }, [clearCardTimer]);
 
   useEffect(() => {
     onFinishedChange?.(isFinished);
@@ -200,6 +221,20 @@ export function GameClient({
     () => (tasks.length > 0 ? tasks[currentIndex] : null),
     [currentIndex, tasks]
   );
+
+  useEffect(() => {
+    clearCardTimer();
+    timerDeadlineRef.current = null;
+
+    if (typeof currentTask?.timer === 'number' && currentTask.timer > 0) {
+      setTimerStatus('idle');
+      setRemainingTimerSeconds(currentTask.timer);
+      return;
+    }
+
+    setTimerStatus('idle');
+    setRemainingTimerSeconds(null);
+  }, [clearCardTimer, currentTask]);
 
   useEffect(() => {
     if (!isLoaded) {
@@ -335,6 +370,65 @@ export function GameClient({
     };
   }, [currentTask, resolveTaskTextToPlain]);
 
+  const currentTaskPenalty = useMemo(() => {
+    if (!currentTask?.penalty) {
+      return null;
+    }
+
+    return resolveTaskTextToPlain(currentTask.penalty, currentTask.type);
+  }, [currentTask, resolveTaskTextToPlain]);
+
+  const startCardTimer = useCallback(() => {
+    const durationSeconds = currentTask?.timer;
+
+    if (typeof durationSeconds !== 'number' || durationSeconds <= 0) {
+      return;
+    }
+
+    clearCardTimer();
+
+    timerDeadlineRef.current = Date.now() + durationSeconds * 1000;
+    setRemainingTimerSeconds(durationSeconds);
+    setTimerStatus('running');
+
+    timerIntervalRef.current = window.setInterval(() => {
+      const deadline = timerDeadlineRef.current;
+
+      if (!deadline) {
+        return;
+      }
+
+      const secondsLeft = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+
+      setRemainingTimerSeconds(secondsLeft);
+
+      if (secondsLeft <= 0) {
+        clearCardTimer();
+        timerDeadlineRef.current = null;
+        setTimerStatus('finished');
+      }
+    }, 200);
+  }, [clearCardTimer, currentTask?.timer]);
+
+  const currentTaskTimerState = useMemo<TaskCardTimerState | null>(() => {
+    if (
+      !currentTask ||
+      typeof currentTask.timer !== 'number' ||
+      currentTask.timer <= 0 ||
+      remainingTimerSeconds === null
+    ) {
+      return null;
+    }
+
+    return {
+      durationSeconds: currentTask.timer,
+      remainingSeconds: remainingTimerSeconds,
+      status: timerStatus,
+      onStart: startCardTimer,
+      onRestart: startCardTimer,
+    };
+  }, [currentTask, remainingTimerSeconds, startCardTimer, timerStatus]);
+
   const commitStatsForCurrentTask = useCallback(() => {
     if (!currentTask || !isLoaded || players.length === 0) {
       return;
@@ -390,6 +484,9 @@ export function GameClient({
       return;
     }
 
+    clearCardTimer();
+    timerDeadlineRef.current = null;
+
     commitStatsForCurrentTask();
 
     if (isSpinTheBottleMode) {
@@ -402,6 +499,7 @@ export function GameClient({
       setIsFinished(true);
     }
   }, [
+    clearCardTimer,
     commitStatsForCurrentTask,
     currentIndex,
     currentTask,
@@ -558,6 +656,8 @@ export function GameClient({
         task={currentTask}
         content={processedContent}
         rule={currentTaskRule}
+        penalty={currentTaskPenalty}
+        timerState={currentTaskTimerState}
         onVote={isVersusMode ? handleVote : undefined}
         teams={isVersusMode ? game.teams : undefined}
       />

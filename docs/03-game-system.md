@@ -80,6 +80,8 @@ Valgfrie felt:
 
 - `rule`
 - `moment`
+- `timer`
+- `penalty`
 
 ### Korttyper
 
@@ -148,6 +150,18 @@ Hvordan det virker i praksis nå:
 - regler spores ikke utover kortet og persisteres ikke ved refresh
 
 Dette er bevisst. GameNight prioriterer tempo og lav administrasjon foran regel-UI.
+
+## Timere og straff
+
+`timer` kan settes på et kort når oppgaven har en tydelig nedtelling i sekunder.
+
+`penalty` er en kort fritekst som kan vises som egen straffemarkering i gameplay.
+
+I praksis betyr det:
+
+- tidskort kan startes direkte i `GameClient`
+- nedtelling nullstilles når nytt kort trekkes
+- kort uten `timer` eller `penalty` oppfører seg som før
 
 ## Moment metadata
 

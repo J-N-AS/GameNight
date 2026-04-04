@@ -39,7 +39,7 @@ export function AdBanner({ className }: { className?: string }) {
     return (
       <div
         className={cn(
-          'flex w-full max-w-lg select-none items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/30 p-4 text-center text-muted-foreground',
+          'flex min-h-[120px] w-full max-w-lg select-none items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/30 p-4 text-center text-muted-foreground',
           className
         )}
       >
@@ -56,7 +56,7 @@ export function AdBanner({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'w-full max-w-lg overflow-hidden rounded-lg border border-border/60 bg-card/40 p-2',
+        'flex min-h-[120px] w-full max-w-lg items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-card/40 p-2',
         className
       )}
     >

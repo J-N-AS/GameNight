@@ -2,12 +2,19 @@ import { notFound } from 'next/navigation';
 import type { Game } from './types';
 import { cache } from 'react';
 import { getGameTier } from './game-library';
+import { validateGame } from './game-editor';
 
 // Helper function to dynamically import game data
 async function loadGameData(id: string): Promise<Game | null> {
   try {
     const gameModule = await import(`@/data/${id}.json`);
-    return gameModule.default as Game;
+    const validation = validateGame(gameModule.default as Game);
+
+    if (!validation.success) {
+      return null;
+    }
+
+    return validation.data;
   } catch (error) {
     // We don't log here anymore as it can be noisy for files that are expected to not exist
     // (e.g. if a game is removed from the list but the file isn't deleted yet)

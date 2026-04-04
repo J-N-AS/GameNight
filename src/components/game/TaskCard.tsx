@@ -2,11 +2,14 @@ import type { Game, GameRule, GameTask } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { getTaskPresentation, type GameplayTone } from '@/lib/gameplay';
 import {
+  CheckCircle2,
+  Clock3,
   Crown,
   Flame,
   Hand,
   HelpCircle,
   MessageSquareQuote,
+  RotateCcw,
   ShieldAlert,
   Sparkles,
   Swords,
@@ -97,7 +100,25 @@ type TaskCardProps = {
   onVote?: (winner: 'team1' | 'team2') => void;
   teams?: Game['teams'];
   rule?: GameRule | null;
+  penalty?: string | null;
+  timerState?: TaskCardTimerState | null;
 };
+
+export type TaskCardTimerState = {
+  durationSeconds: number;
+  remainingSeconds: number;
+  status: 'idle' | 'running' | 'finished';
+  onStart: () => void;
+  onRestart: () => void;
+};
+
+function formatTimerLabel(totalSeconds: number) {
+  const safeSeconds = Math.max(0, totalSeconds);
+  const minutes = Math.floor(safeSeconds / 60);
+  const seconds = safeSeconds % 60;
+
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
 
 export function TaskCard({
   game,
@@ -106,11 +127,40 @@ export function TaskCard({
   onVote,
   teams,
   rule,
+  penalty,
+  timerState,
 }: TaskCardProps) {
   const presentation = getTaskPresentation(task, game);
   const details = toneDetails[presentation.tone];
   const Icon = details.icon;
   const subtitle = rule?.description ?? presentation.hint;
+  const showTimer = Boolean(
+    timerState && timerState.durationSeconds > 0
+  );
+  const showPenalty = Boolean(penalty?.trim());
+  const timerProgress = showTimer && timerState
+    ? Math.max(
+        0,
+        Math.min(
+          100,
+          (timerState.remainingSeconds / timerState.durationSeconds) * 100
+        )
+      )
+    : 0;
+  const timerLabel =
+    timerState?.status === 'finished'
+      ? 'Tiden er ute'
+      : timerState?.status === 'running'
+        ? 'Timeren går'
+        : 'Klar når dere er det';
+  const timerActionLabel =
+    timerState?.status === 'idle'
+      ? 'Start timer'
+      : timerState?.status === 'running'
+        ? 'Start på nytt'
+        : 'Kjør igjen';
+  const TimerStatusIcon =
+    timerState?.status === 'finished' ? CheckCircle2 : Clock3;
 
   return (
     <article
@@ -155,6 +205,81 @@ export function TaskCard({
             >
               {subtitle}
             </p>
+          )}
+
+          {(showTimer || showPenalty) && (
+            <motion.div
+              className="mt-7 w-full max-w-[28rem] rounded-[2rem] border border-white/16 bg-black/15 p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-sm"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {showTimer && timerState && (
+                <div>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-white/82">
+                      <TimerStatusIcon className="h-4 w-4" />
+                      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em]">
+                        Nedtelling
+                      </p>
+                    </div>
+                    <p className="text-sm font-semibold text-white/72">
+                      {timerState.durationSeconds} sek
+                    </p>
+                  </div>
+
+                  <div className="mt-3 flex items-end justify-between gap-4">
+                    <p className="text-[clamp(2.3rem,10vw,4rem)] font-black leading-none tracking-[-0.06em] text-white tabular-nums">
+                      {formatTimerLabel(timerState.remainingSeconds)}
+                    </p>
+                    <p className="pb-1 text-right text-sm font-medium text-white/76">
+                      {timerLabel}
+                    </p>
+                  </div>
+
+                  <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-white/16">
+                    <motion.div
+                      className={cn(
+                        'h-full rounded-full',
+                        timerState.status === 'finished'
+                          ? 'bg-white/55'
+                          : 'bg-white'
+                      )}
+                      animate={{ width: `${timerProgress}%` }}
+                      transition={{ duration: 0.18, ease: 'linear' }}
+                    />
+                  </div>
+
+                  <Button
+                    type="button"
+                    onClick={
+                      timerState.status === 'idle'
+                        ? timerState.onStart
+                        : timerState.onRestart
+                    }
+                    className="mt-4 h-12 rounded-[1.2rem] bg-white px-5 font-semibold text-black hover:bg-white/92"
+                  >
+                    {timerState.status === 'idle' ? (
+                      <Clock3 className="mr-2 h-4 w-4" />
+                    ) : (
+                      <RotateCcw className="mr-2 h-4 w-4" />
+                    )}
+                    {timerActionLabel}
+                  </Button>
+                </div>
+              )}
+
+              {showPenalty && (
+                <div className={cn(showTimer && 'mt-4 border-t border-white/12 pt-4')}>
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/62">
+                    Straff
+                  </p>
+                  <p className="mt-2 text-sm font-medium leading-relaxed text-white/88">
+                    {penalty}
+                  </p>
+                </div>
+              )}
+            </motion.div>
           )}
         </div>
 

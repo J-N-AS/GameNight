@@ -73,6 +73,8 @@ const gameTaskSchema = z.object({
   text: z.string().trim().min(1, 'Hvert kort må ha tekst.'),
   rule: gameRuleSchema.optional(),
   moment: z.enum(GAME_TASK_MOMENTS).optional(),
+  timer: z.number().int().positive().optional(),
+  penalty: z.string().trim().min(1).optional(),
 });
 
 const gameWarningSchema = z.object({
@@ -234,6 +236,15 @@ function sanitizeTask(task: GameTask): GameTask {
 
   if (task.moment) {
     sanitized.moment = task.moment;
+  }
+
+  if (typeof task.timer === 'number' && Number.isFinite(task.timer) && task.timer > 0) {
+    sanitized.timer = task.timer;
+  }
+
+  const penalty = compactString(task.penalty);
+  if (penalty) {
+    sanitized.penalty = penalty;
   }
 
   const rule = sanitizeRule(task.rule);
@@ -467,6 +478,7 @@ export function buildPreviewTask(task: GameTask, game: Pick<Game, 'teams'>): Gam
   return {
     ...task,
     text: replacePreviewToken(task.text, game),
+    penalty: task.penalty ? replacePreviewToken(task.penalty, game) : undefined,
     rule: task.rule
       ? {
           ...task.rule,

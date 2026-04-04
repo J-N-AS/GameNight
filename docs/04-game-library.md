@@ -77,6 +77,8 @@ Et typisk spill ser slik ut:
 - `type` og `text` er alltid obligatoriske
 - `rule` brukes bare når kortet innfører eller rydder en regel gruppa kan huske selv
 - `moment` brukes bare når kortet fortjener tydeligere tone eller redaksjonell markering
+- `timer` brukes når kortet har en konkret nedtelling i sekunder
+- `penalty` kan brukes når kortet trenger en egen, kort straffetekst i UI-et
 
 ## Hvordan legge til et nytt spill
 

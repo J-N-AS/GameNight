@@ -535,7 +535,7 @@ export function InfoPageClient({ slug }: { slug: InfoPageSlug }) {
         <CardContent>{page.content}</CardContent>
       </Card>
       <motion.div
-        className="mt-12 w-full flex justify-center"
+        className="mt-12 w-full flex justify-center min-h-[120px]"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}

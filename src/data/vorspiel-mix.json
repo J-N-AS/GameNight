@@ -25,7 +25,12 @@
     },
     { "type": "prompt", "text": "{player}, hva er det flaueste kallenavnet du noensinne har hatt?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å foreslå nachspiel kl. 02?" },
-    { "type": "challenge", "text": "{player}, du får 10 sekunder til å nevne 5 ting man kan finne i et kjøleskap. Hvis du feiler, drikk." },
+    {
+      "type": "challenge",
+      "text": "{player}, du får 10 sekunder til å nevne 5 ting man kan finne i et kjøleskap. Hvis du feiler, drikk.",
+      "timer": 10,
+      "penalty": "{player} drikker hvis tiden ryker."
+    },
     { "type": "prompt", "text": "{player}, fortell om en gang du prøvde å imponere noen, men feilet totalt." },
     { "type": "challenge", "text": "Alle tar én slurk og sier skål til personen på venstre side." },
     { "type": "prompt", "text": "{player}, hva er din faste «første sang» når du skal i festmodus?" },
@@ -37,7 +42,11 @@
     { "type": "pointing", "text": "Hvem her blir mest pratsom etter 2 drinker?" },
     { "type": "challenge", "text": "{player}, bytt plass med {player2} uten å si et ord. Siste som ler: drikk." },
     { "type": "prompt", "text": "{player}, hva er den rareste tingen du har kjøpt på impuls?" },
-    { "type": "challenge", "text": "{player}, snakk med dialekt du ikke kan i 20 sekunder. Hvis noen gjetter feil dialekt: de drikker, hvis de gjetter riktig: du drikker." },
+    {
+      "type": "challenge",
+      "text": "{player}, snakk med dialekt du ikke kan i 20 sekunder. Hvis noen gjetter feil dialekt: de drikker, hvis de gjetter riktig: du drikker.",
+      "timer": 20
+    },
     { "type": "prompt", "text": "{player}, hva er det kleineste du har gjort for å virke kul?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å starte allsang?" },
     { "type": "challenge", "text": "Alle tar én slurk hvis de har på seg svarte klær." },
@@ -55,19 +64,34 @@
     },
     { "type": "prompt", "text": "{player}, hva er din mest uventede «ick»?" },
     { "type": "pointing", "text": "Hvem her har best pokerfjes?" },
-    { "type": "challenge", "text": "{player}, gjør din beste «jeg er ikke full»-improvisasjon i 10 sekunder. Gruppen bestemmer: drikk 0–3 slurker." },
+    {
+      "type": "challenge",
+      "text": "{player}, gjør din beste «jeg er ikke full»-improvisasjon i 10 sekunder. Gruppen bestemmer: drikk 0–3 slurker.",
+      "timer": 10,
+      "penalty": "Gruppen bestemmer 0–3 slurker etterpå."
+    },
     { "type": "prompt", "text": "Hvilken låt får deg alltid til å danse?" },
     { "type": "challenge", "text": "Alle tar en slurk og sier en ting de faktisk liker med seg selv." },
     { "type": "prompt", "text": "{player}, hva er ditt mest brukte ord når du er på fest?" },
     { "type": "pointing", "text": "Hvem her kommer til å bli hangover-kongen/dronninga i morgen?" },
     { "type": "challenge", "text": "{player}, gi en «toast» på maks 8 ord. Hvis noen sier «aww»: du deler ut 2 slurker." },
     { "type": "prompt", "text": "{player}, hva er den beste festen du har vært på, og hvorfor?" },
-    { "type": "challenge", "text": "{player}, nevn 3 kjendiser på 5 sekunder. Feiler du: drikk." },
+    {
+      "type": "challenge",
+      "text": "{player}, nevn 3 kjendiser på 5 sekunder. Feiler du: drikk.",
+      "timer": 5,
+      "penalty": "{player} drikker hvis det ikke sitter."
+    },
     { "type": "prompt", "text": "{player}, hva er det mest tilfeldige du har Googlet?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å bli venn med noen i køen på byen?" },
     { "type": "challenge", "text": "Alle som har en app for matlevering: drikk." },
     { "type": "prompt", "text": "{player}, hvis du kunne byttet liv med noen i én dag, hvem og hvorfor?" },
-    { "type": "challenge", "text": "{player}, velg en spiller. Dere må svare «ja» på alt dere blir spurt om i 1 minutt (innenfor rimelighet). Første som glemmer: drikk." },
+    {
+      "type": "challenge",
+      "text": "{player}, velg en spiller. Dere må svare «ja» på alt dere blir spurt om i 1 minutt (innenfor rimelighet). Første som glemmer: drikk.",
+      "timer": 60,
+      "penalty": "Første som glemmer «ja»-regelen drikker."
+    },
     { "type": "prompt", "text": "{player}, hva er ditt mest «jeg var ung og dum»-øyeblikk?" },
     { "type": "pointing", "text": "Hvem her har mest «main character energy»?" },
     {
@@ -100,7 +124,12 @@
     { "type": "challenge", "text": "{player}, velg {player2} som dere må skåle og ta en slurk sammen med." },
     { "type": "prompt", "text": "{player}, hva er det rareste komplimentet du har fått?" },
     { "type": "pointing", "text": "Hvem her blir mest sta når de er brisne?" },
-    { "type": "challenge", "text": "{player}, si 3 ting du er takknemlig for. Hvis du bruker mer enn 10 sekunder: drikk." },
+    {
+      "type": "challenge",
+      "text": "{player}, si 3 ting du er takknemlig for. Hvis du bruker mer enn 10 sekunder: drikk.",
+      "timer": 10,
+      "penalty": "{player} drikker hvis de bruker for lang tid."
+    },
     { "type": "prompt", "text": "{player}, hva er din mest «overtenking»-ting?" },
     { "type": "challenge", "text": "Alle spiller stein-saks-papir mot personen til høyre. Taperen: 2 slurker.", "moment": "group" },
     { "type": "prompt", "text": "{player}, hva er den beste og verste appen på telefonen din?" },
@@ -142,15 +171,30 @@
     { "type": "pointing", "text": "Hvem her blir mest sentimental når de drikker?" },
     { "type": "challenge", "text": "{player}, del ut 4 slurker, men maks 2 til samme person.", "moment": "impact" },
     { "type": "prompt", "text": "{player}, hva er den mest «random» tingen du har på ønskelista?" },
-    { "type": "challenge", "text": "{player}, gjør en 10-sekunders «catwalk» til nærmeste vegg og tilbake. Hvis du nekter: drikk 3." },
+    {
+      "type": "challenge",
+      "text": "{player}, gjør en 10-sekunders «catwalk» til nærmeste vegg og tilbake. Hvis du nekter: drikk 3.",
+      "timer": 10,
+      "penalty": "{player} drikker 3 hvis de nekter."
+    },
     { "type": "prompt", "text": "{player}, hva er din mest kontroversielle mat-mening?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å adoptere et kjæledyr impulsivt?" },
     { "type": "challenge", "text": "Alle tar én slurk hvis de har sendt en «u up?»-melding noen gang." },
     { "type": "prompt", "text": "{player}, hva er ditt største røde flagg (på en morsom måte)?" },
-    { "type": "challenge", "text": "{player}, du får 15 sekunder til å nevne 5 frukter. Hvis du tenkte på noe annet: drikk." },
+    {
+      "type": "challenge",
+      "text": "{player}, du får 15 sekunder til å nevne 5 frukter. Hvis du tenkte på noe annet: drikk.",
+      "timer": 15,
+      "penalty": "{player} drikker hvis de ikke holder fokus."
+    },
     { "type": "prompt", "text": "{player}, hva er en ting du alltid overdriver når du forteller en historie?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å bli venn med bartenderen?" },
-    { "type": "challenge", "text": "{player}, velg {player2} som må «hype» deg i 20 sekunder. Hvis de gjør det bra: du drikker. Hvis ikke: de drikker." },
+    {
+      "type": "challenge",
+      "text": "{player}, velg {player2} som må «hype» deg i 20 sekunder. Hvis de gjør det bra: du drikker. Hvis ikke: de drikker.",
+      "timer": 20,
+      "penalty": "Hvis hypen ikke leverer, drikker {player2}."
+    },
     { "type": "prompt", "text": "{player}, hva er det rareste du har blitt misforstått på?" },
     {
       "type": "challenge",
