@@ -1,14 +1,24 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Rocket, Gamepad2, Users, Beer, Music, Wand2, Dices, Clapperboard, Trophy } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { PlayerSetup } from './PlayerSetup';
+import {
+  Beer,
+  Clapperboard,
+  Dices,
+  Gamepad2,
+  Music,
+  Rocket,
+  Trophy,
+  Users,
+} from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { GameMenu } from './GameMenu';
 import { motion } from 'framer-motion';
-import { useSession } from '@/hooks/usePlayers';
+import { useRouter } from 'next/navigation';
+import type { Game } from '@/lib/types';
+import { Button } from '@/components/ui/button';
+import { PlayerSetup } from './PlayerSetup';
+import { GameMenu } from './GameMenu';
 import { GameStartDialog } from './GameStartDialog';
 import {
   Card,
@@ -26,10 +36,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { useRouter } from 'next/navigation';
-import type { Game, Theme } from '@/lib/types';
-import { AdBanner } from '@/components/ads/AdBanner';
-import { PartyTools } from './PartyTools';
+import { useSession } from '@/hooks/usePlayers';
 import { withBasePath } from '@/lib/base-path';
 import {
   formatPlayerCount,
@@ -41,27 +48,127 @@ import {
 import { useGameStart } from '@/hooks/useGameStart';
 import { intensityStyles } from '@/lib/game-ui';
 import { cn } from '@/lib/utils';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
 
-export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: GameFromGetGames[], recommendedGames: GameFromGetGames[], themes: Theme[] }) {
+const FUTURE_ROWS = [
+  {
+    title: 'Klassiske drikkeleker',
+    description:
+      'Plass for kuraterte klassikere, regler og raske innganger til kjente favoritter.',
+    icon: Beer,
+  },
+  {
+    title: 'Musikk drikkeleker',
+    description:
+      'Plass for sangbaserte runder, drikkeregler og miksede musikkleker.',
+    icon: Music,
+  },
+  {
+    title: 'Skjerm drikkeleker',
+    description:
+      'Plass for TV-, sport- og realitybaserte spillkvelder med felles skjerm.',
+    icon: Clapperboard,
+  },
+] as const;
+
+function GameCard({
+  game,
+  onStart,
+}: {
+  game: GameFromGetGames;
+  onStart: (game: GameFromGetGames, event?: React.MouseEvent<HTMLAnchorElement>) => void;
+}) {
+  return (
+    <Link
+      href={`/spill/${game.id}`}
+      onClick={(event) => onStart(game, event)}
+      className="group block h-full"
+    >
+      <Card className="flex h-full flex-col border-border/70 bg-card/80 transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-xl hover:shadow-primary/10">
+        <CardHeader className="flex-row items-start gap-4 pb-4">
+          <div className="mt-1 text-4xl">{game.emoji}</div>
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <CardTitle className="text-xl font-bold transition-colors group-hover:text-primary">
+                {game.title}
+              </CardTitle>
+              {game.audience === '18+' && (
+                <span className="rounded-full bg-destructive/80 px-2 py-0.5 text-xs font-medium text-destructive-foreground">
+                  18+
+                </span>
+              )}
+            </div>
+            <CardDescription className="mt-1 text-muted-foreground/80">
+              {game.description}
+            </CardDescription>
+          </div>
+        </CardHeader>
+        <CardContent className="mt-auto flex items-end justify-between gap-4 pt-0">
+          <div className="min-w-0">
+            {getPlayerRequirementLabel(game) && (
+              <span className="rounded-full bg-primary/15 px-2 py-0.5 text-xs font-semibold text-foreground/80">
+                {getPlayerRequirementLabel(game)}
+              </span>
+            )}
+          </div>
+          <div className="flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground">
+            <span
+              className={cn(
+                'h-2.5 w-2.5 rounded-full',
+                intensityStyles[game.intensity].dotClass
+              )}
+            />
+            {intensityStyles[game.intensity].label}
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
+  );
+}
+
+export function LobbyClient({
+  allGames,
+  recommendedGames,
+}: {
+  allGames: GameFromGetGames[];
+  recommendedGames: GameFromGetGames[];
+}) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
   const [isSurpriseMeOpen, setIsSurpriseMeOpen] = useState(false);
   const [surpriseGame, setSurpriseGame] = useState<GameFromGetGames | null>(null);
   const [pendingReturnPath, setPendingReturnPath] = useState<string | null>(null);
-  
+  const [activeCategory, setActiveCategory] = useState('Alle');
+
   const { players, isLoaded } = useSession();
   const router = useRouter();
   const { startGame, gameStartDialogProps } = useGameStart();
+
   const visibleGames = useMemo(
     () => allGames.filter((game) => !game.hidden && !game.isHiddenFromMain),
     [allGames]
+  );
+
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+
+    visibleGames.forEach((game) => {
+      (game.category ?? []).forEach((category) => {
+        counts.set(category, (counts.get(category) ?? 0) + 1);
+      });
+    });
+
+    return Array.from(counts.entries()).sort(
+      (a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'nb')
+    );
+  }, [visibleGames]);
+
+  const categoryOptions = useMemo(
+    () => [
+      { label: 'Alle', count: visibleGames.length },
+      ...categoryCounts.map(([label, count]) => ({ label, count })),
+    ],
+    [categoryCounts, visibleGames.length]
   );
 
   const pendingGame = useMemo(() => {
@@ -76,6 +183,20 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   const missingPendingPlayers = pendingGame
     ? getMissingPlayers(pendingGame, players.length)
     : 0;
+
+  const filteredCategoryGames = useMemo(() => {
+    const matchesCategory =
+      activeCategory === 'Alle'
+        ? visibleGames
+        : visibleGames.filter((game) => game.category?.includes(activeCategory));
+
+    return matchesCategory.slice(0, 6);
+  }, [activeCategory, visibleGames]);
+
+  const allGamesHref =
+    activeCategory === 'Alle'
+      ? '/alle-spill'
+      : `/alle-spill?kategori=${encodeURIComponent(activeCategory)}`;
 
   const handleSetupComplete = () => {
     setIsPlayerSetupOpen(false);
@@ -102,23 +223,29 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
       setIsPlayerSetupOpen(true);
     }
 
-    if (
-      returnTo &&
-      returnTo.startsWith('/spill/') &&
-      !returnTo.includes('://')
-    ) {
+    if (returnTo && returnTo.startsWith('/spill/') && !returnTo.includes('://')) {
       setPendingReturnPath(returnTo);
       return;
     }
 
     setPendingReturnPath(null);
   }, []);
-  
-  const selectRandomGame = () => {
-    if (visibleGames.length > 0) {
-      const randomIndex = Math.floor(Math.random() * visibleGames.length);
-      setSurpriseGame(visibleGames[randomIndex]);
+
+  useEffect(() => {
+    if (categoryOptions.some((option) => option.label === activeCategory)) {
+      return;
     }
+
+    setActiveCategory('Alle');
+  }, [activeCategory, categoryOptions]);
+
+  const selectRandomGame = () => {
+    if (visibleGames.length === 0) {
+      return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * visibleGames.length);
+    setSurpriseGame(visibleGames[randomIndex]);
   };
 
   const handleSurpriseMeClick = () => {
@@ -131,25 +258,58 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
   };
 
   const handleStartSurpriseGame = () => {
-    if (surpriseGame) {
-      setIsSurpriseMeOpen(false);
-      startGame(surpriseGame);
+    if (!surpriseGame) {
+      return;
     }
+
+    setIsSurpriseMeOpen(false);
+    startGame(surpriseGame);
   };
+
+  const playerDescription = (() => {
+    if (!isLoaded) {
+      return 'Laster spillerlisten deres.';
+    }
+
+    if (players.length === 0) {
+      if (pendingGame) {
+        if (pendingGameRequirement > 0) {
+          return `${pendingGame.title} trenger minst ${formatPlayerCount(
+            pendingGameRequirement
+          )}. Legg inn navnene først.`;
+        }
+
+        return `${pendingGame.title} kan startes med en gang, men navn gjør opplevelsen bedre.`;
+      }
+
+      return 'Legg inn navnene først, så går det raskere å starte riktig spill.';
+    }
+
+    if (pendingGame && missingPendingPlayers > 0) {
+      return `${players.length} klare nå. ${formatPlayerCount(
+        missingPendingPlayers
+      )} mangler for å starte ${pendingGame.title}.`;
+    }
+
+    if (pendingGame) {
+      return `${players.length} klare for ${pendingGame.title}. Du kan fortsatt justere navn før start.`;
+    }
+
+    return `${players.length} spillere er klare for neste runde.`;
+  })();
 
   return (
     <motion.div
-      className="container mx-auto px-4 py-6 md:py-12"
+      className="container mx-auto px-4 py-6 md:py-10"
       initial="hidden"
       animate="visible"
-      variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
+      }}
     >
-      <div className="absolute top-4 right-4 z-10">
-        <GameMenu context="lobby" />
-      </div>
-
       <motion.header
-        className="text-center mb-8 md:mb-12"
+        className="mx-auto mb-6 max-w-xl text-center md:mb-8"
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
       >
         <h1 className="sr-only">
@@ -161,296 +321,267 @@ export function LobbyClient({ allGames, recommendedGames, themes }: { allGames: 
           width={400}
           height={100}
           priority
-          className="h-auto mx-auto max-w-[300px] md:max-w-[400px] drop-shadow-[0_5px_15px_rgba(0,0,0,0.2)]"
+          className="mx-auto h-auto max-w-[280px] drop-shadow-[0_5px_15px_rgba(0,0,0,0.2)] md:max-w-[360px]"
         />
         <p className="mt-4 text-lg font-semibold text-foreground md:text-xl">
           Start et partyspill på sekunder.
         </p>
-        <p className="mt-3 text-sm text-muted-foreground/90">
-          Én mobil styrer hele runden. Del gjerne skjermen til TV når hele
-          gjengen skal se.
-        </p>
-        <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground/80">
-          <span className="rounded-full border border-border/70 bg-card/50 px-3 py-1">
-            Gratis
-          </span>
-          <span className="rounded-full border border-border/70 bg-card/50 px-3 py-1">
-            Ingen login
-          </span>
-          <span className="rounded-full border border-border/70 bg-card/50 px-3 py-1">
-            Ingen abonnement
-          </span>
-          <span className="rounded-full border border-border/70 bg-card/50 px-3 py-1">
-            18+
-          </span>
-        </div>
       </motion.header>
-      
-      <motion.div 
-        className="flex flex-col sm:flex-row gap-3 justify-center mb-10 md:mb-14"
-        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.1 } } }}
+
+      <motion.section
+        className="mx-auto mb-14 max-w-xl md:mb-16"
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
       >
-        <Button size="lg" onClick={handleSurpriseMeClick} className="h-14 text-lg transform transition-transform duration-200 hover:scale-105">
-          <Dices className="mr-3 h-6 w-6"/>
-          Overrask meg!
-        </Button>
-        <Button size="lg" variant="secondary" asChild className="h-14 text-lg transform transition-transform duration-200 hover:scale-105">
-            <Link href="/alle-spill">
-                <Gamepad2 className="mr-3 h-6 w-6" />
-                Se alle spill
-            </Link>
-        </Button>
-      </motion.div>
-      
-       {/* Player Setup */}
-      <motion.div className="mb-8 w-full max-w-md mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.2 } } }}>
-          <PlayerSetup
-            open={isPlayerSetupOpen}
-            onOpenChange={setIsPlayerSetupOpen}
-            onSetupComplete={handleSetupComplete}
-            requiredPlayers={pendingGameRequirement}
-            pendingGameTitle={pendingGame?.title}
-          >
-             {isLoaded && players.length === 0 && (
-                <Button variant="outline" className="w-full h-12" onClick={() => setIsPlayerSetupOpen(true)}>
-                    <Users className="mr-2 h-5 w-5" /> {pendingGame ? `Legg til ${formatPlayerCount(pendingGameRequirement)}` : 'Legg til spillere'}
-                </Button>
+        <Card className="border-border/70 bg-card/85 shadow-xl shadow-black/10 backdrop-blur-sm">
+          <CardHeader className="gap-3">
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-2">
+                <CardTitle className="flex items-center gap-2 text-2xl">
+                  <Users className="h-5 w-5" />
+                  Hvem spiller?
+                </CardTitle>
+                <CardDescription className="max-w-md text-sm text-muted-foreground/90">
+                  {playerDescription}
+                </CardDescription>
+              </div>
+              <GameMenu context="lobby" />
+            </div>
+          </CardHeader>
+
+          <CardContent className="space-y-4">
+            {pendingGame && (
+              <div className="rounded-2xl border border-primary/20 bg-primary/10 px-4 py-3 text-sm text-foreground/90">
+                {missingPendingPlayers > 0 ? (
+                  <p>
+                    <span className="font-semibold">{pendingGame.title}</span> starter
+                    når minst {formatPlayerCount(pendingGameRequirement)} er lagt til.
+                  </p>
+                ) : (
+                  <p>
+                    <span className="font-semibold">{pendingGame.title}</span> er klar
+                    til start.
+                  </p>
+                )}
+              </div>
             )}
-          </PlayerSetup>
-          {pendingGame && (
-              <Card className="mb-4 border-primary/20 bg-card/90 backdrop-blur-sm">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg">Klar til å starte {pendingGame.title}?</CardTitle>
-                  <CardDescription>
-                    {missingPendingPlayers > 0
-                      ? `Dette spillet trenger minst ${formatPlayerCount(pendingGameRequirement)}. Dere mangler ${formatPlayerCount(missingPendingPlayers)}.`
-                      : `Dere har nok spillere. Åpne oppsettet hvis du vil justere navn før start.`}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-          )}
-          {isLoaded && players.length > 0 && (
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
-                  <Card className="bg-card/80 backdrop-blur-sm">
-                  <CardHeader>
-                      <CardTitle className="text-xl flex items-center gap-2">
-                          <Users className="h-5 w-5" /> Hvem spiller?
-                      </CardTitle>
-                      <CardDescription>
-                        {pendingGame && missingPendingPlayers > 0
-                          ? `${players.length} klare. ${formatPlayerCount(missingPendingPlayers)} mangler for å starte ${pendingGame.title}.`
-                          : `${players.length} spillere er klare for fest.`}
-                      </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex flex-wrap gap-2">
-                      {players.map(player => (
-                          <motion.div key={player.id} layout initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} className="bg-muted text-muted-foreground font-medium py-1 px-3 rounded-full text-sm">
-                              {player.name}
-                          </motion.div>
-                      ))}
-                  </CardContent>
-                  <CardFooter className="grid grid-cols-2 gap-2 pt-4">
-                    <Button variant="outline" className="w-full" onClick={() => setIsPlayerSetupOpen(true)}>
-                      {pendingGame && missingPendingPlayers > 0 ? 'Legg til flere' : 'Endre spillere'}
-                    </Button>
-                    <Button asChild>
-                      <Link href="/oppsummering">
-                          <Trophy className="mr-2 h-5 w-5" />
-                          Oppsummering
-                      </Link>
-                    </Button>
-                    {pendingReturnPath && (
-                      <Button
-                        className="col-span-2"
-                        variant="secondary"
-                        onClick={() => {
-                          if (pendingGame) {
-                            startGame(pendingGame);
-                            return;
-                          }
 
-                          router.push(pendingReturnPath);
-                        }}
-                      >
-                        <Rocket className="mr-2 h-5 w-5" />
-                        {pendingGame && missingPendingPlayers > 0
-                          ? 'Fortsett i spilleroppsett'
-                          : 'Tilbake til spillet'}
-                      </Button>
-                    )}
-                  </CardFooter>
-                  </Card>
-              </motion.div>
-          )}
-      </motion.div>
-
-      <motion.div className="mb-14 md:mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.3 } } }}>
-          <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
-            ⭐ Anbefalt Nå
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {recommendedGames.map((game) => (
-                  <Link
-                    key={game.id}
-                    href={`/spill/${game.id}`}
-                    onClick={(event) => startGame(game, event)}
-                    className="group block"
+            {isLoaded && players.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {players.map((player) => (
+                  <motion.div
+                    key={player.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="rounded-full bg-muted px-3 py-1 text-sm font-medium text-muted-foreground"
                   >
-                      <Card className="h-full flex flex-col transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/10">
-                          <CardHeader className="flex-row items-start gap-4 pb-4">
-                              <div className="text-4xl mt-1">{game.emoji}</div>
-                              <div>
-                                  <div className="flex flex-wrap items-center gap-2">
-                                    <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
-                                      {game.title}
-                                      {game.audience === '18+' && (
-                                        <span className="ml-2 text-xs font-medium bg-destructive/80 text-destructive-foreground px-2 py-0.5 rounded-full">
-                                          18+
-                                        </span>
-                                      )}
-                                    </CardTitle>
-                                  </div>
-                                  <CardDescription className="mt-1 text-muted-foreground/80">{game.description}</CardDescription>
-                              </div>
-                          </CardHeader>
-                          <div className="mt-auto flex items-center justify-between gap-4 px-6 pb-6">
-                            <div className="min-w-0">
-                              {getPlayerRequirementLabel(game) && (
-                                <span className="text-xs font-semibold text-foreground/80 bg-primary/15 px-2 py-0.5 rounded-full">
-                                  {getPlayerRequirementLabel(game)}
-                                </span>
-                              )}
-                            </div>
-                            <div className="flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground">
-                              <span
-                                className={cn(
-                                  'h-2.5 w-2.5 rounded-full',
-                                  intensityStyles[game.intensity].dotClass
-                                )}
-                              ></span>
-                              {intensityStyles[game.intensity].label}
-                            </div>
-                          </div>
-                      </Card>
-                  </Link>
-              ))}
-          </div>
-      </motion.div>
+                    {player.name}
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-dashed border-border/70 bg-background/30 px-4 py-5 text-sm text-muted-foreground">
+                Legg til navnene nå, så er dere klare når dere finner spillet som
+                passer.
+              </div>
+            )}
+          </CardContent>
 
-      <motion.div className="mb-20" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.5 } } }}>
-        <h2 className="text-2xl font-bold text-center mb-6 font-headline flex items-center justify-center gap-2">
-            <Wand2 className="h-6 w-6 text-primary" /> Utforsk temaer
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
-            <Link href="/russetiden" className="group block">
-                <Card className="text-center p-6 transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
-                    <div className="text-4xl mb-2">🚌</div>
-                    <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">Russetiden</h3>
-                </Card>
-            </Link>
-            <Link href="/fadderuka" className="group block">
-                <Card className="text-center p-6 transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
-                    <div className="text-4xl mb-2">🎉</div>
-                    <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">Fadderuka</h3>
-                </Card>
-            </Link>
-            {themes.map(theme => (
-                <Link key={theme.slug} href={`/tema/${theme.slug}`} className="group block">
-                    <Card className="text-center p-6 transition-all duration-300 bg-card/60 backdrop-blur-sm border-border hover:border-accent hover:scale-105 hover:shadow-2xl hover:shadow-accent/10">
-                        <div className="text-4xl mb-2">{theme.emoji}</div>
-                        <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">{theme.title.split(':')[0]}</h3>
-                    </Card>
+          <CardFooter
+            className={cn(
+              'grid gap-2',
+              players.length > 0
+                ? pendingReturnPath
+                  ? 'grid-cols-1 md:grid-cols-3'
+                  : 'grid-cols-1 sm:grid-cols-2'
+                : 'grid-cols-1'
+            )}
+          >
+            <PlayerSetup
+              open={isPlayerSetupOpen}
+              onOpenChange={setIsPlayerSetupOpen}
+              onSetupComplete={handleSetupComplete}
+              requiredPlayers={pendingGameRequirement}
+              pendingGameTitle={pendingGame?.title}
+            >
+              <Button
+                className="w-full"
+                variant={players.length > 0 ? 'outline' : 'default'}
+                disabled={!isLoaded}
+              >
+                {players.length > 0
+                  ? pendingGame && missingPendingPlayers > 0
+                    ? 'Legg til flere spillere'
+                    : 'Endre spillere'
+                  : pendingGame && pendingGameRequirement > 0
+                    ? `Legg til ${formatPlayerCount(pendingGameRequirement)}`
+                    : 'Legg til spillere'}
+              </Button>
+            </PlayerSetup>
+
+            {players.length > 0 && (
+              <Button asChild variant="secondary">
+                <Link href="/oppsummering">
+                  <Trophy className="mr-2 h-5 w-5" />
+                  Oppsummering
                 </Link>
-            ))}
-        </div>
-      </motion.div>
-
-      <motion.div className="mb-14 flex justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.5 }}>
-        <AdBanner />
-      </motion.div>
-
-      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.6 } } }}>
-          <section className="text-center">
-             <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
-                  <Beer className="h-6 w-6 text-accent" /> Klassiske Drikkeleker
-              </h2>
-              <p className="text-muted-foreground mb-4">
-                Regler til klassiske drikkeleker og vorspiel-spill som Beer Pong
-                og Ring of Fire.
-              </p>
-              <Button asChild>
-                <Link href="/drikkeleker">Se alle klassikerne</Link>
               </Button>
-          </section>
-           <section className="text-center">
-             <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
-                  <Music className="h-6 w-6 text-primary" /> Musikkeleker
-              </h2>
-              <p className="text-muted-foreground mb-4">Partyspill basert på kjente sanger. Koble til anlegget og la reglene styre kvelden.</p>
-              <Button asChild>
-                <Link href="/musikkleker">Finn en sang</Link>
-              </Button>
-          </section>
-         <section className="text-center">
-             <h2 className="text-xl font-bold text-center mb-4 font-headline flex items-center justify-center gap-2">
-                  <Clapperboard className="h-6 w-6 text-purple-400" /> Skjermleker
-              </h2>
-              <p className="text-muted-foreground mb-4">
-                Spill til filmkvelden, reality-showet eller fotballkampen når
-                dere vil ha noe sosialt på skjermen.
-              </p>
-              <Button asChild>
-                <Link href="/skjermleker">Finn et skjermspill</Link>
-              </Button>
-          </section>
-      </motion.div>
+            )}
 
-      <motion.div 
-        className="mt-12 w-full max-w-md mx-auto"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
+            {pendingReturnPath && (
+              <Button
+                variant="secondary"
+                className="w-full"
+                onClick={() => {
+                  if (pendingGame) {
+                    startGame(pendingGame);
+                    return;
+                  }
+
+                  router.push(pendingReturnPath);
+                }}
+              >
+                <Rocket className="mr-2 h-5 w-5" />
+                {pendingGame && missingPendingPlayers > 0
+                  ? 'Fortsett i spilleroppsett'
+                  : 'Tilbake til spillet'}
+              </Button>
+            )}
+          </CardFooter>
+        </Card>
+      </motion.section>
+
+      <motion.section
+        className="mb-16 md:mb-20"
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
       >
-        <Accordion type="single" collapsible className="rounded-[1.75rem] border border-border/70 bg-card/40 px-5">
-          <AccordionItem value="party-tools" className="border-none">
-            <AccordionTrigger className="py-4 text-left text-base font-semibold text-foreground hover:no-underline">
-              Verktøykasse for raske avgjørelser
-            </AccordionTrigger>
-            <AccordionContent className="pb-5 pt-1">
-              <PartyTools />
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </motion.div>
-      
+        <div className="mx-auto mb-6 flex max-w-5xl flex-col gap-4 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
+          <div>
+            <h2 className="text-2xl font-bold font-headline">Anbefalt nå</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Raske favoritter som fungerer godt når dere vil i gang med én gang.
+            </p>
+          </div>
+          <Button variant="secondary" onClick={handleSurpriseMeClick}>
+            <Dices className="mr-2 h-5 w-5" />
+            Overrask meg
+          </Button>
+        </div>
+
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3">
+          {recommendedGames.map((game) => (
+            <GameCard key={game.id} game={game} onStart={startGame} />
+          ))}
+        </div>
+      </motion.section>
+
+      <motion.section
+        className="mb-8"
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+      >
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-5 text-center">
+            <h2 className="text-2xl font-bold font-headline">Kategorier</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Filtrer direkte på spilldekkene og hopp videre til det som passer kvelden.
+            </p>
+          </div>
+
+          <div className="mb-6 flex gap-2 overflow-x-auto pb-2 md:flex-wrap md:justify-center">
+            {categoryOptions.map((option) => (
+              <Button
+                key={option.label}
+                variant={activeCategory === option.label ? 'default' : 'outline'}
+                onClick={() => setActiveCategory(option.label)}
+                className="shrink-0"
+              >
+                {option.label}
+                <span className="ml-2 text-xs opacity-75">{option.count}</span>
+              </Button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {filteredCategoryGames.map((game) => (
+              <GameCard key={`${activeCategory}-${game.id}`} game={game} onStart={startGame} />
+            ))}
+          </div>
+
+          {filteredCategoryGames.length === 0 && (
+            <div className="rounded-3xl border border-dashed border-border/70 bg-card/50 px-6 py-10 text-center text-sm text-muted-foreground">
+              Ingen spill matcher denne kategorien akkurat nå.
+            </div>
+          )}
+
+          <div className="mt-8 flex justify-center">
+            <Button asChild size="lg" className="min-w-48">
+              <Link href={allGamesHref}>
+                <Gamepad2 className="mr-2 h-5 w-5" />
+                Se alle spill
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </motion.section>
+
+      <motion.section
+        className="mx-auto max-w-5xl space-y-4"
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+      >
+        {FUTURE_ROWS.map((row) => {
+          const Icon = row.icon;
+
+          return (
+            <Card
+              key={row.title}
+              className="border-border/70 bg-card/65 backdrop-blur-sm"
+            >
+              <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-4">
+                  <div className="rounded-2xl bg-primary/12 p-3 text-primary">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground">{row.title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{row.description}</p>
+                  </div>
+                </div>
+                <span className="inline-flex w-fit rounded-full border border-border/70 bg-background/70 px-3 py-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  Kommer snart
+                </span>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </motion.section>
+
       <Dialog open={isSurpriseMeOpen} onOpenChange={setIsSurpriseMeOpen}>
         <DialogContent>
-            <DialogHeader>
+          <DialogHeader>
             {surpriseGame && (
-                <>
+              <>
                 <DialogTitle className="flex items-center gap-4 text-2xl">
-                    <span className="text-5xl">{surpriseGame.emoji}</span>
-                    {surpriseGame.title}
+                  <span className="text-5xl">{surpriseGame.emoji}</span>
+                  {surpriseGame.title}
                 </DialogTitle>
                 <DialogDescription className="pt-2 text-base">
-                    {surpriseGame.description}
+                  {surpriseGame.description}
                 </DialogDescription>
-                </>
+              </>
             )}
-            </DialogHeader>
-            <DialogFooter className="flex-col-reverse sm:flex-row sm:justify-between gap-2 pt-4">
-                <Button variant="secondary" onClick={handleTryAnother}>
-                    Prøv et annet
-                </Button>
-                <Button onClick={handleStartSurpriseGame} disabled={!surpriseGame}>
-                    Kjør i gang!
-                </Button>
-            </DialogFooter>
+          </DialogHeader>
+          <DialogFooter className="flex-col-reverse gap-2 pt-4 sm:flex-row sm:justify-between">
+            <Button variant="secondary" onClick={handleTryAnother}>
+              Prøv et annet
+            </Button>
+            <Button onClick={handleStartSurpriseGame} disabled={!surpriseGame}>
+              Kjør i gang!
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
+
       <GameStartDialog {...gameStartDialogProps} />
     </motion.div>
   );
 }
-
-    

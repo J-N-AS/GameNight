@@ -25,6 +25,12 @@ import { useToast } from '@/hooks/use-toast';
 import { requestDonation } from '@/lib/donations';
 import type { InfoPageSlug } from '@/lib/info-pages';
 import { withBasePath } from '@/lib/base-path';
+import themesData from '@/data/themes.json';
+
+const themePageLinks = themesData.themes as Array<{
+  slug: string;
+  title: string;
+}>;
 
 function OmOssContent() {
   const [donationAmount, setDonationAmount] = useState(50);
@@ -244,6 +250,28 @@ function OmOssContent() {
           <li>Hopp over oppgaver som ikke passer, og respekter alltid grenser og samtykke.</li>
           <li>GameNight er laget for voksne 18+ og skal brukes med sunn dømmekraft.</li>
         </ul>
+      </div>
+
+      <div className="space-y-3 rounded-lg border border-border bg-card/50 p-6">
+        <Library className="h-8 w-8 text-accent" />
+        <h3 className="font-semibold text-foreground text-xl">
+          Temasider og stemninger
+        </h3>
+        <p>
+          Noen finner GameNight gjennom mer spesifikke temasider. Derfor lar vi
+          disse være tilgjengelige her, uten å løfte dem inn i selve app-forsiden.
+        </p>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {themePageLinks.map((theme) => (
+            <Link
+              key={theme.slug}
+              href={`/tema/${theme.slug}`}
+              className="rounded-lg border border-border/70 bg-background/40 px-3 py-2 text-sm text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              {theme.title}
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div className="space-y-2 rounded-lg border border-border bg-card/50 p-6">
