@@ -1206,15 +1206,23 @@ export function GameEditorClient() {
                   <Card
                     className={cn(
                       'border-border/70 bg-card/88 backdrop-blur-sm transition-all duration-200',
-                      isSelected &&
-                        'border-primary/50 shadow-[0_20px_50px_rgba(0,0,0,0.18)] shadow-primary/10'
+                      isSelected 
+                        ? 'border-primary/50 shadow-[0_20px_50px_rgba(0,0,0,0.18)] shadow-primary/10'
+                        : 'cursor-pointer hover:border-primary/30 hover:bg-card/95'
                     )}
-                    onClick={() => setSelectedTaskIndex(index)}
+                    onClick={() => {
+                      if (!isSelected) setSelectedTaskIndex(index);
+                    }}
                   >
-                    <CardHeader className="gap-4 border-b border-border/60 md:flex-row md:items-start md:justify-between">
-                      <div>
+                    <CardHeader
+                      className={cn(
+                        'gap-4 border-border/60 md:flex-row md:items-start md:justify-between',
+                        isSelected ? 'border-b' : 'py-4'
+                      )}
+                    >
+                      <div className={cn(!isSelected && 'flex-1 overflow-hidden')}>
                         <div className="flex flex-wrap items-center gap-2">
-                          <Badge variant="secondary">Kort {index + 1}</Badge>
+                          <Badge variant={isSelected ? "secondary" : "outline"}>Kort {index + 1}</Badge>
                           <Badge className="border-primary/20 bg-primary/15 text-primary">
                             {GAME_TASK_TYPE_LABELS[task.type]}
                           </Badge>
@@ -1225,17 +1233,26 @@ export function GameEditorClient() {
                           )}
                           {task.rule && <Badge variant="outline">Regel</Badge>}
                         </div>
-                        <CardTitle className="mt-3 text-2xl">
-                          {task.text.trim()
-                            ? task.text.slice(0, 72)
-                            : 'Nytt kort'}
-                        </CardTitle>
-                        <CardDescription className="mt-2 max-w-3xl">
-                          {taskTypeDescriptions[task.type]}
-                        </CardDescription>
+                        
+                        {isSelected ? (
+                          <>
+                            <CardTitle className="mt-3 text-2xl">
+                              {task.text.trim()
+                                ? task.text.slice(0, 72)
+                                : 'Nytt kort'}
+                            </CardTitle>
+                            <CardDescription className="mt-2 max-w-3xl">
+                              {taskTypeDescriptions[task.type]}
+                            </CardDescription>
+                          </>
+                        ) : (
+                          <div className="mt-2 truncate text-base font-medium text-foreground">
+                            {task.text.trim() ? task.text : <span className="italic text-muted-foreground">Tomt kort...</span>}
+                          </div>
+                        )}
                       </div>
 
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex shrink-0 flex-wrap gap-2">
                         <Button
                           type="button"
                           size="icon"
@@ -1295,7 +1312,8 @@ export function GameEditorClient() {
                         </Button>
                       </div>
                     </CardHeader>
-                    <CardContent className="space-y-5 p-6">
+                    {isSelected && (
+                      <CardContent className="space-y-5 p-6">
                       <div className="grid gap-5 md:grid-cols-2">
                         <div>
                           <SectionLabel title="Korttype" />
@@ -1519,6 +1537,7 @@ export function GameEditorClient() {
                         )}
                       </div>
                     </CardContent>
+                    )}
                   </Card>
                 </motion.div>
               );
