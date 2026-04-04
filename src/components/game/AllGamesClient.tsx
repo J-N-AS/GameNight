@@ -12,28 +12,21 @@ import { Button } from '@/components/ui/button';
 import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Input } from '../ui/input';
-import { Search } from 'lucide-react';
 import { getPlayerRequirementLabel } from '@/lib/player-requirements';
 import { useGameStart } from '@/hooks/useGameStart';
 import { Badge } from '@/components/ui/badge';
 import { getGameTier, isCoreGame } from '@/lib/game-library';
 import { GameStartDialog } from './GameStartDialog';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 import { intensityStyles } from '@/lib/game-ui';
 
 type GameFromGetGames = Omit<Game, 'items' | 'language' | 'shuffle'>;
+const gameGridClassName = 'grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 md:gap-5';
 
 export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
   const { startGame, gameStartDialogProps } = useGameStart();
 
-  const [searchTerm, setSearchTerm] = useState('');
   const [activeTag, setActiveTag] = useState('Alle');
+
   const tagCounts = useMemo(() => {
     const counts = new Map<string, number>();
 
@@ -67,45 +60,14 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
     }
   }, [tagCounts]);
 
-  const mobileQuickTags = useMemo(() => {
-    const quickTags = ['Alle', ...tagCounts.slice(0, 5).map(([tag]) => tag)];
-
-    if (
-      activeTag !== 'Alle' &&
-      allTags.includes(activeTag) &&
-      !quickTags.includes(activeTag)
-    ) {
-      quickTags.push(activeTag);
-    }
-
-    return quickTags;
-  }, [activeTag, allTags, tagCounts]);
-
-  const additionalMobileTags = useMemo(
-    () =>
-      allTags.filter(
-        (tag) => tag !== 'Alle' && !mobileQuickTags.includes(tag)
-      ),
-    [allTags, mobileQuickTags]
-  );
-
   const filteredGames = useMemo(() => {
-    const lowercasedSearch = searchTerm.toLowerCase();
-    
-    return games.filter(game => {
-      // Search filter
-      const matchesSearch = lowercasedSearch
-        ? game.title.toLowerCase().includes(lowercasedSearch) ||
-          game.description.toLowerCase().includes(lowercasedSearch)
-        : true;
-
-      // Tag filter
-      const gameTags = new Set([...(game.category || []), ...(game.tags || [])]);
+    return games.filter((game) => {
+      const gameTags = new Set([...(game.category ?? []), ...(game.tags ?? [])]);
       const matchesTag = activeTag === 'Alle' ? true : gameTags.has(activeTag);
 
-      return matchesSearch && matchesTag;
+      return matchesTag;
     });
-  }, [games, searchTerm, activeTag]);
+  }, [games, activeTag]);
 
   const coreGames = useMemo(
     () => filteredGames.filter((game) => getGameTier(game.id) === 1),
@@ -117,7 +79,7 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
     [filteredGames]
   );
 
-  const isDefaultBrowse = searchTerm.trim() === '' && activeTag === 'Alle';
+  const isDefaultBrowse = activeTag === 'Alle';
 
   const renderGameCard = (game: GameFromGetGames) => (
     <motion.div
@@ -133,10 +95,10 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
         onClick={(e) => startGame(game, e)}
         className="group block h-full"
       >
-        <Card className="h-full flex flex-col transition-all duration-300 bg-card/80 backdrop-blur-sm border-border hover:border-primary hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/10">
+        <Card className="flex h-full flex-col border-border/70 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-xl hover:shadow-primary/10">
           <CardHeader className="flex-row items-start gap-4">
             <div className="text-4xl mt-1">{game.emoji}</div>
-            <div>
+            <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
                 <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
                   {game.title}
@@ -167,18 +129,6 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
                   {getPlayerRequirementLabel(game)}
                 </span>
               )}
-              {game.tags && game.tags.length > 0 && (
-                <div className="hidden md:flex flex-wrap gap-1 pt-2">
-                  {game.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs font-semibold text-muted-foreground/70 bg-muted/50 px-2 py-0.5 rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
             </div>
             <div className="flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground">
               <span
@@ -196,138 +146,84 @@ export function AllGamesClient({ games }: { games: GameFromGetGames[] }) {
   );
 
   return (
-    <div className="w-full max-w-5xl mx-auto">
-        <div className="mb-8 w-full max-w-lg mx-auto">
-            <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input 
-                    placeholder="Søk etter spill..."
-                    className="pl-10 h-12 text-base"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-            </div>
-        </div>
-
-        <div className="mb-10 md:hidden">
-          <div className="flex gap-2 overflow-x-auto px-1 pb-2">
-            {mobileQuickTags.map((tag) => (
+    <div className="mx-auto w-full max-w-6xl">
+      <div className="relative mb-6 md:mb-8">
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-background via-background/92 to-transparent sm:w-16" />
+        <div className="scrollbar-hide -mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+          <div className="flex min-w-max gap-2 pr-8">
+            {allTags.map((tag) => (
               <Button
                 key={tag}
                 size="sm"
-                variant={activeTag === tag ? 'default' : 'outline'}
+                variant="ghost"
                 onClick={() => setActiveTag(tag)}
                 className={cn(
-                  'shrink-0 whitespace-nowrap transition-all duration-200',
-                  activeTag === tag && 'shadow-lg shadow-primary/20'
+                  'h-10 shrink-0 rounded-full border px-4 text-sm font-medium backdrop-blur-sm transition-all duration-200',
+                  activeTag === tag
+                    ? 'border-primary/30 bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 hover:text-primary-foreground'
+                    : 'border-border/70 bg-card/65 text-muted-foreground hover:border-border hover:bg-card hover:text-foreground'
                 )}
               >
                 {tag}
               </Button>
             ))}
           </div>
+        </div>
+      </div>
 
-          {additionalMobileTags.length > 0 && (
-            <Accordion type="single" collapsible className="mt-3 rounded-2xl border border-border/70 bg-card/40 px-4">
-              <AccordionItem value="more-filters" className="border-none">
-                <AccordionTrigger className="py-3 text-sm font-medium text-muted-foreground hover:no-underline">
-                  Flere filtre
-                </AccordionTrigger>
-                <AccordionContent className="pb-1">
-                  <div className="flex flex-wrap gap-2">
-                    {additionalMobileTags.map((tag) => (
-                      <Button
-                        key={tag}
-                        size="sm"
-                        variant={activeTag === tag ? 'default' : 'outline'}
-                        onClick={() => setActiveTag(tag)}
-                        className={cn(
-                          'transition-all duration-200',
-                          activeTag === tag && 'shadow-lg shadow-primary/20'
-                        )}
-                      >
-                        {tag}
-                      </Button>
-                    ))}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+      {isDefaultBrowse ? (
+        <div className="space-y-10 md:space-y-12">
+          {coreGames.length > 0 && (
+            <section aria-labelledby="kjernebibliotek">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <h2 id="kjernebibliotek" className="text-2xl font-bold font-headline">
+                  Kjernebibliotek
+                </h2>
+                <span className="text-xs font-medium uppercase tracking-[0.24em] text-muted-foreground">
+                  {coreGames.length} spill
+                </span>
+              </div>
+
+              <motion.div layout className={gameGridClassName}>
+                {coreGames.map(renderGameCard)}
+              </motion.div>
+            </section>
+          )}
+
+          {supportingGames.length > 0 && (
+            <section aria-labelledby="flere-spill">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <h2 id="flere-spill" className="text-2xl font-bold font-headline">
+                  Flere spill
+                </h2>
+                <span className="text-xs font-medium uppercase tracking-[0.24em] text-muted-foreground">
+                  {supportingGames.length} spill
+                </span>
+              </div>
+
+              <motion.div layout className={gameGridClassName}>
+                {supportingGames.map(renderGameCard)}
+              </motion.div>
+            </section>
           )}
         </div>
+      ) : (
+        <motion.div layout className={gameGridClassName}>
+          {filteredGames.map(renderGameCard)}
+        </motion.div>
+      )}
 
-        <div className="hidden md:flex flex-wrap justify-center gap-2 md:gap-3 mb-10">
-            {allTags.map(tag => (
-                <Button
-                    key={tag}
-                    variant={activeTag === tag ? 'default' : 'outline'}
-                    onClick={() => setActiveTag(tag)}
-                    className={cn("transition-all duration-200", activeTag === tag && "shadow-lg shadow-primary/20")}
-                >
-                    {tag}
-                </Button>
-            ))}
-        </div>
-
-        {isDefaultBrowse ? (
-          <div className="space-y-12">
-            {coreGames.length > 0 && (
-              <section aria-labelledby="kjernebibliotek">
-                <div className="mb-5 text-center">
-                  <h2 id="kjernebibliotek" className="text-2xl font-bold font-headline">
-                    Kjernebibliotek
-                  </h2>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Dette er de tryggeste førstevalgene i GameNight: raske å starte,
-                    tydelige å lese høyt og sterke i én-skjerm-formatet.
-                  </p>
-                </div>
-
-                <motion.div
-                  layout
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-                >
-                  {coreGames.map(renderGameCard)}
-                </motion.div>
-              </section>
-            )}
-
-            {supportingGames.length > 0 && (
-              <section aria-labelledby="temaspill">
-                <div className="mb-5 text-center">
-                  <h2 id="temaspill" className="text-2xl font-bold font-headline">
-                    Temaspill og nisjer
-                  </h2>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Her ligger de mer situasjonsbestemte spillene: sesong, flørt,
-                    fysikk og mer spesifikke stemninger.
-                  </p>
-                </div>
-
-                <motion.div
-                  layout
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-                >
-                  {supportingGames.map(renderGameCard)}
-                </motion.div>
-              </section>
-            )}
-          </div>
-        ) : (
-          <motion.div 
-              layout
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-          >
-            {filteredGames.map(renderGameCard)}
-          </motion.div>
-        )}
-
-        {filteredGames.length === 0 && (
-            <motion.div layout initial={{opacity: 0}} animate={{opacity: 1}} className="text-center py-16 text-muted-foreground">
-                <p className="text-lg font-medium">Ingen spill matchet søket ditt.</p>
-                <p>Prøv å endre søkeordet eller fjerne filteret.</p>
-            </motion.div>
-        )}
+      {filteredGames.length === 0 && (
+        <motion.div
+          layout
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="rounded-3xl border border-dashed border-border/70 bg-card/40 px-6 py-14 text-center text-muted-foreground"
+        >
+          <p className="text-lg font-medium text-foreground">Ingen spill passer dette filteret.</p>
+          <p className="mt-2">Sveip videre eller velg en annen kategori.</p>
+        </motion.div>
+      )}
       <GameStartDialog {...gameStartDialogProps} />
     </div>
   );

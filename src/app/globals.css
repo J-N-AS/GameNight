@@ -70,6 +70,13 @@
 }
 
 @layer components {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
   .gameplay-active {
     overflow: hidden;
     overscroll-behavior: none;
