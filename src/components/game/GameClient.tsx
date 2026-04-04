@@ -5,22 +5,15 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { TaskCard, type TaskCardTimerState } from './TaskCard';
 import { Button } from '@/components/ui/button';
 import {
+  ChevronLeft,
   Home,
   PartyPopper,
   Trophy,
   X,
 } from 'lucide-react';
-import Link from 'next/link';
-import { useGameplayPreferences } from '@/hooks/useGameplayPreferences';
 import { useSession } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GameMenu } from './GameMenu';
-import {
-  formatSipAmount,
-  gameplayDrinkingIntensityOptions,
-  scaleSipAmount,
-} from '@/lib/gameplay-preferences';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -104,6 +97,10 @@ interface GameClientProps {
 }
 
 type CardTimerStatus = 'idle' | 'running' | 'finished';
+type TaskPlayersAssignment = {
+  player1: Player | null;
+  player2: Player | null;
+} | null;
 
 export function GameClient({
   game,
@@ -112,16 +109,11 @@ export function GameClient({
 }: GameClientProps) {
   const { players, isLoaded, updatePlayerStat } = useSession();
   const router = useRouter();
-  const { preferences, setDrinkingIntensity } = useGameplayPreferences();
 
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
-  const [taskPlayers, setTaskPlayers] = useState<{
-    player1: Player | null;
-    player2: Player | null;
-  } | null>(null);
-  const processedIndexRef = useRef<number | null>(null);
+  const [taskPlayers, setTaskPlayers] = useState<TaskPlayersAssignment>(null);
 
   const [team1Score, setTeam1Score] = useState(0);
   const [team2Score, setTeam2Score] = useState(0);
@@ -132,6 +124,8 @@ export function GameClient({
   const spinTimeoutRef = useRef<number | null>(null);
   const selectionCountsRef = useRef<Record<string, number>>({});
   const recentSelectionsRef = useRef<string[]>([]);
+  const taskPlayersByIndexRef = useRef<Record<number, TaskPlayersAssignment>>({});
+  const committedTaskIndicesRef = useRef<Set<number>>(new Set());
   const timerIntervalRef = useRef<number | null>(null);
   const timerDeadlineRef = useRef<number | null>(null);
 
@@ -190,6 +184,8 @@ export function GameClient({
 
     selectionCountsRef.current = {};
     recentSelectionsRef.current = [];
+    taskPlayersByIndexRef.current = {};
+    committedTaskIndicesRef.current = new Set();
 
     const gameTasks = game.shuffle === false ? game.items : shuffleArray(game.items);
     setTasks(gameTasks);
@@ -201,7 +197,6 @@ export function GameClient({
     setIsSpinning(false);
     setBottleRotation(0);
     setTaskPlayers(null);
-    processedIndexRef.current = null;
   }, [clearCardTimer, game]);
 
   useEffect(() => {
@@ -251,87 +246,90 @@ export function GameClient({
     syncSelectionState(players);
   }, [isLoaded, players, syncSelectionState]);
 
-  useEffect(() => {
-    if (processedIndexRef.current === currentIndex) {
-      return;
-    }
+  const resolveTaskPlayersForIndex = useCallback(
+    (index: number, task: GameTask | null): TaskPlayersAssignment => {
+      if (!isLoaded || !task || players.length === 0) {
+        return null;
+      }
 
-    if (!isLoaded || !currentTask || players.length === 0) {
-      setTaskPlayers(null);
-      processedIndexRef.current = currentIndex;
-      return;
-    }
+      if (index in taskPlayersByIndexRef.current) {
+        return taskPlayersByIndexRef.current[index];
+      }
 
-    if (isSpinTheBottleMode || isPhysicalItemGame) {
-      setTaskPlayers(null);
-      processedIndexRef.current = currentIndex;
-      return;
-    }
+      if (isSpinTheBottleMode || isPhysicalItemGame) {
+        taskPlayersByIndexRef.current[index] = null;
+        return null;
+      }
 
-    const hasNamedPlaceholders =
-      (currentTask.text.includes('{player}') ||
-        currentTask.text.includes('{player2}')) &&
-      !isNameHiddenType(currentTask.type);
+      const hasNamedPlaceholders =
+        (task.text.includes('{player}') || task.text.includes('{player2}')) &&
+        !isNameHiddenType(task.type);
 
-    if (!hasNamedPlaceholders) {
-      setTaskPlayers(null);
-      processedIndexRef.current = currentIndex;
-      return;
-    }
+      if (!hasNamedPlaceholders) {
+        taskPlayersByIndexRef.current[index] = null;
+        return null;
+      }
 
-    syncSelectionState(players);
+      syncSelectionState(players);
 
-    const availablePlayers = [...players];
-    const hasPlayer1Placeholder = currentTask.text.includes('{player}');
-    const hasPlayer2Placeholder = currentTask.text.includes('{player2}');
+      const availablePlayers = [...players];
+      const hasPlayer1Placeholder = task.text.includes('{player}');
+      const hasPlayer2Placeholder = task.text.includes('{player2}');
 
-    let player1: Player | null = null;
-    let player2: Player | null = null;
+      let player1: Player | null = null;
+      let player2: Player | null = null;
 
-    if (hasPlayer1Placeholder) {
-      player1 = pickFairPlayer(
-        availablePlayers,
-        selectionCountsRef.current,
-        recentSelectionsRef.current
-      );
-
-      if (player1) {
-        registerSelectedPlayer(player1);
-
-        const player1Index = availablePlayers.findIndex(
-          (player) => player.id === player1?.id
+      if (hasPlayer1Placeholder) {
+        player1 = pickFairPlayer(
+          availablePlayers,
+          selectionCountsRef.current,
+          recentSelectionsRef.current
         );
 
-        if (player1Index !== -1) {
-          availablePlayers.splice(player1Index, 1);
+        if (player1) {
+          const selectedPlayer = player1;
+
+          registerSelectedPlayer(selectedPlayer);
+
+          const player1Index = availablePlayers.findIndex(
+            (player) => player.id === selectedPlayer.id
+          );
+
+          if (player1Index !== -1) {
+            availablePlayers.splice(player1Index, 1);
+          }
         }
       }
-    }
 
-    if (hasPlayer2Placeholder) {
-      player2 = pickFairPlayer(
-        availablePlayers,
-        selectionCountsRef.current,
-        recentSelectionsRef.current
-      );
+      if (hasPlayer2Placeholder) {
+        player2 = pickFairPlayer(
+          availablePlayers,
+          selectionCountsRef.current,
+          recentSelectionsRef.current
+        );
 
-      if (player2) {
-        registerSelectedPlayer(player2);
+        if (player2) {
+          registerSelectedPlayer(player2);
+        }
       }
-    }
 
-    setTaskPlayers({ player1, player2 });
-    processedIndexRef.current = currentIndex;
-  }, [
-    currentIndex,
-    isLoaded,
-    players,
-    currentTask,
-    isSpinTheBottleMode,
-    isPhysicalItemGame,
-    syncSelectionState,
-    registerSelectedPlayer,
-  ]);
+      const nextTaskPlayers = { player1, player2 };
+      taskPlayersByIndexRef.current[index] = nextTaskPlayers;
+      return nextTaskPlayers;
+    },
+    [
+      isLoaded,
+      isPhysicalItemGame,
+      isSpinTheBottleMode,
+      players,
+      registerSelectedPlayer,
+      syncSelectionState,
+    ]
+  );
+
+  useEffect(() => {
+    setTaskPlayers(resolveTaskPlayersForIndex(currentIndex, currentTask));
+  }, [currentIndex, currentTask, resolveTaskPlayersForIndex]);
 
   const getTaskTextValues = useCallback(
     (taskType: GameTask['type']) => {
@@ -376,33 +374,6 @@ export function GameClient({
       ),
     };
   }, [currentTask, resolveTaskTextToPlain]);
-
-  const currentTaskPenalty = useMemo(() => {
-    if (!currentTask) {
-      return null;
-    }
-
-    const resolvedPenalty = currentTask.penalty
-      ? resolveTaskTextToPlain(currentTask.penalty, currentTask.type)
-      : null;
-
-    if (typeof currentTask.sipAmount !== 'number' || currentTask.sipAmount <= 0) {
-      return resolvedPenalty;
-    }
-
-    const scaledSipAmount = scaleSipAmount(
-      currentTask.sipAmount,
-      preferences.drinkingIntensity
-    );
-    const scaledLabel = formatSipAmount(scaledSipAmount);
-    const intensityLabel =
-      gameplayDrinkingIntensityOptions[preferences.drinkingIntensity].label.toLowerCase();
-    const intensitySentence = `Anbefalt straff nå: ${scaledLabel} på ${intensityLabel} nivå.`;
-
-    return resolvedPenalty
-      ? `${resolvedPenalty} ${intensitySentence}`
-      : intensitySentence;
-  }, [currentTask, preferences.drinkingIntensity, resolveTaskTextToPlain]);
 
   const startCardTimer = useCallback(() => {
     const durationSeconds = currentTask?.timer;
@@ -460,6 +431,10 @@ export function GameClient({
       return;
     }
 
+    if (committedTaskIndicesRef.current.has(currentIndex)) {
+      return;
+    }
+
     if (isSpinTheBottleMode || isPhysicalItemGame || currentTask.type === 'versus') {
       return;
     }
@@ -495,12 +470,15 @@ export function GameClient({
         updatePlayerStat(playerId, 'tasksCompleted');
       });
     }
+
+    committedTaskIndicesRef.current.add(currentIndex);
   }, [
+    currentIndex,
     currentTask,
-    isLoaded,
-    players.length,
-    isSpinTheBottleMode,
     isPhysicalItemGame,
+    isLoaded,
+    isSpinTheBottleMode,
+    players.length,
     taskPlayers,
     updatePlayerStat,
   ]);
@@ -520,7 +498,11 @@ export function GameClient({
     }
 
     if (currentIndex < tasks.length - 1) {
-      setCurrentIndex((previousIndex) => previousIndex + 1);
+      const nextIndex = currentIndex + 1;
+      const nextTask = tasks[nextIndex] ?? null;
+
+      setTaskPlayers(resolveTaskPlayersForIndex(nextIndex, nextTask));
+      setCurrentIndex(nextIndex);
     } else {
       setIsFinished(true);
     }
@@ -530,8 +512,47 @@ export function GameClient({
     currentIndex,
     currentTask,
     isSpinTheBottleMode,
+    resolveTaskPlayersForIndex,
+    tasks,
     tasks.length,
   ]);
+
+  const handlePreviousTask = useCallback(() => {
+    if (currentIndex === 0) {
+      return;
+    }
+
+    clearCardTimer();
+    timerDeadlineRef.current = null;
+
+    if (spinTimeoutRef.current) {
+      clearTimeout(spinTimeoutRef.current);
+      spinTimeoutRef.current = null;
+    }
+
+    setIsSpinning(false);
+
+    if (isSpinTheBottleMode && gameMode === 'virtual') {
+      setShowSpinResult(true);
+    }
+
+    const previousIndex = currentIndex - 1;
+    const previousTask = tasks[previousIndex] ?? null;
+
+    setTaskPlayers(resolveTaskPlayersForIndex(previousIndex, previousTask));
+    setCurrentIndex(previousIndex);
+  }, [
+    clearCardTimer,
+    currentIndex,
+    gameMode,
+    isSpinTheBottleMode,
+    resolveTaskPlayersForIndex,
+    tasks,
+  ]);
+
+  const handleExitGame = useCallback(() => {
+    router.push('/');
+  }, [router]);
 
   const handleSpinBottle = useCallback(() => {
     if (isSpinning) {
@@ -666,7 +687,7 @@ export function GameClient({
   const renderStageCard = () => {
     if (showLoading) {
       return (
-        <div className="flex min-h-[22rem] items-center justify-center rounded-[1.9rem] border border-border/70 bg-card/90 px-6 text-sm text-muted-foreground shadow-sm md:min-h-[28rem]">
+        <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(180deg,#0f172a_0%,#020617_100%)] px-6 text-center text-sm font-medium tracking-[0.12em] text-white/58">
           Laster spill...
         </div>
       );
@@ -682,7 +703,7 @@ export function GameClient({
         task={currentTask}
         content={processedContent}
         rule={currentTaskRule}
-        penalty={currentTaskPenalty}
+        variant="immersive"
         timerState={currentTaskTimerState}
         onVote={isVersusMode ? handleVote : undefined}
         teams={isVersusMode ? game.teams : undefined}
@@ -690,41 +711,8 @@ export function GameClient({
     );
   };
 
-  const topBar = (
-    <div className="sticky top-[calc(env(safe-area-inset-top)+0.15rem)] z-30 mb-5 flex items-start justify-between gap-3">
-      <Button
-        variant="ghost"
-        size="icon"
-        asChild
-        className="h-12 w-12 rounded-full border-0 bg-white/10 text-white shadow-none backdrop-blur-sm hover:bg-white/14 hover:text-white"
-      >
-        <Link href="/">
-          <X className="h-6 w-6" />
-          <span className="sr-only">Avslutt spill</span>
-        </Link>
-      </Button>
-
-      <div className="min-w-0 flex-1 px-2 pt-1 text-center">
-        <p className="truncate text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-white/72">
-          {game.title}
-        </p>
-        {!showLoading && (
-          <p className="mt-1 text-lg font-medium tracking-[0.06em] text-white/50">
-            {currentIndex + 1} / {tasks.length}
-          </p>
-        )}
-      </div>
-
-      <GameMenu
-        context="in-game"
-        onRestart={setupGame}
-        gameplayPreferences={{
-          drinkingIntensity: preferences.drinkingIntensity,
-          onDrinkingIntensityChange: setDrinkingIntensity,
-        }}
-      />
-    </div>
-  );
+  const canGoBack = currentIndex > 0;
+  const progressLabel = !showLoading ? `${currentIndex + 1} / ${tasks.length}` : null;
 
   const renderActionButton = (
     label: string,
@@ -734,9 +722,9 @@ export function GameClient({
       <Button
         onClick={onClick}
         size="lg"
-        className="mx-auto h-[5rem] w-full max-w-[26rem] rounded-[1.8rem] border-2 border-[#1f6ed4] bg-[#f1f1f1] px-5 text-base font-black uppercase tracking-[-0.03em] text-black shadow-[0_14px_0_0_rgba(255,255,255,0.12)] transition-transform duration-150 hover:bg-white active:translate-y-[3px] active:shadow-[0_9px_0_0_rgba(255,255,255,0.1)]"
+        className="mx-auto h-[4.35rem] w-full max-w-[26rem] rounded-[1.55rem] border-2 border-[#1f6ed4] bg-[#f1f1f1] px-5 text-base font-black uppercase tracking-[-0.03em] text-black shadow-[0_12px_0_0_rgba(255,255,255,0.12)] transition-transform duration-150 hover:bg-white active:translate-y-[3px] active:shadow-[0_8px_0_0_rgba(255,255,255,0.1)] [@media(max-height:760px)]:h-[4rem]"
       >
-        <span className="block w-full text-center text-[1.55rem] font-black leading-none sm:text-[2rem]">
+        <span className="block w-full text-center text-[clamp(1.2rem,4.8vw,1.7rem)] font-black leading-none">
           {label}
         </span>
       </Button>
@@ -745,6 +733,88 @@ export function GameClient({
 
   const shellBackground = (
     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_32%)]" />
+  );
+
+  const renderAnimatedStageCard = () => (
+    <AnimatePresence initial={false} mode="wait">
+      <motion.div
+        key={currentIndex}
+        variants={cardVariants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+        className="h-full w-full"
+      >
+        {renderStageCard()}
+      </motion.div>
+    </AnimatePresence>
+  );
+
+  const renderGameplayShell = ({
+    stage,
+    canTapAdvance = false,
+  }: {
+    stage: React.ReactNode;
+    canTapAdvance?: boolean;
+  }) => (
+    <div
+      className="fixed inset-0 z-50 isolate h-[100svh] w-screen overflow-hidden"
+      style={cssVars}
+    >
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center justify-between px-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] sm:px-4">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={handlePreviousTask}
+          disabled={!canGoBack}
+          className="pointer-events-auto h-11 w-11 rounded-full border-0 bg-black/16 text-white shadow-none backdrop-blur-md hover:bg-black/22 hover:text-white disabled:pointer-events-none disabled:opacity-35"
+        >
+          <ChevronLeft className="h-5 w-5" />
+          <span className="sr-only">Forrige kort</span>
+        </Button>
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={handleExitGame}
+          className="pointer-events-auto h-11 w-11 rounded-full border-0 bg-black/16 text-white shadow-none backdrop-blur-md hover:bg-black/22 hover:text-white"
+        >
+          <X className="h-5 w-5" />
+          <span className="sr-only">Avslutt spill</span>
+        </Button>
+      </div>
+
+      {progressLabel && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+0.8rem)] z-20 flex justify-center">
+          <p className="text-[0.72rem] font-medium tracking-[0.18em] text-white/46">
+            {progressLabel}
+          </p>
+        </div>
+      )}
+
+      <div
+        className="absolute inset-0"
+        role={canTapAdvance ? 'button' : undefined}
+        tabIndex={canTapAdvance ? 0 : -1}
+        onClick={canTapAdvance ? handleNextTask : undefined}
+        onKeyDown={
+          canTapAdvance
+            ? (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  handleNextTask();
+                }
+              }
+            : undefined
+        }
+        aria-label={canTapAdvance ? 'Trykk for neste kort' : undefined}
+      >
+        {stage}
+      </div>
+    </div>
   );
 
   if (isFinished) {
@@ -835,168 +905,46 @@ export function GameClient({
   }
 
   if (isSpinTheBottleMode && gameMode === 'virtual') {
-    return (
-      <div
-        className="relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-5 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:px-8 md:pb-8 md:pt-8"
-        style={cssVars}
-      >
-        {shellBackground}
-        <div className="relative z-10 flex flex-1 flex-col">
-          {topBar}
-
-          <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col justify-center">
-            <div className="relative flex flex-1 items-center justify-center overflow-hidden">
-              {!showSpinResult && (
-                <div className="flex flex-col items-center justify-center">
-                  <motion.div
-                    style={{ rotate: bottleRotation }}
-                    animate={{ rotate: bottleRotation }}
-                    transition={{ duration: 4, ease: 'easeOut' }}
-                    className="select-none text-[7rem] md:text-[8rem]"
-                  >
-                    🍾
-                  </motion.div>
-                  <p className="mt-4 text-sm font-medium uppercase tracking-[0.22em] text-white/48">
-                    {isSpinning ? 'Spinner...' : 'Klar for neste spinn'}
-                  </p>
-                </div>
-              )}
-
-              {showSpinResult && (
-                <AnimatePresence initial={false} mode="wait">
-                  <motion.div
-                    key={currentIndex}
-                    variants={cardVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                    className="w-full"
-                  >
-                    {renderStageCard()}
-                  </motion.div>
-                </AnimatePresence>
-              )}
+    return renderGameplayShell({
+      stage: !showSpinResult ? (
+        <div className="flex h-full w-full flex-col items-center justify-center bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_30%),linear-gradient(180deg,#0f172a_0%,#020617_100%)] px-6 text-center">
+          <motion.div
+            style={{ rotate: bottleRotation }}
+            animate={{ rotate: bottleRotation }}
+            transition={{ duration: 4, ease: 'easeOut' }}
+            className="select-none text-[5.8rem] sm:text-[6.4rem] md:text-[8rem]"
+          >
+            🍾
+          </motion.div>
+          <p className="mt-4 text-[0.72rem] font-medium uppercase tracking-[0.2em] text-white/48 sm:text-sm">
+            {isSpinning ? 'Spinner...' : 'Klar for neste spinn'}
+          </p>
+          {!isSpinning && (
+            <div
+              className="mt-6"
+              onClick={(event) => event.stopPropagation()}
+              onKeyDown={(event) => event.stopPropagation()}
+            >
+              {renderActionButton('Spinn flasken', handleSpinBottle)}
             </div>
-
-            {!isSpinning && !showSpinResult && (
-              <motion.div
-                className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.24 }}
-              >
-                {renderActionButton('Spinn flasken', handleSpinBottle)}
-              </motion.div>
-            )}
-
-            {showSpinResult && (
-              <motion.div
-                className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.24 }}
-              >
-                {renderActionButton('Neste spinn', handleNextTask)}
-              </motion.div>
-            )}
-          </div>
+          )}
         </div>
-      </div>
-    );
+      ) : (
+        renderAnimatedStageCard()
+      ),
+      canTapAdvance: showSpinResult && !showLoading && currentTask?.type !== 'versus',
+    });
   }
 
   if ((isSpinTheBottleMode && gameMode === 'physical') || isPhysicalItemGame) {
-    const instructionText = isPhysicalItemGame
-      ? "Les oppgaven høyt, kast gjenstanden trygt videre, og la den som får den trykke 'Neste oppgave'."
-      : 'Spinn den ekte flasken først. Personen flasken peker på tar kortet som vises.';
-
-    return (
-      <div
-        className="relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-5 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:px-8 md:pb-8 md:pt-8"
-        style={cssVars}
-      >
-        {shellBackground}
-        <div className="relative z-10 flex flex-1 flex-col">
-          {topBar}
-
-          <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col justify-center">
-            <div className="mb-4 flex justify-center">
-              <p className="rounded-full border border-border/70 bg-card/80 px-4 py-2 text-center text-xs font-medium text-muted-foreground md:text-sm">
-                {instructionText}
-              </p>
-            </div>
-
-            <div className="relative flex flex-1 items-center justify-center overflow-hidden">
-              <AnimatePresence initial={false} mode="wait">
-                <motion.div
-                  key={currentIndex}
-                  variants={cardVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                  className="w-full"
-                >
-                  {renderStageCard()}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {!showLoading && currentTask?.type !== 'versus' && (
-              <motion.div
-                className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.24 }}
-              >
-                {renderActionButton('Neste oppgave', handleNextTask)}
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
+    return renderGameplayShell({
+      stage: renderAnimatedStageCard(),
+      canTapAdvance: !showLoading && currentTask?.type !== 'versus',
+    });
   }
 
-  return (
-    <div
-      className="relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-5 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:px-8 md:pb-8 md:pt-8"
-      style={cssVars}
-    >
-      {shellBackground}
-      <div className="relative z-10 flex flex-1 flex-col">
-        {topBar}
-
-        <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col justify-center">
-          <div className="relative flex flex-1 items-center justify-center overflow-hidden">
-            <AnimatePresence initial={false} mode="wait">
-              <motion.div
-                key={currentIndex}
-                variants={cardVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full"
-              >
-                {renderStageCard()}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {!showLoading && currentTask?.type !== 'versus' && (
-            <motion.div
-              className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.24 }}
-            >
-              {renderActionButton('Neste kort', handleNextTask)}
-            </motion.div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+  return renderGameplayShell({
+    stage: renderAnimatedStageCard(),
+    canTapAdvance: !showLoading && currentTask?.type !== 'versus',
+  });
 }

@@ -20,7 +20,8 @@ Dette dokumentet konkretiserer Gemini-feedbacken til en faseinndelt plan som pas
 - GameNight er fortsatt et én-skjerm-produkt, ikke et multi-device-system
 - nytt gameplay-UI må være valgfritt eller kontekstuelt, ikke permanent støy
 - repoet er rigget for statisk eksport via `next.config.ts` og `docs/10-cloudflare-pages-setup.md`
-- `vorspiel-mix.json` har allerede timer-felt i arbeidskopien, men `GameTask`, editoren og gameplay-UI støtter det ikke formelt ennå
+- `GameTask.timer`, `GameTask.penalty` og `sipAmount` er allerede implementert i typer, editor, sanitizing og gameplay-UI
+- valg av drikkenivå er allerede implementert både før spillstart og i in-game meny, og brukes aktivt til å skalere nivåstyrte straffer
 - klassiske drikkeleker lever i en egen artikkelmodell (`drikkeleker.json`) og må utvides uten å svekke dagens SEO-tekstflater
 
 ## Fase 1: Stabilisering og rammevalg
@@ -33,7 +34,7 @@ Mål:
 Leveranser:
 
 - reservere plass rundt `AdBanner` på info- og artikkelsider for å redusere layout shift
-- dokumentere nye felter for spillkort og artikler før flere JSON-filer endres
+- dokumentere eksisterende og nye felter for spillkort og artikler før flere JSON-filer endres
 - velge retning for analytics: midlertidig beholde GA eller planlegge overgang til Cloudflare Web Analytics
 - velge retning for OG-bilder: build-genererte assets først, eller senere runtime-basert løsning
 
@@ -56,31 +57,30 @@ Ferdig når:
 
 Mål:
 
-- gjøre tidsbaserte kort faktisk spillbare uten manuell nedtelling
+- bygge videre på allerede implementerte tidskort og straffeflyt
 - løfte interaktiviteten uten å introdusere tung spilladministrasjon
 
 Leveranser:
 
-- utvide `GameTask` med støtte for `timer` og eventuelt et enkelt straffefelt som kan brukes videre senere
-- oppdatere zod-schema, editor og sanitizing slik at timer blir førsteklasses spilldata
-- lage en stor, tydelig timer-komponent i gameplay med start, restart og ferdig-state
+- forbedre presentasjonen og bruken av eksisterende `timer`, `penalty` og `sipAmount` i gameplay
+- koble timer og straffedata til flere kort der det gir faktisk gameplay-verdi
+- videreutvikle timer-komponenten visuelt og ergonomisk der det trengs
 - koble timer til utvalgte kort først, med `vorspiel-mix` som pilotdeck
 - sikre at kort uten timer ser identiske ut med dagens opplevelse
 
 Teknisk berøringsflate:
 
-- `src/lib/types.ts`
-- `src/lib/game-editor.ts`
-- `src/lib/games.ts`
 - `src/components/game/GameClient.tsx`
 - `src/components/game/TaskCard.tsx`
+- `src/lib/gameplay-preferences.ts`
 - relevante `src/data/*.json`
 
 Ferdig når:
 
 - tidskort kan spilles uten at gruppen teller selv
+- straffedata og nivåstyring oppleves som en naturlig del av gameplay
 - timer-funksjonen ikke skaper ekstra friksjon på vanlige kort
-- dataflyten fungerer likt i JSON, editor og frontend
+- dataflyten fortsetter å fungere likt i JSON, editor og frontend
 
 ## Fase 3: Deling og SEO-flate
 
@@ -145,13 +145,13 @@ Ferdig når:
 Mål:
 
 - bruke metadata mer aktivt både i spill og i klassiske drikkeleker
-- gjøre innholdet smartere uten å miste redaksjonell enkelhet
+- bygge videre på eksisterende intensitetsstyring uten å miste redaksjonell enkelhet
 
 Leveranser:
 
 - utvide `drikkeleker.json` med felt som `intensity`, `players` og `tags`
 - legge til filtrering for klassiske drikkeleker basert på gruppestørrelse og intensitet
-- utforske et enkelt `sip_amount`- eller `penalty`-felt som kan skaleres av en intensitetsvelger før spillstart
+- utvide bruken av eksisterende `sipAmount`- og `penalty`-felter som allerede kan skaleres av intensitetsvelgeren
 - holde standardopplevelsen enkel: hvis brukeren ikke velger nivå, brukes normale korttekster og defaults
 
 Teknisk berøringsflate:
@@ -165,10 +165,9 @@ Ferdig når:
 
 - klassiske drikkeleker kan filtreres uten å miste SEO-verdi
 - intensitetsstyring er forståelig for brukeren på få sekunder
-- datamodellen åpner for dynamiske straffer uten at hele spillmotoren må bygges om
+- eksisterende datamodell åpner for rikere dynamiske straffer uten at hele spillmotoren må bygges om
 
-## 
-Fase 6: Privacy-friendly analytics og trust
+## Fase 6: Privacy-friendly analytics og trust
 Mål:
 
 - styrke produktløftet om lav profilering

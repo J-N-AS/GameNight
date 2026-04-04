@@ -81,6 +81,7 @@ Valgfrie felt:
 - `rule`
 - `moment`
 - `timer`
+- `sipAmount`
 - `penalty`
 
 ### Korttyper
@@ -153,15 +154,33 @@ Dette er bevisst. GameNight prioriterer tempo og lav administrasjon foran regel-
 
 ## Timere og straff
 
+`timer` og `penalty` er allerede etablerte gameplay-felter i dagens kodebase.
+
 `timer` kan settes på et kort når oppgaven har en tydelig nedtelling i sekunder.
 
-`penalty` er en kort fritekst som kan vises som egen straffemarkering i gameplay.
+`penalty` er en kort fritekst som vises som egen straffemarkering i gameplay.
 
 I praksis betyr det:
 
-- tidskort kan startes direkte i `GameClient`
+- `GameTask.timer` og `GameTask.penalty` er definert i typer, editor og sanitizing
+- `GameTask.sipAmount` brukes sammen med drikkenivå for å lage nivåstyrte straffer
+- tidskort kan startes direkte i `GameClient` og vises i `TaskCard`
 - nedtelling nullstilles når nytt kort trekkes
 - kort uten `timer` eller `penalty` oppfører seg som før
+
+## Drikkenivå og intensitet
+
+Intensitet finnes på to nivåer i systemet, og begge er allerede i bruk:
+
+- `Game.intensity` brukes som katalogmetadata for hvor hardt spillet er
+- spillerne kan velge drikkenivå (`low`, `medium`, `high`) før start og endre det underveis i gameplay
+
+Det siste styres av `useGameplayPreferences` og brukes aktivt i runtime:
+
+- valget lagres lokalt i nettleseren
+- kort med `sipAmount` skaleres opp eller ned med `scaleSipAmount`
+- `GameClient` fletter dette inn i straffeteksten som vises på kortet
+- dette er en etablert feature, ikke en fremtidig idé
 
 ## Moment metadata
 
@@ -208,6 +227,8 @@ Oppsummeringen er derfor en sosial bonus, ikke en full sannhetsmotor.
 - `src/app/spill/[gameId]/page.tsx`
 - `src/components/game/GameFlow.tsx`
 - `src/components/game/GameClient.tsx`
+- `src/components/game/GameStartDialog.tsx`
 - `src/components/game/TaskCard.tsx`
 - `src/lib/gameplay.ts`
+- `src/lib/gameplay-preferences.ts`
 - `src/lib/player-requirements.ts`
