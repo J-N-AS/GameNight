@@ -32,7 +32,7 @@
       "sipAmount": 2,
       "penalty": "{player} drikker hvis tiden ryker."
     },
-    { "type": "prompt", "text": "{player}, fortell om en gang du prøvde å imponere noen, men feilet totalt." },
+    { "type": "prompt", "text": "{player}, fortell om en gang du prøvde å imponere en crush, men feilet totalt." },
     { "type": "challenge", "text": "Alle tar én slurk og sier skål til personen på venstre side." },
     { "type": "prompt", "text": "{player}, hva er din faste «første sang» når du skal i festmodus?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å miste ting på byen?" },
@@ -45,7 +45,7 @@
     { "type": "prompt", "text": "{player}, hva er den rareste tingen du har kjøpt på impuls?" },
     {
       "type": "challenge",
-      "text": "{player}, snakk med dialekt du ikke kan i 20 sekunder. Hvis noen gjetter feil dialekt: de drikker, hvis de gjetter riktig: du drikker.",
+      "text": "{player}, snakk med dialekt du ikke kan i 20 sekunder. Hvis en spiller gjetter feil dialekt: den spilleren drikker, hvis gjetningen er riktig: du drikker.",
       "timer": 20
     },
     { "type": "prompt", "text": "{player}, hva er det kleineste du har gjort for å virke kul?" },
@@ -76,7 +76,7 @@
     { "type": "challenge", "text": "Alle tar en slurk og sier en ting de faktisk liker med seg selv." },
     { "type": "prompt", "text": "{player}, hva er ditt mest brukte ord når du er på fest?" },
     { "type": "pointing", "text": "Hvem her kommer til å bli hangover-kongen/dronninga i morgen?" },
-    { "type": "challenge", "text": "{player}, gi en «toast» på maks 8 ord. Hvis noen sier «aww»: du deler ut 2 slurker." },
+    { "type": "challenge", "text": "{player}, gi en «toast» på maks 8 ord. Hvis minst én spiller sier «aww»: du deler ut 2 slurker." },
     { "type": "prompt", "text": "{player}, hva er den beste festen du har vært på, og hvorfor?" },
     {
       "type": "challenge",
@@ -86,9 +86,9 @@
       "penalty": "{player} drikker hvis det ikke sitter."
     },
     { "type": "prompt", "text": "{player}, hva er det mest tilfeldige du har Googlet?" },
-    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å bli venn med noen i køen på byen?" },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å bli venn med en fremmed i køen på byen?" },
     { "type": "challenge", "text": "Alle som har en app for matlevering: drikk." },
-    { "type": "prompt", "text": "{player}, hvis du kunne byttet liv med noen i én dag, hvem og hvorfor?" },
+    { "type": "prompt", "text": "{player}, hvis du kunne byttet liv med én person i én dag, hvem og hvorfor?" },
     {
       "type": "challenge",
       "text": "{player}, velg en spiller. Dere må svare «ja» på alt dere blir spurt om i 1 minutt (innenfor rimelighet). Første som glemmer: drikk.",
@@ -121,7 +121,7 @@
     { "type": "challenge", "text": "{player}, gi 1 slurk til alle som har vært på date det siste året." },
     { "type": "prompt", "text": "{player}, hva er ditt beste «rizz»-tips?" },
     { "type": "challenge", "text": "Alle som har vært i en situasjon der de sa «jeg tar bare en rolig kveld»: drikk." },
-    { "type": "prompt", "text": "{player}, hva er det beste rådet til noen som har kjærlighetssorg?" },
+    { "type": "prompt", "text": "{player}, hva er det beste rådet til en person med kjærlighetssorg?" },
     { "type": "pointing", "text": "Hvem her ville klart seg best alene på en øde øy?" },
     {
       "type": "challenge",
@@ -149,7 +149,7 @@
     { "type": "challenge", "text": "Alle spiller stein-saks-papir mot personen til høyre. Taperen: 2 slurker.", "moment": "group" },
     { "type": "prompt", "text": "{player}, hva er den beste og verste appen på telefonen din?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å sende en lang tale-melding?" },
-    { "type": "challenge", "text": "{player}, fortell en vits. Hvis ingen ler: drikk 2. Hvis noen ler: del ut 2." },
+    { "type": "challenge", "text": "{player}, fortell en vits. Hvis ingen ler: drikk 2. Hvis minst én spiller ler: del ut 2." },
     { "type": "prompt", "text": "{player}, hva er din «jeg burde legge meg»-tanke når du er ute?" },
     {
       "type": "challenge",
@@ -167,7 +167,7 @@
     { "type": "challenge", "text": "Alle som har hatt fylleangst: ta én støttende slurk." },
     { "type": "prompt", "text": "{player}, hva er ditt mest «jeg er en ikon»-øyeblikk?" },
     { "type": "challenge", "text": "{player}, beskriv en kjent film uten å bruke hovedpersonens navn. Første som gjetter: du gir dem 1 slurk, og de gir deg 1 slurk." },
-    { "type": "prompt", "text": "{player}, hva er det verste du kan si til noen du flørter med?" },
+    { "type": "prompt", "text": "{player}, hva er det verste du kan si til en du flørter med?" },
     { "type": "pointing", "text": "Hvem her ville vært best på å holde en hemmelighet?" },
     {
       "type": "challenge",
@@ -195,7 +195,7 @@
     },
     { "type": "prompt", "text": "{player}, hva er din mest kontroversielle mat-mening?" },
     { "type": "pointing", "text": "Hvem her er mest sannsynlig til å adoptere et kjæledyr impulsivt?" },
-    { "type": "challenge", "text": "Alle tar én slurk hvis de har sendt en «u up?»-melding noen gang." },
+    { "type": "challenge", "text": "Alle tar én slurk hvis de har sendt en «u up?»-melding før." },
     { "type": "prompt", "text": "{player}, hva er ditt største røde flagg (på en morsom måte)?" },
     {
       "type": "challenge",

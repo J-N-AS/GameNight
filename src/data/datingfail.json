@@ -37,7 +37,7 @@
     },
     {
       "type": "never_have_i_ever",
-      "text": "ghostet noen."
+      "text": "Jeg har aldri ghostet en date."
     },
     {
       "type": "pointing",
@@ -53,7 +53,7 @@
     },
     {
       "type": "prompt",
-      "text": "{player}, hva er det rareste noen har sagt på date?"
+      "text": "{player}, hva er det rareste en date har sagt til deg?"
     },
     {
       "type": "challenge",
@@ -73,7 +73,7 @@
     },
     {
       "type": "never_have_i_ever",
-      "text": "vært på date uten å ville være der."
+      "text": "Jeg har aldri vært på date uten å ville være der."
     },
     {
       "type": "pointing",
@@ -109,7 +109,7 @@
     },
     {
       "type": "prompt",
-      "text": "Har du noen gang innsett midt i daten at dette er feil? Drikk hvis ja."
+      "text": "Har du innsett midt i en date at dette er helt feil? Drikk hvis ja."
     },
     {
       "type": "pointing",
@@ -145,7 +145,7 @@
     },
     {
       "type": "never_have_i_ever",
-      "text": "gått hjem med feil person."
+      "text": "Jeg har aldri gått hjem med feil person."
     },
     {
       "type": "pointing",
@@ -181,7 +181,7 @@
     },
     {
       "type": "never_have_i_ever",
-      "text": "latet som daten gikk bra."
+      "text": "Jeg har aldri latet som daten gikk bra."
     },
     {
       "type": "pointing",

@@ -29,7 +29,7 @@
     { "type": "challenge", "text": "Alle som elsker girl talk: drikk." },
     { "type": "prompt", "text": "Hva er ditt beste dating-råd?" },
     { "type": "pointing", "text": "Hvem her gir best råd?" },
-    { "type": "challenge", "text": "{player}, velg noen som får 2 slurker for god energi." },
+    { "type": "challenge", "text": "{player}, gi {player2} 2 slurker for god energi." },
     { "type": "prompt", "text": "Hva er det mest attraktive med å være deg?" },
     { "type": "challenge", "text": "Alle tar én slurk hvis de liker litt flørt." },
     { "type": "prompt", "text": "Hva er din favorittmåte å bli sjekket opp på?" },
