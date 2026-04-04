@@ -176,10 +176,9 @@ Mål:
 
 Leveranser:
 
-- erstatte Google Analytics med Cloudflare Web Analytics hvis innsiktsbehovet dekkes
 - oppdatere personvern-, info- og eventuell cookie-copy slik at budskapet matcher faktisk oppsett
 - forenkle script-lasting hvis analytics ikke lenger trenger cookies eller lokal consent-gating
-- verifisere at annonser fortsatt håndteres separat fra analytics
+- verifisere at annonser fortsatt håndteres separat fra analyticsß
 
 Teknisk berøringsflate:
 

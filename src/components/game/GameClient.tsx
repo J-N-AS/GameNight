@@ -4,6 +4,8 @@ import type { Game, GameRule, GameTask, Player } from '@/lib/types';
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { TaskCard, type TaskCardTimerState } from './TaskCard';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { getGameplayMoment } from '@/lib/gameplay';
 import {
   Home,
   PartyPopper,
@@ -15,6 +17,9 @@ import { useSession } from '@/hooks/usePlayers';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GameMenu } from './GameMenu';
+import { useGameplayPreferences } from '@/hooks/useGameplayPreferences';
+import { useGameplayAudio } from '@/hooks/useGameplayAudio';
+import type { GameplayDisplayMode } from '@/lib/gameplay-preferences';
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
@@ -106,6 +111,9 @@ export function GameClient({
 }: GameClientProps) {
   const { players, isLoaded, updatePlayerStat } = useSession();
   const router = useRouter();
+  const { preferences, setDisplayMode, setSoundEnabled } =
+    useGameplayPreferences();
+  const gameplayAudio = useGameplayAudio();
 
   const [tasks, setTasks] = useState<GameTask[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -127,6 +135,8 @@ export function GameClient({
   const recentSelectionsRef = useRef<string[]>([]);
   const timerIntervalRef = useRef<number | null>(null);
   const timerDeadlineRef = useRef<number | null>(null);
+  const revealedCardKeyRef = useRef<string | null>(null);
+  const previousTimerStatusRef = useRef<CardTimerStatus>('idle');
 
   const [timerStatus, setTimerStatus] = useState<CardTimerStatus>('idle');
   const [remainingTimerSeconds, setRemainingTimerSeconds] = useState<number | null>(null);
@@ -135,6 +145,13 @@ export function GameClient({
   const isSpinTheBottleMode = game.gameType === 'spin-the-bottle';
   const isPhysicalItemGame = game.gameType === 'physical-item';
   const showLoading = !isLoaded || tasks.length === 0;
+  const isTvMode = preferences.displayMode === 'tv';
+
+  const primeAudioIfEnabled = useCallback(() => {
+    if (preferences.soundEnabled) {
+      void gameplayAudio.prime();
+    }
+  }, [gameplayAudio, preferences.soundEnabled]);
 
   const clearCardTimer = useCallback(() => {
     if (timerIntervalRef.current) {
@@ -221,6 +238,10 @@ export function GameClient({
     () => (tasks.length > 0 ? tasks[currentIndex] : null),
     [currentIndex, tasks]
   );
+  const currentTaskMoment = useMemo(
+    () => (currentTask ? getGameplayMoment(currentTask, game) : null),
+    [currentTask, game]
+  );
 
   useEffect(() => {
     clearCardTimer();
@@ -235,6 +256,69 @@ export function GameClient({
     setTimerStatus('idle');
     setRemainingTimerSeconds(null);
   }, [clearCardTimer, currentTask]);
+
+  const cardRevealKey = useMemo(() => {
+    if (!currentTask || showLoading) {
+      return null;
+    }
+
+    if (isSpinTheBottleMode && gameMode === 'virtual' && !showSpinResult) {
+      return null;
+    }
+
+    return `${currentIndex}:${showSpinResult ? 'shown' : 'ready'}`;
+  }, [
+    currentIndex,
+    currentTask,
+    gameMode,
+    isSpinTheBottleMode,
+    showLoading,
+    showSpinResult,
+  ]);
+
+  useEffect(() => {
+    if (!cardRevealKey) {
+      return;
+    }
+
+    if (revealedCardKeyRef.current === null) {
+      revealedCardKeyRef.current = cardRevealKey;
+      return;
+    }
+
+    if (revealedCardKeyRef.current === cardRevealKey) {
+      return;
+    }
+
+    revealedCardKeyRef.current = cardRevealKey;
+
+    if (!preferences.soundEnabled) {
+      return;
+    }
+
+    if (
+      currentTaskMoment?.kind === 'impact' ||
+      currentTaskMoment?.kind === 'chaos' ||
+      currentTaskMoment?.kind === 'secret'
+    ) {
+      void gameplayAudio.playImpact();
+      return;
+    }
+
+    void gameplayAudio.playCard();
+  }, [cardRevealKey, currentTaskMoment?.kind, gameplayAudio, preferences.soundEnabled]);
+
+  useEffect(() => {
+    if (
+      previousTimerStatusRef.current !== 'finished' &&
+      timerStatus === 'finished' &&
+      preferences.soundEnabled
+    ) {
+      void gameplayAudio.playTimerFinished();
+    }
+
+    previousTimerStatusRef.current = timerStatus;
+  }, [gameplayAudio, preferences.soundEnabled, timerStatus]);
 
   useEffect(() => {
     if (!isLoaded) {
@@ -385,6 +469,7 @@ export function GameClient({
       return;
     }
 
+    primeAudioIfEnabled();
     clearCardTimer();
 
     timerDeadlineRef.current = Date.now() + durationSeconds * 1000;
@@ -408,7 +493,7 @@ export function GameClient({
         setTimerStatus('finished');
       }
     }, 200);
-  }, [clearCardTimer, currentTask?.timer]);
+  }, [clearCardTimer, currentTask?.timer, primeAudioIfEnabled]);
 
   const currentTaskTimerState = useMemo<TaskCardTimerState | null>(() => {
     if (
@@ -484,6 +569,7 @@ export function GameClient({
       return;
     }
 
+    primeAudioIfEnabled();
     clearCardTimer();
     timerDeadlineRef.current = null;
 
@@ -504,6 +590,7 @@ export function GameClient({
     currentIndex,
     currentTask,
     isSpinTheBottleMode,
+    primeAudioIfEnabled,
     tasks.length,
   ]);
 
@@ -512,6 +599,7 @@ export function GameClient({
       return;
     }
 
+    primeAudioIfEnabled();
     setIsSpinning(true);
     setShowSpinResult(false);
 
@@ -530,9 +618,11 @@ export function GameClient({
       setShowSpinResult(true);
       spinTimeoutRef.current = null;
     }, 4000);
-  }, [bottleRotation, isSpinning]);
+  }, [bottleRotation, isSpinning, primeAudioIfEnabled]);
 
   const handleVote = (winner: 'team1' | 'team2') => {
+    primeAudioIfEnabled();
+
     if (winner === 'team1') {
       setTeam1Score((previous) => previous + 1);
     } else {
@@ -637,10 +727,52 @@ export function GameClient({
     '--team2-color-hsl': extractHslValues(game.teams?.team2Color),
   } as React.CSSProperties;
 
+  const rootShellClassName = cn(
+    'relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-5 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:px-8 md:pb-8 md:pt-8',
+    isTvMode && 'xl:px-10 xl:pb-10 xl:pt-10'
+  );
+
+  const stageShellClassName = cn(
+    'mx-auto flex w-full flex-1 flex-col justify-center',
+    isTvMode
+      ? 'max-w-[900px] md:max-w-[1120px] xl:max-w-[1360px]'
+      : 'max-w-[820px] md:max-w-[920px] xl:max-w-[1080px]'
+  );
+
+  const actionDockClassName = cn(
+    'sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4',
+    isTvMode && 'md:mt-8 md:px-6 md:pt-6'
+  );
+
+  const handleDisplayModeChange = useCallback(
+    (displayMode: GameplayDisplayMode) => {
+      setDisplayMode(displayMode);
+    },
+    [setDisplayMode]
+  );
+
+  const handleSoundEnabledChange = useCallback(
+    (soundEnabled: boolean) => {
+      setSoundEnabled(soundEnabled);
+
+      if (soundEnabled) {
+        void gameplayAudio.prime();
+      }
+    },
+    [gameplayAudio, setSoundEnabled]
+  );
+
   const renderStageCard = () => {
     if (showLoading) {
       return (
-        <div className="flex min-h-[22rem] items-center justify-center rounded-[1.9rem] border border-border/70 bg-card/90 px-6 text-sm text-muted-foreground shadow-sm md:min-h-[28rem]">
+        <div
+          className={cn(
+            'flex items-center justify-center rounded-[1.9rem] border border-border/70 bg-card/90 px-6 text-sm text-muted-foreground shadow-sm',
+            isTvMode
+              ? 'min-h-[24rem] md:min-h-[32rem] xl:min-h-[40rem]'
+              : 'min-h-[22rem] md:min-h-[28rem] xl:min-h-[34rem]'
+          )}
+        >
           Laster spill...
         </div>
       );
@@ -660,12 +792,18 @@ export function GameClient({
         timerState={currentTaskTimerState}
         onVote={isVersusMode ? handleVote : undefined}
         teams={isVersusMode ? game.teams : undefined}
+        displayMode={preferences.displayMode}
       />
     );
   };
 
   const topBar = (
-    <div className="sticky top-[calc(env(safe-area-inset-top)+0.15rem)] z-30 mb-5 flex items-start justify-between gap-3">
+    <div
+      className={cn(
+        'sticky top-[calc(env(safe-area-inset-top)+0.15rem)] z-30 mb-5 flex items-start justify-between gap-3',
+        isTvMode && 'md:mb-7'
+      )}
+    >
       <Button
         variant="ghost"
         size="icon"
@@ -679,17 +817,38 @@ export function GameClient({
       </Button>
 
       <div className="min-w-0 flex-1 px-2 pt-1 text-center">
-        <p className="truncate text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-white/72">
+        <p
+          className={cn(
+            'truncate font-semibold uppercase text-white/72',
+            isTvMode
+              ? 'text-[0.72rem] tracking-[0.28em] md:text-[0.78rem]'
+              : 'text-[0.7rem] tracking-[0.26em]'
+          )}
+        >
           {game.title}
         </p>
         {!showLoading && (
-          <p className="mt-1 text-lg font-medium tracking-[0.06em] text-white/50">
+          <p
+            className={cn(
+              'mt-1 font-medium tracking-[0.06em] text-white/50',
+              isTvMode ? 'text-lg md:text-xl xl:text-[1.35rem]' : 'text-lg'
+            )}
+          >
             {currentIndex + 1} / {tasks.length}
           </p>
         )}
       </div>
 
-      <GameMenu context="in-game" onRestart={setupGame} />
+      <GameMenu
+        context="in-game"
+        onRestart={setupGame}
+        gameplayPreferences={{
+          displayMode: preferences.displayMode,
+          soundEnabled: preferences.soundEnabled,
+          onDisplayModeChange: handleDisplayModeChange,
+          onSoundEnabledChange: handleSoundEnabledChange,
+        }}
+      />
     </div>
   );
 
@@ -701,9 +860,21 @@ export function GameClient({
       <Button
         onClick={onClick}
         size="lg"
-        className="mx-auto h-[5rem] w-full max-w-[26rem] rounded-[1.8rem] border-2 border-[#1f6ed4] bg-[#f1f1f1] px-5 text-base font-black uppercase tracking-[-0.03em] text-black shadow-[0_14px_0_0_rgba(255,255,255,0.12)] transition-transform duration-150 hover:bg-white active:translate-y-[3px] active:shadow-[0_9px_0_0_rgba(255,255,255,0.1)]"
+        className={cn(
+          'mx-auto w-full rounded-[1.8rem] border-2 border-[#1f6ed4] bg-[#f1f1f1] px-5 text-base font-black uppercase tracking-[-0.03em] text-black shadow-[0_14px_0_0_rgba(255,255,255,0.12)] transition-transform duration-150 hover:bg-white active:translate-y-[3px] active:shadow-[0_9px_0_0_rgba(255,255,255,0.1)]',
+          isTvMode
+            ? 'h-[5rem] max-w-[26rem] md:h-[5.5rem] md:max-w-[32rem] xl:h-[5.8rem]'
+            : 'h-[5rem] max-w-[26rem] xl:max-w-[30rem]'
+        )}
       >
-        <span className="block w-full text-center text-[1.55rem] font-black leading-none sm:text-[2rem]">
+        <span
+          className={cn(
+            'block w-full text-center font-black leading-none',
+            isTvMode
+              ? 'text-[1.55rem] sm:text-[2rem] md:text-[2.2rem] xl:text-[2.45rem]'
+              : 'text-[1.55rem] sm:text-[2rem]'
+          )}
+        >
           {label}
         </span>
       </Button>
@@ -804,14 +975,14 @@ export function GameClient({
   if (isSpinTheBottleMode && gameMode === 'virtual') {
     return (
       <div
-        className="relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-5 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:px-8 md:pb-8 md:pt-8"
+        className={rootShellClassName}
         style={cssVars}
       >
         {shellBackground}
         <div className="relative z-10 flex flex-1 flex-col">
           {topBar}
 
-          <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col justify-center">
+          <div className={stageShellClassName}>
             <div className="relative flex flex-1 items-center justify-center overflow-hidden">
               {!showSpinResult && (
                 <div className="flex flex-col items-center justify-center">
@@ -848,7 +1019,7 @@ export function GameClient({
 
             {!isSpinning && !showSpinResult && (
               <motion.div
-                className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
+                className={actionDockClassName}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.24 }}
@@ -859,7 +1030,7 @@ export function GameClient({
 
             {showSpinResult && (
               <motion.div
-                className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
+                className={actionDockClassName}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.24 }}
@@ -880,16 +1051,21 @@ export function GameClient({
 
     return (
       <div
-        className="relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-5 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:px-8 md:pb-8 md:pt-8"
+        className={rootShellClassName}
         style={cssVars}
       >
         {shellBackground}
         <div className="relative z-10 flex flex-1 flex-col">
           {topBar}
 
-          <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col justify-center">
+          <div className={stageShellClassName}>
             <div className="mb-4 flex justify-center">
-              <p className="rounded-full border border-border/70 bg-card/80 px-4 py-2 text-center text-xs font-medium text-muted-foreground md:text-sm">
+              <p
+                className={cn(
+                  'rounded-full border border-border/70 bg-card/80 px-4 py-2 text-center font-medium text-muted-foreground',
+                  isTvMode ? 'text-xs md:px-5 md:py-2.5 md:text-sm' : 'text-xs md:text-sm'
+                )}
+              >
                 {instructionText}
               </p>
             </div>
@@ -912,7 +1088,7 @@ export function GameClient({
 
             {!showLoading && currentTask?.type !== 'versus' && (
               <motion.div
-                className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
+                className={actionDockClassName}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.24 }}
@@ -928,14 +1104,14 @@ export function GameClient({
 
   return (
     <div
-      className="relative isolate flex min-h-screen flex-col overflow-hidden px-4 pb-5 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:px-8 md:pb-8 md:pt-8"
+      className={rootShellClassName}
       style={cssVars}
     >
       {shellBackground}
       <div className="relative z-10 flex flex-1 flex-col">
         {topBar}
 
-        <div className="mx-auto flex w-full max-w-[820px] flex-1 flex-col justify-center">
+        <div className={stageShellClassName}>
           <div className="relative flex flex-1 items-center justify-center overflow-hidden">
             <AnimatePresence initial={false} mode="wait">
               <motion.div
@@ -954,7 +1130,7 @@ export function GameClient({
 
           {!showLoading && currentTask?.type !== 'versus' && (
             <motion.div
-              className="sticky bottom-0 mt-6 flex justify-center bg-gradient-to-t from-background/88 via-background/70 to-transparent px-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-4"
+              className={actionDockClassName}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.24 }}

@@ -3,25 +3,49 @@
 import React, { useState } from 'react';
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { MoreVertical, Users, Repeat, LogOut, Trash2, Trophy } from 'lucide-react';
+import {
+  MoreVertical,
+  Users,
+  Repeat,
+  LogOut,
+  Trash2,
+  Trophy,
+  Tv,
+  Volume2,
+} from 'lucide-react';
 import { PlayerSetup } from './PlayerSetup';
 import { useRouter } from 'next/navigation';
 import { useSession } from '@/hooks/usePlayers';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import type { GameplayDisplayMode } from '@/lib/gameplay-preferences';
+
+interface GameplayMenuPreferences {
+  displayMode: GameplayDisplayMode;
+  soundEnabled: boolean;
+  onDisplayModeChange: (displayMode: GameplayDisplayMode) => void;
+  onSoundEnabledChange: (soundEnabled: boolean) => void;
+}
 
 interface GameMenuProps {
   context: 'lobby' | 'in-game';
   onRestart?: () => void;
+  gameplayPreferences?: GameplayMenuPreferences;
 }
 
-export function GameMenu({ context, onRestart }: GameMenuProps) {
+export function GameMenu({
+  context,
+  onRestart,
+  gameplayPreferences,
+}: GameMenuProps) {
   const [isPlayerSetupOpen, setIsPlayerSetupOpen] = useState(false);
   const router = useRouter();
   const { players, removeAllPlayers } = useSession();
@@ -48,6 +72,8 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
   }
 
   const showDestructiveSeparator = context === 'in-game' || players.length > 0;
+  const showGameplayPreferences =
+    context === 'in-game' && gameplayPreferences !== undefined;
 
   return (
     <>
@@ -73,6 +99,35 @@ export function GameMenu({ context, onRestart }: GameMenuProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          {showGameplayPreferences && gameplayPreferences && (
+            <>
+              <DropdownMenuLabel>Spillinnstillinger</DropdownMenuLabel>
+              <DropdownMenuCheckboxItem
+                checked={gameplayPreferences.displayMode === 'tv'}
+                onCheckedChange={(checked) =>
+                  gameplayPreferences.onDisplayModeChange(
+                    checked === true ? 'tv' : 'standard'
+                  )
+                }
+                onSelect={(event) => event.preventDefault()}
+              >
+                <Tv className="mr-2 h-4 w-4" />
+                <span>TV-modus</span>
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={gameplayPreferences.soundEnabled}
+                onCheckedChange={(checked) =>
+                  gameplayPreferences.onSoundEnabledChange(checked === true)
+                }
+                onSelect={(event) => event.preventDefault()}
+              >
+                <Volume2 className="mr-2 h-4 w-4" />
+                <span>Lydeffekter</span>
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuSeparator />
+            </>
+          )}
+
           <DropdownMenuItem onSelect={() => setIsPlayerSetupOpen(true)}>
             <Users className="mr-2 h-4 w-4" />
             <span>Endre spillere</span>
