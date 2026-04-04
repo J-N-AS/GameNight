@@ -121,6 +121,55 @@ function formatTimerLabel(totalSeconds: number) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
+type TaskBurstParticle = {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  rotate: number;
+  delay: number;
+  color: string;
+  shape: 'square' | 'star';
+};
+
+const burstPalette = [
+  '#f8fafc',
+  '#fde68a',
+  '#f9a8d4',
+  '#93c5fd',
+  '#86efac',
+  '#c4b5fd',
+];
+
+function createTaskBurstParticles(seedSource: string): TaskBurstParticle[] {
+  let seed =
+    seedSource.split('').reduce((total, character) => {
+      return total + character.charCodeAt(0);
+    }, 0) || 1;
+
+  const nextRandom = () => {
+    seed = (seed * 1664525 + 1013904223) % 4294967296;
+    return seed / 4294967296;
+  };
+
+  return Array.from({ length: 18 }, (_, index) => {
+    const angle = nextRandom() * Math.PI * 2;
+    const distance = 56 + nextRandom() * 130;
+    const drift = 0.68 + nextRandom() * 0.28;
+
+    return {
+      id: index,
+      x: Math.cos(angle) * distance,
+      y: Math.sin(angle) * distance * drift,
+      size: 8 + nextRandom() * 10,
+      rotate: -160 + nextRandom() * 320,
+      delay: nextRandom() * 0.16,
+      color: burstPalette[index % burstPalette.length],
+      shape: nextRandom() > 0.72 ? 'star' : 'square',
+    };
+  });
+}
+
 export function TaskCard({
   game,
   task,
@@ -136,7 +185,7 @@ export function TaskCard({
   const details = toneDetails[presentation.tone];
   const Icon = details.icon;
   const isImmersive = variant === 'immersive';
-  const subtitle = rule?.description ?? (isImmersive ? null : presentation.hint);
+  const subtitle = isImmersive ? null : rule?.description ?? presentation.hint;
   const showTimer = Boolean(
     timerState && timerState.durationSeconds > 0
   );
@@ -177,6 +226,14 @@ export function TaskCard({
         : 'Kjør igjen';
   const TimerStatusIcon =
     timerState?.status === 'finished' ? CheckCircle2 : Clock3;
+  const taskBurstParticles = React.useMemo(
+    () => createTaskBurstParticles(task.text),
+    [task.text]
+  );
+  const showImmersiveInlineTimer =
+    isImmersive && showTimer && timerState?.status === 'idle';
+  const immersiveTimerActionLabel =
+    timerState?.status === 'idle' ? 'Start' : timerActionLabel;
 
   if (isImmersive) {
     return (
@@ -190,42 +247,66 @@ export function TaskCard({
 
         <div className="relative z-10 flex h-full min-h-0 flex-col px-[clamp(1.35rem,5vw,2.4rem)] pb-[calc(env(safe-area-inset-bottom)+3.4rem)] pt-[calc(env(safe-area-inset-top)+4.5rem)]">
           <div className="flex min-h-0 flex-1 flex-col items-center justify-center">
-            <motion.div
-              className={cn(
-                'immersive-task-card__content max-w-[13ch] text-balance font-black leading-[0.9] tracking-[-0.065em] sm:max-w-[15ch]',
-                textDensity === 'compact' && 'max-w-[14.5ch] sm:max-w-[16.5ch]',
-                textDensity === 'ultra' && 'max-w-[16.5ch] sm:max-w-[18ch]',
-                details.contentClass
-              )}
-              data-density={textDensity}
-              initial={{ opacity: 0, y: 12, scale: 0.99 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {content}
-            </motion.div>
+            <div className="relative flex items-center justify-center">
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                {taskBurstParticles.map((particle) => (
+                  <motion.span
+                    key={particle.id}
+                    aria-hidden
+                    className="absolute block mix-blend-screen shadow-[0_0_18px_rgba(255,255,255,0.35)]"
+                    initial={{ opacity: 0, x: 0, y: 0, rotate: 0, scale: 0.35 }}
+                    animate={{
+                      opacity: [0, 0.95, 0],
+                      x: particle.x,
+                      y: particle.y,
+                      rotate: particle.rotate,
+                      scale: [0.35, 1, 0.58],
+                    }}
+                    transition={{
+                      duration: 0.96,
+                      delay: particle.delay,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    style={{
+                      width: particle.size,
+                      height: particle.size,
+                      backgroundColor: particle.color,
+                      borderRadius: particle.shape === 'square' ? '0.28rem' : undefined,
+                      clipPath:
+                        particle.shape === 'star'
+                          ? 'polygon(50% 0%,61% 36%,98% 36%,68% 57%,79% 92%,50% 70%,21% 92%,32% 57%,2% 36%,39% 36%)'
+                          : undefined,
+                    }}
+                  />
+                ))}
+              </div>
 
-            {subtitle && (
-              <p
+              <motion.div
                 className={cn(
-                  'immersive-task-card__subtitle mt-[clamp(0.85rem,2.6vh,1.5rem)] max-w-[28ch] text-balance font-medium leading-[1.28]',
-                  details.subtitleClass
+                  'immersive-task-card__content relative z-10 max-w-[14.5ch] px-2 text-balance font-black [text-shadow:0_18px_45px_rgba(0,0,0,0.26)] sm:max-w-[16.5ch]',
+                  textDensity === 'compact' && 'max-w-[15.75ch] sm:max-w-[17.5ch]',
+                  textDensity === 'ultra' && 'max-w-[17ch] sm:max-w-[18.5ch]',
+                  details.contentClass
                 )}
+                data-density={textDensity}
+                initial={{ opacity: 0, y: 22, scale: 0.985, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
               >
-                {subtitle}
-              </p>
-            )}
+                {content}
+              </motion.div>
+            </div>
 
-            {showTimer && timerState && (
+            {showImmersiveInlineTimer && timerState && (
               <motion.div
                 className="mt-[clamp(1rem,3vh,1.85rem)] flex flex-col items-center gap-3"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 0.35, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
                 onClick={(event) => event.stopPropagation()}
                 onKeyDown={(event) => event.stopPropagation()}
               >
-                <p className="immersive-task-card__timer font-semibold tracking-[-0.04em] text-white/90 tabular-nums">
+                <p className="immersive-task-card__timer font-semibold text-white/92 tabular-nums">
                   {formatTimerLabel(timerState.remainingSeconds)}
                 </p>
                 <Button
@@ -241,9 +322,9 @@ export function TaskCard({
                     timerState.onRestart();
                   }}
                   onKeyDown={(event) => event.stopPropagation()}
-                  className="h-10 rounded-full border border-white/24 bg-white/12 px-4 text-sm font-semibold text-white shadow-none backdrop-blur-sm hover:bg-white/18"
+                  className="h-11 rounded-full border border-white/24 bg-white/12 px-5 text-sm font-semibold tracking-[0.08em] text-white shadow-none backdrop-blur-sm hover:bg-white/18"
                 >
-                  {timerActionLabel}
+                  {immersiveTimerActionLabel}
                 </Button>
               </motion.div>
             )}

@@ -3,6 +3,7 @@
 import type { Game, GameRule, GameTask, Player } from '@/lib/types';
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { TaskCard, type TaskCardTimerState } from './TaskCard';
+import { getTaskPresentation, type GameplayTone } from '@/lib/gameplay';
 import { Button } from '@/components/ui/button';
 import {
   ChevronLeft,
@@ -28,6 +29,18 @@ const isNameHiddenType = (type: GameTask['type']) =>
   type === 'never_have_i_ever' || type === 'pointing';
 
 const RECENT_SELECTION_LIMIT = 4;
+
+const gameplayShellGradients: Record<GameplayTone, string> = {
+  challenge: 'linear-gradient(180deg,#9f42ef 0%,#4730b7 100%)',
+  never: 'linear-gradient(180deg,#ff1a1f 0%,#ff5a00 100%)',
+  question: 'linear-gradient(180deg,#1496ff 0%,#0e5fd6 100%)',
+  pointing: 'linear-gradient(180deg,#10b8d9 0%,#1273a7 100%)',
+  versus: 'linear-gradient(180deg,#4f46e5 0%,#2537c8 100%)',
+  truth: 'linear-gradient(180deg,#ff9f1c 0%,#ff5a00 100%)',
+  rule: 'linear-gradient(180deg,#8f3ff2 0%,#3c32b2 100%)',
+  chaos: 'linear-gradient(180deg,#ff3b30 0%,#ff7a00 100%)',
+  secret: 'linear-gradient(180deg,#0fb981 0%,#0d8e8b 100%)',
+};
 
 function getFairSelectionWeight(
   playerId: string,
@@ -425,6 +438,9 @@ export function GameClient({
       onRestart: startCardTimer,
     };
   }, [currentTask, remainingTimerSeconds, startCardTimer, timerStatus]);
+  const isTimerOverlayRunning = currentTaskTimerState?.status === 'running';
+  const isTimerOverlayFinished = currentTaskTimerState?.status === 'finished';
+  const isTimerOverlayVisible = isTimerOverlayRunning || isTimerOverlayFinished;
 
   const commitStatsForCurrentTask = useCallback(() => {
     if (!currentTask || !isLoaded || players.length === 0) {
@@ -665,9 +681,9 @@ export function GameClient({
   ]);
 
   const cardVariants = {
-    enter: { opacity: 0, x: 40, scale: 0.985 },
+    enter: { opacity: 0, scale: 1.015 },
     center: { opacity: 1, x: 0, scale: 1 },
-    exit: { opacity: 0, x: -40, scale: 0.985 },
+    exit: { opacity: 0, scale: 0.99 },
   };
 
   const extractHslValues = (hslString?: string) => {
@@ -683,6 +699,15 @@ export function GameClient({
     '--team1-color-hsl': extractHslValues(game.teams?.team1Color),
     '--team2-color-hsl': extractHslValues(game.teams?.team2Color),
   } as React.CSSProperties;
+  const shellSurfaceStyle = useMemo<React.CSSProperties>(() => {
+    const tone = currentTask
+      ? getTaskPresentation(currentTask, game).tone
+      : 'challenge';
+
+    return {
+      backgroundImage: gameplayShellGradients[tone],
+    };
+  }, [currentTask, game]);
 
   const renderStageCard = () => {
     if (showLoading) {
@@ -713,6 +738,10 @@ export function GameClient({
 
   const canGoBack = currentIndex > 0;
   const progressLabel = !showLoading ? `${currentIndex + 1} / ${tasks.length}` : null;
+  const defaultCanTapAdvance =
+    !showLoading &&
+    currentTask?.type !== 'versus' &&
+    currentTaskTimerState?.status !== 'running';
 
   const renderActionButton = (
     label: string,
@@ -736,24 +765,64 @@ export function GameClient({
   );
 
   const renderAnimatedStageCard = () => (
-    <AnimatePresence initial={false} mode="wait">
-      <motion.div
-        key={currentIndex}
-        variants={cardVariants}
-        initial="enter"
-        animate="center"
-        exit="exit"
-        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-        className="h-full w-full"
-      >
-        {renderStageCard()}
-      </motion.div>
-    </AnimatePresence>
+    <div className="relative h-full w-full overflow-hidden">
+      <AnimatePresence initial={false} mode="sync">
+        <motion.div
+          key={currentIndex}
+          variants={cardVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0 h-full w-full"
+        >
+          {renderStageCard()}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
+
+  const renderTimerOverlay = () => {
+    return (
+      <AnimatePresence initial={false} mode="sync">
+        {currentTaskTimerState && currentTaskTimerState.status !== 'idle' ? (
+          <motion.div
+            key={`timer-overlay-${currentIndex}-${currentTaskTimerState.status}`}
+            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center bg-slate-950/42 backdrop-blur-2xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="flex h-full w-full items-center justify-center px-6 text-center">
+              {isTimerOverlayRunning ? (
+                <AnimatePresence initial={false} mode="wait">
+                  <motion.p
+                    key={currentTaskTimerState.remainingSeconds}
+                    className="gameplay-timer-overlay__value text-[clamp(7rem,30vw,22rem)] font-black leading-none tracking-[-0.08em] text-white [text-shadow:0_24px_70px_rgba(0,0,0,0.45)]"
+                    initial={{ opacity: 0.3, scale: 0.84, filter: 'blur(10px)' }}
+                    animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0.18, scale: 1.08, filter: 'blur(10px)' }}
+                    transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {currentTaskTimerState.remainingSeconds}
+                  </motion.p>
+                </AnimatePresence>
+              ) : isTimerOverlayFinished ? (
+                <p className="gameplay-timer-overlay__stop text-[clamp(5.25rem,22vw,15rem)] font-black leading-none tracking-[-0.08em] text-[#ff3b30] [text-shadow:0_24px_85px_rgba(255,59,48,0.4)]">
+                  STOPP!
+                </p>
+              ) : null}
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    );
+  };
 
   const renderGameplayShell = ({
     stage,
-    canTapAdvance = false,
+    canTapAdvance = defaultCanTapAdvance,
   }: {
     stage: React.ReactNode;
     canTapAdvance?: boolean;
@@ -762,14 +831,31 @@ export function GameClient({
       className="fixed inset-0 z-50 isolate h-[100svh] w-screen overflow-hidden"
       style={cssVars}
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center justify-between px-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] sm:px-4">
+      <AnimatePresence initial={false} mode="sync">
+        <motion.div
+          key={`shell-${currentIndex}`}
+          className="pointer-events-none absolute inset-0"
+          style={shellSurfaceStyle}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+        />
+      </AnimatePresence>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_28%),radial-gradient(circle_at_center,rgba(255,255,255,0.04),transparent_46%)]" />
+
+      <div
+        className={`pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center justify-between px-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] transition-opacity duration-200 sm:px-4 ${
+          isTimerOverlayVisible ? 'opacity-0' : 'opacity-100'
+        }`}
+      >
         <Button
           type="button"
           variant="ghost"
           size="icon"
           onClick={handlePreviousTask}
           disabled={!canGoBack}
-          className="pointer-events-auto h-11 w-11 rounded-full border-0 bg-black/16 text-white shadow-none backdrop-blur-md hover:bg-black/22 hover:text-white disabled:pointer-events-none disabled:opacity-35"
+          className="pointer-events-auto h-12 w-12 rounded-full border border-slate-900/12 bg-white text-slate-950 shadow-[0_14px_30px_rgba(15,23,42,0.24)] transition-transform duration-150 hover:scale-[1.02] hover:bg-white active:scale-[0.98] disabled:pointer-events-none disabled:bg-white/58 disabled:text-slate-950/38"
         >
           <ChevronLeft className="h-5 w-5" />
           <span className="sr-only">Forrige kort</span>
@@ -780,7 +866,7 @@ export function GameClient({
           variant="ghost"
           size="icon"
           onClick={handleExitGame}
-          className="pointer-events-auto h-11 w-11 rounded-full border-0 bg-black/16 text-white shadow-none backdrop-blur-md hover:bg-black/22 hover:text-white"
+          className="pointer-events-auto h-12 w-12 rounded-full border border-slate-900/12 bg-white text-slate-950 shadow-[0_14px_30px_rgba(15,23,42,0.24)] transition-transform duration-150 hover:scale-[1.02] hover:bg-white active:scale-[0.98]"
         >
           <X className="h-5 w-5" />
           <span className="sr-only">Avslutt spill</span>
@@ -788,7 +874,11 @@ export function GameClient({
       </div>
 
       {progressLabel && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+0.8rem)] z-20 flex justify-center">
+        <div
+          className={`pointer-events-none absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+0.8rem)] z-20 flex justify-center transition-opacity duration-200 ${
+            isTimerOverlayVisible ? 'opacity-0' : 'opacity-100'
+          }`}
+        >
           <p className="text-[0.72rem] font-medium tracking-[0.18em] text-white/46">
             {progressLabel}
           </p>
@@ -814,6 +904,8 @@ export function GameClient({
       >
         {stage}
       </div>
+
+      {renderTimerOverlay()}
     </div>
   );
 
@@ -932,19 +1024,21 @@ export function GameClient({
       ) : (
         renderAnimatedStageCard()
       ),
-      canTapAdvance: showSpinResult && !showLoading && currentTask?.type !== 'versus',
+      canTapAdvance:
+        showSpinResult &&
+        !showLoading &&
+        currentTask?.type !== 'versus' &&
+        currentTaskTimerState?.status !== 'running',
     });
   }
 
   if ((isSpinTheBottleMode && gameMode === 'physical') || isPhysicalItemGame) {
     return renderGameplayShell({
       stage: renderAnimatedStageCard(),
-      canTapAdvance: !showLoading && currentTask?.type !== 'versus',
     });
   }
 
   return renderGameplayShell({
     stage: renderAnimatedStageCard(),
-    canTapAdvance: !showLoading && currentTask?.type !== 'versus',
   });
 }

@@ -1,10 +1,9 @@
 'use client';
 
-import { useCallback, useState, type MouseEvent } from 'react';
+import { useCallback, type MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { useSession } from '@/hooks/usePlayers';
-import { useGameplayPreferences } from '@/hooks/useGameplayPreferences';
 import {
   formatPlayerCount,
   getMinimumPlayers,
@@ -12,6 +11,7 @@ import {
   getPlayerSetupHref,
   hasEnoughPlayers,
 } from '@/lib/player-requirements';
+import type { GameplayDrinkingIntensity } from '@/lib/gameplay-preferences';
 import type { Game } from '@/lib/types';
 
 type StartableGame = Pick<
@@ -23,9 +23,13 @@ export function useGameStart() {
   const router = useRouter();
   const { toast } = useToast();
   const { players } = useSession();
-  const { preferences, setDrinkingIntensity } = useGameplayPreferences();
-  const [pendingGame, setPendingGame] = useState<StartableGame | null>(null);
-  const [isStartDialogOpen, setIsStartDialogOpen] = useState(false);
+
+  const handleUnusedDialogOpenChange = useCallback((_open: boolean) => {}, []);
+  const handleUnusedDrinkingIntensityChange = useCallback(
+    (_drinkingIntensity: GameplayDrinkingIntensity) => {},
+    []
+  );
+  const handleUnusedConfirm = useCallback(() => {}, []);
 
   const startGame = useCallback(
     (game: StartableGame, event?: MouseEvent<Element>) => {
@@ -51,40 +55,21 @@ export function useGameStart() {
       }
 
       event?.preventDefault();
-      setPendingGame(game);
-      setIsStartDialogOpen(true);
+      router.push(`/spill/${game.id}`);
       return true;
     },
     [players.length, router, toast]
   );
 
-  const confirmStartGame = useCallback(() => {
-    if (!pendingGame) {
-      return false;
-    }
-
-    setIsStartDialogOpen(false);
-    router.push(`/spill/${pendingGame.id}`);
-    return true;
-  }, [pendingGame, router]);
-
-  const handleStartDialogOpenChange = useCallback((open: boolean) => {
-    setIsStartDialogOpen(open);
-
-    if (!open) {
-      setPendingGame(null);
-    }
-  }, []);
-
   return {
     startGame,
     gameStartDialogProps: {
-      game: pendingGame,
-      open: isStartDialogOpen,
-      drinkingIntensity: preferences.drinkingIntensity,
-      onOpenChange: handleStartDialogOpenChange,
-      onDrinkingIntensityChange: setDrinkingIntensity,
-      onConfirm: confirmStartGame,
+      game: null,
+      open: false,
+      drinkingIntensity: 'medium' as const,
+      onOpenChange: handleUnusedDialogOpenChange,
+      onDrinkingIntensityChange: handleUnusedDrinkingIntensityChange,
+      onConfirm: handleUnusedConfirm,
     },
   };
 }
