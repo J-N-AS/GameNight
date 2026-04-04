@@ -15,7 +15,7 @@ export function SkjermlekerClient({ categories }: { categories: ScreenGameCatego
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 max-w-4xl">
-      <nav className="mb-8" aria-label="Tilbake til forsiden">
+      <nav className="mb-10" aria-label="Tilbake til forsiden">
         <Button variant="ghost" asChild>
           <Link href="/">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -24,18 +24,22 @@ export function SkjermlekerClient({ categories }: { categories: ScreenGameCatego
         </Button>
       </nav>
 
-      <article className="space-y-12">
-        <header className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter flex items-center justify-center gap-3">
-            <Clapperboard className="h-10 w-10" />
-            Skjermleker
-          </h1>
-          <p className="text-muted-foreground mt-3 text-lg max-w-2xl mx-auto">
-            Skjermleker passer perfekt når dere vil gjøre filmkveld, reality,
-            sport eller TV-maraton mer sosialt uten mye forberedelse. Her finner
-            dere enkle partyspill og regler som gjør at alle følger med, ler mer
-            og får flere øyeblikk å reagere på sammen.
-          </p>
+      <article className="space-y-10 md:space-y-12">
+        <header className="border-b border-border/70 pb-10 text-center">
+          <div className="mx-auto max-w-2xl space-y-4">
+            <div className="flex justify-center text-foreground/80" aria-hidden="true">
+              <Clapperboard className="h-10 w-10 md:h-12 md:w-12" />
+            </div>
+            <h1 className="text-4xl font-bold font-headline tracking-tight md:text-5xl">
+              Skjermleker
+            </h1>
+            <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
+              Her finner dere skjermleker som gjør det enklere å velge noe som
+              passer filmkveld, reality, sport eller TV-maraton. Reglene ligger
+              klare, så dere kan bruke mindre tid på å forklare og mer tid på å
+              reagere, le og følge med sammen.
+            </p>
+          </div>
         </header>
 
         <section aria-label="Skjermlek-kategorier" className="space-y-16">
@@ -86,7 +90,7 @@ export function SkjermlekerClient({ categories }: { categories: ScreenGameCatego
                   <SeoLandingCta
                     headingId="skjermleker-cta-heading"
                     title="Vil dere heller spille på mobilen?"
-                    description="GameNight gjør det enkelt å gå fra manuelle skjermleker til ferdige mobilrunder med temaer, regler og tempo som holder kvelden i gang. Start gratis når dere vil ha mindre venting og mer spill."
+                    description="Når dere vil bytte ut manuelle regler med en ferdig runde som holder tempoet oppe, kan dere starte GameNight direkte i nettleseren."
                   />
                 )}
               </Fragment>

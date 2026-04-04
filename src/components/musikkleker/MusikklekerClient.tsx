@@ -15,7 +15,7 @@ export function MusikklekerClient({ categories }: { categories: MusicGameCategor
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 max-w-4xl">
-      <nav className="mb-8" aria-label="Tilbake til forsiden">
+      <nav className="mb-10" aria-label="Tilbake til forsiden">
         <Button variant="ghost" asChild>
           <Link href="/">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -24,18 +24,22 @@ export function MusikklekerClient({ categories }: { categories: MusicGameCategor
         </Button>
       </nav>
 
-      <article className="space-y-12">
-        <header className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter flex items-center justify-center gap-3">
-            <Music className="h-10 w-10" />
-            Musikkeleker
-          </h1>
-          <p className="text-muted-foreground mt-3 text-lg max-w-2xl mx-auto">
-            Musikkeleker er laget for kvelder der allsang, nostalgi og litt kaos
-            er halve opplevelsen. Her finner dere sangbaserte partyspill og
-            regler som gjør det enkelt å gå fra første låt til fullt vorspiel
-            uten å miste flyten.
-          </p>
+      <article className="space-y-10 md:space-y-12">
+        <header className="border-b border-border/70 pb-10 text-center">
+          <div className="mx-auto max-w-2xl space-y-4">
+            <div className="flex justify-center text-foreground/80" aria-hidden="true">
+              <Music className="h-10 w-10 md:h-12 md:w-12" />
+            </div>
+            <h1 className="text-4xl font-bold font-headline tracking-tight md:text-5xl">
+              Musikkeleker
+            </h1>
+            <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
+              Her finner dere musikkleker som gjør det lettere å velge en runde
+              som passer stemningen, enten dere vil ha allsang, nostalgi,
+              konkurranse eller ren kaosenergi. Alt er samlet så dere kan gå
+              fra første låt til en kveld folk faktisk husker.
+            </p>
+          </div>
         </header>
 
         <section aria-label="Musikkelek-kategorier" className="space-y-16">
@@ -98,7 +102,7 @@ export function MusikklekerClient({ categories }: { categories: MusicGameCategor
                   <SeoLandingCta
                     headingId="musikkleker-cta-heading"
                     title="Vil dere heller spille på mobilen?"
-                    description="Når dere vil gå fra manuelle musikkleker til en komplett spillflyt, lar GameNight dere starte ferdige runder, temaer og regler på sekunder. Det er den raskeste veien fra spilleliste til faktisk spillkveld."
+                    description="Når dere vil gå fra hjemmelagde regler til en ferdig spillrunde, kan dere starte GameNight og finne noe som matcher stemningen med en gang."
                   />
                 )}
               </Fragment>

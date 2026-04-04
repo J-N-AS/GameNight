@@ -4,6 +4,8 @@
 
 GameNight er en statisk-first Next.js-app for festspill og relaterte innholdssider. Produktet er bygget for én skjerm per spilløkt og henter nesten alt innhold fra lokale filer i `src/data/`.
 
+Les `docs/GAMENIGHT_MASTER.md` først hvis du trenger helheten. Denne filen er bare en kortversjon.
+
 ## Hvor ting ligger
 
 - spill: `src/data/*.json`
@@ -15,13 +17,19 @@ GameNight er en statisk-first Next.js-app for festspill og relaterte innholdssid
 - gameplay-presentasjon: `src/components/game/TaskCard.tsx`
 - SEO: `src/lib/seo.ts`, `src/app/sitemap.ts`, `src/app/robots.ts`
 
-## Hvordan gameplay fungerer
+## Hvordan gameplay faktisk fungerer
 
-- `GameFlow` bestemmer oppstartssteget og skjuler footer/related når `step === "playing"`
-- `GameClient` kjører kortstokken og holder session-lokal state
-- kort støtter `type`, `text`, valgfri `rule` og valgfri `moment`
-- `rule` og `moment` brukes nå hovedsakelig som redaksjonell metadata og kortpresentasjon
+- `GameFlow` bestemmer preplay-steg og skjuler footer/related når gameplay er aktivt
+- `GameClient` kjører fullscreen-shellen og bruker tap-to-advance som hovedmekanikk
 - spillerliste og enkel statistikk ligger i `localStorage`
+- kort støtter `type`, `text`, valgfri `rule`, `moment`, `timer`, `sipAmount` og `penalty`
+
+Viktig realitet:
+
+- `timer` er live i immersive gameplay
+- `rule` er live som kortinnhold, men aktive regler spores ikke i standard gameplay
+- `sipAmount` og `penalty` finnes i modellen, men er ikke fullt koblet inn i dagens immersive runtime
+- drikkenivå-preferanser og `GameStartDialog` finnes som scaffolding, men brukes ikke i vanlig startflyt
 
 Støttede korttyper:
 
@@ -40,10 +48,12 @@ Støttede placeholders:
 - `{team2}`
 - `{all}`
 
+Navn skjules med vilje i `pointing` og `never_have_i_ever`, hvor motoren kan vise `Noen` og `En annen`.
+
 ## Hvordan nye spill legges til
 
 1. lag `src/data/<id>.json`
-2. legg ID-en i `src/lib/games.ts`
+2. legg ID-en i `canonicalGameIds` i `src/lib/games.ts`
 3. oppdater `src/lib/game-library.ts` hvis tiering eller anbefalinger skal endres
 4. legg spillet til i `themes.json` hvis det skal vises i temaer
 5. oppdater `SPILL_OVERSIKT.md`
@@ -58,12 +68,14 @@ Støttede placeholders:
 - ikke anta database, auth eller backend
 - behold én-enhets-modellen med mindre noe annet er bestilt
 - foretrekk data-drevne endringer fremfor nye spesialsystemer
-- ikke legg inn ekstra paneler eller støtte-UI i aktiv spilling uten eksplisitt behov
-- ikke gjør `versus` til standardmønster; dagens støtte er smal
+- ikke anta at alle schemafelt er live i gameplay bare fordi de finnes
+- ikke legg inn store “Neste”-knapper i normal gameplay-flyt
 - vær tydelig på at oppsummeringen bygger på enkel lokal statistikk, ikke full tracking
+- husk at dagens repo har aktiv consent-/ad-gating og at dette påvirker UX
 
 ## Dokumenter som bør leses først
 
+- `docs/GAMENIGHT_MASTER.md`
 - `docs/02-architecture.md`
 - `docs/03-game-system.md`
 - `docs/04-game-library.md`

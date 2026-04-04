@@ -14,13 +14,13 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     dateLabel: 'Ca. tidlig mars 2026',
     emoji: '✨',
     tag: 'Glow-up',
-    title: 'Infosidene fikk en skikkelig glow-up',
+    title: 'Infosidene sluttet å mumle',
     summary:
-      'Vi ryddet opp i hvordan GameNight presenterer seg selv, så det føles mindre tilfeldig sideprosjekt og mer som et produkt du faktisk tør å sende videre til folk.',
+      'Vi tok en skikkelig rydderunde på sidene rundt spillet, så det ble lettere å skjønne hva GameNight er, hvordan det funker og hvorfor det ikke krever masse styr.',
     items: [
-      'Skrev om Om oss, FAQ, vilkår, kontakt og denne oppdateringssiden med tydeligere språk og litt mer personlighet.',
-      'Gjorde det enklere å forstå at GameNight er gratis, uten login, abonnement eller låste spillpakker.',
-      'La inn flere små trust-signaler rundt 18+, ansvarlig bruk og hvordan tjenesten faktisk fungerer i praksis.',
+      'Skrev om Om oss, FAQ, vilkår, kontakt og oppdateringssiden med kortere og tydeligere språk.',
+      'Gjorde det mye enklere å se at GameNight er gratis, uten login og uten låste spillpakker.',
+      'La inn tryggere rammer rundt 18+, ansvar og hvordan tjenesten faktisk brukes i praksis.',
     ],
   },
   {
@@ -28,13 +28,13 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     dateLabel: 'Ca. første uka i mars 2026',
     emoji: '🚀',
     tag: 'Flyt',
-    title: 'Spillstart gikk fra "vent litt" til "ok, kjør"',
+    title: 'Lynrask spillstart',
     summary:
-      'Målet var å fjerne de små irriterende stegene mellom "vi skal spille noe" og det øyeblikket første kort faktisk dukker opp på skjermen.',
+      'Vi jaget bort de små stegene mellom "skal vi spille noe?" og første kort på skjermen.',
     items: [
-      'Spill med spillerkrav forklarer tydeligere hva som mangler før dere kan starte.',
-      'Når spillerlista er klar, sendes dere tilbake til riktig spill i stedet for å måtte lete dere fram igjen.',
-      'Installasjon på mobil ble tonet ned til en hyggelig snarvei, ikke et stopp-skilt midt i flyten.',
+      'Spill med spillerkrav sier tydelig fra om hva som mangler før dere kan starte.',
+      'Når spillerlista er klar, havner dere tilbake i riktig spill i stedet for å måtte lete.',
+      'Mobilinstallasjon ble en valgfri snarvei, ikke en stoppkloss midt i moroa.',
     ],
   },
   {
@@ -42,13 +42,13 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     dateLabel: 'Ca. slutten av februar 2026',
     emoji: '🎉',
     tag: 'Innhold',
-    title: 'Spillmiksen føltes mer som en faktisk vorspiel-meny',
+    title: 'Spillmiksen fikk mer personlighet',
     summary:
-      'Vi begynte å stramme opp hvordan spill og kategorier oppleves, så det blir lettere å finne noe som passer enten dere vil ha kaos, flørting eller bare komme i gang.',
+      'Mindre tilfeldig katalog, mer faktisk meny for kvelder med ulik stemning.',
     items: [
-      'Finjusterte miksene så forskjellige typer kvelder får litt tydeligere personlighet.',
-      'Gjorde det enklere å hoppe mellom klassiske drikkeleker, raske partyspill og mer sosiale isbrytere.',
-      'Ryddet i tekst og struktur så færre sider føles som stubber og flere føles som ekte anbefalinger.',
+      'Finjusterte miksene så kaoskvelder, flørtestemning og rolige oppstarter føles mer forskjellige.',
+      'Gjorde det enklere å hoppe mellom drikkeleker, partyspill og sosiale isbrytere.',
+      'Ryddet i tekster og struktur så flere sider føles ferdige, ikke halvveis.',
     ],
   },
   {
@@ -56,13 +56,13 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     dateLabel: 'Ca. midten av februar 2026',
     emoji: '📱',
     tag: 'Mobil + TV',
-    title: 'Én mobil først, TV når kvelden fortjener det',
+    title: 'Mobil først, TV når dere vil',
     summary:
-      'Vi gjorde produktfortellingen tydeligere: GameNight er laget for én skjerm som styrer alt, men fungerer også kjempefint når dere vil caste til noe større.',
+      'GameNight ble tydeligere som en en-skjermsgreie som også spiller fint med større skjermer.',
     items: [
       'La inn mer konkret hjelp for AirPlay på iPhone og Cast/skjermdeling på Android.',
-      'Skrev tydeligere at installasjon bare er en valgfri snarvei og ikke noe dere trenger for å spille.',
-      'Gjorde mobilopplevelsen mer konsekvent så den passer bedre til faktisk bruk rundt et bord.',
+      'Skrev tydeligere at installasjon bare er en valgfri snarvei.',
+      'Jevnet ut mobilopplevelsen så den sitter bedre rundt et faktisk bord.',
     ],
   },
   {
@@ -70,13 +70,13 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     dateLabel: 'Ca. slutten av januar 2026',
     emoji: '🧃',
     tag: 'Vibe',
-    title: 'Mer juice i smådetaljene',
+    title: 'Smågrep som gjør kvelden glattere',
     summary:
-      'Ikke alt var en stor feature. En del av løftet kom fra mange små justeringer som samlet gjør at GameNight føles mindre hakkete og mer gjennomtenkt.',
+      'Ingen stor feature-drop, bare mange små justeringer som gjør at appen føles mindre hakkete.',
     items: [
-      'Strammet opp tekst, knapper og små hjelpetekster der folk typisk blir usikre.',
+      'Strammet opp tekst, knapper og hjelpetekster der folk ofte stopper opp.',
       'Jevnet ut noen rare overganger mellom lister, infosider og spillsider.',
-      'Gjorde flere deler av produktet litt mindre "prototype" og litt mer "ja, dette funker faktisk".',
+      'Gjorde flere småting litt mindre prototype og litt mer "ja, dette funker".',
     ],
   },
   {
@@ -86,11 +86,11 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     tag: 'Grunnmur',
     title: 'Mer orden bak kulissene',
     summary:
-      'Vi gjorde en runde på strukturen i prosjektet, ikke fordi det er sexy, men fordi det gjør resten lettere å bygge og publisere uten overraskelser.',
+      'Den litt usynlige jobben: rydde struktur og publisering før flere ting bygges videre.',
     items: [
       'Ryddet i sideoppsett og grunnleggende metadata så deling og søk blir mer konsistent.',
       'Gjorde publiseringsoppsettet mindre skjørt på tvers av miljøer.',
-      'Dokumenterte mer av dagens setup så videre forbedringer går raskere å rulle ut.',
+      'Dokumenterte mer av setupen så nye forbedringer går raskere å rulle ut.',
     ],
   },
   {
@@ -98,13 +98,13 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     dateLabel: 'Ca. sent i 2025',
     emoji: '🌙',
     tag: 'Starten',
-    title: 'GameNight begynte å ligne på GameNight',
+    title: 'Da GameNight begynte å ligne på seg selv',
     summary:
-      'Dette var perioden der ideen gikk fra "vi burde lage noe" til et faktisk konsept: norsk, raskt å starte, sosialt rundt én skjerm og uten unødvendig paywall-stemning.',
+      'Dette var fasen der ideen gikk fra løs tanke til et norsk partyspill-opplegg som er raskt å starte og lett å dele.',
     items: [
-      'La retningen for at GameNight skal være gratis å bruke og lett å dele med venner.',
-      'Bestemte at én mobil eller nettleser skal kunne styre hele spilløkten uten konto og styr.',
-      'Satte tonen for at noen spill kan være drikkespill, men at gruppa alltid styrer nivå, regler og grenser selv.',
+      'La retningen for at GameNight skal være gratis å bruke og enkelt å sende videre.',
+      'Bestemte at én mobil eller nettleser skal kunne styre hele spilløkten uten konto.',
+      'Satte tonen for at gruppa styrer nivå, regler og grenser selv.',
     ],
   },
 ];

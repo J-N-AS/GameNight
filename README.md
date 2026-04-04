@@ -43,6 +43,7 @@ Viktige mapper:
 
 ## Dokumentasjon
 
+- `docs/GAMENIGHT_MASTER.md` hoveddokumentet og kildesannhet for arkitektur, UX og innholdsregler
 - `docs/01-product.md` hva GameNight er og hva produktet prøver å løse
 - `docs/02-architecture.md` teknisk arkitektur, render-modell og hosting
 - `docs/03-game-system.md` hvordan gameplay-systemet og spillkortene fungerer

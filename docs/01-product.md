@@ -56,7 +56,12 @@ GameNight er bygget rundt én skjerm per spilløkt. Det betyr:
 - ingen login
 - ingen konto
 - ingen låste spillpakker
-- ingen onboarding som blokkerer spillstart
+- ingen tung onboarding som blokkerer spillstart
+
+Viktig nyanse om dagens implementasjon:
+
+- repoet har aktiv consent-/annonsegating som kan stoppe brukeren før vanlig bruk
+- dette er en nåværende monetiseringsrealitet, ikke et ideal for produktopplevelsen
 
 ### Innhold først
 

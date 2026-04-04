@@ -10,10 +10,12 @@ Eksempler:
 - `src/data/spinn-flasken.json`
 - `src/data/sannhet-eller-shot.json`
 
-Selve biblioteket styres av to filer:
+Selve biblioteket styres primært av to filer:
 
-- `src/lib/games.ts` bestemmer hvilke spill-ID-er som lastes
+- `src/lib/games.ts` bestemmer hvilke spill-ID-er som faktisk lastes
 - `src/lib/game-library.ts` bestemmer tiering og anbefalte spill
+
+I tillegg finnes legacy-aliaser i `src/lib/games.ts` som peker gamle URL-er til kanoniske spill.
 
 ## Bibliotekets nivåer
 
@@ -25,7 +27,7 @@ Spill som prioriteres i sortering og anbefalinger.
 
 ### Offentlige temaspill
 
-Spill som fortsatt er synlige, men som er mer nisje- eller situasjonsstyrte.
+Spill som fortsatt er synlige, men som er mer nisje-, stemnings- eller situasjonsstyrte.
 
 ### Skjulte spill
 
@@ -33,7 +35,7 @@ Spill som enten:
 
 - er skjult helt med `hidden`
 - er skjult fra hovedbiblioteket med `isHiddenFromMain`
-- brukes som custom-/legacy- eller preset-ruter
+- brukes via direkte lenker, spesialflater eller legacy-ruter
 
 ## Spillfilens struktur
 
@@ -62,7 +64,7 @@ Et typisk spill ser slik ut:
 
 ### På spillnivå
 
-- `id` må matche filnavn og ID-en som legges i `allGameIds`
+- `id` må matche filnavn og den kanoniske ID-en som legges i `canonicalGameIds`
 - `title` og `description` brukes i bibliotek, metadata og relaterte lister
 - `shuffle` avgjør om kortene stokkes
 - `requiresPlayers` og `minPlayers` styrer spillerkrav
@@ -70,20 +72,36 @@ Et typisk spill ser slik ut:
 - `warning` gir samtykkeskjerm før spillstart
 - `gameType` og `spinMode` styrer spesialflyt
 - `hidden` og `isHiddenFromMain` styrer synlighet
-- `custom`, `region`, `kommune` og `instagram` brukes på russe-/custom-flater
+- `custom`, `region`, `kommune` og `instagram` brukes på spesialflater som russesider
 
 ### På kortnivå
 
 - `type` og `text` er alltid obligatoriske
-- `rule` brukes bare når kortet innfører eller rydder en regel gruppa kan huske selv
-- `moment` brukes bare når kortet fortjener tydeligere tone eller redaksjonell markering
-- `timer` brukes når kortet har en konkret nedtelling i sekunder
-- `penalty` kan brukes når kortet trenger en egen, kort straffetekst i UI-et
+- `rule` brukes når kortet innfører eller rydder en sosialt håndhevbar regel
+- `moment` brukes som tone-/markørmetadata
+- `timer` brukes når kortet faktisk trenger nedtelling
+- `sipAmount` og `penalty` er gyldige datafelt i schema og editor
+
+Viktig realitet om de to siste:
+
+- `timer` er live i immersive gameplay
+- `sipAmount` og `penalty` finnes i modellen, men er ikke fullt eksponert i dagens immersive gameplay-shell
+
+## Legacy- og aliasruter
+
+Et spill kan ha flere URL-er uten å være flere separate deck.
+
+Eksempler:
+
+- `spinn-flasken-ekte` og `spinn-flasken-virtuell` er aliaser til `spinn-flasken`
+- `girls-vs-boys` peker til `lagduell`
+
+Når du jobber med temaer, relaterte spill eller SEO-koblinger, er det ofte den kanoniske ID-en som er riktig referanse.
 
 ## Hvordan legge til et nytt spill
 
 1. Lag `src/data/<spill-id>.json`
-2. Legg ID-en inn i `allGameIds` i `src/lib/games.ts`
+2. Legg ID-en inn i `canonicalGameIds` i `src/lib/games.ts`
 3. Velg tier i `src/lib/game-library.ts` hvis spillet skal være kjernevalg eller skjult
 4. Legg spillet inn i `src/data/themes.json` hvis det skal vises på temasider
 5. Oppdater `SPILL_OVERSIKT.md`
@@ -118,6 +136,16 @@ Nye spill bør passe dagens motor:
 - korte, høytlesbare kort
 - enkel sosial håndheving
 - begrenset behov for kompliserte lag- eller rollemodeller
+- ikke avhengighet av vedvarende regelpanel
+
+### Innholdskvalitet
+
+Før et spill tas inn, bør decket være:
+
+- lett å lese høyt
+- skrevet i muntlig norsk
+- konsekvent i korttype og tone
+- bygget med placeholders i stedet for tvetydige ord som `noen`
 
 ### SEO og katalog
 
@@ -126,6 +154,7 @@ Et spill blir ikke automatisk synlig i riktig sammenheng bare fordi JSON-filen f
 - bør det være offentlig eller skjult?
 - skal det inn i temaer?
 - skal det være del av kjernebiblioteket?
+- trenger det egne hubkoblinger eller relaterte lenker?
 
 ## Nærliggende innholdstyper
 

@@ -45,7 +45,7 @@ export function DrikkelekerClient({ games }: { games: DrikkelekListItem[] }) {
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 max-w-4xl">
-      <nav className="mb-8" aria-label="Tilbake til forsiden">
+      <nav className="mb-10" aria-label="Tilbake til forsiden">
         <Button variant="ghost" asChild>
           <Link href="/">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -55,17 +55,19 @@ export function DrikkelekerClient({ games }: { games: DrikkelekListItem[] }) {
       </nav>
 
       <article className="space-y-8 md:space-y-10">
-        <header className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter">
-            Klassiske Drikkeleker
-          </h1>
-          <p className="text-muted-foreground mt-3 text-lg max-w-2xl mx-auto">
-            Klassiske drikkeleker er perfekte når dere vil ha regler alle
-            kjenner igjen, lav terskel for å bli med og raske runder som løfter
-            stemningen. Her finner dere favoritter som Beer Pong, Ring of Fire
-            og andre festklassikere samlet på ett sted, så dere slipper å lete
-            etter regler midt i vorspielet.
-          </p>
+        <header className="border-b border-border/70 pb-10 text-center">
+          <div className="mx-auto max-w-2xl space-y-4">
+            <h1 className="text-4xl font-bold font-headline tracking-tight md:text-5xl">
+              Klassiske Drikkeleker
+            </h1>
+            <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
+              Her finner dere klassiske drikkeleker samlet på ett sted, så det
+              blir enklere å velge noe som passer gruppa, stemningen og hvor
+              kaotisk dere vil ha festen. Når dere vil komme raskt i gang med
+              Beer Pong, Ring of Fire eller en annen favoritt, ligger reglene
+              klare her.
+            </p>
+          </div>
         </header>
 
         <section
@@ -170,7 +172,7 @@ export function DrikkelekerClient({ games }: { games: DrikkelekListItem[] }) {
         <SeoLandingCta
           headingId="drikkeleker-cta-heading"
           title="Vil dere heller spille på mobilen?"
-          description="GameNight gir dere ferdige runder, temaer og regler i én flyt når dere vil gå fra manuelle klassikere til en raskere spillstart. Perfekt når dere vil bruke mindre tid på å forklare og mer tid på å spille."
+          description="Når dere vil hoppe over forklaringsrunden og bare starte noe som passer festen, kan dere åpne GameNight og komme i gang med en gang."
         />
 
         <section

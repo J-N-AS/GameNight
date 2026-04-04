@@ -34,6 +34,8 @@ Typografi, kontrast, spacing og knappestørrelse skal først og fremst gjøre ko
 
 - hold fokus på kortet og neste handling
 - la gameplay normalt få plass på én mobilskjerm uten scroll
+- foretrekk tap-to-advance i selve kortflaten fremfor store permanente “Neste”-knapper
+- bruk bare eksplisitte handlingsknapper når gameplay faktisk krever et valg, en timer eller en spesialhandling
 - skjul footer og related-innhold mens aktiv spilling pågår
 - unngå å plassere perifert innhold for tett på aktiv spilling
 

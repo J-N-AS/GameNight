@@ -20,8 +20,8 @@ Dette dokumentet konkretiserer Gemini-feedbacken til en faseinndelt plan som pas
 - GameNight er fortsatt et én-skjerm-produkt, ikke et multi-device-system
 - nytt gameplay-UI må være valgfritt eller kontekstuelt, ikke permanent støy
 - repoet er rigget for statisk eksport via `next.config.ts` og `docs/10-cloudflare-pages-setup.md`
-- `GameTask.timer`, `GameTask.penalty` og `sipAmount` er allerede implementert i typer, editor, sanitizing og gameplay-UI
-- valg av drikkenivå er allerede implementert både før spillstart og i in-game meny, og brukes aktivt til å skalere nivåstyrte straffer
+- `GameTask.timer`, `GameTask.penalty` og `sipAmount` er implementert i typer, editor og sanitizing, men bare `timer` er fullt koblet inn i dagens immersive gameplay-UI
+- det finnes scaffolding for drikkenivå og `GameStartDialog`, men vanlig startflyt bruker det ikke aktivt ennå
 - klassiske drikkeleker lever i en egen artikkelmodell (`drikkeleker.json`) og må utvides uten å svekke dagens SEO-tekstflater
 
 ## Fase 1: Stabilisering og rammevalg
@@ -35,8 +35,8 @@ Leveranser:
 
 - reservere plass rundt `AdBanner` på info- og artikkelsider for å redusere layout shift
 - dokumentere eksisterende og nye felter for spillkort og artikler før flere JSON-filer endres
-- velge retning for analytics: midlertidig beholde GA eller planlegge overgang til Cloudflare Web Analytics
-- velge retning for OG-bilder: build-genererte assets først, eller senere runtime-basert løsning
+- dokumentere og operasjonalisere valgt retning for analytics: midlertidig beholde GA med mulig senere overgang til Cloudflare Web Analytics
+- dokumentere og operasjonalisere valgt retning for OG-bilder: build-genererte assets først, ikke runtime-basert løsning
 
 Teknisk berøringsflate:
 
@@ -51,19 +51,19 @@ Ferdig når:
 
 - annonseplassering ikke gir tydelig hopping når siden laster
 - nye metadatafelter er eksplisitt definert før større innholdsarbeid
-- teamet har tatt et bevisst valg om OG-strategi og analytics-retning
+- valgt OG-strategi og analytics-retning er eksplisitt dokumentert og fulgt opp i kode og driftssjekklister
 
 ## Fase 2: Timere og smartere kort
 
 Mål:
 
-- bygge videre på allerede implementerte tidskort og straffeflyt
+- bygge videre på allerede implementerte tidskort
 - løfte interaktiviteten uten å introdusere tung spilladministrasjon
 
 Leveranser:
 
-- forbedre presentasjonen og bruken av eksisterende `timer`, `penalty` og `sipAmount` i gameplay
-- koble timer og straffedata til flere kort der det gir faktisk gameplay-verdi
+- forbedre presentasjonen og bruken av eksisterende `timer` i gameplay
+- koble `penalty` og `sipAmount` tydeligere inn i den immersive gameplay-flaten der det gir faktisk verdi
 - videreutvikle timer-komponenten visuelt og ergonomisk der det trengs
 - koble timer til utvalgte kort først, med `vorspiel-mix` som pilotdeck
 - sikre at kort uten timer ser identiske ut med dagens opplevelse
@@ -78,7 +78,7 @@ Teknisk berøringsflate:
 Ferdig når:
 
 - tidskort kan spilles uten at gruppen teller selv
-- straffedata og nivåstyring oppleves som en naturlig del av gameplay
+- straffedata og eventuelt nivåstyring oppleves som en naturlig del av gameplay
 - timer-funksjonen ikke skaper ekstra friksjon på vanlige kort
 - dataflyten fortsetter å fungere likt i JSON, editor og frontend
 
@@ -151,7 +151,7 @@ Leveranser:
 
 - utvide `drikkeleker.json` med felt som `intensity`, `players` og `tags`
 - legge til filtrering for klassiske drikkeleker basert på gruppestørrelse og intensitet
-- utvide bruken av eksisterende `sipAmount`- og `penalty`-felter som allerede kan skaleres av intensitetsvelgeren
+- utvide bruken av eksisterende `sipAmount`- og `penalty`-felter og avgjøre om de faktisk skal kobles til en synlig intensitetsvelger
 - holde standardopplevelsen enkel: hvis brukeren ikke velger nivå, brukes normale korttekster og defaults
 
 Teknisk berøringsflate:
