@@ -279,7 +279,7 @@ export function GameEditorClient() {
       setLoadedFileName(file.name);
       activeTextFieldRef.current = null;
       toast({
-        title: 'JSON åpnet',
+        title: 'Spill åpnet',
         description: `${file.name} er lastet inn lokalt i editoren.`,
       });
     } catch (error) {
@@ -317,7 +317,7 @@ export function GameEditorClient() {
     URL.revokeObjectURL(url);
 
     toast({
-      title: 'JSON lagret',
+      title: 'Spill lagret',
       description: `${downloadFileName} er lastet ned til enheten din.`,
     });
   };
@@ -335,13 +335,13 @@ export function GameEditorClient() {
     try {
       await navigator.clipboard.writeText(exportJson);
       toast({
-        title: 'JSON kopiert',
+        title: 'Spilldata kopiert',
         description: 'Den formatterte spillfilen ligger nå på utklippstavlen.',
       });
     } catch {
       toast({
         title: 'Kunne ikke kopiere',
-        description: 'Prøv heller å laste ned JSON-filen.',
+        description: 'Prøv heller å laste ned spillfilen.',
         variant: 'destructive',
       });
     }
@@ -528,27 +528,14 @@ export function GameEditorClient() {
           className="mx-auto h-auto max-w-[270px] drop-shadow-[0_8px_24px_rgba(0,0,0,0.28)] md:max-w-[340px]"
         />
         <Badge className="mt-5 border-primary/30 bg-primary/15 text-primary">
-          Lokal editor
+          Spilleditor
         </Badge>
         <h1 className="mt-4 text-balance text-4xl font-bold tracking-[-0.05em] text-foreground md:text-6xl">
-          Game editor for lokale JSON-spill
+          Bygg og tilpass egne spill
         </h1>
         <p className="mx-auto mt-4 max-w-3xl text-pretty text-base text-muted-foreground md:text-lg">
-          Ingen backend, ingen database og ingen offisiell lenking. Her kan du
-          åpne en GameNight-fil, bygge et nytt spill fra bunnen og eksportere en
-          ren JSON-fil som kan sendes videre manuelt.
+          Her kan du bygge et nytt spill fra bunnen, eller laste inn et eksisterende spill for å gjøre egne tilpasninger.
         </p>
-        <div className="mt-5 flex flex-wrap justify-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground/85">
-          <span className="rounded-full border border-border/70 bg-card/60 px-3 py-1">
-            Noindex
-          </span>
-          <span className="rounded-full border border-border/70 bg-card/60 px-3 py-1">
-            Ikke i sitemap
-          </span>
-          <span className="rounded-full border border-border/70 bg-card/60 px-3 py-1">
-            Kun lokal import/eksport
-          </span>
-        </div>
       </motion.header>
 
       <div className="mx-auto grid max-w-7xl gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(340px,0.95fr)]">
@@ -578,7 +565,7 @@ export function GameEditorClient() {
                   onClick={handleOpenJson}
                 >
                   <FolderOpen className="h-5 w-5" />
-                  Åpne JSON
+                  Åpne spillfil
                 </Button>
                 <Button
                   type="button"
@@ -598,7 +585,7 @@ export function GameEditorClient() {
                   onClick={handleDownloadJson}
                 >
                   <Download className="h-5 w-5" />
-                  Lagre JSON
+                  Lagre fil
                 </Button>
                 <Button
                   type="button"
@@ -608,7 +595,7 @@ export function GameEditorClient() {
                   onClick={handleCopyJson}
                 >
                   <Copy className="h-5 w-5" />
-                  Kopier JSON
+                  Kopier data
                 </Button>
               </div>
 
@@ -645,8 +632,7 @@ export function GameEditorClient() {
             <CardHeader>
               <CardTitle className="text-2xl">Spillinfo</CardTitle>
               <CardDescription>
-                Disse feltene blir toppnivået i JSON-filen og styrer hvordan
-                spillet oppfører seg i GameNight.
+                Grunnleggende informasjon om spillet og hvordan det skal vises i appen.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-5 md:grid-cols-2">
@@ -943,7 +929,7 @@ export function GameEditorClient() {
                   <div>
                     <Label htmlFor="shuffle">Shuffle kortene</Label>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Slå av hvis rekkefølgen i JSON skal beholdes.
+                      Slå av for å beholde rekkefølgen du har satt.
                     </p>
                   </div>
                   <Switch
@@ -1130,8 +1116,8 @@ export function GameEditorClient() {
                   <div className="md:col-span-2">
                     <SectionLabel
                       htmlFor="warning-description"
-                      title="Warning-linjer"
-                      hint="Én linje per punkt i JSON-filen."
+                      title="Advarsler (én per linje)"
+                      hint="Hver linje blir et eget punkt."
                     />
                     <Textarea
                       id="warning-description"
@@ -1403,7 +1389,7 @@ export function GameEditorClient() {
                               Har dette kortet en vedvarende regel?
                             </Label>
                             <p className="mt-1 text-xs text-muted-foreground">
-                              Slå på hvis kortet skal skrive til `rule` i JSON.
+                              Slå på hvis kortet inneholder en generell regel for spillet.
                             </p>
                           </div>
                           <Switch
@@ -1588,8 +1574,7 @@ export function GameEditorClient() {
             <CardHeader>
               <CardTitle className="text-2xl">Forhåndsvisning</CardTitle>
               <CardDescription>
-                Vis valgt kort i GameNight-stil eller se den eksakte JSON-en som
-                er klar for eksport.
+                Vis valgt kort i GameNight-stil eller se rådataen som er klar for eksport.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -1621,7 +1606,7 @@ export function GameEditorClient() {
                   <div className="rounded-[1.5rem] border border-border/70 bg-black/30 p-4">
                     <pre className="max-h-[30rem] overflow-auto whitespace-pre-wrap break-words text-xs leading-6 text-foreground/90">
                       {exportJson ??
-                        'JSON blir tilgjengelig her så snart valideringen er grønn.'}
+                        'Rådata blir tilgjengelig her så snart spillet er ferdig validert.'}
                     </pre>
                   </div>
                 </TabsContent>
@@ -1641,14 +1626,14 @@ export function GameEditorClient() {
                 Validering
               </CardTitle>
               <CardDescription>
-                Editoren sjekker at JSON-filen er spillbar og passer modellen i
+                Editoren sjekker kontinuerlig at spillet er gyldig og kan spilles i
                 GameNight.
               </CardDescription>
             </CardHeader>
             <CardContent>
               {issueList.length === 0 ? (
                 <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-100">
-                  JSON-en er gyldig og klar for lokal lagring.
+                  Spillet er gyldig og klart for lokal lagring.
                 </div>
               ) : (
                 <div className="space-y-3">

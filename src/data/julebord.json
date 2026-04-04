@@ -12,7 +12,7 @@
   "category": ["Sesong", "Party"],
   "tags": ["Jul"],
   "items": [
-    { "type": "challenge", "text": "Alle tar en slurk og sier 'God jul!'" },
+    { "type": "challenge", "text": "{all} tar en slurk og sier «God jul!»", "moment": "group" },
     { "type": "pointing", "text": "Hvem her er mest i julestemning?" },
     { "type": "prompt", "text": "{player}, hva er din favoritt-julesang?" },
     { "type": "challenge", "text": "{player}, nevn tre ting du ønsker deg til jul på 5 sekunder. Hvis ikke, drikk." },
@@ -20,7 +20,7 @@
     { "type": "pointing", "text": "Hvem her hadde spist mest julemat?" },
     {
       "type": "challenge",
-      "text": "Juleforbud! I de neste 4 rundene er ordet 'jul' forbudt. Sier du det, tar du 1 slurk. Et nytt forbuds-kort erstatter det gamle.",
+      "text": "Juleforbud! I de neste 4 rundene er ordet «jul» forbudt. Sier du det, tar du 1 slurk. Et nytt forbuds-kort erstatter det gamle.",
       "rule": {
         "action": "activate",
         "title": "Juleforbud",
@@ -55,8 +55,8 @@
     },
     { "type": "prompt", "text": "Pest eller kolera: Kun spise ribbe eller kun spise pinnekjøtt resten av året?" },
     { "type": "never_have_i_ever", "text": "gått på julebord med jobben og angret dagen etter." },
-    { "type": "challenge", "text": "{player} må synge første vers av 'På låven sitter nissen'. Hvis du klarer det, del ut 5 slurker." },
-    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å gråte av 'Tre nøtter til Askepott'?" },
+    { "type": "challenge", "text": "{player} må synge første vers av «På låven sitter nissen». Hvis du klarer det, del ut 5 slurker." },
+    { "type": "pointing", "text": "Hvem her er mest sannsynlig til å gråte av «Tre nøtter til Askepott»?" },
     { "type": "prompt", "text": "{player}, hva er din favoritt juletradisjon?" },
     { "type": "challenge", "text": "Alle som elsker gløgg, tar en slurk." },
     { "type": "never_have_i_ever", "text": "gitt bort en gave du har fått selv." },

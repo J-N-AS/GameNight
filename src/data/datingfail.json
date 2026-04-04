@@ -36,12 +36,8 @@
       "text": "Alle som har ignorert et rødt flagg: drikk."
     },
     {
-      "type": "prompt",
-      "text": "Har du noen gang ghostet noen? Drikk hvis ja."
-    },
-    {
-      "type": "challenge",
-      "text": "Shot hvis svaret er ja."
+      "type": "never_have_i_ever",
+      "text": "ghostet noen."
     },
     {
       "type": "pointing",
@@ -76,8 +72,8 @@
       "text": "Alle som har en sterk ick: drikk."
     },
     {
-      "type": "prompt",
-      "text": "Har du noen gang vært på date uten å ville være der? Drikk hvis ja."
+      "type": "never_have_i_ever",
+      "text": "vært på date uten å ville være der."
     },
     {
       "type": "pointing",
@@ -148,8 +144,8 @@
       "text": "Shot hvis du fortsatt husker den."
     },
     {
-      "type": "prompt",
-      "text": "Har du noen gang gått hjem med feil person? Drikk hvis ja."
+      "type": "never_have_i_ever",
+      "text": "gått hjem med feil person."
     },
     {
       "type": "pointing",
@@ -184,12 +180,8 @@
       "text": "Alle tar én slurk for livserfaring."
     },
     {
-      "type": "prompt",
-      "text": "Har du noen gang latet som daten gikk bra? Drikk hvis ja."
-    },
-    {
-      "type": "challenge",
-      "text": "Alle som har gjort det: drikk."
+      "type": "never_have_i_ever",
+      "text": "latet som daten gikk bra."
     },
     {
       "type": "pointing",
