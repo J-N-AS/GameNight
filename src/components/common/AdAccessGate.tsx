@@ -50,6 +50,29 @@ export function AdAccessGate() {
     };
   }, []);
 
+  const isBaitBlocked = () => {
+    if (!baitRef.current) {
+      return false;
+    }
+
+    const styles = window.getComputedStyle(baitRef.current);
+
+    return (
+      styles.display === 'none' ||
+      styles.visibility === 'hidden' ||
+      baitRef.current.offsetHeight === 0 ||
+      baitRef.current.offsetWidth === 0
+    );
+  };
+
+  const shouldShowAdblockGate = () => {
+    if (!hasConsent) {
+      return false;
+    }
+
+    return isBaitBlocked();
+  };
+
   useEffect(() => {
     if (!hasConsent) {
       return;
@@ -57,32 +80,21 @@ export function AdAccessGate() {
 
     let cancelled = false;
 
-    const isBaitBlocked = () => {
-      if (!baitRef.current) {
-        return false;
-      }
-
-      const styles = window.getComputedStyle(baitRef.current);
-
-      return (
-        styles.display === 'none' ||
-        styles.visibility === 'hidden' ||
-        baitRef.current.offsetHeight === 0 ||
-        baitRef.current.offsetWidth === 0
-      );
-    };
-
     const runCheck = () => {
       if (cancelled) {
         return;
       }
 
-      if (adsenseStatus === 'failed' || isBaitBlocked()) {
+      if (shouldShowAdblockGate()) {
         setGateReason('adblock');
         return;
       }
 
-      if (adsenseStatus === 'loaded' && Array.isArray(window.adsbygoogle)) {
+      if (
+        adsenseStatus === 'loaded' ||
+        adsenseStatus === 'failed' ||
+        Array.isArray(window.adsbygoogle)
+      ) {
         setGateReason(null);
       }
     };
@@ -101,14 +113,7 @@ export function AdAccessGate() {
     setAdsenseStatus(Array.isArray(window.adsbygoogle) ? 'loaded' : 'idle');
 
     window.setTimeout(() => {
-      const baitBlocked =
-        baitRef.current &&
-        (window.getComputedStyle(baitRef.current).display === 'none' ||
-          window.getComputedStyle(baitRef.current).visibility === 'hidden' ||
-          baitRef.current.offsetHeight === 0 ||
-          baitRef.current.offsetWidth === 0);
-
-      if (baitBlocked || !Array.isArray(window.adsbygoogle)) {
+      if (shouldShowAdblockGate()) {
         setGateReason('adblock');
         return;
       }
