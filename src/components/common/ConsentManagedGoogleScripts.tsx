@@ -31,6 +31,10 @@ export function ConsentManagedGoogleScripts() {
     return null;
   }
 
+  // TODO (Fase 1 / 6): Google Analytics beholdes midlertidig. 
+  // Planen er å migrere til Cloudflare Web Analytics for å kunne fjerne cookie-consent 
+  // for ren analytics-innsikt og dermed redusere UX-friksjon. Annonser krever fortsatt consent.
+
   return (
     <>
       <Script

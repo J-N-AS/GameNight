@@ -173,11 +173,19 @@ Dette er ikke nødvendig for første stabile produksjonsoppsett:
 
 Hold oppsettet enkelt først. For dette prosjektet er enkelhet direkte knyttet til lavere kostnad og færre feil.
 
-## 11. Senere optimaliseringer
+## 11. Senere optimaliseringer og retningsvalg (Fase 1-beslutninger)
+
+Følgende tekniske retningsvalg er tatt for videreutvikling av arkitekturen:
+
+**Analytics (Google Analytics vs Cloudflare Web Analytics):**
+Vi beholder Google Analytics midlertidig, men planlegger en overgang til Cloudflare Web Analytics. Dette vil tillate oss å fjerne cookie-consent for analytics, som reduserer UX-friksjon, og styrker produktets personvernprofil. Annonser (AdSense) krever fortsatt consent inntil videre.
+
+**Open Graph (OG) bilder:**
+Siden appen er rigget for statisk eksport på Cloudflare Pages, velger vi build-genererte OG-assets (eller pre-renderte statiske bilder) fremfor runtime-generering (som `@vercel/og`). Runtime-generering krever en server (Pages Functions/OpenNext) og bryter med prinsippet om "enklest mulig drift".
 
 Dette er nyttig senere, men ikke nødvendig før launch:
 
-- Cloudflare Web Analytics
+- full overgang til Cloudflare Web Analytics
 - redirect-regler utover `www -> apex`
 - bildekomprimering i repoet for de største artikkelbildene
 - strammere preview-strategi hvis mange brancher begynner å deploye

@@ -36,6 +36,8 @@ export interface GameTask {
   text: string;
   rule?: GameRule;
   moment?: GameTaskMoment;
+  timer?: number;
+  penalty?: string;
 }
 
 export interface GameWarning {
@@ -92,6 +94,11 @@ export interface GameArticle {
   imageUrl?: string;
   imageHint?: string;
   attributionHtml?: string;
+  intensity?: 'low' | 'medium' | 'high';
+  players?: string;
+  tags?: string[];
+  sipAmount?: number;
+  penalty?: string;
 }
 
 export interface MusicGame {
