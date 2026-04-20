@@ -90,6 +90,9 @@ export interface GameArticle {
   slug: string;
   title: string;
   description: string;
+  publishedAt: string;
+  updatedAt: string;
+  editorialOwner: string;
   whatYouNeed: string[];
   rules: string[];
   cardRules?: { [key: string]: string };

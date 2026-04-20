@@ -14,6 +14,11 @@ export const INFO_PAGE_META = {
     description:
       'Kontakt GameNight for spørsmål, feil, forslag til spill og publisherinformasjon.',
   },
+  'redaksjonell-policy': {
+    title: 'Redaksjonell policy',
+    description:
+      'Hvordan GameNight redigerer, kvalitetssikrer og oppdaterer artikler om drikkeleker og festspill.',
+  },
 } as const;
 
 export type InfoPageSlug = keyof typeof INFO_PAGE_META;

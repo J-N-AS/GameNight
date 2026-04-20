@@ -6,12 +6,14 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   ArrowLeft,
+  CalendarClock,
   Dice5,
   Crown,
   HelpCircle,
   Layers,
   Gamepad2,
   Library,
+  Signature,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -45,6 +47,12 @@ export function DrikkelekArticleClient({
   relatedArticles: RelatedArticle[];
   relatedGames: RelatedGame[];
 }) {
+  const updatedLabel = new Intl.DateTimeFormat('nb-NO', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(article.updatedAt));
+
   return (
     <motion.div
       className="container mx-auto px-4 py-8 md:py-16 max-w-3xl"
@@ -81,6 +89,22 @@ export function DrikkelekArticleClient({
         <CardHeader>
           <h1 className="text-3xl font-bold leading-tight">{article.title}</h1>
           <p className="text-muted-foreground pt-2">{article.description}</p>
+          <div className="mt-4 rounded-lg border border-border/60 bg-card/50 p-4 text-sm text-muted-foreground space-y-2">
+            <p className="flex items-center gap-2">
+              <CalendarClock className="h-4 w-4 text-primary" />
+              <span>
+                <span className="font-medium text-foreground">Sist oppdatert:</span>{' '}
+                {updatedLabel}
+              </span>
+            </p>
+            <p className="flex items-center gap-2">
+              <Signature className="h-4 w-4 text-primary" />
+              <span>
+                <span className="font-medium text-foreground">Redaksjonelt ansvar:</span>{' '}
+                {article.editorialOwner}
+              </span>
+            </p>
+          </div>
           {(article.intensity || article.players || article.tags?.length || article.sipAmount || article.penalty) && (
             <div className="mt-5 space-y-4">
               <div className="grid gap-3 sm:grid-cols-3">

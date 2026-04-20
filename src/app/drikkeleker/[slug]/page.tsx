@@ -75,9 +75,11 @@ export default async function DrikkelekArticlePage({
     inLanguage: 'nb-NO',
     isAccessibleForFree: true,
     mainEntityOfPage: getCanonicalUrl(`/drikkeleker/${article.slug}`),
+    datePublished: article.publishedAt,
+    dateModified: article.updatedAt,
     author: {
       '@type': 'Organization',
-      name: 'GameNight',
+      name: article.editorialOwner,
     },
     publisher: {
       '@type': 'Organization',
