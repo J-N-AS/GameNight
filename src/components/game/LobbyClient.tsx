@@ -56,21 +56,21 @@ const FUTURE_ROWS = [
   {
     title: 'Klassiske drikkeleker',
     description:
-      'Plass for kuraterte klassikere, regler og raske innganger til kjente favoritter.',
+      'Finn tidløse drikkeleker med tydelige regler, forslag til oppsett og raske varianter som fungerer fra første runde.',
     icon: Beer,
     href: '/drikkeleker',
   },
   {
     title: 'Musikk drikkeleker',
     description:
-      'Plass for sangbaserte runder, drikkeregler og miksede musikkleker.',
+      'Start musikkrunder med ferdige kategorier, enkle drikkeregler og tips som holder energien oppe gjennom hele kvelden.',
     icon: Music,
     href: '/musikkleker',
   },
   {
     title: 'Skjerm drikkeleker',
     description:
-      'Plass for TV-, sport- og realitybaserte spillkvelder med felles skjerm.',
+      'Kjør skjermbaserte leker inspirert av TV, sport og reality med opplegg som gjør det lett å spille sammen i stua.',
     icon: Clapperboard,
     href: '/skjermleker',
   },
