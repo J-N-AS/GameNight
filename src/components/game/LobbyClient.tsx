@@ -560,6 +560,77 @@ export function LobbyClient({
         })}
       </motion.section>
 
+
+      <motion.section
+        className="mx-auto mt-12 max-w-5xl"
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+      >
+        <Card className="border-border/70 bg-card/55 backdrop-blur-sm">
+          <CardContent className="space-y-5 p-5 text-sm leading-6 text-muted-foreground md:p-7">
+            <div>
+              <h2 className="text-base font-semibold text-foreground">Hva er GameNight</h2>
+              <p className="mt-2">
+                GameNight er et norsk spillbibliotek for festspill, isbrytere og drikkeleker som er laget for å
+                fungere raskt på mobil. Målet er at dere skal komme i gang på sekunder, uten lange regler eller
+                tungt oppsett. Hvert spillkort er skrevet med tydelig språk, kort varighet og praktiske forslag
+                til gruppestørrelse, slik at det blir enklere å velge riktig stemning i rommet. Vi bygger
+                innholdet for ekte kvelder med venner, men med fokus på trygg ramme, tydelige valg og respekt for
+                at alle deltakere er forskjellige.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-base font-semibold text-foreground">Hvordan vi kvalitetssikrer innhold</h3>
+              <p className="mt-2">
+                Spill og regler gjennomgås redaksjonelt før publisering, og vi oppdaterer løpende når språk,
+                flyt eller sikkerhet kan bli bedre. Vi prioriterer klare instruksjoner, realistiske tidsrammer og
+                balanse mellom humor og inkludering, slik at innholdet fungerer både for nye og erfarne spillere.
+                Les mer om prinsipper, kriterier og oppdateringsrutiner i
+                {' '}
+                <Link href="/info/redaksjonell-policy" className="font-medium text-foreground underline underline-offset-4">
+                  redaksjonell policy
+                </Link>
+                , samt hvordan vi håndterer data i
+                {' '}
+                <Link href="/info/personvern" className="font-medium text-foreground underline underline-offset-4">
+                  personvern
+                </Link>
+                {' '}og våre
+                {' '}
+                <Link href="/vilkar" className="font-medium text-foreground underline underline-offset-4">
+                  vilkår
+                </Link>
+                .
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-base font-semibold text-foreground">Ansvarlig bruk 18+</h3>
+              <p className="mt-2">
+                Innhold merket 18+ er laget for voksne brukere og skal brukes med samtykke, pauser og respekt for
+                egne grenser. Ingen skal presses til å drikke, utføre utfordringer eller bli med på regler som
+                føles utrygge. Vi anbefaler vann tilgjengelig, tydelig stoppord og at vertskapet justerer tempo
+                etter gruppen.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-base font-semibold text-foreground">Slik bruker du siden uten alkohol</h3>
+              <p className="mt-2">
+                Alle konsepter kan spilles alkoholfritt: bytt drikk med vann, brus, poeng, oppgaver eller små
+                premier. Dere kan også velge spill som handler om kreativitet, samarbeid eller latter uten
+                drikkepress. Hvis du vil utforske flere varianter, finner du oversikten i
+                {' '}
+                <Link href="/drikkeleker" className="font-medium text-foreground underline underline-offset-4">
+                  drikkeleker
+                </Link>
+                {' '}og kan tilpasse reglene til gruppen deres.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.section>
+
       <Dialog open={isSurpriseMeOpen} onOpenChange={setIsSurpriseMeOpen}>
         <DialogContent>
           <DialogHeader>
