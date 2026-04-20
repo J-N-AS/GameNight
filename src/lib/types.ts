@@ -109,6 +109,11 @@ export interface GameArticle {
   tags?: string[];
   sipAmount?: number;
   penalty?: string;
+  seoPriority?: number;
+  articleSections?: {
+    title: string;
+    items: string[];
+  }[];
 }
 
 export interface MusicGame {
