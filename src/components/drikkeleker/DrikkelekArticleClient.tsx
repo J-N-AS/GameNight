@@ -231,6 +231,29 @@ export function DrikkelekArticleClient({
                 </div>
               </div>
             )}
+
+            {article.articleSections && article.articleSections.length > 0 && (
+              <div>
+                <h2 className="font-semibold text-foreground mb-4 text-xl">
+                  Flere tips for {article.title}
+                </h2>
+                <div className="space-y-5">
+                  {article.articleSections.map((section) => (
+                    <section
+                      key={section.title}
+                      className="rounded-xl border border-border/60 bg-card/40 p-4"
+                    >
+                      <h3 className="font-semibold text-foreground mb-2">{section.title}</h3>
+                      <ul className="list-disc list-inside space-y-2 text-base">
+                        {section.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

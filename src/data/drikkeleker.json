@@ -43,9 +43,43 @@
       "Dame": "Spørsmåls-mester - Du er 'Spørsmåls-mester' til neste dame trekkes. Hvis noen svarer på et spørsmål fra deg, får de en straff.",
       "Konge": "King's Cup - Hell litt av drikken din i koppen i midten. Den som trekker den siste kongen, tømmer alt."
     },
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2024-05-12",
+    "updatedAt": "2026-03-11",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 2,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "Kort trekkes for raskt uten at nye regler forklares tydelig for alle.",
+          "Koppen i midten blir ofte overfylt fordi spillerne heller for mye om gangen."
+        ]
+      },
+      {
+        "title": "Passer best til",
+        "items": [
+          "Vorspiel med blandet gruppe der noen kjenner hverandre fra før og noen er nye."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "Bruk vann eller alkoholfri drikke i King's Cup, og la siste konge trekke en sosial utfordring i stedet for å tømme koppen."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Skriv aktive husregler på mobilnotat så alle husker dem når tempoet øker."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Legg inn \"reset-runde\" hver gang andre konge trekkes, der alle repeterer gjeldende regler på 30 sekunder. Det kutter regelkrangler dramatisk."
+        ]
+      }
+    ]
   },
   {
     "slug": "beer-pong",
@@ -113,9 +147,44 @@
         ]
       }
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2024-06-01",
+    "updatedAt": "2026-04-10",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 1,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "For lange avstander mellom koppene gjør spillet tregt og lite presist.",
+          "Mange glemmer å avtale bounce-regler før start, noe som skaper diskusjoner."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Marker en kastelinje med tape så alle står likt hver runde.",
+          "Ha en egen skyllekopp til ballene for bedre hygiene gjennom kvelden."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "Bytt innholdet i koppene til saft eller brus, og la taperlaget gjøre en morsom utfordring i stedet for å drikke."
+        ]
+      },
+      {
+        "title": "Tidsbruk",
+        "items": [
+          "Ca. 20-35 minutter per kamp med 10 kopper per lag."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Spill best av tre med bytte av side mellom kampene; det jevner ut forskjeller i bordhelling og lys."
+        ]
+      }
+    ]
   },
   {
     "slug": "flip-cup",
@@ -147,9 +216,44 @@
       "Så fort en spiller klarer det, kan neste person på laget begynne.",
       "Det første laget hvor alle har fullført, vinner."
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2024-08-19",
+    "updatedAt": "2026-02-21",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 4,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "Ujevnt antall spillere per lag gjør konkurransen skjev.",
+          "For fulle kopper gjør at mer handler om drikkemengde enn ferdighet."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Kjør oppvarming med én treningsrunde før poeng teller.",
+          "Sett en dommer som kun vurderer om koppen står opp-ned."
+        ]
+      },
+      {
+        "title": "Tidsbruk",
+        "items": [
+          "Typisk 10-20 minutter per heat, perfekt som energibooster mellom andre leker."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "Bruk vann eller sportsdrikk, og la taperlaget gjøre 10 high-fives med alle i rommet."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Roter startspiller mellom rundene; lag som alltid starter med samme person blir ofte lettere å lese taktisk."
+        ]
+      }
+    ]
   },
   {
     "slug": "sannhet-eller-straff",
@@ -180,9 +284,43 @@
       "Spilleren som nettopp svarte (eller tok straffen) stiller så neste spørsmål til en ny person.",
       "Tips: Spørsmålene kan variere fra uskyldige til mer dristige, avhengig av stemningen i gruppa."
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2024-07-07",
+    "updatedAt": "2026-04-02",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 3,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "Spørsmålene blir for like og mister spenning etter få runder.",
+          "Gruppen hopper over komfortgrenser fordi man ikke har satt rammer først."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Forbered tre nivåer med spørsmål: lett, middels og spicy, så alle kan velge komfortnivå."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "Bytt straff med minioppdrag som dans, mime eller å fortelle en pinlig, men ufarlig historie."
+        ]
+      },
+      {
+        "title": "Passer best til",
+        "items": [
+          "Mindre grupper på 4-8 personer hvor dere vil bli kjent raskt."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Innfør \"pass-brikke\": hver spiller får én gratis passering per kveld. Det øker ærlige svar i de rundene som faktisk spilles."
+        ]
+      }
+    ]
   },
   {
     "slug": "klespoker-partyversjon",
@@ -213,9 +351,44 @@
       "Hovedregelen er at alle skal være komfortable. Målet er å ha det gøy og le, ikke å gjøre noen flaue.",
       "Spillet avsluttes når stemningen er god, eller når noen har mistet alle sine 'strippe-plagg' og bare sitter igjen med vanlige klær."
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2024-09-14",
+    "updatedAt": "2026-01-29",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 9,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "Uklare grenser for hva som er greit gjør stemningen utrygg.",
+          "For raske blinds presser nye spillere ut for tidlig."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Avklar komfortnivå før første hånd, og bruk alltid frivillig deltakelse.",
+          "Tilby alltid alternativ straff (poengtap/challenge) for dem som ikke vil kle av seg."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "Spill med tokens eller morsomme rekvisitter i stedet for klær og alkohol."
+        ]
+      },
+      {
+        "title": "Passer best til",
+        "items": [
+          "Lukkede vennegjenger med høy tillit og tydelige grenser."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Innfør \"samtykkepause\" hver tredje hånd der alle aktivt bekrefter at de vil fortsette på samme nivå."
+        ]
+      }
+    ]
   },
   {
     "slug": "busstur",
@@ -245,9 +418,44 @@
       "Gjetter sjåføren riktig, går de videre til neste kort. Gjetter de feil, får de en straff tilsvarende raden (1 for rad 1, 2 for rad 2 osv.) og må starte raden på nytt.",
       "Målet er å komme seg gjennom hele pyramiden uten å gjøre en feil. Lykke til, sjåfør!"
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2024-10-03",
+    "updatedAt": "2026-03-18",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 6,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "Spørsmål stilles i tilfeldig rekkefølge, så vanskelighetskurven blir kaotisk.",
+          "Ingen blir enige om hva som teller som riktig svar på rødt/svart ved jokerkort."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Les hele spørsmålstrappen høyt før første spiller starter.",
+          "Ha en \"neste i kø\" klar for å holde tempoet oppe."
+        ]
+      },
+      {
+        "title": "Tidsbruk",
+        "items": [
+          "Rundt 15-30 minutter avhengig av antall spillere og hvor mange som må ta ny busstur."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "Hver feil gir en morsom challenge-lapp i stedet for drikking, for eksempel dialektimitasjon i 20 sekunder."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Bruk to kortstokker på store fester: én til spørsmål og én til busstigen. Det reduserer ventetid merkbart."
+        ]
+      }
+    ]
   },
   {
     "slug": "pyramide",
@@ -278,9 +486,43 @@
       "Man kan også bløffe! Hvis du deler ut en straff, kan den som mottar den utfordre deg ved å si 'bløff'. Hvis du har kortet, må de ta dobbel straff. Hvis du ikke har det, må du ta dobbel straff selv.",
       "Antall straffer øker for hver rad oppover i pyramiden. Toppkortet er ofte verdt mange straffer eller en spesiell oppgave."
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2024-11-22",
+    "updatedAt": "2026-03-30",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 5,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "Folk avslører egne kortreaksjoner i ansiktet før de melder antall slurker.",
+          "Pyramiden bygges for tett, slik at kortene velter underveis."
+        ]
+      },
+      {
+        "title": "Passer best til",
+        "items": [
+          "Konkurransepregede vennegjenger som liker bluffing og poker-aktige elementer."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Bruk en tydelig matte eller duk med ruter for å holde pyramiden stabil."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "La antall matchende kort gi poengtrekk i stedet for slurker; lavest poengsum etter tre runder vinner."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Spill med \"åpen første rad\" (første tre kort vises direkte): det senker terskelen for nye spillere uten å fjerne bluff-elementet."
+        ]
+      }
+    ]
   },
   {
     "slug": "klespoker-high-stakes",
@@ -312,8 +554,8 @@
       "Alternativ regel: Man kan velge å ta en avtalt straff for å slippe å kle av seg et plagg, men kun et begrenset antall ganger.",
       "Spillet avsluttes når en spiller når sin avtalte grense, eller når gruppen bestemmer det. Målet er å ha det gøy, ikke å presse noen."
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
+    "publishedAt": "2025-01-09",
+    "updatedAt": "2026-02-07",
     "editorialOwner": "GameNight-redaksjonen"
   },
   {
@@ -344,8 +586,8 @@
       "Hvis du ser direkte på en person som ser tilbake på deg, har dere øyekontakt. Begge roper 'MEDUSA!' og får en straff.",
       "Spillet fortsetter i raskt tempo. Hold hodet kaldt og blikket strategisk."
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
+    "publishedAt": "2025-02-16",
+    "updatedAt": "2026-01-12",
     "editorialOwner": "GameNight-redaksjonen"
   },
   {
@@ -377,9 +619,44 @@
       "Man har ett gjett per runde. Gjetter man feil, må man ta en straff. Gjetter man riktig, er man trygg og turen går videre.",
       "En annen variant: Gå runden og la alle stille ja/nei-spørsmål for å finne ut hvilket kort de har. Den siste som gjetter kortet sitt, taper runden."
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2025-06-08",
+    "updatedAt": "2026-03-03",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 10,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "Spillere løfter kortet sitt for tidlig og ødelegger spenningen.",
+          "Dårlig oversikt over sum poeng gjør sluttfasen forvirrende."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Bruk en enkel poengtavle på papir for hver runde.",
+          "Innfør 5 sekunders betenkningstid før alle valg for å holde flyt."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "La taperen utføre en humoroppgave, som å holde en minitale med heiarop."
+        ]
+      },
+      {
+        "title": "Tidsbruk",
+        "items": [
+          "20-40 minutter avhengig av antall runder og hvor mange som spiller taktisk."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Spill med \"åpen siste stikk\" i finalerunden: alle viser kort samtidig før avgjørelse, noe som gir en mer dramatisk avslutning."
+        ]
+      }
+    ]
   },
   {
     "slug": "tre-mann",
@@ -411,9 +688,44 @@
       "Hvis en 3-er dukker opp i et hvilket som helst kast (enten som en terning eller i sum), må 'Tre-Mann' ta en skål!",
       "Hvis du slår en ny 3-er (2+1 eller en 3-er på en terning), kan du sende 'Tre-Mann'-tittelen videre til en annen spiller."
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2025-03-03",
+    "updatedAt": "2026-04-14",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 8,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "Spillerne glemmer hvem som er \"tre-mann\" etter noen minutter.",
+          "Terningkastene skjer uten fast retning, noe som skaper pauser."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Gi tre-mann en synlig markør (f.eks. hatt eller armbånd).",
+          "Avtal kastretning med klokka for jevnt tempo."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "Tre-mann må dele ut danseoppdrag eller mini-quiz i stedet for slurker."
+        ]
+      },
+      {
+        "title": "Tidsbruk",
+        "items": [
+          "10-25 minutter per runde, lett å starte på nytt med nye deltakere."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Sett en maksimumstid på tre-mann-rollen (f.eks. 5 minutter) for å unngå at én spiller blir passiv målskive for lenge."
+        ]
+      }
+    ]
   },
   {
     "slug": "party-jenga",
@@ -445,8 +757,43 @@
       "Hvis klossen har en oppgave på seg, må spilleren utføre den før de plasserer klossen på toppen av tårnet.",
       "Spilleren som til slutt river tårnet, må utføre en på forhånd avtalt 'hovedstraff'."
     ],
-    "publishedAt": "2026-04-20",
-    "updatedAt": "2026-04-20",
-    "editorialOwner": "GameNight-redaksjonen"
+    "publishedAt": "2025-04-25",
+    "updatedAt": "2026-04-05",
+    "editorialOwner": "GameNight-redaksjonen",
+    "seoPriority": 7,
+    "articleSections": [
+      {
+        "title": "Vanlige feil",
+        "items": [
+          "Regler skrives med uklare formuleringer som tolkes forskjellig.",
+          "For mange \"drikk nå\"-klosser gjør spillet ensformig."
+        ]
+      },
+      {
+        "title": "Vertens tips",
+        "items": [
+          "Bland ferdighetsoppdrag, quiz og sosiale regler for mer variasjon.",
+          "Skriv med tynn tusj på siden av klossen for bedre lesbarhet over tid."
+        ]
+      },
+      {
+        "title": "Passer best til",
+        "items": [
+          "Stuefester med stående mingling der folk kan komme inn og ut av spillet."
+        ]
+      },
+      {
+        "title": "Trygg variant uten alkohol",
+        "items": [
+          "Bytt drikkeregler med samarbeidsoppdrag, f.eks. \"finn to med samme favorittartist\"."
+        ]
+      },
+      {
+        "title": "Unik innsikt",
+        "items": [
+          "Sorter klossene i tre vanskelighetsgrader (grønn/gul/rød) før start for jevnere progresjon og mer spenning mot slutten."
+        ]
+      }
+    ]
   }
 ]
