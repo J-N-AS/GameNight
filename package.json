@@ -11,8 +11,9 @@
     "start": "next start",
     "lint": "node -e \"console.log('ESLint er ikke konfigurert ennå.')\"",
     "typecheck": "next typegen && tsc --noEmit --incremental false",
-    "check": "npm run typecheck && npm run build",
-    "check:cloudflare": "npm run typecheck && npm run build:cloudflare"
+    "check:content": "node ./scripts/check-content-placeholders.mjs",
+    "check": "npm run check:content && npm run typecheck && npm run build",
+    "check:cloudflare": "npm run check:content && npm run typecheck && npm run build:cloudflare"
   },
   "engines": {
     "node": "20.x"
