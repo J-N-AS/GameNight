@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ShieldAlert } from 'lucide-react';
 import {
@@ -15,14 +14,15 @@ import {
 
 type GateReason = 'consent' | 'adblock' | null;
 
+type TrackingWindow = Window & {
+  gtag?: (...args: unknown[]) => void;
+};
+
 export function AdAccessGate() {
   const baitRef = useRef<HTMLDivElement | null>(null);
-  const pathname = usePathname();
   const [gateReason, setGateReason] = useState<GateReason>(null);
   const [hasConsent, setHasConsent] = useState(false);
   const [adsenseStatus, setAdsenseStatus] = useState<'idle' | 'loaded' | 'failed'>('idle');
-  const isAllowedWithoutAds =
-    pathname === '/info/personvern' || pathname === '/vilkar';
 
   useEffect(() => {
     const syncConsent = () => {
@@ -65,7 +65,7 @@ export function AdAccessGate() {
     );
   };
 
-  const shouldShowAdblockGate = () => {
+  const shouldShowAdblockBanner = () => {
     if (!hasConsent) {
       return false;
     }
@@ -85,7 +85,7 @@ export function AdAccessGate() {
         return;
       }
 
-      if (shouldShowAdblockGate()) {
+      if (shouldShowAdblockBanner()) {
         setGateReason('adblock');
         return;
       }
@@ -99,9 +99,7 @@ export function AdAccessGate() {
       }
     };
 
-    const timeouts = [1200, 2500, 4000].map((delay) =>
-      window.setTimeout(runCheck, delay)
-    );
+    const timeouts = [1200, 2500, 4000].map((delay) => window.setTimeout(runCheck, delay));
 
     return () => {
       cancelled = true;
@@ -113,7 +111,7 @@ export function AdAccessGate() {
     setAdsenseStatus(Array.isArray(window.adsbygoogle) ? 'loaded' : 'idle');
 
     window.setTimeout(() => {
-      if (shouldShowAdblockGate()) {
+      if (shouldShowAdblockBanner()) {
         setGateReason('adblock');
         return;
       }
@@ -122,15 +120,40 @@ export function AdAccessGate() {
     }, 300);
   };
 
-  if (!gateReason || isAllowedWithoutAds) {
-    return hasConsent ? (
-      <div
-        ref={baitRef}
-        aria-hidden="true"
-        className="adsbox ad-banner ad-unit ad-placement pointer-events-none fixed -left-[9999px] top-0 h-12 w-12 opacity-0"
-      />
-    ) : null;
-  }
+  const trackSoftConsentAccepted = () => {
+    if (!hasCookieConsent()) {
+      return;
+    }
+
+    let tracked = false;
+    const sendTracking = () => {
+      if (tracked || !hasCookieConsent()) {
+        return;
+      }
+
+      const trackingWindow = window as TrackingWindow;
+      if (typeof trackingWindow.gtag !== 'function') {
+        return;
+      }
+
+      trackingWindow.gtag('event', 'soft_ad_consent_granted', {
+        event_category: 'consent',
+        event_label: 'ad_access_gate_banner',
+      });
+      tracked = true;
+    };
+
+    [0, 600, 1600].forEach((delay) => {
+      window.setTimeout(sendTracking, delay);
+    });
+  };
+
+  const handleConsentClick = () => {
+    grantCookieConsent();
+    trackSoftConsentAccepted();
+  };
+
+  const bannerPlacementClass = gateReason === 'consent' ? 'top-0' : 'bottom-0';
 
   return (
     <>
@@ -141,46 +164,43 @@ export function AdAccessGate() {
           className="adsbox ad-banner ad-unit ad-placement pointer-events-none fixed -left-[9999px] top-0 h-12 w-12 opacity-0"
         />
       ) : null}
-      <div className="fixed inset-0 z-[70] bg-background/96 backdrop-blur-sm">
-        <div className="flex min-h-screen items-center justify-center p-6">
-          <div className="w-full max-w-xl rounded-3xl border border-border bg-card p-8 text-center shadow-2xl">
-            <ShieldAlert className="mx-auto h-12 w-12 text-primary" />
-            <h2 className="mt-4 text-3xl font-bold font-headline text-foreground">
-              GameNight lever av annonser
-            </h2>
-            {gateReason === 'consent' ? (
-              <p className="mt-4 text-base leading-7 text-muted-foreground">
-                For å holde GameNight gratis trenger vi annonseinntekter. Derfor
-                må annonser og måling være aktivert for å bruke tjenesten. Når du
-                godkjenner, hjelper du oss å holde spillene åpne, gratis og i live.
-              </p>
-            ) : (
-              <p className="mt-4 text-base leading-7 text-muted-foreground">
-                Det ser ut som en annonseblokker stopper annonsene våre. GameNight
-                driftes av reklameinntekter, og uten dem blir det vanskelig å holde
-                tjenesten gratis og tilgjengelig for alle.
-              </p>
-            )}
-            <p className="mt-3 text-sm text-muted-foreground">
-              Takk for at du hjelper oss å holde GameNight i gang.
-            </p>
-            <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+      {gateReason ? (
+        <div
+          className={`fixed inset-x-0 ${bannerPlacementClass} z-50 border-border bg-card/95 p-3 shadow-lg backdrop-blur`}
+        >
+          <div className="mx-auto flex w-full max-w-5xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-3">
+              <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
               {gateReason === 'consent' ? (
-                <Button onClick={grantCookieConsent} size="lg">
-                  Godta annonser og fortsett
+                <p className="text-sm leading-6 text-muted-foreground">
+                  GameNight holdes gratis med annonser. Du kan fortsatt spille uten samtykke,
+                  men frivillig samtykke til annonser og måling hjelper oss å holde tjenesten i
+                  gang.
+                </p>
+              ) : (
+                <p className="text-sm leading-6 text-muted-foreground">
+                  Det ser ut som adblock skjuler annonsene våre. Du kan fortsatt bruke GameNight
+                  som normalt, men å tillate annonser støtter videre drift av tjenesten.
+                </p>
+              )}
+            </div>
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+              {gateReason === 'consent' ? (
+                <Button onClick={handleConsentClick} size="sm" className="w-full sm:w-auto">
+                  Samtykk og støtt GameNight
                 </Button>
               ) : (
-                <Button onClick={retryAdCheck} size="lg">
-                  Jeg har skrudd av adblock
+                <Button onClick={retryAdCheck} size="sm" className="w-full sm:w-auto">
+                  Oppdater etter adblock-endring
                 </Button>
               )}
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="outline" size="sm" asChild className="w-full sm:w-auto">
                 <Link href="/info/personvern">Les om personvern</Link>
               </Button>
             </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </>
   );
 }
