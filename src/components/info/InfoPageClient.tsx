@@ -532,6 +532,71 @@ const pages: Record<InfoPageSlug, { title: string; content: ReactNode }> =
               </a>{' '}
               hovedkontakt for alle bruker- og publisherhenvendelser.
             </p>
+            <p>
+              For innsikt i hvordan vi jobber med kvalitetssikring og oppdateringer,
+              se vår{' '}
+              <Link href="/info/redaksjonell-policy" className="text-primary hover:underline">
+                redaksjonelle policy
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+      ),
+    },
+    'redaksjonell-policy': {
+      title: 'Redaksjonell policy',
+      content: (
+        <div className="space-y-6 text-muted-foreground">
+          <p className="text-lg">
+            Denne siden forklarer hvordan GameNight-redaksjonen planlegger,
+            oppdaterer og kvalitetssikrer artikler om drikkeleker og festspill.
+          </p>
+
+          <div>
+            <h3 className="font-semibold text-foreground text-xl mb-2">
+              Formål
+            </h3>
+            <p>
+              Innholdet vårt skal være lett å forstå, praktisk å bruke i sosiale
+              settinger og tydelig på ansvarlig bruk for voksne (18+).
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground text-xl mb-2">
+              Redaksjonelt ansvar
+            </h3>
+            <p>
+              Artikler merkes med redaksjonell eier og dato for siste oppdatering.
+              Dette gjør det enklere å se hvem som står bak innholdet og når det
+              sist ble revidert.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground text-xl mb-2">
+              Oppdateringsrutiner
+            </h3>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>Vi retter faktiske feil og uklare formuleringer fortløpende.</li>
+              <li>Vi oppdaterer regler og beskrivelser når de er uklare i praksis.</li>
+              <li>Vi prioriterer tydelig språk, samtykke og inkluderende formuleringer.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground text-xl mb-2">
+              Kilder og innspill
+            </h3>
+            <p>
+              Spillbeskrivelser bygger på utbredte spillvarianter og praktisk
+              bruk. Finner du feil eller har forslag, kan du sende innspill via{' '}
+              <Link href="/info/kontakt-oss" className="text-primary hover:underline">
+                kontaktsiden
+              </Link>
+              .
+            </p>
           </div>
         </div>
       ),

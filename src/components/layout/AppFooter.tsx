@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 const FOOTER_LINKS = [
   { href: '/info/om-oss', label: 'Om oss' },
   { href: '/info/personvern', label: 'Personvern' },
+  { href: '/info/redaksjonell-policy', label: 'Redaksjonell policy' },
   { href: '/changelog', label: 'Oppdateringer' },
   { href: '/info/kontakt-oss', label: 'Kontakt' },
 ] as const;
